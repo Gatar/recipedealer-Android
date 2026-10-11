@@ -52,4 +52,25 @@
     <string name="browser_challenge">Strona sprawdza przeglądarkę – poczekaj albo wykonaj test.</string>
     <string name="browser_abandoned">Przerwano w przeglądarce</string>
     <string name="notif_failed_consent_text">Strona wymaga zgody (cookies). Dotknij, aby ją otworzyć i odpowiedzieć – kolejne przepisy z tej strony zapiszą się już same.</string>
+
+    <string name="notif_auth_title">Wysyłanie wstrzymane</string>
+    <string name="notif_auth_text">Serwer odrzucił token. Sprawdź adres i token w ustawieniach.</string>
+    <string name="settings_backend">Serwer</string>
+    <string name="settings_url">Adres serwera (https://…)</string>
+    <string name="settings_url_hint">Puste = zapis tylko na telefonie</string>
+    <string name="settings_token">Token</string>
+    <string name="settings_test">Testuj połączenie</string>
+    <string name="settings_save">Zapisz</string>
+    <string name="settings_saved">Zapisano ustawienia</string>
+    <string name="settings_background">Przetwarzanie w tle</string>
+    <string name="settings_background_desc">Po udostępnieniu zostajesz w aplikacji źródłowej; wynik przyjdzie jako powiadomienie.</string>
+    <string name="settings_autosend">Wysyłaj automatycznie</string>
+    <string name="settings_autosend_desc">Wysyła zaraz po odczytaniu, bez przeglądania.</string>
+    <string name="settings_https_only">Adres musi zaczynać się od https://</string>
+    <string name="health_ok">Połączenie działa</string>
+    <string name="health_unauthorized">Serwer odrzucił token (401/403)</string>
+    <string name="health_failed">Błąd połączenia: %1$s</string>
+    <string name="health_testing">Sprawdzam…</string>
+    <string name="refresh_status">Odśwież status</string>
+    <string name="backend_status">Serwer: %1$s</string>
 </resources>

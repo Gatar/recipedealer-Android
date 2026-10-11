@@ -13,14 +13,11 @@ import com.gatar.recipedealer.web.ExtractorScripts
 import com.gatar.recipedealer.web.TextSourceExtractor
 import com.gatar.recipedealer.web.WebSourceExtractor
 import com.gatar.recipedealer.settings.SettingsRepository
-import com.gatar.recipedealer.store.CaptureStatus
 import com.gatar.recipedealer.store.CaptureStore
-import com.gatar.recipedealer.upload.CaptureUploadRunner
-import com.gatar.recipedealer.upload.LocalCaptureSender
+import com.gatar.recipedealer.upload.UploadQueue
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.launch
 import java.io.File
 
 class RecipeDealerApp : Application() {
@@ -32,6 +29,7 @@ class RecipeDealerApp : Application() {
         // Whole-page snapshots for the OCR fallback; must run before the first WebView is created.
         WebView.enableSlowWholeDocumentDraw()
         container = AppContainer(this)
+        UploadQueue.resume(this, includeAuthFailures = false)
         Notifications.createChannels(this)
         // Debug builds: chrome://inspect / CDP via `adb forward tcp:9222 localabstract:webview_devtools_remote_<pid>`.
         if (applicationInfo.flags and ApplicationInfo.FLAG_DEBUGGABLE != 0) WebView.setWebContentsDebuggingEnabled(true)
@@ -55,15 +53,10 @@ class AppContainer(val context: Context) {
             SourceType.PDF to PdfSourceExtractor(ocr),
         ),
     )
-    private val uploadRunner = CaptureUploadRunner(store)
-
     init {
         processor.markInterrupted()
     }
 
-    /** Queue a capture for sending. */
-    fun send(id: String) {
-        store.updateState(id) { it.copy(status = CaptureStatus.QUEUED, error = null) }
-        appScope.launch { uploadRunner.upload(id, LocalCaptureSender()) }
-    }
+    /** Queue a capture for sending (backend from the settings, else the local sender). */
+    fun send(id: String) = UploadQueue.enqueue(context, id)
 }

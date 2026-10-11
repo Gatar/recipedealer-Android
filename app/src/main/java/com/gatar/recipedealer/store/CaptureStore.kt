@@ -34,6 +34,8 @@ data class CaptureState(
     val updatedAt: String = Instant.now().toString(),
     val error: String? = null,
     val attempts: Int = 0,
+    /** Failed with 401 / 403: re-queued once the token is changed in the settings. */
+    val needsAuth: Boolean = false,
     /** Where it was sent: "local" or the backend base URL. */
     val destination: String? = null,
     /** From `GET /v1/captures/{id}` (optional). */

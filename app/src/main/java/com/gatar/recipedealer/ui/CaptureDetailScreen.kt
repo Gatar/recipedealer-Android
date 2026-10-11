@@ -46,6 +46,8 @@ import com.gatar.recipedealer.model.CaptureJson
 import com.gatar.recipedealer.model.Group
 import com.gatar.recipedealer.model.SourceType
 import com.gatar.recipedealer.store.CaptureEntry
+import com.gatar.recipedealer.upload.LocalCaptureSender
+import com.gatar.recipedealer.upload.UploadQueue
 import com.gatar.recipedealer.web.BrowserActivity
 import com.gatar.recipedealer.store.CaptureStatus
 
@@ -96,6 +98,9 @@ fun CaptureDetailScreen(id: String, onBack: () -> Unit, extraActions: @Composabl
                         Text(stringResource(R.string.open_page))
                     }
                 }
+                if (entry.state.status == CaptureStatus.SENT && entry.state.destination != LocalCaptureSender.DESTINATION) {
+                    OutlinedButton(onClick = { UploadQueue.scheduleStatusNow(context, id) }) { Text(stringResource(R.string.refresh_status)) }
+                }
                 extraActions(entry)
             }
             entry.capture?.let { RecipeView(it) }
@@ -122,6 +127,10 @@ private fun StatusBlock(entry: CaptureEntry) {
     Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
         Text(statusText(entry), color = statusColor(entry.state.status), style = MaterialTheme.typography.labelLarge)
         entry.state.error?.let { Text(it, color = MaterialTheme.colorScheme.error, style = MaterialTheme.typography.bodySmall) }
+        entry.state.backendStatus?.let { st ->
+            val titles = entry.state.backendTitles.takeIf { it.isNotEmpty() }?.joinToString(prefix = " · ") ?: ""
+            Text(stringResource(R.string.backend_status, st) + titles, style = MaterialTheme.typography.bodySmall)
+        }
         entry.state.backendMessage?.let { Text(it, style = MaterialTheme.typography.bodySmall) }
         if (c != null) {
             val source = listOfNotNull(c.source.type.name, c.source.siteName, c.share.sourceApp).joinToString(" · ")

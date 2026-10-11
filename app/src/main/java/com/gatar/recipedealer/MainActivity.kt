@@ -19,6 +19,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.gatar.recipedealer.ui.CaptureDetailScreen
 import com.gatar.recipedealer.ui.CaptureListScreen
+import com.gatar.recipedealer.ui.SettingsScreen
 import com.gatar.recipedealer.ui.theme.RecipeDealerTheme
 
 class MainActivity : ComponentActivity() {
@@ -28,7 +29,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        if (savedInstanceState == null) pendingCapture = intent.getStringExtra(EXTRA_CAPTURE_ID)
+        if (savedInstanceState == null) pendingCapture = target(intent)
         if (checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(arrayOf(Manifest.permission.POST_NOTIFICATIONS), 1)
         }
@@ -36,8 +37,8 @@ class MainActivity : ComponentActivity() {
             RecipeDealerTheme {
                 val nav = rememberNavController()
                 LaunchedEffect(pendingCapture) {
-                    pendingCapture?.let { id ->
-                        nav.navigate(Routes.capture(id)) { launchSingleTop = true }
+                    pendingCapture?.let { target ->
+                        nav.navigate(if (target == SETTINGS) Routes.SETTINGS else Routes.capture(target)) { launchSingleTop = true }
                         pendingCapture = null
                     }
                 }
@@ -48,11 +49,20 @@ class MainActivity : ComponentActivity() {
 
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
-        intent.getStringExtra(EXTRA_CAPTURE_ID)?.let { pendingCapture = it }
+        target(intent)?.let { pendingCapture = it }
     }
+
+    private fun target(intent: Intent) =
+        if (intent.getBooleanExtra(EXTRA_SETTINGS, false)) SETTINGS else intent.getStringExtra(EXTRA_CAPTURE_ID)
 
     companion object {
         private const val EXTRA_CAPTURE_ID = "captureId"
+        private const val EXTRA_SETTINGS = "openSettings"
+        private const val SETTINGS = "\u0000settings"
+
+        fun openSettingsIntent(context: Context) = Intent(context, MainActivity::class.java)
+            .putExtra(EXTRA_SETTINGS, true)
+            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_SINGLE_TOP)
 
         fun openCaptureIntent(context: Context, captureId: String) = Intent(context, MainActivity::class.java)
             .putExtra(EXTRA_CAPTURE_ID, captureId)
@@ -63,6 +73,7 @@ class MainActivity : ComponentActivity() {
 object Routes {
     const val LIST = "list"
     const val CAPTURE = "capture/{id}"
+    const val SETTINGS = "settings"
     fun capture(id: String) = "capture/$id"
 }
 
@@ -70,10 +81,11 @@ object Routes {
 private fun AppNavHost(nav: NavHostController) {
     NavHost(nav, startDestination = Routes.LIST) {
         composable(Routes.LIST) {
-            CaptureListScreen(onOpen = { nav.navigate(Routes.capture(it)) })
+            CaptureListScreen(onOpen = { nav.navigate(Routes.capture(it)) }, onSettings = { nav.navigate(Routes.SETTINGS) })
         }
         composable(Routes.CAPTURE) { back ->
             CaptureDetailScreen(id = back.arguments?.getString("id").orEmpty(), onBack = { nav.popBackStack() })
         }
+        composable(Routes.SETTINGS) { SettingsScreen(onBack = { nav.popBackStack() }) }
     }
 }
