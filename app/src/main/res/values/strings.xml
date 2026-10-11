@@ -73,4 +73,22 @@
     <string name="health_testing">Sprawdzam…</string>
     <string name="refresh_status">Odśwież status</string>
     <string name="backend_status">Serwer: %1$s</string>
+
+    <string name="edit">Popraw</string>
+    <string name="save_recipe">Zapisz przepis</string>
+    <string name="edit_locked">Wysłanego przepisu nie można już poprawić.</string>
+    <string name="manual_hint">Podaj tytuł oraz składniki lub kroki.</string>
+    <string name="field_title">Tytuł</string>
+    <string name="field_servings">Porcje (np. 4 porcje)</string>
+    <string name="field_prep">Przyg.</string>
+    <string name="field_cook">Gotow.</string>
+    <string name="field_total">Razem</string>
+    <string name="field_group_name">Nazwa grupy (opcjonalnie)</string>
+    <string name="field_ingredients_hint">Składniki – jeden w linii</string>
+    <string name="field_steps_hint">Kroki – jeden w linii</string>
+    <string name="section_ingredients">Składniki</string>
+    <string name="section_steps">Przygotowanie</string>
+    <string name="section_notes">Wskazówki – jedna w linii</string>
+    <string name="add_group">Dodaj grupę</string>
+    <string name="remove_group">Usuń grupę</string>
 </resources>

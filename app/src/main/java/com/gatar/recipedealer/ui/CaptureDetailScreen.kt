@@ -1,6 +1,22 @@
 package com.gatar.recipedealer.ui
 
+import android.graphics.BitmapFactory
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.imePadding
+import androidx.compose.runtime.produceState
+import androidx.compose.runtime.saveable.Saver
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.layout.ContentScale
+import com.gatar.recipedealer.Notifications
+import com.gatar.recipedealer.capture.RecipeDraft
+import com.gatar.recipedealer.capture.RecipeEdits
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import java.io.File
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
@@ -59,6 +75,8 @@ fun CaptureDetailScreen(id: String, onBack: () -> Unit, extraActions: @Composabl
     val entries by container.store.entries.collectAsStateWithLifecycle()
     val entry = entries.firstOrNull { it.id == id }
     var confirmDelete by remember { mutableStateOf(false) }
+    var editing by rememberSaveable(stateSaver = NullableDraftSaver) { mutableStateOf<RecipeDraft?>(null) }
+    val editable = entry?.capture != null && entry.state.status in setOf(CaptureStatus.DRAFT, CaptureStatus.FAILED)
     Scaffold(
         topBar = {
             TopAppBar(
@@ -75,6 +93,24 @@ fun CaptureDetailScreen(id: String, onBack: () -> Unit, extraActions: @Composabl
         },
     ) { padding ->
         if (entry == null) return@Scaffold
+        val draft = editing
+        if (draft != null && entry.capture != null) {
+            Column(
+                Modifier.fillMaxSize().padding(padding).imePadding().verticalScroll(rememberScrollState()).padding(16.dp),
+                verticalArrangement = Arrangement.spacedBy(12.dp),
+            ) {
+                RecipeEditor(draft) { editing = it }
+                FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    Button(onClick = {
+                        val c = container.store.get(id)?.capture ?: return@Button
+                        container.store.saveCapture(RecipeEdits.applyEdit(c, draft.toRecipe(c.recipe)))
+                        editing = null
+                    }) { Text(stringResource(R.string.save_recipe)) }
+                    OutlinedButton(onClick = { editing = null }) { Text(stringResource(R.string.cancel)) }
+                }
+            }
+            return@Scaffold
+        }
         Column(
             Modifier.fillMaxSize().padding(padding).verticalScroll(rememberScrollState()).padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp),
@@ -82,8 +118,9 @@ fun CaptureDetailScreen(id: String, onBack: () -> Unit, extraActions: @Composabl
             StatusBlock(entry)
             FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 val c = entry.capture
-                if (c != null && entry.state.status in setOf(CaptureStatus.DRAFT, CaptureStatus.FAILED)) {
-                    Button(onClick = { container.send(id) }) { Text(stringResource(R.string.send)) }
+                if (c != null && editable) {
+                    Button(onClick = { container.send(id); Notifications.cancel(context, id) }) { Text(stringResource(R.string.send)) }
+                    OutlinedButton(onClick = { editing = RecipeDraft.from(c.recipe) }) { Text(stringResource(R.string.edit)) }
                 }
                 if (c != null) {
                     OutlinedButton(onClick = { Exporter.shareJson(context, container.store, id) }) { Text(stringResource(R.string.share_json)) }
@@ -103,7 +140,7 @@ fun CaptureDetailScreen(id: String, onBack: () -> Unit, extraActions: @Composabl
                 }
                 extraActions(entry)
             }
-            entry.capture?.let { RecipeView(it) }
+            entry.capture?.let { RecipeView(it, container.store.filesDir(id)) }
             entry.capture?.let { RawJson(it) }
         }
     }
@@ -151,7 +188,7 @@ private fun StatusBlock(entry: CaptureEntry) {
 }
 
 @Composable
-fun RecipeView(c: Capture) {
+fun RecipeView(c: Capture, filesDir: File? = null) {
     val r = c.recipe
     Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
         r.title?.let { Text(it, style = MaterialTheme.typography.headlineSmall) }
@@ -171,11 +208,36 @@ fun RecipeView(c: Capture) {
         c.raw.pdfText?.takeIf { it.isNotBlank() }?.let { Section("Tekst z PDF") { Text(it, style = MaterialTheme.typography.bodySmall) } }
         if (c.attachments.isNotEmpty()) {
             Section("Załączniki") {
-                c.attachments.forEach { Text("${it.name} · ${it.role} · ${it.width ?: "?"}×${it.height ?: "?"} · ${(it.bytes ?: 0) / 1024} KB") }
+                c.attachments.forEach { a ->
+                    Text("${a.name} · ${a.role} · ${a.width ?: "?"}×${a.height ?: "?"} · ${(a.bytes ?: 0) / 1024} KB",
+                        style = MaterialTheme.typography.bodySmall)
+                    if (filesDir != null && a.mimeType.startsWith("image/")) Thumbnail(File(filesDir, a.name))
+                }
             }
         }
     }
 }
+
+@Composable
+private fun Thumbnail(file: File) {
+    val bitmap by produceState<ImageBitmap?>(null, file) {
+        value = withContext(Dispatchers.IO) {
+            runCatching {
+                val o = BitmapFactory.Options().apply { inJustDecodeBounds = true }
+                BitmapFactory.decodeFile(file.path, o)
+                var s = 1
+                while (o.outWidth / (s * 2) >= 400) s *= 2
+                BitmapFactory.decodeFile(file.path, BitmapFactory.Options().apply { inSampleSize = s })?.asImageBitmap()
+            }.getOrNull()
+        }
+    }
+    bitmap?.let { Image(it, null, Modifier.fillMaxWidth().heightIn(max = 360.dp), contentScale = ContentScale.Fit, alignment = Alignment.TopStart) }
+}
+
+private val NullableDraftSaver = Saver<RecipeDraft?, String>(
+    save = { d -> d?.let { CaptureJson.encodeToString(RecipeDraft.serializer(), it) } ?: "" },
+    restore = { s -> s.takeIf { it.isNotEmpty() }?.let { CaptureJson.decodeFromString(RecipeDraft.serializer(), it) } },
+)
 
 @Composable
 private fun Section(title: String, content: @Composable ColumnScope.() -> Unit) {

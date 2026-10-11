@@ -19,6 +19,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.gatar.recipedealer.ui.CaptureDetailScreen
 import com.gatar.recipedealer.ui.CaptureListScreen
+import com.gatar.recipedealer.ui.ManualEntryScreen
 import com.gatar.recipedealer.ui.SettingsScreen
 import com.gatar.recipedealer.ui.theme.RecipeDealerTheme
 
@@ -74,6 +75,7 @@ object Routes {
     const val LIST = "list"
     const val CAPTURE = "capture/{id}"
     const val SETTINGS = "settings"
+    const val MANUAL = "manual"
     fun capture(id: String) = "capture/$id"
 }
 
@@ -81,11 +83,20 @@ object Routes {
 private fun AppNavHost(nav: NavHostController) {
     NavHost(nav, startDestination = Routes.LIST) {
         composable(Routes.LIST) {
-            CaptureListScreen(onOpen = { nav.navigate(Routes.capture(it)) }, onSettings = { nav.navigate(Routes.SETTINGS) })
+            CaptureListScreen(
+                onOpen = { nav.navigate(Routes.capture(it)) },
+                onSettings = { nav.navigate(Routes.SETTINGS) },
+                onManual = { nav.navigate(Routes.MANUAL) },
+            )
         }
         composable(Routes.CAPTURE) { back ->
             CaptureDetailScreen(id = back.arguments?.getString("id").orEmpty(), onBack = { nav.popBackStack() })
         }
         composable(Routes.SETTINGS) { SettingsScreen(onBack = { nav.popBackStack() }) }
+        composable(Routes.MANUAL) {
+            ManualEntryScreen(onBack = { nav.popBackStack() }, onSaved = { id ->
+                nav.navigate(Routes.capture(id)) { popUpTo(Routes.LIST) }
+            })
+        }
     }
 }

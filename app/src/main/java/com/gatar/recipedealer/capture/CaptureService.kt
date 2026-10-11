@@ -3,6 +3,7 @@ package com.gatar.recipedealer.capture
 import android.content.Context
 import android.content.Intent
 import android.content.pm.ServiceInfo
+import android.util.Log
 import androidx.lifecycle.LifecycleService
 import androidx.lifecycle.lifecycleScope
 import com.gatar.recipedealer.Notifications
@@ -10,6 +11,7 @@ import com.gatar.recipedealer.container
 import com.gatar.recipedealer.share.Route
 import com.gatar.recipedealer.share.ShareRequest
 import com.gatar.recipedealer.store.CaptureStatus
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
@@ -72,10 +74,24 @@ class CaptureService : LifecycleService() {
             restart(context, request.captureId)
         }
 
-        /** (Re)processes a capture whose job is saved. */
+        /**
+         * (Re)processes a capture whose job is saved. Should the system refuse the foreground service, the capture is
+         * processed in the app scope instead (the process usually lives long enough) rather than left hanging.
+         */
         fun restart(context: Context, captureId: String) {
-            context.container.store.updateState(captureId) { it.copy(status = CaptureStatus.EXTRACTING, error = null) }
-            context.startForegroundService(Intent(context, CaptureService::class.java).putExtra(EXTRA_ID, captureId))
+            val c = context.container
+            c.store.updateState(captureId) { it.copy(status = CaptureStatus.EXTRACTING, error = null) }
+            try {
+                context.startForegroundService(Intent(context, CaptureService::class.java).putExtra(EXTRA_ID, captureId))
+            } catch (e: IllegalStateException) {
+                Log.w("CaptureService", "foreground service refused, processing in the app scope", e)
+                val job = c.processor.loadJob(captureId) ?: return
+                c.appScope.launch(Dispatchers.Main) {
+                    val entry = c.processor.run(job)
+                    ResultNotifier.notify(context.applicationContext, entry)
+                    if (c.settings.current.autoSend) c.send(entry.id)
+                }
+            }
         }
     }
 }

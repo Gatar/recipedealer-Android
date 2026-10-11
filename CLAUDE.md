@@ -74,6 +74,13 @@ that gave ingredients or steps. `BrowserActivity` is the visible WebView (failur
   white, ≤ 10 pages, original attached as `document-N.pdf`.
 - `am start` has no array-of-URI extra: SEND_MULTIPLE is covered by `ShareFlowTest` (instrumented).
 
+## Preview, editing, manual entry (§6.7, D5)
+- `capture/RecipeEdits.kt`: `RecipeDraft` (form strings ↔ Recipe, items one per line), `applyEdit` (changed fields →
+  provenance `user`, raw untouched, completeness recomputed), `manualCapture` (`MANUAL`, provenance `manual`).
+- Editing only while DRAFT / FAILED: a sent capture cannot change (idempotent PUT answers 200 and keeps the old one).
+- Compose UI tests need espresso ≥ 3.7 / test runner ≥ 1.7 on Android 37 (older espresso calls the removed
+  `InputManager.getInstance`).
+
 ## State
 - M1 skeleton: done (share target + routing, capture model + schema + contract tests, local sender, capture list).
 - M2 web capture: done. Verified on the emulator: kwestiasmaku (timeout trigger, heuristic groups), recipetineats
