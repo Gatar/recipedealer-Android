@@ -1,0 +1,56 @@
+{
+  "recipe": {
+    "title": "Zupa pomidorowa",
+    "language": "pl",
+    "servings": {
+      "text": "6 porcji",
+      "count": 6
+    },
+    "times": {
+      "prepMinutes": 10,
+      "cookMinutes": 40
+    },
+    "ingredientGroups": [
+      {
+        "items": [
+          "1 l bulionu",
+          "500 g przecieru pomidorowego",
+          "100 g ryżu"
+        ]
+      }
+    ],
+    "stepGroups": [
+      {
+        "items": [
+          "Zagotuj bulion.",
+          "Dodaj przecier i ryż, gotuj 20 minut."
+        ]
+      }
+    ],
+    "notes": [],
+    "images": [
+      "https://example.test/img/zupa.jpg"
+    ],
+    "source": {
+      "type": "WEB",
+      "url": "https://example.test/microdata-only",
+      "files": []
+    }
+  },
+  "provenance": {
+    "title": "microdata",
+    "ingredients": "microdata",
+    "steps": "microdata",
+    "servings": "microdata",
+    "prepMinutes": "microdata",
+    "cookMinutes": "microdata",
+    "images": "microdata"
+  },
+  "completeness": {
+    "score": 1.0,
+    "bestStage": "microdata",
+    "hasTitle": true,
+    "hasIngredients": true,
+    "hasSteps": true
+  }
+}

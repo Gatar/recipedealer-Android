@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head><meta charset="utf-8"><title>Mutating</title></head>
+<body>
+  <div id="ticker">0</div>
+  <script>
+    // Mutates the DOM every 500 ms for ~4 s, then goes quiet.
+    var n = 0;
+    var id = setInterval(function () {
+      document.getElementById('ticker').textContent = String(++n);
+      if (n >= 8) clearInterval(id);
+    }, 500);
+  </script>
+</body>
+</html>

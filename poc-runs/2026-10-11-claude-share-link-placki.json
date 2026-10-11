@@ -1,0 +1,800 @@
+{
+  "schemaVersion": 2,
+  "captureId": "9667025f-8f3f-4e32-8026-dc596ac8c166",
+  "capturedAt": "2026-10-11T13:40:05.233689Z",
+  "recipe": {
+    "title": "Claude",
+    "language": "en",
+    "times": {},
+    "ingredientGroups": [
+      {
+        "items": [
+          "1 kilograms ziemniaki (najlepiej mączyste)",
+          "1 średnia cebula",
+          "1 jajko",
+          "3 tablespoons mąka pszenna",
+          "1 teaspoons sól",
+          "0.5 teaspoons świeżo mielony pieprz",
+          "150 milliliters olej do smażenia",
+          "200 grams śmietana do podania"
+        ]
+      }
+    ],
+    "stepGroups": [],
+    "notes": [
+      "Wariacje: na słodko z cukrem i śmietaną, na słono z gulaszem (placek po węgiersku) albo z czosnkiem w cieście. Cienkie placki będą bardziej chrupiące."
+    ],
+    "images": [
+      "https://claude.ai/images/claude_ogimage.png"
+    ],
+    "source": {
+      "type": "WEB",
+      "url": "https://claude.ai/share/525f68b6-1bef-4d4d-9bdd-c4a42876e4c3",
+      "siteName": "Claude",
+      "files": []
+    }
+  },
+  "completeness": {
+    "score": 0.6,
+    "bestStage": "heuristic",
+    "hasTitle": true,
+    "hasIngredients": true,
+    "hasSteps": false
+  },
+  "provenance": {
+    "title": "heuristic",
+    "ingredients": "heuristic",
+    "notes": "heuristic",
+    "images": "page"
+  },
+  "web": {
+    "finalUrl": "https://claude.ai/share/525f68b6-1bef-4d4d-9bdd-c4a42876e4c3",
+    "heuristic": {
+      "articleTitle": "Claude",
+      "usedBodyFallback": true,
+      "servings": null,
+      "ingredients": [
+        {
+          "name": null,
+          "items": [
+            "1 kilograms ziemniaki (najlepiej mączyste)",
+            "1 średnia cebula",
+            "1 jajko",
+            "3 tablespoons mąka pszenna",
+            "1 teaspoons sól",
+            "0.5 teaspoons świeżo mielony pieprz",
+            "150 milliliters olej do smażenia",
+            "200 grams śmietana do podania"
+          ]
+        }
+      ],
+      "instructions": [],
+      "notes": [
+        "Wariacje: na słodko z cukrem i śmietaną, na słono z gulaszem (placek po węgiersku) albo z czosnkiem w cieście. Cienkie placki będą bardziej chrupiące."
+      ]
+    },
+    "jsonLd": [
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebSite",
+            "name": "Claude",
+            "alternateName": [
+              "Claude.ai",
+              "Claude by Anthropic"
+            ],
+            "url": "https://claude.com"
+          },
+          {
+            "@type": "Organization",
+            "name": "Anthropic",
+            "url": "https://www.anthropic.com",
+            "logo": "https://claude.ai/images/claude_ogimage.png",
+            "sameAs": [
+              "https://x.com/AnthropicAI",
+              "https://www.linkedin.com/company/anthropic",
+              "https://www.youtube.com/@anthropic-ai"
+            ]
+          }
+        ]
+      }
+    ],
+    "lang": "en-US",
+    "microdata": [],
+    "ogImage": "https://claude.ai/images/claude_ogimage.png",
+    "pluginHits": {
+      "wprm": {
+        "found": false,
+        "containerCount": 0,
+        "fieldMatches": {},
+        "recipe": {}
+      },
+      "tasty": {
+        "found": false,
+        "containerCount": 0,
+        "fieldMatches": {},
+        "recipe": {}
+      },
+      "mediavine": {
+        "found": false,
+        "containerCount": 0,
+        "fieldMatches": {},
+        "recipe": {}
+      }
+    },
+    "readableText": "Zetrzyj ziemniaki i cebulę: Obierz 1 kilograms ziemniaki (najlepiej mączyste) i zetrzyj na drobnych oczkach razem z 1 średnia cebula. Cebula spowolni ciemnienie ziemniaków.Odcedź masę: Odlej sok z masy, odciskając ją na sicie lub w ściereczce. Odstaw płyn na minutę – opadnie z niego skrobia; odlej wodę, a skrobię dodaj z powrotem do masy.Dopraw ciasto: Dodaj 1 jajko, 3 tablespoons mąka pszenna, 1 teaspoons sól i 0.5 teaspoons świeżo mielony pieprz. Wymieszaj do połączenia składników.Smaż placki: Rozgrzej 150 milliliters olej do smażenia na patelni. Nakładaj masę łyżką, formując cienkie placki. Smaż na złoty kolor po 3–4 minuty z każdej strony.Osącz i podaj: Połóż placki na ręczniku papierowym, by odsączyć nadmiar tłuszczu. Podawaj od razu z 200 grams śmietana do podania.",
+    "renderTimeMs": 9371,
+    "siteName": "Claude",
+    "stabilized": true,
+    "title": "Claude",
+    "visibility": "visible"
+  },
+  "ocr": {
+    "blocks": [
+      {
+        "bbox": [
+          149,
+          85,
+          847,
+          118
+        ],
+        "page": 0,
+        "text": "Shared by Bartek. This is a copy of a chat"
+      },
+      {
+        "bbox": [
+          159,
+          134,
+          997,
+          169
+        ],
+        "page": 0,
+        "text": "between Claude and Bartek. Content may include"
+      },
+      {
+        "bbox": [
+          150,
+          190,
+          872,
+          217
+        ],
+        "page": 0,
+        "text": "unverified or unsafe content that does not"
+      },
+      {
+        "bbox": [
+          150,
+          242,
+          850,
+          274
+        ],
+        "page": 0,
+        "text": "represent the views of Anthropic. Shared"
+      },
+      {
+        "bbox": [
+          149,
+          295,
+          974,
+          330
+        ],
+        "page": 0,
+        "text": "snapshot may contain attachments and data not"
+      },
+      {
+        "bbox": [
+          149,
+          347,
+          405,
+          382
+        ],
+        "page": 0,
+        "text": "displayed here."
+      },
+      {
+        "bbox": [
+          177,
+          443,
+          291,
+          476
+        ],
+        "page": 0,
+        "text": "Report"
+      },
+      {
+        "bbox": [
+          250,
+          632,
+          995,
+          682
+        ],
+        "page": 0,
+        "text": "Napisz mi przepis na placki ziemniaczane."
+      },
+      {
+        "bbox": [
+          783,
+          748,
+          969,
+          782
+        ],
+        "page": 0,
+        "text": "9 minutes ago"
+      },
+      {
+        "bbox": [
+          118,
+          1052,
+          328,
+          1074
+        ],
+        "page": 0,
+        "text": "theworldsfood"
+      },
+      {
+        "bbox": [
+          548,
+          1052,
+          662,
+          1081
+        ],
+        "page": 0,
+        "text": "polonist"
+      },
+      {
+        "bbox": [
+          842,
+          1055,
+          993,
+          1085
+        ],
+        "page": 0,
+        "text": "rozagotuje"
+      },
+      {
+        "bbox": [
+          111,
+          1178,
+          626,
+          1236
+        ],
+        "page": 0,
+        "text": "Placki ziemniaczane"
+      },
+      {
+        "bbox": [
+          86,
+          1287,
+          937,
+          1324
+        ],
+        "page": 0,
+        "text": "Chrupiące na brzegach, miękkie w środkU - klasyk"
+      },
+      {
+        "bbox": [
+          86,
+          1336,
+          338,
+          1377
+        ],
+        "page": 0,
+        "text": "polskiej kuchni."
+      },
+      {
+        "bbox": [
+          104,
+          1435,
+          425,
+          1474
+        ],
+        "page": 0,
+        "text": "-4 + servings"
+      },
+      {
+        "bbox": [
+          374,
+          1535,
+          604,
+          1574
+        ],
+        "page": 0,
+        "text": "Start cooking"
+      },
+      {
+        "bbox": [
+          87,
+          1644,
+          312,
+          1685
+        ],
+        "page": 0,
+        "text": "Ingredients"
+      },
+      {
+        "bbox": [
+          96,
+          1722,
+          791,
+          1770
+        ],
+        "page": 0,
+        "text": "1 kilograms ziemniaki (najlepiej mączyste)"
+      },
+      {
+        "bbox": [
+          100,
+          1788,
+          357,
+          1825
+        ],
+        "page": 0,
+        "text": "1 średnia cebula"
+      },
+      {
+        "bbox": [
+          85,
+          1855,
+          183,
+          1891
+        ],
+        "page": 0,
+        "text": "1jajko"
+      },
+      {
+        "bbox": [
+          86,
+          1918,
+          576,
+          1951
+        ],
+        "page": 0,
+        "text": "3 tablespoons maka pszenna"
+      },
+      {
+        "bbox": [
+          98,
+          1982,
+          341,
+          2015
+        ],
+        "page": 0,
+        "text": "1 teasp0ons sól"
+      },
+      {
+        "bbox": [
+          86,
+          2043,
+          708,
+          2078
+        ],
+        "page": 0,
+        "text": "0.5 teaspoons świeżo mielony pieprz"
+      },
+      {
+        "bbox": [
+          85,
+          2107,
+          595,
+          2138
+        ],
+        "page": 0,
+        "text": "150 milliliters olej do smażenia"
+      },
+      {
+        "bbox": [
+          86,
+          2169,
+          626,
+          2203
+        ],
+        "page": 0,
+        "text": "200 grams śmietana do podania"
+      },
+      {
+        "bbox": [
+          86,
+          2274,
+          197,
+          2315
+        ],
+        "page": 0,
+        "text": "Steps"
+      },
+      {
+        "bbox": [
+          115,
+          2364,
+          955,
+          2407
+        ],
+        "page": 0,
+        "text": "1 Zetrzyj ziemniaki i cebulę: Obierz 1 kilograms"
+      },
+      {
+        "bbox": [
+          191,
+          2420,
+          893,
+          2458
+        ],
+        "page": 0,
+        "text": "ziemniaki (najlepiej nmączyste) i zetrzyj na"
+      },
+      {
+        "bbox": [
+          191,
+          2473,
+          930,
+          2508
+        ],
+        "page": 0,
+        "text": "drobnych oczkach razem z 1średnia cebula."
+      },
+      {
+        "bbox": [
+          191,
+          2526,
+          884,
+          2558
+        ],
+        "page": 0,
+        "text": "Cebula spowolni ciemnienie ziemniaków."
+      },
+      {
+        "bbox": [
+          191,
+          2620,
+          961,
+          2657
+        ],
+        "page": 0,
+        "text": "Odcedź masę: Odlej sok z masy, odciskając ją"
+      },
+      {
+        "bbox": [
+          192,
+          2673,
+          896,
+          2708
+        ],
+        "page": 0,
+        "text": "na sicie lub w ściereczce. Odstaw ptyn na"
+      },
+      {
+        "bbox": [
+          192,
+          2726,
+          983,
+          2762
+        ],
+        "page": 0,
+        "text": "minutę - opadnie z niego skrobia; odlej wodę, a"
+      },
+      {
+        "bbox": [
+          191,
+          2776,
+          788,
+          2816
+        ],
+        "page": 0,
+        "text": "skrobię dodaj z powrotem do masy."
+      },
+      {
+        "bbox": [
+          112,
+          2873,
+          921,
+          2910
+        ],
+        "page": 0,
+        "text": "3 Dopraw ciasto: Dodaj 1 jajko, 3 tablespoons"
+      },
+      {
+        "bbox": [
+          192,
+          2926,
+          974,
+          2967
+        ],
+        "page": 0,
+        "text": "mąka pszenna, 1 teaspoons sól i 0.5 teaspoons"
+      },
+      {
+        "bbox": [
+          191,
+          2977,
+          818,
+          3014
+        ],
+        "page": 0,
+        "text": "świeżo mielony pieprz. Wymieszaj do"
+      },
+      {
+        "bbox": [
+          191,
+          3025,
+          586,
+          3065
+        ],
+        "page": 0,
+        "text": "połączenia składników."
+      },
+      {
+        "bbox": [
+          191,
+          3125,
+          905,
+          3160
+        ],
+        "page": 0,
+        "text": "Smaż placki: Rozgrzej 150 mililiters olej do"
+      },
+      {
+        "bbox": [
+          111,
+          3137,
+          128,
+          3162
+        ],
+        "page": 0,
+        "text": "4"
+      },
+      {
+        "bbox": [
+          191,
+          3178,
+          908,
+          3214
+        ],
+        "page": 0,
+        "text": "smażenia na patelni. Nakładaj masę tyżką,"
+      },
+      {
+        "bbox": [
+          190,
+          3230,
+          985,
+          3264
+        ],
+        "page": 0,
+        "text": "formując cienkie placki. Smaż na złoty kolor po"
+      },
+      {
+        "bbox": [
+          190,
+          3279,
+          645,
+          3317
+        ],
+        "page": 0,
+        "text": "3-4 minuty z każdej strony."
+      },
+      {
+        "bbox": [
+          191,
+          3374,
+          843,
+          3413
+        ],
+        "page": 0,
+        "text": "Osącz i podaj: Potóż placki na ręczniku"
+      },
+      {
+        "bbox": [
+          111,
+          3389,
+          128,
+          3415
+        ],
+        "page": 0,
+        "text": "5"
+      },
+      {
+        "bbox": [
+          192,
+          3425,
+          939,
+          3468
+        ],
+        "page": 0,
+        "text": "papierowym, by odsączyć nadmiar ttuszczu."
+      },
+      {
+        "bbox": [
+          192,
+          3481,
+          893,
+          3516
+        ],
+        "page": 0,
+        "text": "Podawaj od razu z 200 grams śmietana do"
+      },
+      {
+        "bbox": [
+          191,
+          3531,
+          331,
+          3568
+        ],
+        "page": 0,
+        "text": "podania."
+      },
+      {
+        "bbox": [
+          92,
+          3677,
+          192,
+          3703
+        ],
+        "page": 0,
+        "text": "Notes"
+      },
+      {
+        "bbox": [
+          91,
+          3746,
+          960,
+          3787
+        ],
+        "page": 0,
+        "text": "Wariacje: na stodko z cukrem i śmietaną, na stono z"
+      },
+      {
+        "bbox": [
+          90,
+          3800,
+          971,
+          3838
+        ],
+        "page": 0,
+        "text": "gulaszem (placek po węgiersku) albo z czosnkiem w"
+      },
+      {
+        "bbox": [
+          91,
+          266,
+          890,
+          311
+        ],
+        "page": 1,
+        "text": "cieście. Cienkie placki będą bardziej chrupiące."
+      },
+      {
+        "bbox": [
+          715,
+          405,
+          1026,
+          428
+        ],
+        "page": 1,
+        "text": "Results from the web"
+      },
+      {
+        "bbox": [
+          44,
+          499,
+          778,
+          540
+        ],
+        "page": 1,
+        "text": "Przepis jest gotowy powyżej - możesz"
+      },
+      {
+        "bbox": [
+          52,
+          560,
+          808,
+          584
+        ],
+        "page": 1,
+        "text": "Zmianinó 1iozbanoi onWwmożAniu"
+      },
+      {
+        "bbox": [
+          65,
+          625,
+          350,
+          670
+        ],
+        "page": 1,
+        "text": "Cookie settings"
+      },
+      {
+        "bbox": [
+          65,
+          726,
+          939,
+          760
+        ],
+        "page": 1,
+        "text": "We use cookies to deliver and improve our services,"
+      },
+      {
+        "bbox": [
+          65,
+          780,
+          938,
+          816
+        ],
+        "page": 1,
+        "text": "analyze site usage, and if you agree, to customize or"
+      },
+      {
+        "bbox": [
+          66,
+          832,
+          1005,
+          868
+        ],
+        "page": 1,
+        "text": "personalize your experience and market our services to"
+      },
+      {
+        "bbox": [
+          75,
+          883,
+          755,
+          918
+        ],
+        "page": 1,
+        "text": "you. YoU can read our Cookie Policy here."
+      },
+      {
+        "bbox": [
+          143,
+          995,
+          323,
+          1022
+        ],
+        "page": 1,
+        "text": "Customize"
+      },
+      {
+        "bbox": [
+          517,
+          995,
+          623,
+          1031
+        ],
+        "page": 1,
+        "text": "Reject"
+      },
+      {
+        "bbox": [
+          814,
+          996,
+          936,
+          1030
+        ],
+        "page": 1,
+        "text": "Accept"
+      }
+    ],
+    "source": "WEBVIEW_SNAPSHOT",
+    "text": "Shared by Bartek. This is a copy of a chat\nbetween Claude and Bartek. Content may include\nunverified or unsafe content that does not\nrepresent the views of Anthropic. Shared\nsnapshot may contain attachments and data not\ndisplayed here.\nReport\nNapisz mi przepis na placki ziemniaczane.\n9 minutes ago\ntheworldsfood\npolonist\nrozagotuje\nPlacki ziemniaczane\nChrupiące na brzegach, miękkie w środkU - klasyk\npolskiej kuchni.\n-4 + servings\nStart cooking\nIngredients\n1 kilograms ziemniaki (najlepiej mączyste)\n1 średnia cebula\n1jajko\n3 tablespoons maka pszenna\n1 teasp0ons sól\n0.5 teaspoons świeżo mielony pieprz\n150 milliliters olej do smażenia\n200 grams śmietana do podania\nSteps\n1 Zetrzyj ziemniaki i cebulę: Obierz 1 kilograms\nziemniaki (najlepiej nmączyste) i zetrzyj na\ndrobnych oczkach razem z 1średnia cebula.\nCebula spowolni ciemnienie ziemniaków.\nOdcedź masę: Odlej sok z masy, odciskając ją\nna sicie lub w ściereczce. Odstaw ptyn na\nminutę - opadnie z niego skrobia; odlej wodę, a\nskrobię dodaj z powrotem do masy.\n3 Dopraw ciasto: Dodaj 1 jajko, 3 tablespoons\nmąka pszenna, 1 teaspoons sól i 0.5 teaspoons\nświeżo mielony pieprz. Wymieszaj do\npołączenia składników.\nSmaż placki: Rozgrzej 150 mililiters olej do\n4\nsmażenia na patelni. Nakładaj masę tyżką,\nformując cienkie placki. Smaż na złoty kolor po\n3-4 minuty z każdej strony.\nOsącz i podaj: Potóż placki na ręczniku\n5\npapierowym, by odsączyć nadmiar ttuszczu.\nPodawaj od razu z 200 grams śmietana do\npodania.\nNotes\nWariacje: na stodko z cukrem i śmietaną, na stono z\ngulaszem (placek po węgiersku) albo z czosnkiem w\n\ncieście. Cienkie placki będą bardziej chrupiące.\nResults from the web\nPrzepis jest gotowy powyżej - możesz\nZmianinó 1iozbanoi onWwmożAniu\nCookie settings\nWe use cookies to deliver and improve our services,\nanalyze site usage, and if you agree, to customize or\npersonalize your experience and market our services to\nyou. YoU can read our Cookie Policy here.\nCustomize\nReject\nAccept",
+    "truncated": false
+  },
+  "attachments": [],
+  "diagnostics": {
+    "errors": [],
+    "notes": [
+      "intent action=android.intent.action.SEND type=text/plain referrer=null clipItems=1 clipMime=text/plain extras={android.intent.extra.SUBJECT=String(30)'Przepis na placki ziemniaczane', android.intent.extra.TEXT=String(60)'https://claude.ai/share/525f68b6-1bef-4d4d-9bdd-c4a42876e4c3'}",
+      "mode=visible",
+      "extractionTrigger=stable"
+    ],
+    "stageTimingsMs": {
+      "stabilize": 9371,
+      "extractRoundTrip": 49,
+      "js.jsonLd": 0,
+      "js.microdata": 0,
+      "js.pluginHits": 0,
+      "js.readability": 14,
+      "js.heuristic": 16,
+      "merge": 2,
+      "ocr": 1228
+    }
+  }
+}

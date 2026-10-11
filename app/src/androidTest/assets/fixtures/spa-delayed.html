@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <title>Ładowanie…</title>
+</head>
+<body>
+  <div id="app">Ładowanie przepisu…</div>
+  <script>
+    // Simulates a client-rendered page: the recipe (JSON-LD + DOM) appears 2 s after load.
+    setTimeout(function () {
+      document.title = 'Naleśniki – Przepis';
+      var ld = document.createElement('script');
+      ld.type = 'application/ld+json';
+      ld.textContent = JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'Recipe',
+        name: 'Naleśniki',
+        recipeIngredient: ['2 szklanki mąki', '2 jajka', '2 szklanki mleka'],
+        recipeInstructions: [
+          { '@type': 'HowToStep', text: 'Wymieszaj składniki na gładkie ciasto.' },
+          { '@type': 'HowToStep', text: 'Smaż na patelni z obu stron.' }
+        ]
+      });
+      document.head.appendChild(ld);
+      document.getElementById('app').innerHTML = '<h1>Naleśniki</h1><p>Gotowe po 2 sekundach.</p>';
+    }, 2000);
+  </script>
+</body>
+</html>

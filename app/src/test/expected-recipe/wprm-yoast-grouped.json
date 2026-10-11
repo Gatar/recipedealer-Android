@@ -1,0 +1,91 @@
+{
+  "recipe": {
+    "title": "Bun Cha - Vietnamese Meatballs",
+    "language": "en",
+    "servings": {
+      "text": "2",
+      "count": 2
+    },
+    "times": {
+      "prepMinutes": 20,
+      "cookMinutes": 10,
+      "totalMinutes": 30
+    },
+    "ingredientGroups": [
+      {
+        "name": "Meatballs",
+        "items": [
+          "250 g pork mince (ground pork)(Note 1)",
+          "1 tbsp fish sauce (Note 2)"
+        ]
+      },
+      {
+        "name": "Nuoc Cham (Sauce)",
+        "items": [
+          "3 tbsp white sugar",
+          "2 tbsp lime juice"
+        ]
+      },
+      {
+        "name": "Serving",
+        "items": [
+          "100 g vermicelli noodles, dried"
+        ]
+      }
+    ],
+    "stepGroups": [
+      {
+        "items": [
+          "Sauce: Mix ingredients. Set aside 10 minutes+."
+        ]
+      },
+      {
+        "name": "Meatballs",
+        "items": [
+          "Mix all ingredients.",
+          "Shape into 6 patties."
+        ]
+      },
+      {
+        "name": "Assemble Bowls",
+        "items": [
+          "Place noodles in bowl."
+        ]
+      }
+    ],
+    "notes": [
+      "1. Pork: Can use chicken or turkey.",
+      "2. Nuoc Cham: Not as strong as others.",
+      "3. Adapted from a few cookbooks."
+    ],
+    "images": [
+      "https://example.test/img/bun-cha.jpg"
+    ],
+    "source": {
+      "type": "WEB",
+      "url": "https://example.test/wprm-yoast-grouped",
+      "siteName": "RecipeTin Eats",
+      "author": "Nagi",
+      "files": []
+    }
+  },
+  "provenance": {
+    "title": "jsonLd",
+    "ingredients": "pluginHits",
+    "steps": "jsonLd",
+    "servings": "jsonLd",
+    "prepMinutes": "jsonLd",
+    "cookMinutes": "jsonLd",
+    "totalMinutes": "jsonLd",
+    "images": "jsonLd",
+    "notes": "pluginHits",
+    "author": "jsonLd"
+  },
+  "completeness": {
+    "score": 1.0,
+    "bestStage": "jsonLd",
+    "hasTitle": true,
+    "hasIngredients": true,
+    "hasSteps": true
+  }
+}

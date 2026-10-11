@@ -1,0 +1,142 @@
+{
+  "schemaVersion": 2,
+  "captureId": "8bb27c5e-39b9-411a-ac34-7af1260de4e1",
+  "capturedAt": "2026-10-11T13:52:46.972403Z",
+  "recipe": {
+    "title": "Placki ziemniaczane – chrupiące i złociste",
+    "language": "en",
+    "times": {},
+    "ingredientGroups": [
+      {
+        "items": [
+          "1 kg ziemniaków",
+          "1 średnia cebula",
+          "1 jajko",
+          "2 łyżki mąki pszennej",
+          "1 płaska łyżeczka soli",
+          "Szczypta pieprzu",
+          "Olej do smażenia"
+        ]
+      }
+    ],
+    "stepGroups": [
+      {
+        "name": "Przygotowanie krok po kroku",
+        "items": [
+          "Zetrzyj ziemniaki: Obierz ziemniaki i cebulę. Zetrzyj je na tarce o drobnych oczkach. Jeśli masa jest bardzo wodnista, odlej nadmiar płynu.",
+          "Przygotuj masę: Dodaj jajko, mąkę, sól i pieprz. Dokładnie wymieszaj. Masa powinna być gęsta, ale łatwa do nakładania łyżką.",
+          "Rozgrzej patelnię: Wlej cienką warstwę oleju i dobrze go rozgrzej. Nakładaj porcje masy łyżką, formując cienkie placki.",
+          "Usmaż na złoto: Smaż na średnim ogniu przez około 3–4 minuty z każdej strony, aż placki będą rumiane i chrupiące. Odsącz na ręczniku papierowym."
+        ]
+      }
+    ],
+    "notes": [],
+    "images": [
+      "https://ogimg.chatgpt.com/?postId=t_6acb90310d508191bff23df2b335f821"
+    ],
+    "source": {
+      "type": "WEB",
+      "url": "https://chatgpt.com/s/t_6acb90310d508191bff23df2b335f821",
+      "siteName": "ChatGPT",
+      "sharedFrom": "com.android.shell",
+      "files": []
+    }
+  },
+  "completeness": {
+    "score": 1.0,
+    "bestStage": "heuristic",
+    "hasTitle": true,
+    "hasIngredients": true,
+    "hasSteps": true
+  },
+  "provenance": {
+    "title": "heuristic",
+    "ingredients": "heuristic",
+    "steps": "heuristic",
+    "images": "page"
+  },
+  "web": {
+    "finalUrl": "https://chatgpt.com/s/t_6acb90310d508191bff23df2b335f821",
+    "heuristic": {
+      "articleTitle": "Check out this chat",
+      "recipeHeading": "Placki ziemniaczane – chrupiące i złociste",
+      "usedBodyFallback": false,
+      "servings": null,
+      "ingredients": [
+        {
+          "name": null,
+          "items": [
+            "1 kg ziemniaków",
+            "1 średnia cebula",
+            "1 jajko",
+            "2 łyżki mąki pszennej",
+            "1 płaska łyżeczka soli",
+            "Szczypta pieprzu",
+            "Olej do smażenia"
+          ]
+        }
+      ],
+      "instructions": [
+        {
+          "name": "Przygotowanie krok po kroku",
+          "items": [
+            "Zetrzyj ziemniaki: Obierz ziemniaki i cebulę. Zetrzyj je na tarce o drobnych oczkach. Jeśli masa jest bardzo wodnista, odlej nadmiar płynu.",
+            "Przygotuj masę: Dodaj jajko, mąkę, sól i pieprz. Dokładnie wymieszaj. Masa powinna być gęsta, ale łatwa do nakładania łyżką.",
+            "Rozgrzej patelnię: Wlej cienką warstwę oleju i dobrze go rozgrzej. Nakładaj porcje masy łyżką, formując cienkie placki.",
+            "Usmaż na złoto: Smaż na średnim ogniu przez około 3–4 minuty z każdej strony, aż placki będą rumiane i chrupiące. Odsącz na ręczniku papierowym."
+          ]
+        }
+      ],
+      "notes": []
+    },
+    "jsonLd": [],
+    "lang": "en-US",
+    "microdata": [],
+    "ogImage": "https://ogimg.chatgpt.com/?postId=t_6acb90310d508191bff23df2b335f821",
+    "pluginHits": {
+      "wprm": {
+        "found": false,
+        "containerCount": 0,
+        "fieldMatches": {},
+        "recipe": {}
+      },
+      "tasty": {
+        "found": false,
+        "containerCount": 0,
+        "fieldMatches": {},
+        "recipe": {}
+      },
+      "mediavine": {
+        "found": false,
+        "containerCount": 0,
+        "fieldMatches": {},
+        "recipe": {}
+      }
+    },
+    "readableText": "This is a copy of a shared ChatGPT chat. It won't be added to memory.ChatGPT said:🥔 Placki ziemniaczane – chrupiące i złocisteOto prosty, tradycyjny przepis na domowe placki ziemniaczane — chrupiące na zewnątrz i miękkie w środku!30 minPrzygotowanie2–3 osobyPorcjeŁatwyPoziomSkładniki1 kg ziemniaków1 średnia cebula1 jajko2 łyżki mąki pszennej1 płaska łyżeczka soliSzczypta pieprzuOlej do smażeniaPrzygotowanie krok po kroku1. Zetrzyj ziemniakiObierz ziemniaki i cebulę. Zetrzyj je na tarce o drobnych oczkach. Jeśli masa jest bardzo wodnista, odlej nadmiar płynu.2. Przygotuj masęDodaj jajko, mąkę, sól i pieprz. Dokładnie wymieszaj. Masa powinna być gęsta, ale łatwa do nakładania łyżką.3. Rozgrzej patelnięWlej cienką warstwę oleju i dobrze go rozgrzej. Nakładaj porcje masy łyżką, formując cienkie placki.4. Usmaż na złotoSmaż na średnim ogniu przez około 3–4 minuty z każdej strony, aż placki będą rumiane i chrupiące. Odsącz na ręczniku papierowym.Z czym podawać?Ze śmietaną — klasycznie, z kwaśną śmietaną lub jogurtem naturalnym.Na słodko — posypane cukrem, jeśli lubisz tradycyjną wersję.Z gulaszem — jako sycący obiad, z sosem mięsnym lub pieczarkowym.Sekret naprawdę chrupiących placków: użyj ziemniaków typu mączystego, nie nakładaj zbyt grubej warstwy masy i smaż placki partiami na dobrze rozgrzanym oleju.Smacznego! 😋If you want, I can:Add tips for adjusting recipe to make placki ziemniaczane gluten-freeProvide wine or drink pairing recommendations for the potato pancakesExplain the science behind why mączysty potatoes make crispier pancakes",
+    "renderTimeMs": 10894,
+    "siteName": "ChatGPT",
+    "stabilized": true,
+    "title": "ChatGPT - Chat example",
+    "visibility": "visible"
+  },
+  "attachments": [],
+  "diagnostics": {
+    "errors": [],
+    "notes": [
+      "intent action=android.intent.action.SEND type=text/plain referrer=android-app://com.android.shell extras={android.intent.extra.TEXT=String(56)'https://chatgpt.com/s/t_6acb90310d508191bff23df2b335f821'}",
+      "mode=visible",
+      "extractionTrigger=stable"
+    ],
+    "stageTimingsMs": {
+      "stabilize": 10894,
+      "extractRoundTrip": 77,
+      "js.jsonLd": 0,
+      "js.microdata": 0,
+      "js.pluginHits": 0,
+      "js.readability": 27,
+      "js.heuristic": 31,
+      "merge": 6
+    }
+  }
+}

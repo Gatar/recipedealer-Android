@@ -1,0 +1,278 @@
+{
+  "attachments": [],
+  "captureId": "4c7231cf-40a4-4c93-aa22-110f8e8a89ff",
+  "capturedAt": "2026-10-05T16:41:38.494563Z",
+  "completeness": {
+    "bestStage": "microdata",
+    "hasIngredients": true,
+    "hasInstructions": true,
+    "hasName": true,
+    "score": 1.0
+  },
+  "diagnostics": {
+    "errors": [],
+    "notes": [
+      "intent action=android.intent.action.SEND type=text/plain referrer=android-app://com.android.shell extras={android.intent.extra.TEXT=String(51)'https://aniagotuje.pl/przepis/jajecznica-z-grzybami'}",
+      "extractionTrigger=stable"
+    ],
+    "stageTimingsMs": {
+      "stabilize": 3846,
+      "extractRoundTrip": 41,
+      "js.jsonLd": 0,
+      "js.microdata": 2,
+      "js.pluginHits": 0,
+      "js.readability": 31,
+      "js.heuristic": 33,
+      "merge": 2
+    }
+  },
+  "provenance": {
+    "name": "microdata",
+    "recipeIngredient": "microdata",
+    "recipeInstructions": "microdata",
+    "recipeYield": "microdata",
+    "prepTime": "microdata",
+    "cookTime": "microdata",
+    "totalTime": "microdata",
+    "image": "microdata",
+    "url": "microdata"
+  },
+  "recipeCandidate": {
+    "@context": "https://schema.org",
+    "cookTime": "PT5M",
+    "image": "https://cdn.aniagotuje.com/pictures/articles/2026/09/109042334-v-1500x1500.jpg",
+    "name": "Jajecznica z grzybami",
+    "prepTime": "PT0H30M",
+    "recipeIngredient": [
+      "świeże grzyby leśne, np. podgrzybki 150 g",
+      "bardzo duże jajka 3 sztuki",
+      "masło klarowane 15 g",
+      "masło zwykłe 5 g",
+      "czosnek świeży - można pominąć 1 ząbek",
+      "sól i pieprz po sporej szczypcie",
+      "natka pietruszki do podania"
+    ],
+    "recipeInstructions": [
+      {
+        "text": "Przygotuj 150 g świeżych lub mrożonych grzybów leśnych, np. podgrzybków lub prawdziwków. Świeże grzyby oczyść z pozostałości ściółki. Jeśli to możliwe, nie płucz ich. Jeżeli są zbyt brudne, szybko przepłucz je w całości zimną wodą, a następnie pokrój na mniejsze kawałki. Grzyby umieść na niedużej, nagrzanej patelni z 15 gramami masła klarowanego. Całość wymieszaj i smaż bez przykrywki przez 15-20 minut na niskiej mocy palnika. Porady: Nie polecam używać grzybów rozmrożonych, ponieważ puszczą one dużo wody. Jeżeli jednak chcesz się na nie zdecydować, to po naturalnym ich rozmrożeniu, smaż całość dłużej, aż do odparowania wody. Masło klarowane można w ostateczności zamienić na olej lub delikatną oliwę. Polecam jednak użycie masła, które idealnie komponuje się z grzybami leśnymi. Jeżeli masz świeże gałązki tymianku, możesz dodać razem z grzybami jedną lub dwie, ponieważ idealnie pasują do grzybów i nadadzą im ciekawy smak. Takie gałązki należy usunąć przed dodaniem jajek na patelnię.",
+        "@type": "HowToStep"
+      },
+      {
+        "text": "W trakcie smażenia grzybów do osobnej miski wbij 3 bardzo duże lub 4 mniejsze jajka. Dodaj sporą szczyptę soli. Jajka rozbełtaj przy pomocy widelca lub trzepaczki kuchennej. Porada: Przy 150 g grzybów trzy duże jajka to minimalna ilość, dzięki której jajecznica będzie pełna aromatu i wyraźnie grzybowa. Jeśli wolisz delikatniejszy smak, możesz dodać nawet dwa razy więcej jajek, a jajecznica nadal pozostanie aromatyczna, choć będzie zawierała proporcjonalnie mniej grzybów.",
+        "@type": "HowToStep"
+      },
+      {
+        "text": "Na patelnię z podsmażonymi grzybami dodaj 1 łyżeczkę masła oraz 1 ząbek czosnku, obrany i pokrojony w cienkie plasterki. Całość smaż przez 1 min na minimalnej mocy palnika. Jeżeli na patelnię był dodawany tymianek, teraz wyjmij gałązki. Czosnek nie jest obowiązkowy, więc możesz go pominąć.",
+        "@type": "HowToStep"
+      },
+      {
+        "text": "Od razu po podsmażeniu czosnku z dodatkiem masła wlej na patelnię rozbełtane jajka. Po chwili zacznij delikatnie mieszać jajecznicę. Smaż ją, aż jajka się zetną. Jeśli wolisz delikatną, bardziej wilgotną jajecznicę, smaż ją dłużej na minimalnej mocy palnika. Jeśli zaś lubisz bardziej podsmażoną i suchą, zwiększ moc palnika i smaż do uzyskania ulubionej konsystencji. Na koniec dodaj szczyptę pieprzu, sprawdź smak i w razie potrzeby dosól. Porada: Po wlaniu rozbełtanych jajek na patelnię z grzybami jajecznica będzie miała ostatecznie lekko szarawy kolor. Jeżeli chcesz tego uniknąć, musisz osobno usmażyć samą jajecznicę na odrobinie zwykłego masła i dopiero na koniec połączyć jajecznicę z grzybami.",
+        "@type": "HowToStep"
+      },
+      {
+        "text": "Jajecznicę podawaj od razu. Z tej ilości wyjdą 2 mniejsze porcje. Jajecznica najlepiej smakuje ze świeżym koperkiem lub natką pietruszki, podana ze świeżym pieczywem albo domowymi grzankami.",
+        "@type": "HowToStep"
+      }
+    ],
+    "recipeYield": "ponad 300 g jajecznicy",
+    "totalTime": "PT0H30M",
+    "@type": "Recipe",
+    "url": "https://aniagotuje.pl/przepis/jajecznica-z-grzybami"
+  },
+  "schemaVersion": 1,
+  "sourceApp": "com.android.shell",
+  "sourceType": "WEB_URL",
+  "url": "https://aniagotuje.pl/przepis/jajecznica-z-grzybami",
+  "web": {
+    "canonicalUrl": "https://aniagotuje.pl/przepis/jajecznica-z-grzybami",
+    "finalUrl": "https://aniagotuje.pl/przepis/jajecznica-z-grzybami",
+    "heuristic": {
+      "articleTitle": "Jajecznica z grzybami",
+      "usedBodyFallback": true,
+      "ingredients": [],
+      "instructions": [],
+      "sections": []
+    },
+    "jsonLd": [
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "@id": "https://aniagotuje.pl/#website",
+        "url": "https://aniagotuje.pl/",
+        "name": "Ania Gotuje | Tylko najlepsze przepisy",
+        "description": "Blog kulinarny Ania Gotuje. Przepisy na pyszne i proste ciasta, serniki i desery. Pomysły na obiady i zdrowe przekąski. Sprawdzone przepisy na naleśniki czy pizzę. Ponad 8.000.000 Czytelników miesięcznie!",
+        "inLanguage": "pl-PL",
+        "image": "https://cdn.aniagotuje.com/app/client/static/imgs/ania/ania_profil_240x240.jpg",
+        "author": {
+          "@type": "Person",
+          "name": "Ania Gotuje",
+          "sameAs": [
+            "https://www.facebook.com/AniaGotuje",
+            "https://www.instagram.com/aniagotujepl/",
+            "https://www.youtube.com/c/AniaGotujeplBlog",
+            "https://pl.pinterest.com/AniaGotuje/"
+          ]
+        },
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": {
+            "@type": "EntryPoint",
+            "urlTemplate": "https://aniagotuje.pl/szukaj?s={search_term_string}"
+          },
+          "query-input": "required name=search_term_string"
+        }
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "@id": "https://aniagotuje.pl/przepis/jajecznica-z-grzybami#webpage",
+        "url": "https://aniagotuje.pl/przepis/jajecznica-z-grzybami",
+        "name": "Jajecznica z grzybami",
+        "description": "Jajecznica z grzybami leśnymi smażonymi na maśle to pyszny pomysł na jesienne śniadanie. Sprawdź prosty przepis z podgrzybkami lub prawdziwkami. Zapach i smak jest wspaniały, więc warto ją zrobić.",
+        "inLanguage": "pl-PL",
+        "isPartOf": {
+          "@id": "https://aniagotuje.pl/#website"
+        },
+        "datePublished": "2026-09-22T04:00:00.000Z",
+        "dateModified": "2026-09-26T07:23:33.835Z",
+        "primaryImageOfPage": {
+          "@type": "ImageObject",
+          "url": "https://cdn.aniagotuje.com/pictures/articles/2026/09/109042334-v-1500x1500.jpg"
+        },
+        "breadcrumb": {
+          "@id": "https://aniagotuje.pl/przepis/jajecznica-z-grzybami#breadcrumbs"
+        }
+      }
+    ],
+    "lang": "pl",
+    "microdata": [
+      {
+        "author": {
+          "name": "Ania Gotuje",
+          "url": "https://aniagotuje.pl/",
+          "@type": "Person"
+        },
+        "datePublished": "2026-09-22T04:00:00Z",
+        "dateModified": "2026-09-26T07:23:33Z",
+        "description": "Jajecznica z grzybami leśnymi smażonymi na maśle to pyszny pomysł na jesienne śniadanie. Sprawdź prosty przepis z podgrzybkami lub prawdziwkami. Zapach i smak jest wspaniały, więc warto ją zrobić.",
+        "commentCount": "3",
+        "inLanguage": "pl-PL",
+        "url": "https://aniagotuje.pl/przepis/jajecznica-z-grzybami",
+        "mainEntityOfPage": "https://aniagotuje.pl/przepis/jajecznica-z-grzybami#webpage",
+        "interactionStatistic": {
+          "interactionType": "https://schema.org/CommentAction",
+          "userInteractionCount": "3",
+          "@type": "InteractionCounter"
+        },
+        "prepTime": "PT0H30M",
+        "cookTime": "PT5M",
+        "totalTime": "PT0H30M",
+        "recipeYield": "ponad 300 g jajecznicy",
+        "recipeCuisine": "polska",
+        "recipeCategory": "przekąski",
+        "keywords": "Jajecznica z grzybami, przekąski, kolacja, śniadanie, bezglutenowa, niskocukrowa, niskowęglowodanowa, wegetariańska, wysokobiałkowa",
+        "image": "https://cdn.aniagotuje.com/pictures/articles/2026/09/109042334-v-1500x1500.jpg",
+        "name": "Jajecznica z grzybami",
+        "nutrition": {
+          "calories": "147 kcal",
+          "carbohydrateContent": "2 g",
+          "sugarContent": "1 g",
+          "proteinContent": "9 g",
+          "fatContent": "11 g",
+          "@type": "NutritionInformation"
+        },
+        "suitableForDiet": [
+          "https://schema.org/GlutenFreeDiet",
+          "https://schema.org/RestrictedDiet",
+          "https://schema.org/RestrictedDiet",
+          "https://schema.org/VegetarianDiet",
+          "https://schema.org/RestrictedDiet"
+        ],
+        "recipeIngredient": [
+          "świeże grzyby leśne, np. podgrzybki 150 g",
+          "bardzo duże jajka 3 sztuki",
+          "masło klarowane 15 g",
+          "masło zwykłe 5 g",
+          "czosnek świeży - można pominąć 1 ząbek",
+          "sól i pieprz po sporej szczypcie",
+          "natka pietruszki do podania"
+        ],
+        "recipeInstructions": [
+          {
+            "position": "1",
+            "url": "https://aniagotuje.pl/przepis/jajecznica-z-grzybami#step1",
+            "name": "Podsmaż grzyby",
+            "text": "Przygotuj 150 g świeżych lub mrożonych grzybów leśnych, np. podgrzybków lub prawdziwków. Świeże grzyby oczyść z pozostałości ściółki. Jeśli to możliwe, nie płucz ich. Jeżeli są zbyt brudne, szybko przepłucz je w całości zimną wodą, a następnie pokrój na mniejsze kawałki. Grzyby umieść na niedużej, nagrzanej patelni z 15 gramami masła klarowanego. Całość wymieszaj i smaż bez przykrywki przez 15-20 minut na niskiej mocy palnika. Porady: Nie polecam używać grzybów rozmrożonych, ponieważ puszczą one dużo wody. Jeżeli jednak chcesz się na nie zdecydować, to po naturalnym ich rozmrożeniu, smaż całość dłużej, aż do odparowania wody. Masło klarowane można w ostateczności zamienić na olej lub delikatną oliwę. Polecam jednak użycie masła, które idealnie komponuje się z grzybami leśnymi. Jeżeli masz świeże gałązki tymianku, możesz dodać razem z grzybami jedną lub dwie, ponieważ idealnie pasują do grzybów i nadadzą im ciekawy smak. Takie gałązki należy usunąć przed dodaniem jajek na patelnię.",
+            "image": "https://cdn.aniagotuje.com/pictures/articles/2026/09/109042357-v-1080x1080.jpg",
+            "@type": "HowToStep"
+          },
+          {
+            "position": "2",
+            "url": "https://aniagotuje.pl/przepis/jajecznica-z-grzybami#step2",
+            "name": "Rozbełtaj jajka",
+            "text": "W trakcie smażenia grzybów do osobnej miski wbij 3 bardzo duże lub 4 mniejsze jajka. Dodaj sporą szczyptę soli. Jajka rozbełtaj przy pomocy widelca lub trzepaczki kuchennej. Porada: Przy 150 g grzybów trzy duże jajka to minimalna ilość, dzięki której jajecznica będzie pełna aromatu i wyraźnie grzybowa. Jeśli wolisz delikatniejszy smak, możesz dodać nawet dwa razy więcej jajek, a jajecznica nadal pozostanie aromatyczna, choć będzie zawierała proporcjonalnie mniej grzybów.",
+            "image": "https://cdn.aniagotuje.com/pictures/articles/2026/09/109042370-v-1080x1080.jpg",
+            "@type": "HowToStep"
+          },
+          {
+            "position": "3",
+            "url": "https://aniagotuje.pl/przepis/jajecznica-z-grzybami#step3",
+            "name": "Dodaj czosnek i zwykłe masło",
+            "text": "Na patelnię z podsmażonymi grzybami dodaj 1 łyżeczkę masła oraz 1 ząbek czosnku, obrany i pokrojony w cienkie plasterki. Całość smaż przez 1 min na minimalnej mocy palnika. Jeżeli na patelnię był dodawany tymianek, teraz wyjmij gałązki. Czosnek nie jest obowiązkowy, więc możesz go pominąć.",
+            "image": "https://cdn.aniagotuje.com/pictures/articles/2026/09/109042383-v-1080x1080.jpg",
+            "@type": "HowToStep"
+          },
+          {
+            "position": "4",
+            "url": "https://aniagotuje.pl/przepis/jajecznica-z-grzybami#step4",
+            "name": "Wlej jajka i dokończ",
+            "text": "Od razu po podsmażeniu czosnku z dodatkiem masła wlej na patelnię rozbełtane jajka. Po chwili zacznij delikatnie mieszać jajecznicę. Smaż ją, aż jajka się zetną. Jeśli wolisz delikatną, bardziej wilgotną jajecznicę, smaż ją dłużej na minimalnej mocy palnika. Jeśli zaś lubisz bardziej podsmażoną i suchą, zwiększ moc palnika i smaż do uzyskania ulubionej konsystencji. Na koniec dodaj szczyptę pieprzu, sprawdź smak i w razie potrzeby dosól. Porada: Po wlaniu rozbełtanych jajek na patelnię z grzybami jajecznica będzie miała ostatecznie lekko szarawy kolor. Jeżeli chcesz tego uniknąć, musisz osobno usmażyć samą jajecznicę na odrobinie zwykłego masła i dopiero na koniec połączyć jajecznicę z grzybami.",
+            "image": "https://cdn.aniagotuje.com/pictures/articles/2026/09/109042396-v-1080x1080.jpg",
+            "@type": "HowToStep"
+          },
+          {
+            "position": "5",
+            "url": "https://aniagotuje.pl/przepis/jajecznica-z-grzybami#step5",
+            "name": "Od razu podawaj",
+            "text": "Jajecznicę podawaj od razu. Z tej ilości wyjdą 2 mniejsze porcje. Jajecznica najlepiej smakuje ze świeżym koperkiem lub natką pietruszki, podana ze świeżym pieczywem albo domowymi grzankami.",
+            "image": "https://cdn.aniagotuje.com/pictures/articles/2026/09/109042422-v-1080x1467.jpg",
+            "@type": "HowToStep"
+          }
+        ],
+        "aggregateRating": {
+          "ratingValue": "5.0",
+          "bestRating": "5",
+          "worstRating": "1",
+          "ratingCount": "16",
+          "@type": "AggregateRating"
+        },
+        "@type": "Recipe"
+      }
+    ],
+    "ogImage": "https://cdn.aniagotuje.com/pictures/articles/2026/09/109042334-v-1500x1500.jpg",
+    "pluginHits": {
+      "wprm": {
+        "found": false,
+        "containerCount": 0,
+        "fieldMatches": {},
+        "recipe": {}
+      },
+      "tasty": {
+        "found": false,
+        "containerCount": 0,
+        "fieldMatches": {},
+        "recipe": {}
+      },
+      "mediavine": {
+        "found": false,
+        "containerCount": 0,
+        "fieldMatches": {},
+        "recipe": {}
+      }
+    },
+    "readableText": "Jajecznica z grzybami to super pomysł na pyszne jesienne śniadanie lub podwieczorek. Przepis jest prosty, a zapach grzybów leśnych prosto z patelni nie do podrobienia. Czas przygotowania: 30 minutLiczba porcji: ponad 300 g jajecznicy W 100 g: Wartość energetyczna 147 kcal Węglowodany 2 g - W tym cukry 1 g Białko 9 g Tłuszcze 11 g Dieta:\n\n bezglutenowa, niskocukrowa, niskowęglowodanowa, wegetariańska, wysokobiałkowa świeże grzyby leśne, np. podgrzybki 150 g bardzo duże jajka 3 sztuki masło klarowane 15 g masło zwykłe 5 g czosnek świeży - można pominąć 1 ząbek sól i pieprz po sporej szczypcie natka pietruszki do podania \nJajecznica z grzybami\nJajka wyjmij wcześniej z lodówki. \n Zanim zaczniesz szykować jajecznicę, polecam najpierw przeczytać cały przepis, by przygotować się odpowiednio wcześniej do kolejnych etapów wykonania.\n\n Krok 1: Podsmaż grzyby\n\n Przygotuj 150 g świeżych lub mrożonych grzybów leśnych, np. podgrzybków lub prawdziwków. Świeże grzyby oczyść z pozostałości ściółki. Jeśli to możliwe, nie płucz ich. Jeżeli są zbyt brudne, szybko przepłucz je w całości zimną wodą, a następnie pokrój na mniejsze kawałki.\n Grzyby umieść na niedużej, nagrzanej patelni z 15 gramami masła klarowanego. Całość wymieszaj i smaż bez przykrywki przez 15-20 minut na niskiej mocy palnika.\n Porady: Nie polecam używać grzybów rozmrożonych, ponieważ puszczą one dużo wody. Jeżeli jednak chcesz się na nie zdecydować, to po naturalnym ich rozmrożeniu, smaż całość dłużej, aż do odparowania wody. Masło klarowane można w ostateczności zamienić na olej lub delikatną oliwę. Polecam jednak użycie masła, które idealnie komponuje się z grzybami leśnymi. Jeżeli masz świeże gałązki tymianku, możesz dodać razem z grzybami jedną lub dwie, ponieważ idealnie pasują do grzybów i nadadzą im ciekawy smak. Takie gałązki należy usunąć przed dodaniem jajek na patelnię.\n\n Krok 2: Rozbełtaj jajka\n\n W trakcie smażenia grzybów do osobnej miski wbij 3 bardzo duże lub 4 mniejsze jajka. Dodaj sporą szczyptę soli. Jajka rozbełtaj przy pomocy widelca lub trzepaczki kuchennej.\n Porada: Przy 150 g grzybów trzy duże jajka to minimalna ilość, dzięki której jajecznica będzie pełna aromatu i wyraźnie grzybowa. Jeśli wolisz delikatniejszy smak, możesz dodać nawet dwa razy więcej jajek, a jajecznica nadal pozostanie aromatyczna, choć będzie zawierała proporcjonalnie mniej grzybów.\n\n Krok 3: Dodaj czosnek i zwykłe masło\n\n Na patelnię z podsmażonymi grzybami dodaj 1 łyżeczkę masła oraz 1 ząbek czosnku, obrany i pokrojony w cienkie plasterki. Całość smaż przez 1 min na minimalnej mocy palnika. Jeżeli na patelnię był dodawany tymianek, teraz wyjmij gałązki. Czosnek nie jest obowiązkowy, więc możesz go pominąć.\n\n Krok 4: Wlej jajka i dokończ\n\n Od razu po podsmażeniu czosnku z dodatkiem masła wlej na patelnię rozbełtane jajka. Po chwili zacznij delikatnie mieszać jajecznicę. Smaż ją, aż jajka się zetną. Jeśli wolisz delikatną, bardziej wilgotną jajecznicę, smaż ją dłużej na minimalnej mocy palnika. Jeśli zaś lubisz bardziej podsmażoną i suchą, zwiększ moc palnika i smaż do uzyskania ulubionej konsystencji. Na koniec dodaj szczyptę pieprzu, sprawdź smak i w razie potrzeby dosól.\n Porada: Po wlaniu rozbełtanych jajek na patelnię z grzybami jajecznica będzie miała ostatecznie lekko szarawy kolor. Jeżeli chcesz tego uniknąć, musisz osobno usmażyć samą jajecznicę na odrobinie zwykłego masła i dopiero na koniec połączyć jajecznicę z grzybami.\n\n Krok 5: Od razu podawaj\n\n Jajecznicę podawaj od razu. Z tej ilości wyjdą 2 mniejsze porcje. Jajecznica najlepiej smakuje ze świeżym koperkiem lub natką pietruszki, podana ze świeżym pieczywem albo domowymi grzankami.\n\n Smacznego. Najczęściej zadawane pytania Czy do jajecznicy można użyć mrożonych grzybów? Czy grzyby leśne trzeba obgotować przed smażeniem? Jak zrobić wilgotną jajecznicę i jej nie przesuszyć? Czy grzyby leśne można zastąpić pieczarkami? Ile jajek dodać do 150 g grzybów? Czym zastąpić masło klarowane? Czy grzyby można opłukać przed smażeniem? Jak uniknąć szarawego koloru jajecznicy z grzybami? Czy grzyby do jajecznicy można przygotować dzień wcześniej? \n Średnia 5.0 / 5 \n (16 ocen)\n Oceń! Drukuj Przepis Zapisz Przepis Dodaj Notatkę Dodaj Komentarz \n Dziękuję za wspólne gotowanie.\n\n Będzie mi miło jeżeli dodasz komentarz ze zdjęciem. Ania\n\n Zostaw mi swój email, a 2 - 3 razy w miesiącu wyślę Ci moje ulubione przepisy.\n Jajecznica z grzybami \nJajecznica z grzybami leśnymi to śniadanie o wyraźnym, jesiennym aromacie. Pyszne grzyby leśne dobrze pasują do delikatnych jajek, a prosty zestaw dodatków pozwala zachować ich smak. Do tej wersji polecam podgrzybki lub prawdziwki, świeże albo mrożone, które trzeba jednak dłużej odparować na patelni. Dzięki temu po grzybową jajecznicę możesz sięgnąć także wtedy, gdy sezon na świeże zbiory już się skończy. To pomysł na wykorzystanie niewielkiej porcji grzybów w ciepłym posiłku, który sprawdzi się również na podwieczorek. Jeśli masz kurki, zajrzyj do osobnego przepisu na jajecznicę z kurkami. Tam smak grzybów uzupełniają koperek i sok z cytryny.\nJajecznica z grzybami leśnymi\nW tej jajecznicy ważny jest maślany smak, który łączy jajka z grzybami. Masło klarowane i odrobina zwykłego masła pasują zarówno do podgrzybków, jak i prawdziwków. Czosnek nadaje całości wyrazistości, ale jest dodatkiem opcjonalnym, więc możesz wybrać wersję o łagodniejszym smaku. Z grzybami dobrze komponują się też tymianek, świeży koperek lub natka pietruszki. Jajecznica z podgrzybkami nie potrzebuje śmietanki ani mleka. W tym przepisie wystarczają jajka i masło. Jeśli szukasz innego dania z podobnych grzybów, polecam grzyby w śmietanie, z cebulą, koperkiem i natką. To propozycja dla osób, które mają ochotę na grzyby w kremowym sosie.\nJajecznica z grzybami przepis\nDo jajecznicy z grzybami pasuje świeże pieczywo albo domowe grzanki. Świeża pajda lub chrupiący tost dają dwa różne sposoby podania tego samego śniadania, więc wybierz pieczywo, które lubisz najbardziej. Taki ciepły posiłek jak jajecznica z grzybami sprawdzi się także na kolację. Jeśli chętnie łączysz jajka z chrupiącym chlebem, zobacz również grzanki z jajkiem, podawane z mozzarellą lub twarożkiem. Innym pomysłem na śniadanie bez mięsa jest jajecznica z pomidorami, w której ważną rolę odgrywają soczyste pomidory malinowe i szczypiorek. Więcej propozycji znajdziesz wśród przekąsek z jajkami. Zobacz też inne moje przepisy na potrawy z grzybami. Blog kulinarny AniaGotuje.pl Copyright© 2015-2026 - All Rigths reserved Kopiowanie tekstów i zdjęć zabronione O co chodzi? Przepisy na blogu tworzy i sprawdza Ania. Ta sekcja to informacje techniczne dla osób, które chcą korzystać z bloga przez asystenta AI, np. ChatGPT. Pomagają asystentowi wyszukiwać i otwierać przepisy Ani. Jeśli przeglądasz blog samodzielnie, nie musisz niczego ustawiać. Korzystaj ze strony tak jak zawsze. Informacje techniczne Te narzędzia pomagają szukać i otwierać przepisy. Nie wymagają instalacji umiejętności. \n Natywne API: niedostępne.\n Rejestracja: wyłączona.\n Kod: NATIVE_API_UNAVAILABLE. Narzędzia w tym dokumencie: brak. Najpierw połącz agenta z przeglądarką. Wybierz tę kartę. Użyj wykrywania WebMCP w swoim agencie. Strona nie wie, czy Codex jest połączony. Widok narzędzi w DevTools nie potwierdza połączenia agenta. Przykłady dla agenta Jeśli agent pozwala wykonywać skrypty w karcie, może użyć tego samego natywnego API. Nie ma drugiego API strony. Odkryj narzędzia. Zwróć tylko ich opisy i schematy: const tools = await document.modelContext.getTools()\nreturn tools.map(({ name, description, inputSchema }) =>\n ({ name, description, inputSchema })) Najpierw wykonaj bezpieczny odczyt kontekstu: const tools = await document.modelContext.getTools()\nconst tool = tools.find(t => t.name === 'get_page_context')\nreturn await document.modelContext.executeTool(tool, {}) Najpierw przekaż argumenty jako obiekt. Jeśli ten odczyt kontekstu zgłosi błąd formatu argumentów, spróbuj '{}' zamiast {}. Nie wybieraj formatu tylko na podstawie wersji Chrome. Połączenie agenta może udostępniać inny wariant API. Używaj formatu potwierdzonego przez udany odczyt. Nie ponawiaj automatycznie nawigacji po niejednoznacznym błędzie. Najpierw odczytaj kontekst. Strona mogła już się zmienić. Po udanym odczycie wybierz deskryptor get_search_options. Przekaż { type: 'categories' }. Do search_recipes przekaż np. { query: 'zupa', categories: ['wartość-z-listy'] }. Po nawigacji uchwyt narzędzia może być nieaktualny. Jeśli agent zgłosi taki błąd, odśwież wykrywanie narzędzi. W skrypcie ponownie wywołaj getTools() i wybierz nowy deskryptor. Odczytaj get_page_context przed kolejną nawigacją. Co oznacza problem? Brak połączenia z przeglądarką: sprawdź połączenie w agencie. Nie oznacza to braku WebMCP. Zła karta lub dokument: wybierz kartę AniaGotuje i główny dokument. NATIVE_API_UNAVAILABLE: ta przeglądarka nie udostępnia natywnego API. PAGE_PENDING lub REGISTRATION_PENDING: strona albo narzędzia jeszcze się ładują. FEATURE_DISABLED lub PAGE_DISABLED: narzędzia są wyłączone. TOOL_UNAVAILABLE: narzędzie nie działa na tej stronie. Odkryj narzędzia ponownie. Błąd formatu wywołania: sprawdź typ argumentów bezpiecznym odczytem get_page_context. Sama wersja Chrome nie wystarcza. Nieaktualny uchwyt narzędzia (stale tool registration): odśwież wykrywanie narzędzi. Użyj nowego uchwytu do odczytu kontekstu. REGISTRATION_FAILED, EXECUTION_FAILED lub PAGE_LOAD_FAILED: rejestracja, narzędzie albo wczytanie strony nie powiodło się. BUSY, CANCELLED, STALE_CONTEXT lub TIMEOUT: odczytaj kontekst przed kolejną próbą. Nawigacja może jeszcze trwać. Czasy i diety pochodzą z danych serwisu. Nie są gwarancją czasu gotowania ani bezpieczeństwa przy alergiach. Wersja aplikacji 21.1.0 \n url: https://aniagotuje.pl\n api: https://api.aniagotuje.pl/client\n mode: production\n timestamp: 1790406900000",
+    "renderTimeMs": 3846,
+    "stabilized": true,
+    "title": "Jajecznica z grzybami | AniaGotuje.pl"
+  }
+}

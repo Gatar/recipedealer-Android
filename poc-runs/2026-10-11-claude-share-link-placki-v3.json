@@ -1,0 +1,176 @@
+{
+  "schemaVersion": 2,
+  "captureId": "344db450-e771-412a-91e8-2f545d7c293c",
+  "capturedAt": "2026-10-11T13:53:39.279475Z",
+  "recipe": {
+    "title": "Placki ziemniaczane",
+    "language": "en",
+    "times": {},
+    "ingredientGroups": [
+      {
+        "items": [
+          "1 kilograms ziemniaki (najlepiej mączyste)",
+          "1 średnia cebula",
+          "1 jajko",
+          "3 tablespoons mąka pszenna",
+          "1 teaspoons sól",
+          "0.5 teaspoons świeżo mielony pieprz",
+          "150 milliliters olej do smażenia",
+          "200 grams śmietana do podania"
+        ]
+      }
+    ],
+    "stepGroups": [
+      {
+        "items": [
+          "Zetrzyj ziemniaki i cebulę: Obierz 1 kilograms ziemniaki (najlepiej mączyste) i zetrzyj na drobnych oczkach razem z 1 średnia cebula. Cebula spowolni ciemnienie ziemniaków.",
+          "Odcedź masę: Odlej sok z masy, odciskając ją na sicie lub w ściereczce. Odstaw płyn na minutę – opadnie z niego skrobia; odlej wodę, a skrobię dodaj z powrotem do masy.",
+          "Dopraw ciasto: Dodaj 1 jajko, 3 tablespoons mąka pszenna, 1 teaspoons sól i 0.5 teaspoons świeżo mielony pieprz. Wymieszaj do połączenia składników.",
+          "Smaż placki: Rozgrzej 150 milliliters olej do smażenia na patelni. Nakładaj masę łyżką, formując cienkie placki. Smaż na złoty kolor po 3–4 minuty z każdej strony.",
+          "Osącz i podaj: Połóż placki na ręczniku papierowym, by odsączyć nadmiar tłuszczu. Podawaj od razu z 200 grams śmietana do podania."
+        ]
+      }
+    ],
+    "notes": [
+      "Wariacje: na słodko z cukrem i śmietaną, na słono z gulaszem (placek po węgiersku) albo z czosnkiem w cieście. Cienkie placki będą bardziej chrupiące."
+    ],
+    "images": [
+      "https://claude.ai/images/claude_ogimage.png"
+    ],
+    "source": {
+      "type": "WEB",
+      "url": "https://claude.ai/share/525f68b6-1bef-4d4d-9bdd-c4a42876e4c3",
+      "siteName": "Claude",
+      "sharedFrom": "com.android.shell",
+      "files": []
+    }
+  },
+  "completeness": {
+    "score": 1.0,
+    "bestStage": "heuristic",
+    "hasTitle": true,
+    "hasIngredients": true,
+    "hasSteps": true
+  },
+  "provenance": {
+    "title": "heuristic",
+    "ingredients": "heuristic",
+    "steps": "heuristic",
+    "notes": "heuristic",
+    "images": "page"
+  },
+  "web": {
+    "finalUrl": "https://claude.ai/share/525f68b6-1bef-4d4d-9bdd-c4a42876e4c3",
+    "heuristic": {
+      "articleTitle": "Claude",
+      "recipeHeading": "Placki ziemniaczane",
+      "usedBodyFallback": true,
+      "servings": null,
+      "ingredients": [
+        {
+          "name": null,
+          "items": [
+            "1 kilograms ziemniaki (najlepiej mączyste)",
+            "1 średnia cebula",
+            "1 jajko",
+            "3 tablespoons mąka pszenna",
+            "1 teaspoons sól",
+            "0.5 teaspoons świeżo mielony pieprz",
+            "150 milliliters olej do smażenia",
+            "200 grams śmietana do podania"
+          ]
+        }
+      ],
+      "instructions": [
+        {
+          "name": null,
+          "items": [
+            "Zetrzyj ziemniaki i cebulę: Obierz 1 kilograms ziemniaki (najlepiej mączyste) i zetrzyj na drobnych oczkach razem z 1 średnia cebula. Cebula spowolni ciemnienie ziemniaków.",
+            "Odcedź masę: Odlej sok z masy, odciskając ją na sicie lub w ściereczce. Odstaw płyn na minutę – opadnie z niego skrobia; odlej wodę, a skrobię dodaj z powrotem do masy.",
+            "Dopraw ciasto: Dodaj 1 jajko, 3 tablespoons mąka pszenna, 1 teaspoons sól i 0.5 teaspoons świeżo mielony pieprz. Wymieszaj do połączenia składników.",
+            "Smaż placki: Rozgrzej 150 milliliters olej do smażenia na patelni. Nakładaj masę łyżką, formując cienkie placki. Smaż na złoty kolor po 3–4 minuty z każdej strony.",
+            "Osącz i podaj: Połóż placki na ręczniku papierowym, by odsączyć nadmiar tłuszczu. Podawaj od razu z 200 grams śmietana do podania."
+          ]
+        }
+      ],
+      "notes": [
+        "Wariacje: na słodko z cukrem i śmietaną, na słono z gulaszem (placek po węgiersku) albo z czosnkiem w cieście. Cienkie placki będą bardziej chrupiące."
+      ]
+    },
+    "jsonLd": [
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebSite",
+            "name": "Claude",
+            "alternateName": [
+              "Claude.ai",
+              "Claude by Anthropic"
+            ],
+            "url": "https://claude.com"
+          },
+          {
+            "@type": "Organization",
+            "name": "Anthropic",
+            "url": "https://www.anthropic.com",
+            "logo": "https://claude.ai/images/claude_ogimage.png",
+            "sameAs": [
+              "https://x.com/AnthropicAI",
+              "https://www.linkedin.com/company/anthropic",
+              "https://www.youtube.com/@anthropic-ai"
+            ]
+          }
+        ]
+      }
+    ],
+    "lang": "en-US",
+    "microdata": [],
+    "ogImage": "https://claude.ai/images/claude_ogimage.png",
+    "pluginHits": {
+      "wprm": {
+        "found": false,
+        "containerCount": 0,
+        "fieldMatches": {},
+        "recipe": {}
+      },
+      "tasty": {
+        "found": false,
+        "containerCount": 0,
+        "fieldMatches": {},
+        "recipe": {}
+      },
+      "mediavine": {
+        "found": false,
+        "containerCount": 0,
+        "fieldMatches": {},
+        "recipe": {}
+      }
+    },
+    "readableText": "Zetrzyj ziemniaki i cebulę: Obierz 1 kilograms ziemniaki (najlepiej mączyste) i zetrzyj na drobnych oczkach razem z 1 średnia cebula. Cebula spowolni ciemnienie ziemniaków.Odcedź masę: Odlej sok z masy, odciskając ją na sicie lub w ściereczce. Odstaw płyn na minutę – opadnie z niego skrobia; odlej wodę, a skrobię dodaj z powrotem do masy.Dopraw ciasto: Dodaj 1 jajko, 3 tablespoons mąka pszenna, 1 teaspoons sól i 0.5 teaspoons świeżo mielony pieprz. Wymieszaj do połączenia składników.Smaż placki: Rozgrzej 150 milliliters olej do smażenia na patelni. Nakładaj masę łyżką, formując cienkie placki. Smaż na złoty kolor po 3–4 minuty z każdej strony.Osącz i podaj: Połóż placki na ręczniku papierowym, by odsączyć nadmiar tłuszczu. Podawaj od razu z 200 grams śmietana do podania.",
+    "renderTimeMs": 8538,
+    "siteName": "Claude",
+    "stabilized": true,
+    "title": "Claude",
+    "visibility": "visible"
+  },
+  "attachments": [],
+  "diagnostics": {
+    "errors": [],
+    "notes": [
+      "intent action=android.intent.action.SEND type=text/plain referrer=android-app://com.android.shell extras={android.intent.extra.TEXT=String(60)'https://claude.ai/share/525f68b6-1bef-4d4d-9bdd-c4a42876e4c3'}",
+      "mode=visible",
+      "extractionTrigger=stable"
+    ],
+    "stageTimingsMs": {
+      "stabilize": 8538,
+      "extractRoundTrip": 64,
+      "js.jsonLd": 0,
+      "js.microdata": 0,
+      "js.pluginHits": 1,
+      "js.readability": 18,
+      "js.heuristic": 24,
+      "merge": 5
+    }
+  }
+}

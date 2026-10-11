@@ -1,0 +1,213 @@
+{
+  "schemaVersion": 2,
+  "captureId": "0ea67e67-cf60-457b-808b-35bcfef25475",
+  "capturedAt": "2026-10-09T18:56:07.472628Z",
+  "recipe": {
+    "title": "Szarlotka",
+    "language": "pl",
+    "servings": {
+      "text": "12 porcji",
+      "count": 12
+    },
+    "times": {},
+    "ingredientGroups": [
+      {
+        "name": "Jabłka",
+        "items": [
+          "1,5 kg jabłek (na szarlotkę najlepiej twardych i kwaśnych, np. szara reneta)",
+          "5 łyżek cukru",
+          "1/2 łyżeczki cynamonu"
+        ]
+      },
+      {
+        "name": "Ciasto",
+        "items": [
+          "320 g mąki (2 szklanki)",
+          "250 g zimnego masła*",
+          "1,5 łyżeczki proszku do pieczenia",
+          "5 łyżek cukru",
+          "1 łyżka cukru wanilinowego",
+          "1 jajko",
+          "Do posypania: cukier puder"
+        ]
+      }
+    ],
+    "stepGroups": [
+      {
+        "name": "Jabłka",
+        "items": [
+          "Jabłka obrać, pokroić na ćwiartki i wyciąć gniazda nasienne. Pokroić na mniejsze kawałki i włożyć do szerokiego garnka lub na głęboką patelnię.",
+          "Dodać cukier i cynamon i smażyć przez ok. 20 minut co chwilę mieszając, aż jabłka zmiękną i zaczną się rozpadać."
+        ]
+      },
+      {
+        "name": "Ciasto",
+        "items": [
+          "Do mąki dodać pokrojone w kostkę zimne masło, proszek do pieczenia, cukier i cukier wanilinowy.",
+          "Składniki połączyć w jednolite ciasto (mikserem lub ręcznie), pod koniec dodać jajko (ciasto będzie dość miękkie).",
+          "Podzielić je na pół i włożyć obie połówki do zamrażarki na ok. 15 minut."
+        ]
+      },
+      {
+        "name": "Pieczenie",
+        "items": [
+          "Piekarnik nagrzać do 180 stopni C (góra i dół bez termoobiegu).",
+          "Wyjąć jedną połówkę ciasta z zamrażarki, pokroić nożem na plasterki i wylepić nimi spód formy. Następnie wyłożyć na to jabłka.",
+          "Pozostałe ciasto zetrzeć na tarce bezpośrednio na jabłka (lub pokroić ciasto na plasterki i ułożyć na wierzchu).",
+          "Wstawić do piekarnika i piec przez ok. 50 minut lub na złoty kolor. Upieczoną szarlotkę przestudzić i posypać cukrem pudrem."
+        ]
+      }
+    ],
+    "notes": [
+      "* lub oleju kokosowego (zimnego) lub margaryny. Można połączyć masło z olejem kokosowym. Można też dodać trochę smalcu."
+    ],
+    "images": [
+      "https://www.kwestiasmaku.com/sites/v123.kwestiasmaku.com/files/szarlotka-00_2.jpg"
+    ],
+    "source": {
+      "type": "WEB",
+      "url": "https://www.kwestiasmaku.com/przepis/szarlotka",
+      "siteName": "Kwestia Smaku",
+      "author": "kwestiasmaku",
+      "sharedFrom": "com.android.shell",
+      "files": []
+    }
+  },
+  "completeness": {
+    "score": 1.0,
+    "bestStage": "heuristic",
+    "hasTitle": true,
+    "hasIngredients": true,
+    "hasSteps": true
+  },
+  "provenance": {
+    "title": "microdata",
+    "ingredients": "heuristic",
+    "steps": "heuristic",
+    "servings": "heuristic",
+    "images": "microdata",
+    "notes": "heuristic",
+    "author": "microdata"
+  },
+  "web": {
+    "canonicalUrl": "https://www.kwestiasmaku.com/przepis/szarlotka",
+    "finalUrl": "https://www.kwestiasmaku.com/przepis/szarlotka",
+    "heuristic": {
+      "articleTitle": "Szarlotka",
+      "usedBodyFallback": false,
+      "servings": "12 porcji",
+      "ingredients": [
+        {
+          "name": "Jabłka",
+          "items": [
+            "1,5 kg jabłek (na szarlotkę najlepiej twardych i kwaśnych, np. szara reneta)",
+            "5 łyżek cukru",
+            "1/2 łyżeczki cynamonu"
+          ]
+        },
+        {
+          "name": "Ciasto",
+          "items": [
+            "320 g mąki (2 szklanki)",
+            "250 g zimnego masła*",
+            "1,5 łyżeczki proszku do pieczenia",
+            "5 łyżek cukru",
+            "1 łyżka cukru wanilinowego",
+            "1 jajko",
+            "Do posypania: cukier puder"
+          ]
+        }
+      ],
+      "instructions": [
+        {
+          "name": "Jabłka",
+          "items": [
+            "Jabłka obrać, pokroić na ćwiartki i wyciąć gniazda nasienne. Pokroić na mniejsze kawałki i włożyć do szerokiego garnka lub na głęboką patelnię.",
+            "Dodać cukier i cynamon i smażyć przez ok. 20 minut co chwilę mieszając, aż jabłka zmiękną i zaczną się rozpadać."
+          ]
+        },
+        {
+          "name": "Ciasto",
+          "items": [
+            "Do mąki dodać pokrojone w kostkę zimne masło, proszek do pieczenia, cukier i cukier wanilinowy.",
+            "Składniki połączyć w jednolite ciasto (mikserem lub ręcznie), pod koniec dodać jajko (ciasto będzie dość miękkie).",
+            "Podzielić je na pół i włożyć obie połówki do zamrażarki na ok. 15 minut."
+          ]
+        },
+        {
+          "name": "Pieczenie",
+          "items": [
+            "Piekarnik nagrzać do 180 stopni C (góra i dół bez termoobiegu).",
+            "Wyjąć jedną połówkę ciasta z zamrażarki, pokroić nożem na plasterki i wylepić nimi spód formy. Następnie wyłożyć na to jabłka.",
+            "Pozostałe ciasto zetrzeć na tarce bezpośrednio na jabłka (lub pokroić ciasto na plasterki i ułożyć na wierzchu).",
+            "Wstawić do piekarnika i piec przez ok. 50 minut lub na złoty kolor. Upieczoną szarlotkę przestudzić i posypać cukrem pudrem."
+          ]
+        }
+      ],
+      "notes": [
+        "* lub oleju kokosowego (zimnego) lub margaryny. Można połączyć masło z olejem kokosowym. Można też dodać trochę smalcu."
+      ]
+    },
+    "jsonLd": [],
+    "lang": "pl",
+    "microdata": [
+      {
+        "image": "https://www.kwestiasmaku.com/sites/v123.kwestiasmaku.com/files/szarlotka-00_2.jpg",
+        "description": "Pyszna domowa szarlotka, najlepsza jeszcze ciepła. Idealnie kruche, maślane ciasto i prażone z cynamonem jabłka. Czy można wyobrazić sobie lepszy podwieczorek na jesienny wieczór? Do upieczenia szarlotki będziecie potrzebować niezbyt dużą blaszkę np. prostokątną 21 x 27 cm lub okrągłą tortownicę o średnicy 24 cm. Ciasto robi się szybko... i jeszcze szybciej znika :-) Dajcie znać w komentarzach jak Wam smakowała i zamieście zdjęcie Waszej szarlotki!",
+        "commentCount": "0",
+        "aggregateRating": {
+          "reviewCount": "3224",
+          "ratingValue": "4.73",
+          "@type": "AggregateRating"
+        },
+        "author": "kwestiasmaku",
+        "name": "Szarlotka",
+        "@type": "Recipe"
+      }
+    ],
+    "ogImage": "https://www.kwestiasmaku.com/sites/v123.kwestiasmaku.com/files/szarlotka-00_2.jpg",
+    "pluginHits": {
+      "wprm": {
+        "found": false,
+        "containerCount": 0,
+        "fieldMatches": {},
+        "recipe": {}
+      },
+      "tasty": {
+        "found": false,
+        "containerCount": 0,
+        "fieldMatches": {},
+        "recipe": {}
+      },
+      "mediavine": {
+        "found": false,
+        "containerCount": 0,
+        "fieldMatches": {},
+        "recipe": {}
+      }
+    },
+    "readableText": "To jest super prosty i szybki przepis. robiłam ostatnio dwa raz pod rząd i bardzo szybko znika oraz wszystkim smakowala :) \n\n Absolutnie najlepsza szarlotka, jaką jadłam. Ciasto super kruche, cieniutki spód wyszedł ideolo! Jest jeden problem z tą szarlotka - za szybko znika. \n\n Ta szarlotka smakuje dokładnie tak, jak ta jedzona za dzieciaka u babci :-) Zapisuję przepis \n\n Pierwszy raz w życiu upiekłam szarlotkę i była naprawdę IDEALNA, dokładnie taka o jakiej marzyłam! \n\n To ciasto to strzał w 10tkę! Próbowałam już różnych wariacji z gruszkami, brzoskwiniami i za każdym razem wychodzi super :-) \n\n Wszyscy mówią, że to najlepsza szarlotka. Zazwyczaj z szarej renety ale ostatnio też z przypadkowych, już nie tak kwaśnych jabłek i też pycha 😊 tylko już cukru do jabłek nie dodawałam bo same w sobie były słodkie. \n\n Ciasto przepyszne... Najlepsza szarlotka jaką jadłam.. dziękuję za przepis \n\n U mnie z cukrem brązowym. Ponadczasowa klasyka. Łatwa w przygotowaniu i przepyszna. \n\n Pyszna, delikatna z chrupiącym wierzchem 😍 Doskonały przepis 😊 \n\n To jest naprawdę najlepsza szarlotka jaką jadłam! Na jeszcze ciepłą sos toffi i lody 🤩 pycha. \n\n Najlepsza szarlotka jaką w życiu jadłam :) wychodzi zawsze, każdy prosi o więcej. \n\n Sprawdzony przepis, zawsze wychodzi, a samo ciasto jest przepyszne 😍 Jedynie dodaję więcej cynamonu. \n\n To jest super prosty i szybki przepis. robiłam ostatnio dwa raz pod rząd i bardzo szybko znika oraz wszystkim smakowala :) \n\n Absolutnie najlepsza szarlotka, jaką jadłam. Ciasto super kruche, cieniutki spód wyszedł ideolo! Jest jeden problem z tą szarlotka - za szybko znika. \nSpodobał Ci się ten przepis? Udostępnij go!\n\n Oceń przepis aby doradzić innym!Średnia: 4.7 (3224 głosów) \n\nPyszna domowa szarlotka, najlepsza jeszcze ciepła. Idealnie kruche, maślane ciasto i prażone z cynamonem jabłka. Czy można wyobrazić sobie lepszy podwieczorek na jesienny wieczór? Do upieczenia szarlotki będziecie potrzebować niezbyt dużą blaszkę np. prostokątną 21 x 27 cm lub okrągłą tortownicę o średnicy 24 cm. Ciasto robi się szybko... i jeszcze szybciej znika :-) Dajcie znać w komentarzach jak Wam smakowała i zamieście zdjęcie Waszej szarlotki!\n\n03224\n4.73\n\nkwestiasmaku \nSzarlotka\n\n Najlepszy przepis na szarlotkę! \n\n Popularne ciasta \n\n Szybkie ciasto \n\n Kuchnia polska \n\n Podwieczorki \n\n Jabłka \n\n Dla dzieci \n\n Ciasta \n\n Szarlotka \n\n Ciasta kruche \n\n Ciasta tradycyjne \n\n Pyszna i prosta do zrobienia szarlotka na kruchym cieście. Każdemu się udaje i wszystkim smakuje! Dla ekstra kruchości część masła można zastąpić smalcem (sekretny składnik babcinych przepisów na szarlotkę ;-)\nPotrzebujemy prostokątną formę 21 x 27 cm lub kwadratową 24 x 24 cm lub tortownicę o średnicy 26 cm.\n\n Składniki\n\n 12 porcji \n\n Jabłka\n\n 1,5 kg jabłek (na szarlotkę najlepiej twardych i kwaśnych, np. szara reneta)\n\n 5 łyżek cukru\n\n 1/2 łyżeczki cynamonu\n\n Ciasto\n\n 320 g mąki (2 szklanki)\n\n 250 g zimnego masła*\n\n 1,5 łyżeczki proszku do pieczenia\n\n 5 łyżek cukru\n\n 1 łyżka cukru wanilinowego\n\n 1 jajko\n\nDo posypania: cukier puder\n\n Przygotowanie \n\n Jabłka\n\n Jabłka obrać, pokroić na ćwiartki i wyciąć gniazda nasienne. Pokroić na mniejsze kawałki i włożyć do szerokiego garnka lub na głęboką patelnię.\n\n Dodać cukier i cynamon i smażyć przez ok. 20 minut co chwilę mieszając, aż jabłka zmiękną i zaczną się rozpadać.\n\n Ciasto\n\n Do mąki dodać pokrojone w kostkę zimne masło, proszek do pieczenia, cukier i cukier wanilinowy.\n\n Składniki połączyć w jednolite ciasto (mikserem lub ręcznie), pod koniec dodać jajko (ciasto będzie dość miękkie).\n\n Podzielić je na pół i włożyć obie połówki do zamrażarki na ok. 15 minut.\n\n Pieczenie\n\n Piekarnik nagrzać do 180 stopni C (góra i dół bez termoobiegu).\n\n Wyjąć jedną połówkę ciasta z zamrażarki, pokroić nożem na plasterki i wylepić nimi spód formy. Następnie wyłożyć na to jabłka.\n\n Pozostałe ciasto zetrzeć na tarce bezpośrednio na jabłka (lub pokroić ciasto na plasterki i ułożyć na wierzchu).\n\n Wstawić do piekarnika i piec przez ok. 50 minut lub na złoty kolor. Upieczoną szarlotkę przestudzić i posypać cukrem pudrem.\n\n Wskazówki \n\n * lub oleju kokosowego (zimnego) lub margaryny. Można połączyć masło z olejem kokosowym. Można też dodać trochę smalcu.\n\nSzarlotka",
+    "renderTimeMs": 4970,
+    "siteName": "Kwestia Smaku",
+    "stabilized": true,
+    "title": "Szarlotka | Kwestia Smaku"
+  },
+  "attachments": [],
+  "diagnostics": {
+    "errors": [],
+    "notes": [
+      "intent action=android.intent.action.SEND type=text/plain referrer=android-app://com.android.shell extras={android.intent.extra.TEXT=String(46)'https://www.kwestiasmaku.com/przepis/szarlotka'}",
+      "extractionTrigger=stable"
+    ],
+    "stageTimingsMs": {
+      "stabilize": 4970,
+      "extractRoundTrip": 122,
+      "js.jsonLd": 0,
+      "js.microdata": 1,
+      "js.pluginHits": 0,
+      "js.readability": 91,
+      "js.heuristic": 92,
+      "merge": 2
+    }
+  }
+}

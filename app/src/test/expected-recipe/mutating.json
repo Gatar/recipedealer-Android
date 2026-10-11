@@ -1,0 +1,23 @@
+{
+  "recipe": {
+    "language": "pl",
+    "times": {},
+    "ingredientGroups": [],
+    "stepGroups": [],
+    "notes": [],
+    "images": [],
+    "source": {
+      "type": "WEB",
+      "url": "https://example.test/mutating",
+      "files": []
+    }
+  },
+  "provenance": {},
+  "completeness": {
+    "score": 0.0,
+    "bestStage": "none",
+    "hasTitle": false,
+    "hasIngredients": false,
+    "hasSteps": false
+  }
+}

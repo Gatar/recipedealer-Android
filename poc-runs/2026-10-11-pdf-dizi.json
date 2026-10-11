@@ -1,0 +1,636 @@
+{
+  "schemaVersion": 2,
+  "captureId": "fad5bfb6-0d50-49a3-9144-ba4612765fcf",
+  "capturedAt": "2026-10-11T14:53:25.161385Z",
+  "recipe": {
+    "times": {},
+    "ingredientGroups": [],
+    "stepGroups": [],
+    "notes": [],
+    "images": [],
+    "source": {
+      "type": "PDF",
+      "sharedFrom": "com.android.shell",
+      "files": [
+        "dizi.pdf"
+      ]
+    }
+  },
+  "completeness": {
+    "score": 0.0,
+    "bestStage": "ocr",
+    "hasTitle": false,
+    "hasIngredients": false,
+    "hasSteps": false
+  },
+  "provenance": {},
+  "rawText": "Dizi (Abgoosht)\nJest to danie kuchni perskiej, przypominające trochę nasze gulasze.\nJest to kuchnia pasterska, pierwotnie dane wykonywano w glinianych\ngarnkach jedynie z roślin strączkowych i baraniny.\nPorcja dla 4-6 osób:\nSkładniki:\n- 50-70 dag tłustej baraniny (udziec z kością, żeberka, ale inne kawałki też się\nnadadzą)\n- ½ szklanki ciecierzycy suchej - namoczyć przez noc\n- ½ szklanki fasoli suchej - namoczyć przez noc\n- 3 średnie cebule\n- 2 średnie pyry\n- puszka pomidorów krojonych lub 2 świeże pomidory, sparzone i bez skórki\n- 1 łyżeczka kurkumy\n- 1 łyżeczka soli\n- czarny pieprz\n- 2-3 suszone limonki (Loomi) lub 1 łyżeczka sumaku + 1 łyżka soku limonki\n- 2 łyżki koncentratu pomidorowego\nKrok po kroku\n1. Pokroić 2 cebule w kostkę. Zeszklić na małej ilości oleju w dużym garnku i odłożyć\nna bok. Następnie dolać znowu trochę oleju i przesmażyć z każdej strony mięso\nrazem z kurkumą pokrojone w kostkę 2-3 cm.\nOPCJA: W bardziej tradycyjnym dizi pomijamy smażenie kompletnie, wrzucamy tylko\ncebulę i mięso do gara, przechodzimy dalej od razu do gotowania.\n2. Wrzucamy z powrotem cebulę, odsączone strączki, pomidory, koncentrat i zalewamy\n1.3-1.5l wrzącej wody. Zagotowujemy, zmniejszamy grzanie do minimum i powolutku\ngotujemy przez 2h.\n3. Wrzucamy przekrojone w pół pyry, nakłute suszone limonki. Doprawiamy solą i\npieprzem i dalej gotujemy 1-1.5h aż wszystko będzie miękkie, a mięso będzie się\nrozpadać.\n4. Sposób podania. Bulion odlewamy do osobnego garnka i\npodajemy jako zupę razem z pitą/lawaszem/podpłomykami.\nKości jak były to usuwamy. Stałe składniki ubijamy tłuczkiem\nna gęstą pastę, którą należy jeść z\npitą/lawaszem/podpłomykami.\nDodatki do przegryzania: surowa cebula w ćwiartkach, mięta,\njogurt Doogh, rzodkiewki\n\nPodpłomyki\nProsty przepis na podpłomyki do zrobienia w domu.\nPorcja na 4 szt (dość spore, jak naleśnik)\nSkładniki:\n- 2 szklanki mąki pszennej\n- ¾ szklanki wody\n- ½ łyżeczki soli\n- łyżka oleju (opcjonalnie)\nKrok po kroku:\n1. Wszystkie składniki zagniatamy przez 4-6 min na jednolite ciasto. W ™ tryb interwał\nprzez 5min.\n2. Przykrywamy ciasto ściereczką na 15 min aby odpoczęło, dzięki temu łatwiej się\nwałkuje.\n3. Dzielimy ciasto na 4 równe porcje i rozwałkowujemy na placek ~2-3mm grubości o\nwielkości takiej patelni na jakiej będziemy je piec.\n4. Rozgrzewamy suchą patelnię bez oleju dość mocno. Kładziemy placek i pieczemy z\njednej strony aż się lekko przyjara (ale lekko!) i przerzucamy na drugą stronę żeby\ndopiec jeszcze z 30-60s.\nTIP: Najlepiej jak jeden placek się piecze, to wtedy rozwałkować kolejny i tak na\nzmianę. Dzięki temu ciasto nie schnie i nie marnujemy czasu.\nPo upieczeniu placki kładziemy na dużym talerzu jak naleśniki, jeden na drugim i\nprzykrywamy ściereczką żeby nie wysychały i nie stwardniały.",
+  "ocr": {
+    "blocks": [
+      {
+        "bbox": [
+          197,
+          159,
+          667,
+          235
+        ],
+        "page": 0,
+        "text": "Dizi (Abgoosht)"
+      },
+      {
+        "bbox": [
+          194,
+          298,
+          1091,
+          325
+        ],
+        "page": 0,
+        "text": "Jest to danie kuchni perskiej, przypominające trochę nasze gulasze."
+      },
+      {
+        "bbox": [
+          194,
+          337,
+          1099,
+          365
+        ],
+        "page": 0,
+        "text": "Jest to kuchnia pasterska, piervwotnie dane wykonywano w glinianych"
+      },
+      {
+        "bbox": [
+          194,
+          376,
+          842,
+          403
+        ],
+        "page": 0,
+        "text": "garnkach jedynie z roślin strączkowych i baraniny."
+      },
+      {
+        "bbox": [
+          195,
+          450,
+          451,
+          481
+        ],
+        "page": 0,
+        "text": "Porcja dla 4-6 osób:"
+      },
+      {
+        "bbox": [
+          194,
+          532,
+          317,
+          555
+        ],
+        "page": 0,
+        "text": "Skladniki:"
+      },
+      {
+        "bbox": [
+          291,
+          572,
+          1286,
+          599
+        ],
+        "page": 0,
+        "text": "50-70 dag tustej baraniny (udziec z kością, żeberka, ale inne kawałki też się"
+      },
+      {
+        "bbox": [
+          290,
+          608,
+          410,
+          638
+        ],
+        "page": 0,
+        "text": "nadadza)"
+      },
+      {
+        "bbox": [
+          291,
+          647,
+          985,
+          678
+        ],
+        "page": 0,
+        "text": "½ szklanki ciecierzycy suchej - namoczyć przez noc"
+      },
+      {
+        "bbox": [
+          291,
+          684,
+          911,
+          717
+        ],
+        "page": 0,
+        "text": "V szklanki fasoli suchej - namoczyć przez noc"
+      },
+      {
+        "bbox": [
+          291,
+          728,
+          505,
+          750
+        ],
+        "page": 0,
+        "text": "3 średnie cebule"
+      },
+      {
+        "bbox": [
+          306,
+          761,
+          474,
+          795
+        ],
+        "page": 0,
+        "text": "2 średnie pyry"
+      },
+      {
+        "bbox": [
+          291,
+          806,
+          1260,
+          833
+        ],
+        "page": 0,
+        "text": "puszka pomidorów krojonych lub 2 świeże pomidory, sparzone i bez skórki"
+      },
+      {
+        "bbox": [
+          292,
+          842,
+          544,
+          874
+        ],
+        "page": 0,
+        "text": "1 tyżeczka kurkumy"
+      },
+      {
+        "bbox": [
+          293,
+          884,
+          478,
+          911
+        ],
+        "page": 0,
+        "text": "1 łyżeczka soli"
+      },
+      {
+        "bbox": [
+          291,
+          923,
+          464,
+          951
+        ],
+        "page": 0,
+        "text": "czarny pieprz"
+      },
+      {
+        "bbox": [
+          291,
+          957,
+          1263,
+          986
+        ],
+        "page": 0,
+        "text": "2-3 suszone limonki (Loomi) lub 1 yżeczka sumaku + 1 yżka soku limonki"
+      },
+      {
+        "bbox": [
+          290,
+          998,
+          735,
+          1030
+        ],
+        "page": 0,
+        "text": "2 łyżki koncentratu pomidorowego"
+      },
+      {
+        "bbox": [
+          195,
+          1079,
+          374,
+          1102
+        ],
+        "page": 0,
+        "text": "Krok po kroku"
+      },
+      {
+        "bbox": [
+          244,
+          1153,
+          1364,
+          1184
+        ],
+        "page": 0,
+        "text": "1. Pokroić 2 cebule w kostkę. Zeszklić na małej ilości oleju w dużym garnku i odłożyć"
+      },
+      {
+        "bbox": [
+          291,
+          1194,
+          1338,
+          1225
+        ],
+        "page": 0,
+        "text": "na bok. Następnie dolać znowu trochę oleju i przesmażyć z każdej strony mięso"
+      },
+      {
+        "bbox": [
+          291,
+          1236,
+          891,
+          1263
+        ],
+        "page": 0,
+        "text": "razem z kurkumą pokrojone w kostkę 2-3 cm."
+      },
+      {
+        "bbox": [
+          291,
+          1274,
+          1398,
+          1303
+        ],
+        "page": 0,
+        "text": "OPCJA: VW bardziej tradycyjnym dizi pomijamy smażenie kompletnie, wrzucamy tylko"
+      },
+      {
+        "bbox": [
+          291,
+          1310,
+          1148,
+          1342
+        ],
+        "page": 0,
+        "text": "cebulę i mięso do gara, przechodzimy dalej od razu do gotowania."
+      },
+      {
+        "bbox": [
+          242,
+          1388,
+          1394,
+          1419
+        ],
+        "page": 0,
+        "text": "2. Wrzucamy z powrotem cebulę, odsączone strączki, pomidory, koncentrat i zalewamy"
+      },
+      {
+        "bbox": [
+          293,
+          1428,
+          1398,
+          1458
+        ],
+        "page": 0,
+        "text": "1.3-1.5l wrzącej wody. Zagotowujemy, zmniejszamy grzanie do minimum i powolutku"
+      },
+      {
+        "bbox": [
+          290,
+          1470,
+          537,
+          1498
+        ],
+        "page": 0,
+        "text": "gotujemy przez 2h."
+      },
+      {
+        "bbox": [
+          243,
+          1548,
+          1315,
+          1575
+        ],
+        "page": 0,
+        "text": "3. Wrzucamy przekrojone w pół pyry, nakłute suszone limonki. Doprawiamy solą i"
+      },
+      {
+        "bbox": [
+          303,
+          1584,
+          1346,
+          1615
+        ],
+        "page": 0,
+        "text": "pieprzemi dalej gotujemy 1-1.5h aż wszystko będzie miękkie, a mięso będzie się"
+      },
+      {
+        "bbox": [
+          291,
+          1624,
+          414,
+          1652
+        ],
+        "page": 0,
+        "text": "rozpadać."
+      },
+      {
+        "bbox": [
+          242,
+          1703,
+          1049,
+          1732
+        ],
+        "page": 0,
+        "text": "4. Sposób podania. Bulion odlewamy do osobnego garnka i"
+      },
+      {
+        "bbox": [
+          291,
+          1743,
+          1065,
+          1771
+        ],
+        "page": 0,
+        "text": "podajemy jako zupę razem z pitą/lawaszem/podpłomykami."
+      },
+      {
+        "bbox": [
+          292,
+          1781,
+          1077,
+          1809
+        ],
+        "page": 0,
+        "text": "Kości jak były to usuwamy. Stałe składniki ubijamy tłuczkiem"
+      },
+      {
+        "bbox": [
+          291,
+          1821,
+          742,
+          1849
+        ],
+        "page": 0,
+        "text": "na gęstą pastę, którą należy jeść z"
+      },
+      {
+        "bbox": [
+          291,
+          1860,
+          681,
+          1887
+        ],
+        "page": 0,
+        "text": "pitą/lawaszen/podpłomykami."
+      },
+      {
+        "bbox": [
+          306,
+          1936,
+          1086,
+          1965
+        ],
+        "page": 0,
+        "text": "Dodatki do przegryzania: surowa cebula w ćwiartkach, mięta,"
+      },
+      {
+        "bbox": [
+          288,
+          1970,
+          609,
+          2006
+        ],
+        "page": 0,
+        "text": "jogurt Doogh, rzodkiewki"
+      },
+      {
+        "bbox": [
+          197,
+          200,
+          549,
+          272
+        ],
+        "page": 1,
+        "text": "Podpłomyki"
+      },
+      {
+        "bbox": [
+          195,
+          337,
+          863,
+          365
+        ],
+        "page": 1,
+        "text": "Prosty przepis na podpłomyki do zrobienia w domu."
+      },
+      {
+        "bbox": [
+          195,
+          411,
+          729,
+          442
+        ],
+        "page": 1,
+        "text": "Porcja na 4 szt (doŚć spore, jak naleśnik)"
+      },
+      {
+        "bbox": [
+          194,
+          493,
+          317,
+          516
+        ],
+        "page": 1,
+        "text": "Składniki:"
+      },
+      {
+        "bbox": [
+          290,
+          525,
+          615,
+          562
+        ],
+        "page": 1,
+        "text": "2 szklanki maki pszennej"
+      },
+      {
+        "bbox": [
+          289,
+          568,
+          503,
+          600
+        ],
+        "page": 1,
+        "text": "% szklanki wody"
+      },
+      {
+        "bbox": [
+          291,
+          609,
+          476,
+          641
+        ],
+        "page": 1,
+        "text": "½ łyżeczki soli"
+      },
+      {
+        "bbox": [
+          293,
+          646,
+          603,
+          681
+        ],
+        "page": 1,
+        "text": "łyżka oleju (opcjonalnie)"
+      },
+      {
+        "bbox": [
+          195,
+          728,
+          381,
+          752
+        ],
+        "page": 1,
+        "text": "Krok po kroku:"
+      },
+      {
+        "bbox": [
+          245,
+          806,
+          1404,
+          832
+        ],
+        "page": 1,
+        "text": "1. Wszystkie składniki zagniatamy przez 4-6 min na jednolite ciasto. W TM tryb interwał"
+      },
+      {
+        "bbox": [
+          291,
+          841,
+          430,
+          871
+        ],
+        "page": 1,
+        "text": "przez 5min."
+      },
+      {
+        "bbox": [
+          242,
+          920,
+          1403,
+          952
+        ],
+        "page": 1,
+        "text": "2. Przykrywamy ciasto ściereczką na 15 min aby odpoczęlo, dzięki temu łatwiej się"
+      },
+      {
+        "bbox": [
+          303,
+          959,
+          393,
+          992
+        ],
+        "page": 1,
+        "text": "wałkuje."
+      },
+      {
+        "bbox": [
+          243,
+          1038,
+          1402,
+          1066
+        ],
+        "page": 1,
+        "text": "3. Dzielimy ciasto na 4 równe porcje i rozwałkowujemy na placek ~2-3mm grubości o"
+      },
+      {
+        "bbox": [
+          290,
+          1079,
+          928,
+          1107
+        ],
+        "page": 1,
+        "text": "wielkości takiej patelni na jakiej będziemy je piec."
+      },
+      {
+        "bbox": [
+          242,
+          1155,
+          1403,
+          1186
+        ],
+        "page": 1,
+        "text": "4. Rozgrzewamy suchą patelnię bez oleju dość mocno. Kładziemy placek i pieczemy z"
+      },
+      {
+        "bbox": [
+          288,
+          1195,
+          1399,
+          1224
+        ],
+        "page": 1,
+        "text": "jednej strony aż się lekko przyjara (ale lekko!) i przerzucamy na drugą stronę żeby"
+      },
+      {
+        "bbox": [
+          290,
+          1230,
+          608,
+          1264
+        ],
+        "page": 1,
+        "text": "dopiec jeszcze z 30-60s."
+      },
+      {
+        "bbox": [
+          290,
+          1311,
+          1402,
+          1341
+        ],
+        "page": 1,
+        "text": "TIP: Najlepiej jak jeden placek się piecze, to wtedy rozwałkować kolejny i tak na"
+      },
+      {
+        "bbox": [
+          290,
+          1351,
+          1089,
+          1380
+        ],
+        "page": 1,
+        "text": "zmianę. Dzięki temu ciasto nie schnie i nie marnujemy czasu."
+      },
+      {
+        "bbox": [
+          292,
+          1428,
+          1411,
+          1458
+        ],
+        "page": 1,
+        "text": "Po upieczeniu placki kładziemy na dużym talerzu jak naleśniki, jeden na drugim ii"
+      },
+      {
+        "bbox": [
+          291,
+          1470,
+          1092,
+          1498
+        ],
+        "page": 1,
+        "text": "przykrywamy ściereczką żeby ie wysychały i nie stwardniały."
+      }
+    ],
+    "source": "PDF_RENDER",
+    "text": "Dizi (Abgoosht)\nJest to danie kuchni perskiej, przypominające trochę nasze gulasze.\nJest to kuchnia pasterska, piervwotnie dane wykonywano w glinianych\ngarnkach jedynie z roślin strączkowych i baraniny.\nPorcja dla 4-6 osób:\nSkladniki:\n50-70 dag tustej baraniny (udziec z kością, żeberka, ale inne kawałki też się\nnadadza)\n½ szklanki ciecierzycy suchej - namoczyć przez noc\nV szklanki fasoli suchej - namoczyć przez noc\n3 średnie cebule\n2 średnie pyry\npuszka pomidorów krojonych lub 2 świeże pomidory, sparzone i bez skórki\n1 tyżeczka kurkumy\n1 łyżeczka soli\nczarny pieprz\n2-3 suszone limonki (Loomi) lub 1 yżeczka sumaku + 1 yżka soku limonki\n2 łyżki koncentratu pomidorowego\nKrok po kroku\n1. Pokroić 2 cebule w kostkę. Zeszklić na małej ilości oleju w dużym garnku i odłożyć\nna bok. Następnie dolać znowu trochę oleju i przesmażyć z każdej strony mięso\nrazem z kurkumą pokrojone w kostkę 2-3 cm.\nOPCJA: VW bardziej tradycyjnym dizi pomijamy smażenie kompletnie, wrzucamy tylko\ncebulę i mięso do gara, przechodzimy dalej od razu do gotowania.\n2. Wrzucamy z powrotem cebulę, odsączone strączki, pomidory, koncentrat i zalewamy\n1.3-1.5l wrzącej wody. Zagotowujemy, zmniejszamy grzanie do minimum i powolutku\ngotujemy przez 2h.\n3. Wrzucamy przekrojone w pół pyry, nakłute suszone limonki. Doprawiamy solą i\npieprzemi dalej gotujemy 1-1.5h aż wszystko będzie miękkie, a mięso będzie się\nrozpadać.\n4. Sposób podania. Bulion odlewamy do osobnego garnka i\npodajemy jako zupę razem z pitą/lawaszem/podpłomykami.\nKości jak były to usuwamy. Stałe składniki ubijamy tłuczkiem\nna gęstą pastę, którą należy jeść z\npitą/lawaszen/podpłomykami.\nDodatki do przegryzania: surowa cebula w ćwiartkach, mięta,\njogurt Doogh, rzodkiewki\n\nPodpłomyki\nProsty przepis na podpłomyki do zrobienia w domu.\nPorcja na 4 szt (doŚć spore, jak naleśnik)\nSkładniki:\n2 szklanki maki pszennej\n% szklanki wody\n½ łyżeczki soli\nłyżka oleju (opcjonalnie)\nKrok po kroku:\n1. Wszystkie składniki zagniatamy przez 4-6 min na jednolite ciasto. W TM tryb interwał\nprzez 5min.\n2. Przykrywamy ciasto ściereczką na 15 min aby odpoczęlo, dzięki temu łatwiej się\nwałkuje.\n3. Dzielimy ciasto na 4 równe porcje i rozwałkowujemy na placek ~2-3mm grubości o\nwielkości takiej patelni na jakiej będziemy je piec.\n4. Rozgrzewamy suchą patelnię bez oleju dość mocno. Kładziemy placek i pieczemy z\njednej strony aż się lekko przyjara (ale lekko!) i przerzucamy na drugą stronę żeby\ndopiec jeszcze z 30-60s.\nTIP: Najlepiej jak jeden placek się piecze, to wtedy rozwałkować kolejny i tak na\nzmianę. Dzięki temu ciasto nie schnie i nie marnujemy czasu.\nPo upieczeniu placki kładziemy na dużym talerzu jak naleśniki, jeden na drugim ii\nprzykrywamy ściereczką żeby ie wysychały i nie stwardniały.",
+    "truncated": false
+  },
+  "attachments": [],
+  "diagnostics": {
+    "errors": [],
+    "notes": [
+      "intent action=android.intent.action.SEND type=application/pdf referrer=android-app://com.android.shell extras={android.intent.extra.STREAM=StringUri}",
+      "pdf content://com.gatar.recipedealer.fileprovider/captures/dizi.pdf pages=2 textApi=true"
+    ],
+    "stageTimingsMs": {
+      "pdf": 1450
+    }
+  }
+}

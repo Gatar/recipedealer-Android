@@ -1,0 +1,8 @@
+{
+  "name": "recipe-capture-tools",
+  "private": true,
+  "description": "Runs extractor.js against the androidTest HTML fixtures in jsdom and stores the output as JVM test resources.",
+  "dependencies": {
+    "jsdom": "^16.7.0"
+  }
+}

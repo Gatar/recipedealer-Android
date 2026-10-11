@@ -1,0 +1,356 @@
+{
+  "schemaVersion": 2,
+  "captureId": "537fd03f-e4b1-4946-9ea8-7f06850c1e61",
+  "capturedAt": "2026-10-11T14:53:12.941600Z",
+  "recipe": {
+    "times": {},
+    "ingredientGroups": [],
+    "stepGroups": [],
+    "notes": [],
+    "images": [],
+    "source": {
+      "type": "PDF",
+      "sharedFrom": "com.android.shell",
+      "files": [
+        "zupa.pdf"
+      ]
+    }
+  },
+  "completeness": {
+    "score": 0.0,
+    "bestStage": "ocr",
+    "hasTitle": false,
+    "hasIngredients": false,
+    "hasSteps": false
+  },
+  "provenance": {},
+  "rawText": "Koreańska zupa na kaca - przepis Yun\n● dwa suszone mintaje (lub filety/paski ~100g)\n● 2 ziemniaki\n● 2 papryczki Cheongyang (zielone, ostre, można pominąć)\n● 1 kawałek wodorostu kelp/konbu (lub bulion dashi)\n● olej z pachnotki (perilla), w ostateczności prażony sezamowy\n● sos sojowy do zup Joseon ganjang), w ostateczności zwykły jasny\n● gruby szczypior (zielona cebulka)\n● woda ryżowa\nKrok 1: Przygotowanie wody ryżowej\nSuchy ryż przepłukać pierwszy raz i wylać tą wodę. Następnie przepłukać go porządnie drugi\nraz 1l wody, a potem trzeci raz kolejnym 1l wody. Wodę z drugiego i trzeciego płukania zlać\nrazem, to jest woda ryżowa.\nKrok 2: Przygotowanie ryby do wywaru\nPotnij rybę w paski. Jak jest twarda to roztłucz ją najpierw. Delikatnie opal połowę ryby nad\npalnikiem aby nabrała złotego koloru. Drugą połowę zostaw do kroku nr 5.\nKrok 3: Przygotowanie pyrek\nObierz i pokrój pyry na niezbyt grube (0.5cm) półplastry lub ćwierćplastry jeśli są duże. Dodaj do\nszybkowaru trochę oleju z pachnotki, rozgrzej go i krótko przesmaż na nim pokrojone pyry.\nNastępnie dolewaj po łyżce wody ryżowej cały czas podsmażając, powinny się zrobić\npółprzejrzyste.\nKrok 4: Przygotowanie wywaru\nWrzuć do szybkowaru z pyrami: połowę ryby, kawałek wodorostu konbu, połowę posiekanego\nszczypioru, całą paprykę i zalej resztą wody ryżowej. Zamknij szybkowar i gotuj na dużym\nciśnieniu. Po osiągnięciu ciśnienia (jak pójdzie para przez zawór) gotuj 3min. Następnie wyjmij\nkonbu i paprykę, nie będą już potrzebne.\nKrok 5: Finisz\nZamarynuj drugą połowę ryby w sosie sojowym. Następnie podsmaż ją krótko na oleju z\npachnotki i zacznij dodawać po łyżce wywaru (podobnie jak z pyrami) nadal smażąc. Po paru\nminutach dodaj rybę do garnka z wywarem i gotuj przez 10min na małym ogniu, w otwartym\ngarnku. Dopraw solą morską do smaku. Podawaj z posiekanym szczypiorem.",
+  "ocr": {
+    "blocks": [
+      {
+        "bbox": [
+          213,
+          308,
+          1109,
+          361
+        ],
+        "page": 0,
+        "text": "Koreańska zupa na kaca - przepis Yun"
+      },
+      {
+        "bbox": [
+          379,
+          443,
+          934,
+          470
+        ],
+        "page": 0,
+        "text": "dwa suszone mintaje (lub filety/paski ~100g)"
+      },
+      {
+        "bbox": [
+          379,
+          484,
+          517,
+          505
+        ],
+        "page": 0,
+        "text": "2 ziemniaki"
+      },
+      {
+        "bbox": [
+          379,
+          524,
+          1097,
+          551
+        ],
+        "page": 0,
+        "text": "2 papryczki Cheongyang (zielone, ostre, można pominąć)"
+      },
+      {
+        "bbox": [
+          391,
+          561,
+          1015,
+          592
+        ],
+        "page": 0,
+        "text": "1 kawałek wodorostu kelp/konbu (lub bulion dashi)"
+      },
+      {
+        "bbox": [
+          379,
+          606,
+          1141,
+          633
+        ],
+        "page": 0,
+        "text": "olej z pachnotki (perilla), w ostateczności prażony sezamowy"
+      },
+      {
+        "bbox": [
+          379,
+          647,
+          1211,
+          674
+        ],
+        "page": 0,
+        "text": "sos sojowy do zup Joseon ganjang), w ostateczności zwykły jasny"
+      },
+      {
+        "bbox": [
+          379,
+          688,
+          793,
+          715
+        ],
+        "page": 0,
+        "text": "gruby szczypior (zielona cebulka)"
+      },
+      {
+        "bbox": [
+          378,
+          725,
+          544,
+          756
+        ],
+        "page": 0,
+        "text": "woda ryżowa"
+      },
+      {
+        "bbox": [
+          196,
+          808,
+          802,
+          853
+        ],
+        "page": 0,
+        "text": "Krok 1: Przygotowanie wody ryżowej"
+      },
+      {
+        "bbox": [
+          194,
+          869,
+          1361,
+          902
+        ],
+        "page": 0,
+        "text": "Suchy ryż przepłukać pierwszy raz i wylać tą wodę. Następnie przepłukać go porządnie drugi"
+      },
+      {
+        "bbox": [
+          195,
+          911,
+          1339,
+          942
+        ],
+        "page": 0,
+        "text": "raz 1l wody, a potem trzeci raz kolejnym 1l wody. VWodę z drugiego i trzeciego płukania zlać"
+      },
+      {
+        "bbox": [
+          195,
+          955,
+          542,
+          981
+        ],
+        "page": 0,
+        "text": "razem, to jest woda ryżowa."
+      },
+      {
+        "bbox": [
+          196,
+          1045,
+          838,
+          1080
+        ],
+        "page": 0,
+        "text": "Krok 2: Przygotowanie ryby do wywaru"
+      },
+      {
+        "bbox": [
+          195,
+          1132,
+          1340,
+          1162
+        ],
+        "page": 0,
+        "text": "Potnij rybę w paski. Jak jest twarda to roztłucz ją najpierw. Delikatnie opal połowę ryby nad"
+      },
+      {
+        "bbox": [
+          195,
+          1175,
+          1123,
+          1200
+        ],
+        "page": 0,
+        "text": "palnikiem aby nabrała złotego koloru. Drugą połowę zostaw do kroku nr 5."
+      },
+      {
+        "bbox": [
+          196,
+          1260,
+          671,
+          1295
+        ],
+        "page": 0,
+        "text": "Krok 3: Przygotowanie pyrek"
+      },
+      {
+        "bbox": [
+          194,
+          1316,
+          1401,
+          1347
+        ],
+        "page": 0,
+        "text": "Obierz i pokrój pyry na niezbyt grube (0.5cm) półplastry lub ćwierćplastry jeśli są duże. Dodaj do"
+      },
+      {
+        "bbox": [
+          194,
+          1358,
+          1329,
+          1390
+        ],
+        "page": 0,
+        "text": "szybkowaru trochę oleju z pachnotki, rozgrzej go i krótko przesmaż na nim pokrojone pyry."
+      },
+      {
+        "bbox": [
+          195,
+          1400,
+          1266,
+          1427
+        ],
+        "page": 0,
+        "text": "Następnie dolewaj po łyżce wody ryżowej cały czas podsmażając, powinny się zrobić"
+      },
+      {
+        "bbox": [
+          195,
+          1441,
+          372,
+          1468
+        ],
+        "page": 0,
+        "text": "półprzejrzyste."
+      },
+      {
+        "bbox": [
+          195,
+          1545,
+          704,
+          1588
+        ],
+        "page": 0,
+        "text": "Krok 4: Przygotowanie wywaru"
+      },
+      {
+        "bbox": [
+          214,
+          1613,
+          1375,
+          1641
+        ],
+        "page": 0,
+        "text": "Wrzuć do szybkowaru z pyrami: połowe ryby, kawałek wodorostu konbu, połowę posiekanego"
+      },
+      {
+        "bbox": [
+          194,
+          1654,
+          1318,
+          1686
+        ],
+        "page": 0,
+        "text": "Szczypioru, całą paprykę i zalej resztą wody ryżowej. Zamknij szybkowar i gotuj na dużym"
+      },
+      {
+        "bbox": [
+          194,
+          1697,
+          1368,
+          1724
+        ],
+        "page": 0,
+        "text": "ciśnieniu. Po osiągnięciu ciśnienia (jak pójdzie para przez zawón) gotuj 3min. Następnie wyjmij"
+      },
+      {
+        "bbox": [
+          195,
+          1735,
+          703,
+          1766
+        ],
+        "page": 0,
+        "text": "konbu i paprykę, nie będą już potrzebne."
+      },
+      {
+        "bbox": [
+          196,
+          1823,
+          420,
+          1851
+        ],
+        "page": 0,
+        "text": "Krok 5: Finisz"
+      },
+      {
+        "bbox": [
+          205,
+          1880,
+          1301,
+          1911
+        ],
+        "page": 0,
+        "text": "Zamarynuj drugą połowę ryby w sosie sojowym. Następnie podsmaż ją krótko na oleju z"
+      },
+      {
+        "bbox": [
+          204,
+          1921,
+          1360,
+          1951
+        ],
+        "page": 0,
+        "text": "pachnotki i zacznij dodawać po tyżce wywaru (podobnie jak z pyrami) nadal smażąc. Po paru"
+      },
+      {
+        "bbox": [
+          195,
+          1964,
+          1350,
+          1993
+        ],
+        "page": 0,
+        "text": "minutach dodaj rybę do garnka z wywarem i gotuj przez 1Omin na małym ogniu, w otwartym"
+      },
+      {
+        "bbox": [
+          194,
+          2005,
+          1162,
+          2031
+        ],
+        "page": 0,
+        "text": "garnku. Dopraw solą morską do smaku. Podawaj z posiekanym szczypiorem."
+      }
+    ],
+    "source": "PDF_RENDER",
+    "text": "Koreańska zupa na kaca - przepis Yun\ndwa suszone mintaje (lub filety/paski ~100g)\n2 ziemniaki\n2 papryczki Cheongyang (zielone, ostre, można pominąć)\n1 kawałek wodorostu kelp/konbu (lub bulion dashi)\nolej z pachnotki (perilla), w ostateczności prażony sezamowy\nsos sojowy do zup Joseon ganjang), w ostateczności zwykły jasny\ngruby szczypior (zielona cebulka)\nwoda ryżowa\nKrok 1: Przygotowanie wody ryżowej\nSuchy ryż przepłukać pierwszy raz i wylać tą wodę. Następnie przepłukać go porządnie drugi\nraz 1l wody, a potem trzeci raz kolejnym 1l wody. VWodę z drugiego i trzeciego płukania zlać\nrazem, to jest woda ryżowa.\nKrok 2: Przygotowanie ryby do wywaru\nPotnij rybę w paski. Jak jest twarda to roztłucz ją najpierw. Delikatnie opal połowę ryby nad\npalnikiem aby nabrała złotego koloru. Drugą połowę zostaw do kroku nr 5.\nKrok 3: Przygotowanie pyrek\nObierz i pokrój pyry na niezbyt grube (0.5cm) półplastry lub ćwierćplastry jeśli są duże. Dodaj do\nszybkowaru trochę oleju z pachnotki, rozgrzej go i krótko przesmaż na nim pokrojone pyry.\nNastępnie dolewaj po łyżce wody ryżowej cały czas podsmażając, powinny się zrobić\npółprzejrzyste.\nKrok 4: Przygotowanie wywaru\nWrzuć do szybkowaru z pyrami: połowe ryby, kawałek wodorostu konbu, połowę posiekanego\nSzczypioru, całą paprykę i zalej resztą wody ryżowej. Zamknij szybkowar i gotuj na dużym\nciśnieniu. Po osiągnięciu ciśnienia (jak pójdzie para przez zawón) gotuj 3min. Następnie wyjmij\nkonbu i paprykę, nie będą już potrzebne.\nKrok 5: Finisz\nZamarynuj drugą połowę ryby w sosie sojowym. Następnie podsmaż ją krótko na oleju z\npachnotki i zacznij dodawać po tyżce wywaru (podobnie jak z pyrami) nadal smażąc. Po paru\nminutach dodaj rybę do garnka z wywarem i gotuj przez 1Omin na małym ogniu, w otwartym\ngarnku. Dopraw solą morską do smaku. Podawaj z posiekanym szczypiorem.",
+    "truncated": false
+  },
+  "attachments": [],
+  "diagnostics": {
+    "errors": [],
+    "notes": [
+      "intent action=android.intent.action.SEND type=application/pdf referrer=android-app://com.android.shell extras={android.intent.extra.STREAM=StringUri}",
+      "pdf content://com.gatar.recipedealer.fileprovider/captures/zupa.pdf pages=1 textApi=true"
+    ],
+    "stageTimingsMs": {
+      "pdf": 1108
+    }
+  }
+}

@@ -1,0 +1,115 @@
+{
+  "schemaVersion": 2,
+  "captureId": "b33ac630-a5ee-4eda-a713-7f8ab118e7e5",
+  "capturedAt": "2026-10-11T15:11:22.134926Z",
+  "recipe": {
+    "times": {},
+    "ingredientGroups": [
+      {
+        "name": "Biszkopt kokosowy",
+        "items": [
+          "6 jajek (w temperaturze pokojowej)",
+          "1 szklanka cukru",
+          "3/4 szklanki mąki pszennej",
+          "1/4 szklanki mąki ziemniaczanej",
+          "1/2 szklanki wiórkóW kokosowych (można je lekko zmielić)",
+          "Szczypta soli"
+        ]
+      },
+      {
+        "name": "Krem kokosowo-śmietankowy",
+        "items": [
+          "500 ml śmietanki 36% (schłodzonej)",
+          "250 g serka mascarpone (schłodzonego)",
+          "4-5 łyżek cukru pudru (do smaku)",
+          "4-5 łyżek wiórkóW kokosowych lub 2 łyżki pasty kokosowej (dla głębszego smaku)",
+          "Śmi-fix (opcjonalnie, dla stabilizacji)"
+        ]
+      },
+      {
+        "name": "Wkładka ananasowa (żelka/frużelina)",
+        "items": [
+          "1 puszka ananasa w krążkach lub kawałkach (ok. 565g)",
+          "2 łyżki soku z cytryny",
+          "2-3 łyżki cukru (zależnie od słodkości owoców)",
+          "2 czubate łyżki skrobi ziemniaczanej lub mąki ziemniaczanej rozpuszczone w 3 łyżkach zimnej wody"
+        ]
+      },
+      {
+        "name": "Poncz do nasączenia",
+        "items": [
+          "Sok z puszki ananasa wymieszany z odrobiną wody i kilkoma kroplami soku z cytryny (można dodać odrobinę białego rumu, jeśli tort jest tylko dla dorosłych)."
+        ]
+      }
+    ],
+    "stepGroups": [
+      {
+        "name": "Krok 1: Biszkopt",
+        "items": [
+          "Piekarnik rozgrzej do 175°C (góra-dół). Dno tortownicy (20-22 cm) wyłóż papierem do pieczenia (boków nie smaruj tłuszczem).",
+          "Białka oddziel od żółtek. Ubij je na sztywną pianę ze szczyptą soli. Pod koniec ubijania dodawaj stopniowo cukier, łyżka po łyżce, cały czas miksując, aż powstała beza będzie lśniąca i sztywna.",
+          "Dodawaj żółtka po jednym, miksując krótko na niskich obrotach tylko do połączenia.",
+          "Przesiej obie mąki i wymieszaj je delikatnie szpatułką z ubijanymi jajkami, a na końcu wmieszaj wiórki kokosowe.",
+          "Przelej ciasto do formy i piecz przez około 35-40 minut (do suchego patyczka). Po upieczeniu upuść biszkopt w formie na podłogę z wysokości około 30 cm (to zapobiegnie jego opadnięciu), a następnie odwróć do góry dnem i wystudź. Przekrój na 3 blaty dopiero po całkowitym ostygnięciu."
+        ]
+      },
+      {
+        "name": "Krok 2: Wkładka ananasowa",
+        "items": [
+          "Ananasy odsącz na sitku, zachowując sok do nasączenia. Pokrój owoce na drobną kostkę.",
+          "Przełóż ananasy do rondelka, dodaj sok z cytryny i cukier. Podgrzewaj przez kilka minut.",
+          "Dodaj rozpuszczoną w wodzie skrobię ziemniaczaną, energicznie mieszając. Gotuj przez 1-2 minuty, aż całość zgęstnieje i zrobi się przejrzysta. Odstaw do ostygnięcia."
+        ]
+      },
+      {
+        "name": "Krok 3: Krem kokosowy",
+        "items": [
+          "Do miski wlej schłodzoną śmietankę 36%, dodaj serek mascarpone, cukier pudru oraz wiórki kokosowe (lub pastę kokosową).",
+          "Ubijaj całość mikserem na średnich, a potem wyższych obrotach, aż krem stanie się gęsty i sztywny. Uważaj, aby nie przebić śmietanki."
+        ]
+      },
+      {
+        "items": [
+          "Pierwszy blat biszkoptowy ułóż na paterze i nasącz przygotowanym ponczem z soku ananasowego.",
+          "Nałóż 1/3 kremu kokosowego, wyrównaj, a na środku zrób wałeczek z kremu (tworząc \"zapornik\"), w którego środek wyłóż połowę żelki ananasowej.",
+          "Przykryj drugim blatem biszkoptowym, lekko ddociskając, nasącz go i powtórz warstwę kremu oraz resztę ananasów.",
+          "Nałóż trzeci blat biszkoptowy, nasącz go od spodu (lub z góry po nałożeniu) i pokryj resztą kremu boki oraz wierzch tortu."
+        ]
+      }
+    ],
+    "notes": [],
+    "images": [],
+    "source": {
+      "type": "TEXT",
+      "sharedFrom": "com.android.shell",
+      "files": []
+    }
+  },
+  "completeness": {
+    "score": 0.8,
+    "bestStage": "heuristic",
+    "hasTitle": false,
+    "hasIngredients": true,
+    "hasSteps": true
+  },
+  "provenance": {
+    "ingredients": "heuristic",
+    "steps": "heuristic"
+  },
+  "rawText": "Oto sprawdzony, domowy przepis krok po kroku na tort o średnicy około 20-22 cm.\n1. Składniki\nBiszkopt kokosowy:\n6 jajek (w temperaturze pokojowej)\n1 szklanka cukru\n3/4 szklanki mąki pszennej\n1/4 szklanki mąki ziemniaczanej\n1/2 szklanki wiórkóW kokosowych (można je lekko zmielić)\nSzczypta soli\nKrem kokosowo-śmietankowy:\n500 ml śmietanki 36% (schłodzonej)\n250 g serka mascarpone (schłodzonego)\n4-5 łyżek cukru pudru (do smaku)\n4-5 łyżek wiórkóW kokosowych lub 2 łyżki pasty kokosowej (dla głębszego smaku)\nŚmi-fix (opcjonalnie, dla stabilizacji)\nWkładka ananasowa (żelka/frużelina):\n1 puszka ananasa w krążkach lub kawałkach (ok. 565g)\n2 łyżki soku z cytryny\n2-3 łyżki cukru (zależnie od słodkości owoców)\n2 czubate łyżki skrobi ziemniaczanej lub mąki ziemniaczanej rozpuszczone w 3 łyżkach zimnej wody\nPoncz do nasączenia:\nSok z puszki ananasa wymieszany z odrobiną wody i kilkoma kroplami soku z cytryny (można dodać odrobinę białego rumu, jeśli tort jest tylko dla dorosłych).\n2. Przygotowanie krok po kroku\nKrok 1: Biszkopt\nPiekarnik rozgrzej do 175°C (góra-dół). Dno tortownicy (20-22 cm) wyłóż papierem do pieczenia (boków nie smaruj tłuszczem).\nBiałka oddziel od żółtek. Ubij je na sztywną pianę ze szczyptą soli. Pod koniec ubijania dodawaj stopniowo cukier, łyżka po łyżce, cały czas miksując, aż powstała beza będzie lśniąca i sztywna.\nDodawaj żółtka po jednym, miksując krótko na niskich obrotach tylko do połączenia.\nPrzesiej obie mąki i wymieszaj je delikatnie szpatułką z ubijanymi jajkami, a na końcu wmieszaj wiórki kokosowe.\nPrzelej ciasto do formy i piecz przez około 35-40 minut (do suchego patyczka). Po upieczeniu upuść biszkopt w formie na podłogę z wysokości około 30 cm (to zapobiegnie jego opadnięciu), a następnie odwróć do góry dnem i wystudź. Przekrój na 3 blaty dopiero po całkowitym ostygnięciu.\nKrok 2: Wkładka ananasowa\nAnanasy odsącz na sitku, zachowując sok do nasączenia. Pokrój owoce na drobną kostkę.\nPrzełóż ananasy do rondelka, dodaj sok z cytryny i cukier. Podgrzewaj przez kilka minut.\nDodaj rozpuszczoną w wodzie skrobię ziemniaczaną, energicznie mieszając. Gotuj przez 1-2 minuty, aż całość zgęstnieje i zrobi się przejrzysta. Odstaw do ostygnięcia.\nKrok 3: Krem kokosowy\nDo miski wlej schłodzoną śmietankę 36%, dodaj serek mascarpone, cukier pudru oraz wiórki kokosowe (lub pastę kokosową).\nUbijaj całość mikserem na średnich, a potem wyższych obrotach, aż krem stanie się gęsty i sztywny. Uważaj, aby nie przebić śmietanki.\n3. Składanie tortu\nPierwszy blat biszkoptowy ułóż na paterze i nasącz przygotowanym ponczem z soku ananasowego.\nNałóż 1/3 kremu kokosowego, wyrównaj, a na środku zrób wałeczek z kremu (tworząc \"zapornik\"), w którego środek wyłóż połowę żelki ananasowej.\nPrzykryj drugim blatem biszkoptowym, lekko ddociskając, nasącz go i powtórz warstwę kremu oraz resztę ananasów.\nNałóż trzeci blat biszkoptowy, nasącz go od spodu (lub z góry po nałożeniu) i pokryj resztą kremu boki oraz wierzch tortu.\n4. Dekoracja i chłodzenie\nDekoracja: Tort w stylu tropikalnym świetnie wygląda ozdobiony dodatkowymi wiórkami kokosowymi na bokach, plasterkami suszonego ananasa, świeżymi liśćmi ananasa lub koktajlowymi parasolkami.\nChłodzenie: Wstaw gotowy tort do lodówki na minimum 4-6 godzin, a najlepiej na całą noc, aby smaki dobrze się połączyły, a warstwy stabilizowały.",
+  "attachments": [],
+  "diagnostics": {
+    "errors": [],
+    "notes": [
+      "intent action=android.intent.action.SEND type=text/plain referrer=android-app://com.android.shell extras={android.intent.extra.TEXT=String(3320)'Oto sprawdzony, domowy przepis krok po kroku na tort o średnicy około 20-22 cm.\n1. Składniki\nBiszkopt kokosowy:\n6 jajek (w temperaturze pokojowej)\n1 szklanka cukru\n3/4 szklanki mąki pszennej\n1/4 szkla…'}"
+    ],
+    "stageTimingsMs": {
+      "js.jsonLd": 0,
+      "js.microdata": 0,
+      "js.pluginHits": 0,
+      "js.readability": 0,
+      "js.heuristic": 15,
+      "textExtract": 431
+    }
+  }
+}

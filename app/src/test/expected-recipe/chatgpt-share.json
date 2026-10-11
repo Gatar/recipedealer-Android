@@ -1,0 +1,46 @@
+{
+  "recipe": {
+    "title": "Placki ziemniaczane – chrupiące i złociste",
+    "language": "en",
+    "times": {},
+    "ingredientGroups": [
+      {
+        "items": [
+          "1 kg ziemniaków",
+          "1 średnia cebula",
+          "1 jajko",
+          "Olej do smażenia"
+        ]
+      }
+    ],
+    "stepGroups": [
+      {
+        "items": [
+          "Zetrzyj ziemniaki: Obierz ziemniaki i cebulę. Zetrzyj je na tarce o drobnych oczkach.",
+          "Przygotuj masę: Dodaj jajko i sól. Dokładnie wymieszaj.",
+          "Usmaż na złoto: Smaż na średnim ogniu przez około 3–4 minuty z każdej strony."
+        ]
+      }
+    ],
+    "notes": [],
+    "images": [],
+    "source": {
+      "type": "WEB",
+      "url": "https://example.test/chatgpt-share",
+      "siteName": "ChatGPT",
+      "files": []
+    }
+  },
+  "provenance": {
+    "title": "heuristic",
+    "ingredients": "heuristic",
+    "steps": "heuristic"
+  },
+  "completeness": {
+    "score": 1.0,
+    "bestStage": "heuristic",
+    "hasTitle": true,
+    "hasIngredients": true,
+    "hasSteps": true
+  }
+}

@@ -1,0 +1,162 @@
+{
+  "schemaVersion": 2,
+  "captureId": "ea6294aa-6798-42f4-9d9f-f20b4205287d",
+  "capturedAt": "2026-10-11T14:45:05.535543Z",
+  "recipe": {
+    "title": "Przepis na czerwone curry",
+    "language": "en",
+    "times": {},
+    "ingredientGroups": [
+      {
+        "items": [
+          "Mięso: 400 g piersi lub udków z kurczaka (pokrojonych w paski)",
+          "1 puszkowane mleczko kokosowe (400 ml, najlepiej min. 70% ekstraktu)",
+          "2–3 łyżki czerwonej pasty curry (zależnie od tego, jak pikantne dania lubisz)",
+          "1/2 szklanki bulionu (drobiowego lub warzywnego) lub wody",
+          "1 czerwona papryka (pokrojona w paski)",
+          "1 mała cukinia (pokrojona w półplasterki)",
+          "Garść pędów bambusa lub małych kolb kukurydzy (opcjonalnie)",
+          "1 łyżka sosu rybnego (lub sosu sojowego)",
+          "1 łyżeczka cukru (najlepiej palmowego lub brązowego)",
+          "Sok z 1/2 limonki",
+          "Świeża kolendra lub tajska bazylia do dekoracji",
+          "1 łyżka oleju do smażenia"
+        ]
+      }
+    ],
+    "stepGroups": [
+      {
+        "items": [
+          "Podsmażenie pasty: W głębokiej patelni lub woku rozgrzej olej. Dodaj czerwoną pastę curry i smaż ją na średnim ogniu przez około 1 minutę, aż zacznie intensywnie pachnieć.",
+          "Dodanie mleczka: Wlej około 1/3 puszki mleczka kokosowego. Mieszaj dokładnie z pastą, aż składniki się połączą i zacznie wydzielać się tłuszcz.",
+          "Dodanie kurczaka: Wrzuć pokrojonego kurczaka i smaż przez około 3–4 minuty, aż mięso zmieni kolor z zewnątrz.",
+          "Gotowanie z warzywami: Wlej resztę mleczka kokosowego oraz bulion (lub wodę). Dodaj paprykę i cukinię. Całość doprowadź do wrzenia, po czym zmniejsz ogień i gotuj na wolnym ogniu przez około 8–10 minut, aż warzywa będą miękkie, ale wciąż lekko chrupiące.",
+          "Doprawianie: Dodaj sos rybny (lub sojowy) oraz cukier. Wymieszaj i gotuj jeszcze przez minutę. Na samym końcu zdejmij patelnię z ognia i wciśnij sok z limonki."
+        ]
+      }
+    ],
+    "notes": [],
+    "images": [
+      "https://www.gstatic.com/lamda/images/gemini_aurora_thumbnail_4g_e74822ff0ca4259beb718.png"
+    ],
+    "source": {
+      "type": "WEB",
+      "url": "https://gemini.google.com/share/0b4cbe621433",
+      "siteName": "Gemini",
+      "sharedFrom": "com.android.shell",
+      "files": []
+    }
+  },
+  "completeness": {
+    "score": 1.0,
+    "bestStage": "heuristic",
+    "hasTitle": true,
+    "hasIngredients": true,
+    "hasSteps": true
+  },
+  "provenance": {
+    "title": "heuristic",
+    "ingredients": "heuristic",
+    "steps": "heuristic",
+    "images": "page"
+  },
+  "web": {
+    "canonicalUrl": "https://gemini.google.com/share/0b4cbe621433",
+    "finalUrl": "https://gemini.google.com/share/0b4cbe621433?social_preview=false&skid=4ad20ff9-a0e0-40e3-a8da-0a34fae6fbec",
+    "heuristic": {
+      "articleTitle": null,
+      "recipeHeading": "Przepis na czerwone curry",
+      "usedBodyFallback": true,
+      "servings": null,
+      "ingredients": [
+        {
+          "name": null,
+          "items": [
+            "Mięso: 400 g piersi lub udków z kurczaka (pokrojonych w paski)",
+            "1 puszkowane mleczko kokosowe (400 ml, najlepiej min. 70% ekstraktu)",
+            "2–3 łyżki czerwonej pasty curry (zależnie od tego, jak pikantne dania lubisz)",
+            "1/2 szklanki bulionu (drobiowego lub warzywnego) lub wody",
+            "1 czerwona papryka (pokrojona w paski)",
+            "1 mała cukinia (pokrojona w półplasterki)",
+            "Garść pędów bambusa lub małych kolb kukurydzy (opcjonalnie)",
+            "1 łyżka sosu rybnego (lub sosu sojowego)",
+            "1 łyżeczka cukru (najlepiej palmowego lub brązowego)",
+            "Sok z 1/2 limonki",
+            "Świeża kolendra lub tajska bazylia do dekoracji",
+            "1 łyżka oleju do smażenia"
+          ]
+        }
+      ],
+      "instructions": [
+        {
+          "name": null,
+          "items": [
+            "Podsmażenie pasty: W głębokiej patelni lub woku rozgrzej olej. Dodaj czerwoną pastę curry i smaż ją na średnim ogniu przez około 1 minutę, aż zacznie intensywnie pachnieć.",
+            "Dodanie mleczka: Wlej około 1/3 puszki mleczka kokosowego. Mieszaj dokładnie z pastą, aż składniki się połączą i zacznie wydzielać się tłuszcz.",
+            "Dodanie kurczaka: Wrzuć pokrojonego kurczaka i smaż przez około 3–4 minuty, aż mięso zmieni kolor z zewnątrz.",
+            "Gotowanie z warzywami: Wlej resztę mleczka kokosowego oraz bulion (lub wodę). Dodaj paprykę i cukinię. Całość doprowadź do wrzenia, po czym zmniejsz ogień i gotuj na wolnym ogniu przez około 8–10 minut, aż warzywa będą miękkie, ale wciąż lekko chrupiące.",
+            "Doprawianie: Dodaj sos rybny (lub sojowy) oraz cukier. Wymieszaj i gotuj jeszcze przez minutę. Na samym końcu zdejmij patelnię z ognia i wciśnij sok z limonki."
+          ]
+        }
+      ],
+      "notes": []
+    },
+    "jsonLd": [
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "Gemini",
+        "url": "https://gemini.google.com"
+      }
+    ],
+    "lang": "en-US",
+    "microdata": [],
+    "ogImage": "https://www.gstatic.com/lamda/images/gemini_aurora_thumbnail_4g_e74822ff0ca4259beb718.png",
+    "pluginHits": {
+      "wprm": {
+        "found": false,
+        "containerCount": 0,
+        "fieldMatches": {},
+        "recipe": {}
+      },
+      "tasty": {
+        "found": false,
+        "containerCount": 0,
+        "fieldMatches": {},
+        "recipe": {}
+      },
+      "mediavine": {
+        "found": false,
+        "containerCount": 0,
+        "fieldMatches": {},
+        "recipe": {}
+      }
+    },
+    "renderTimeMs": 7627,
+    "siteName": "Gemini",
+    "stabilized": true,
+    "title": "‎Gemini - direct access to Google AI",
+    "visibility": "visible"
+  },
+  "attachments": [],
+  "diagnostics": {
+    "errors": [
+      "extractor.js readability: Failed to set the 'innerHTML' property on 'Element': This document requires 'TrustedHTML' assignment."
+    ],
+    "notes": [
+      "intent action=android.intent.action.SEND type=text/plain referrer=android-app://com.android.shell extras={android.intent.extra.TEXT=String(40)'https://share.gemini.google/3D31VIKKZhf8'}",
+      "mode=visible",
+      "extractionTrigger=stable"
+    ],
+    "stageTimingsMs": {
+      "stabilize": 7627,
+      "extractRoundTrip": 44,
+      "js.jsonLd": 1,
+      "js.microdata": 0,
+      "js.pluginHits": 0,
+      "js.readability": 17,
+      "js.heuristic": 33,
+      "merge": 3
+    }
+  }
+}

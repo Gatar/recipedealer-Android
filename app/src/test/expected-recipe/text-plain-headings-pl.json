@@ -1,0 +1,44 @@
+{
+  "recipe": {
+    "title": "Podpłomyki",
+    "times": {},
+    "ingredientGroups": [
+      {
+        "items": [
+          "2 szklanki mąki pszennej",
+          "¾ szklanki wody",
+          "½ łyżeczki soli"
+        ]
+      }
+    ],
+    "stepGroups": [
+      {
+        "items": [
+          "Wszystkie składniki zagniatamy na jednolite ciasto",
+          "Przykrywamy ciasto ściereczką na 15 min",
+          "Pieczemy na suchej patelni z obu stron.",
+          "Smacznego!"
+        ]
+      }
+    ],
+    "notes": [],
+    "images": [],
+    "source": {
+      "type": "WEB",
+      "url": "https://example.test/text-plain-headings-pl",
+      "files": []
+    }
+  },
+  "provenance": {
+    "title": "heuristic",
+    "ingredients": "heuristic",
+    "steps": "heuristic"
+  },
+  "completeness": {
+    "score": 1.0,
+    "bestStage": "heuristic",
+    "hasTitle": true,
+    "hasIngredients": true,
+    "hasSteps": true
+  }
+}

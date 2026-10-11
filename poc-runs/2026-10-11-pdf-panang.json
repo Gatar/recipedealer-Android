@@ -1,0 +1,576 @@
+{
+  "schemaVersion": 2,
+  "captureId": "2a5b178c-83a7-4ec5-815c-2903415bc4ec",
+  "capturedAt": "2026-10-11T14:53:37.542884Z",
+  "recipe": {
+    "times": {},
+    "ingredientGroups": [],
+    "stepGroups": [],
+    "notes": [],
+    "images": [],
+    "source": {
+      "type": "PDF",
+      "sharedFrom": "com.android.shell",
+      "files": [
+        "panang.pdf"
+      ]
+    }
+  },
+  "completeness": {
+    "score": 0.0,
+    "bestStage": "ocr",
+    "hasTitle": false,
+    "hasIngredients": false,
+    "hasSteps": false
+  },
+  "provenance": {},
+  "rawText": "The Best Thai Panang Chicken Curry\nThe Best Thai Panang Chicken Curry Recipe - The most amazing red chicken\ncurry we've ever made! This light and healthy dish is better than any takeout\noption out there, and it's easy to make.\n10 mins 22 mins 32 mins\nMain Course Thai 6 340kcal\nSommer Collier\nIngredients\nInstructions\nNotes\nThere are some ingredients that may need to be purchased at an Asian food market, but this\nrecipe is worth the trip! Most likely: panang red curry paste, kaffir lime leaves, thick canned\ncoconut milk, fish sauce, and Thai basil. Kaffir lime leaves can be kept in the freezer. They turn\ndark, but retain their flavor. Kaffir lime leaves stay a little tough, even after cooking. You can eat\nthem, eat around them, or take them out after cooking.\nPrep Time Cook Time Total Time\nCourse: Cuisine: Servings: Calories:\nAuthor:\n680.39 g boneless skinless chicken thighs\nchopped\n1 small onion, peeled and chopped\n1 red bell pepper, seeded and chopped\n1 orange bell pepper, seeded and chopped\n2 cloves garlic, minced\n14.79 ml coconut oil\n113.4 g Panang red curry paste\n(1 can)\n14.79 ml peanut butter\n12 kaffir lime leaves, crushed\n382.72 g thick coconut milk, unsweetened (1 can)\n3 tablespons fish sauce\n6 g Thai basil leaves\nor sweet basil\n1. Cut the chicken into bite-size pieces. Chop the onions and peppers into rough 1-inch pieces.\nMince the garlic. Then crush the kaffir lime leaves to help release their oils.\n2. Place a 14-inch skillet (or wok) over medium-high heat. Add the coconut oil. Once the oil\nmelts, add the onions. Sauté for 1 minute, then add the peppers and garlic. Sauté another 2-3\nminutes.\n3. Move the veggies to the sides of the skillet and add the panang red curry paste and peanut\nbutter to the center of the pan. Sauté the curry for 2-3 minutes to intensify the flavor, moving\naround the pan. Then add the kaffir lime leaves, coconut milk, and fish sauce. Stir to blend.\n4. Stir in the chopped chicken and bring to a boil. Lower the heat and simmer for 10-15 minutes,\nuntil the chicken is cooked through and the sauce thickens. Stir occasionally. Remove from\nheat and stir in the basil leaves. Serve with rice, quinoa, or noodles.\n4.91 from 221 votes\n\nNutrition\nServing: 6ounces | Calories: 340kcal | Carbohydrates: 8g | Protein: 24g | Fat: 23g | Saturated Fat: 16g |\nCholesterol: 107mg | Sodium: 163mg | Potassium: 545mg | Fiber: 2g | Sugar: 4g | Vitamin A: 4300IU |\nVitamin C: 54.7mg | Calcium: 56mg | Iron: 3.8mg\nAll images and text ©Sommer Collier for A Spicy Perspective",
+  "ocr": {
+    "blocks": [
+      {
+        "bbox": [
+          170,
+          147,
+          1027,
+          198
+        ],
+        "page": 0,
+        "text": "The Best Thai Panang Chicken Curry"
+      },
+      {
+        "bbox": [
+          169,
+          225,
+          1147,
+          253
+        ],
+        "page": 0,
+        "text": "The Best Thai Panang Chicken Curry Recipe - The most amazing red chicken"
+      },
+      {
+        "bbox": [
+          170,
+          267,
+          1138,
+          293
+        ],
+        "page": 0,
+        "text": "curry we've ever made! This light and healthy dish is better than any takeout"
+      },
+      {
+        "bbox": [
+          170,
+          312,
+          659,
+          340
+        ],
+        "page": 0,
+        "text": "option out there, and it's easy to make."
+      },
+      {
+        "bbox": [
+          285,
+          395,
+          411,
+          424
+        ],
+        "page": 0,
+        "text": "Prep Time"
+      },
+      {
+        "bbox": [
+          620,
+          395,
+          756,
+          420
+        ],
+        "page": 0,
+        "text": "Cook Time"
+      },
+      {
+        "bbox": [
+          962,
+          397,
+          1097,
+          419
+        ],
+        "page": 0,
+        "text": "Total Time"
+      },
+      {
+        "bbox": [
+          643,
+          439,
+          733,
+          466
+        ],
+        "page": 0,
+        "text": "22 mins"
+      },
+      {
+        "bbox": [
+          984,
+          439,
+          1074,
+          465
+        ],
+        "page": 0,
+        "text": "32 mins"
+      },
+      {
+        "bbox": [
+          303,
+          440,
+          392,
+          465
+        ],
+        "page": 0,
+        "text": "10 mins"
+      },
+      {
+        "bbox": [
+          1230,
+          506,
+          1435,
+          524
+        ],
+        "page": 0,
+        "text": "4.91 from 221 votes"
+      },
+      {
+        "bbox": [
+          866,
+          517,
+          1073,
+          543
+        ],
+        "page": 0,
+        "text": "Calories: 340kcal"
+      },
+      {
+        "bbox": [
+          474,
+          520,
+          636,
+          542
+        ],
+        "page": 0,
+        "text": "Cuisine: Thai"
+      },
+      {
+        "bbox": [
+          170,
+          521,
+          436,
+          542
+        ],
+        "page": 0,
+        "text": "Course: Main Course"
+      },
+      {
+        "bbox": [
+          682,
+          521,
+          821,
+          546
+        ],
+        "page": 0,
+        "text": "Servings: 6"
+      },
+      {
+        "bbox": [
+          169,
+          564,
+          468,
+          586
+        ],
+        "page": 0,
+        "text": "Author: Sommer Collier"
+      },
+      {
+        "bbox": [
+          171,
+          646,
+          343,
+          681
+        ],
+        "page": 0,
+        "text": "Ingredients"
+      },
+      {
+        "bbox": [
+          235,
+          695,
+          894,
+          723
+        ],
+        "page": 0,
+        "text": "680.39 g boneless skinless chicken thighs chopped"
+      },
+      {
+        "bbox": [
+          203,
+          737,
+          679,
+          768
+        ],
+        "page": 0,
+        "text": "• 1 small onion, peeled and chopped"
+      },
+      {
+        "bbox": [
+          250,
+          778,
+          726,
+          812
+        ],
+        "page": 0,
+        "text": "1 red bell pepper, seeded and chopped"
+      },
+      {
+        "bbox": [
+          203,
+          825,
+          211,
+          855
+        ],
+        "page": 0,
+        "text": "•"
+      },
+      {
+        "bbox": [
+          250,
+          825,
+          774,
+          855
+        ],
+        "page": 0,
+        "text": "1 orange bell pepper, seeded and chopped"
+      },
+      {
+        "bbox": [
+          212,
+          865,
+          525,
+          897
+        ],
+        "page": 0,
+        "text": "• 2 cloves garlic, minced"
+      },
+      {
+        "bbox": [
+          203,
+          913,
+          494,
+          935
+        ],
+        "page": 0,
+        "text": "• 14.79 ml coconut oil"
+      },
+      {
+        "bbox": [
+          203,
+          956,
+          729,
+          988
+        ],
+        "page": 0,
+        "text": "• 113.4 g Panang red curry paste (1 can)"
+      },
+      {
+        "bbox": [
+          236,
+          1000,
+          525,
+          1028
+        ],
+        "page": 0,
+        "text": "14.79 ml peanut butter"
+      },
+      {
+        "bbox": [
+          203,
+          1044,
+          605,
+          1071
+        ],
+        "page": 0,
+        "text": "• 12 kaffir lime leaves, crushed"
+      },
+      {
+        "bbox": [
+          235,
+          1086,
+          871,
+          1115
+        ],
+        "page": 0,
+        "text": "382.72 g thick coconut milk, unsweetened (1 can)"
+      },
+      {
+        "bbox": [
+          203,
+          1130,
+          538,
+          1158
+        ],
+        "page": 0,
+        "text": "• 3 tablespons fish sauce"
+      },
+      {
+        "bbox": [
+          239,
+          1175,
+          678,
+          1201
+        ],
+        "page": 0,
+        "text": "6g Thai basil leaves or sweet basil"
+      },
+      {
+        "bbox": [
+          171,
+          1259,
+          356,
+          1285
+        ],
+        "page": 0,
+        "text": "Instructions"
+      },
+      {
+        "bbox": [
+          204,
+          1305,
+          1403,
+          1332
+        ],
+        "page": 0,
+        "text": "1. Cut the chicken into bite-size pieces. Chop the onions and peppers into rough 1-inch pieces."
+      },
+      {
+        "bbox": [
+          235,
+          1349,
+          1188,
+          1376
+        ],
+        "page": 0,
+        "text": "Mince the garlic. Then crush the kaffir lime leaves to help release their oils."
+      },
+      {
+        "bbox": [
+          203,
+          1400,
+          1361,
+          1429
+        ],
+        "page": 0,
+        "text": "2. Place a 14-inch skillet (or wok) over medium-high heat. Add the coconut oil. Once the oil"
+      },
+      {
+        "bbox": [
+          235,
+          1445,
+          1423,
+          1472
+        ],
+        "page": 0,
+        "text": "melts, add the onions. Sauté for 1 minute, then add the peppers and garlic. Sauté another 2-3"
+      },
+      {
+        "bbox": [
+          235,
+          1492,
+          342,
+          1513
+        ],
+        "page": 0,
+        "text": "minutes."
+      },
+      {
+        "bbox": [
+          203,
+          1543,
+          1395,
+          1571
+        ],
+        "page": 0,
+        "text": "3. Move the veggies to the sides of the skillet and add the panang red curry paste and peanut"
+      },
+      {
+        "bbox": [
+          235,
+          1587,
+          1412,
+          1614
+        ],
+        "page": 0,
+        "text": "butter to the center of the pan. Sauté the curry for 2-3 minutes to intensify the flavor, moving"
+      },
+      {
+        "bbox": [
+          235,
+          1631,
+          1389,
+          1658
+        ],
+        "page": 0,
+        "text": "around the pan. Then add the kaffir lime leaves, coconut milk, and fish sauce. Stir to blend."
+      },
+      {
+        "bbox": [
+          215,
+          1681,
+          1427,
+          1711
+        ],
+        "page": 0,
+        "text": "4. Stir in the chopped chicken and bring to a boil. Lower the heat and simmer for 10-15 minutes,"
+      },
+      {
+        "bbox": [
+          235,
+          1728,
+          1398,
+          1756
+        ],
+        "page": 0,
+        "text": "until the chicken is cooked through and the sauce thickens. Stir occasionally. Remove from"
+      },
+      {
+        "bbox": [
+          235,
+          1771,
+          1089,
+          1798
+        ],
+        "page": 0,
+        "text": "heat and stir in the basil leaves. Serve with rice, quinoa, or noodles."
+      },
+      {
+        "bbox": [
+          171,
+          1857,
+          260,
+          1883
+        ],
+        "page": 0,
+        "text": "Notes"
+      },
+      {
+        "bbox": [
+          169,
+          1902,
+          1351,
+          1930
+        ],
+        "page": 0,
+        "text": "There are some ingredients that may need to be purchased at an Asian food market, but this"
+      },
+      {
+        "bbox": [
+          170,
+          1946,
+          1326,
+          1975
+        ],
+        "page": 0,
+        "text": "recipe is worth the trip! Most likely: panang red curry paste, kaffir lime leaves, thick canned"
+      },
+      {
+        "bbox": [
+          170,
+          1988,
+          1371,
+          2015
+        ],
+        "page": 0,
+        "text": "coconut milk, fish sauce, and Thai basil. Kaffir lime leaves can be kept in the freezer. They turn"
+      },
+      {
+        "bbox": [
+          170,
+          2033,
+          1383,
+          2061
+        ],
+        "page": 0,
+        "text": "dark, but retain their flavor. Kaffir lime leaves stay a little tough, even after cooking. You can eat"
+      },
+      {
+        "bbox": [
+          169,
+          2075,
+          867,
+          2103
+        ],
+        "page": 0,
+        "text": "them, eat around them, or take them out after cooking."
+      },
+      {
+        "bbox": [
+          171,
+          82,
+          305,
+          108
+        ],
+        "page": 1,
+        "text": "Nutrition"
+      },
+      {
+        "bbox": [
+          170,
+          124,
+          1430,
+          156
+        ],
+        "page": 1,
+        "text": "Serving: 6ounces | Calories: 340kcal | Carbohydrates: 8g | Protein: 24g | Fat: 23g | Saturated Fat: 16g|"
+      },
+      {
+        "bbox": [
+          170,
+          172,
+          1426,
+          204
+        ],
+        "page": 1,
+        "text": "Cholesterol: 107mg | Sodium: 163mg | Potassium: 545mg | Fiber: 2g | Sugar: 4g | Vitamin A: 43001U |"
+      },
+      {
+        "bbox": [
+          169,
+          221,
+          770,
+          250
+        ],
+        "page": 1,
+        "text": "Vitamin C: 54.7mg | Calcium: 56mg | Iron: 3.8mg"
+      },
+      {
+        "bbox": [
+          469,
+          320,
+          1149,
+          347
+        ],
+        "page": 1,
+        "text": "All images and text ©Sommer Collier for A Spicy Perspective"
+      }
+    ],
+    "source": "PDF_RENDER",
+    "text": "The Best Thai Panang Chicken Curry\nThe Best Thai Panang Chicken Curry Recipe - The most amazing red chicken\ncurry we've ever made! This light and healthy dish is better than any takeout\noption out there, and it's easy to make.\nPrep Time\nCook Time\nTotal Time\n22 mins\n32 mins\n10 mins\n4.91 from 221 votes\nCalories: 340kcal\nCuisine: Thai\nCourse: Main Course\nServings: 6\nAuthor: Sommer Collier\nIngredients\n680.39 g boneless skinless chicken thighs chopped\n• 1 small onion, peeled and chopped\n1 red bell pepper, seeded and chopped\n•\n1 orange bell pepper, seeded and chopped\n• 2 cloves garlic, minced\n• 14.79 ml coconut oil\n• 113.4 g Panang red curry paste (1 can)\n14.79 ml peanut butter\n• 12 kaffir lime leaves, crushed\n382.72 g thick coconut milk, unsweetened (1 can)\n• 3 tablespons fish sauce\n6g Thai basil leaves or sweet basil\nInstructions\n1. Cut the chicken into bite-size pieces. Chop the onions and peppers into rough 1-inch pieces.\nMince the garlic. Then crush the kaffir lime leaves to help release their oils.\n2. Place a 14-inch skillet (or wok) over medium-high heat. Add the coconut oil. Once the oil\nmelts, add the onions. Sauté for 1 minute, then add the peppers and garlic. Sauté another 2-3\nminutes.\n3. Move the veggies to the sides of the skillet and add the panang red curry paste and peanut\nbutter to the center of the pan. Sauté the curry for 2-3 minutes to intensify the flavor, moving\naround the pan. Then add the kaffir lime leaves, coconut milk, and fish sauce. Stir to blend.\n4. Stir in the chopped chicken and bring to a boil. Lower the heat and simmer for 10-15 minutes,\nuntil the chicken is cooked through and the sauce thickens. Stir occasionally. Remove from\nheat and stir in the basil leaves. Serve with rice, quinoa, or noodles.\nNotes\nThere are some ingredients that may need to be purchased at an Asian food market, but this\nrecipe is worth the trip! Most likely: panang red curry paste, kaffir lime leaves, thick canned\ncoconut milk, fish sauce, and Thai basil. Kaffir lime leaves can be kept in the freezer. They turn\ndark, but retain their flavor. Kaffir lime leaves stay a little tough, even after cooking. You can eat\nthem, eat around them, or take them out after cooking.\n\nNutrition\nServing: 6ounces | Calories: 340kcal | Carbohydrates: 8g | Protein: 24g | Fat: 23g | Saturated Fat: 16g|\nCholesterol: 107mg | Sodium: 163mg | Potassium: 545mg | Fiber: 2g | Sugar: 4g | Vitamin A: 43001U |\nVitamin C: 54.7mg | Calcium: 56mg | Iron: 3.8mg\nAll images and text ©Sommer Collier for A Spicy Perspective",
+    "truncated": false
+  },
+  "attachments": [],
+  "diagnostics": {
+    "errors": [],
+    "notes": [
+      "intent action=android.intent.action.SEND type=application/pdf referrer=android-app://com.android.shell extras={android.intent.extra.STREAM=StringUri}",
+      "pdf content://com.gatar.recipedealer.fileprovider/captures/panang.pdf pages=2 textApi=true"
+    ],
+    "stageTimingsMs": {
+      "pdf": 1364
+    }
+  }
+}

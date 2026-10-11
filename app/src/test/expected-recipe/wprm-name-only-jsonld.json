@@ -1,0 +1,58 @@
+{
+  "recipe": {
+    "title": "Pierogi ruskie",
+    "language": "pl",
+    "servings": {
+      "text": "4",
+      "count": 4
+    },
+    "times": {},
+    "ingredientGroups": [
+      {
+        "name": "Ciasto",
+        "items": [
+          "500 g mąki pszennej"
+        ]
+      },
+      {
+        "name": "Farsz",
+        "items": [
+          "500 g ziemniaków",
+          "250 g twarogu"
+        ]
+      }
+    ],
+    "stepGroups": [
+      {
+        "items": [
+          "Zagnieć ciasto z mąki i ciepłej wody.",
+          "Ugotuj ziemniaki i zmiel je z twarogiem.",
+          "Lep pierogi i gotuj 3 minuty od wypłynięcia."
+        ]
+      }
+    ],
+    "notes": [],
+    "images": [
+      "https://example.test/img/pierogi.jpg"
+    ],
+    "source": {
+      "type": "WEB",
+      "url": "https://example.test/wprm-name-only-jsonld",
+      "files": []
+    }
+  },
+  "provenance": {
+    "title": "jsonLd",
+    "ingredients": "pluginHits",
+    "steps": "pluginHits",
+    "servings": "pluginHits",
+    "images": "pluginHits"
+  },
+  "completeness": {
+    "score": 1.0,
+    "bestStage": "pluginHits",
+    "hasTitle": true,
+    "hasIngredients": true,
+    "hasSteps": true
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "recipe": {
+    "language": "en",
+    "times": {},
+    "ingredientGroups": [],
+    "stepGroups": [],
+    "notes": [],
+    "images": [],
+    "source": {
+      "type": "WEB",
+      "url": "https://example.test/cloudflare-challenge",
+      "files": []
+    }
+  },
+  "provenance": {},
+  "completeness": {
+    "score": 0.0,
+    "bestStage": "none",
+    "hasTitle": false,
+    "hasIngredients": false,
+    "hasSteps": false
+  }
+}

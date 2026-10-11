@@ -1,0 +1,60 @@
+{
+  "recipe": {
+    "title": "Sernik klasyczny",
+    "language": "pl",
+    "servings": {
+      "text": "12 porcji",
+      "count": 12
+    },
+    "times": {
+      "prepMinutes": 30,
+      "cookMinutes": 60,
+      "totalMinutes": 90
+    },
+    "ingredientGroups": [
+      {
+        "items": [
+          "1 kg twarogu sernikowego",
+          "5 jajek",
+          "200 g cukru",
+          "1 łyżka mąki ziemniaczanej"
+        ]
+      }
+    ],
+    "stepGroups": [
+      {
+        "items": [
+          "Utrzyj twaróg z cukrem.",
+          "Dodaj jajka i mąkę, wymieszaj.",
+          "Piecz 60 minut w 170°C."
+        ]
+      }
+    ],
+    "notes": [],
+    "images": [
+      "https://example.test/img/sernik.jpg"
+    ],
+    "source": {
+      "type": "WEB",
+      "url": "https://example.test/sernik-klasyczny",
+      "files": []
+    }
+  },
+  "provenance": {
+    "title": "jsonLd",
+    "ingredients": "jsonLd",
+    "steps": "jsonLd",
+    "servings": "jsonLd",
+    "prepMinutes": "jsonLd",
+    "cookMinutes": "jsonLd",
+    "totalMinutes": "jsonLd",
+    "images": "jsonLd"
+  },
+  "completeness": {
+    "score": 1.0,
+    "bestStage": "jsonLd",
+    "hasTitle": true,
+    "hasIngredients": true,
+    "hasSteps": true
+  }
+}

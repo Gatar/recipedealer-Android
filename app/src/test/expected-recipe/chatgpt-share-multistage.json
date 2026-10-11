@@ -1,0 +1,69 @@
+{
+  "recipe": {
+    "title": "Tropikalny tort kokosowo-ananasowy",
+    "language": "en",
+    "times": {},
+    "ingredientGroups": [
+      {
+        "name": "Biszkopt kokosowy",
+        "items": [
+          "5 jajek",
+          "150 g cukru",
+          "120 g mąki pszennej tortowej"
+        ]
+      },
+      {
+        "name": "Krem kokosowy",
+        "items": [
+          "500 g mascarpone, schłodzonego",
+          "400 ml śmietanki 36%, bardzo zimnej"
+        ]
+      }
+    ],
+    "stepGroups": [
+      {
+        "name": "Krok 1. Upiecz biszkopt",
+        "items": [
+          "Nagrzej piekarnik do 170°C, grzanie góra–dół.",
+          "Ubij jajka z cukrem na puszystą masę.",
+          "Piecz około 30–35 minut, do suchego patyczka."
+        ]
+      },
+      {
+        "name": "Krok 2. Przygotuj krem kokosowy",
+        "items": [
+          "Umieść zimne składniki w misie.",
+          "Ubijaj, aż krem będzie gęsty."
+        ]
+      },
+      {
+        "items": [
+          "Blat 2 — biszkopt kokosowy",
+          "Krem kokosowy",
+          "Blat 1 — biszkopt kokosowy",
+          "Schemat od góry do dołu; chrupkę można pominąć, jeśli wolisz gładką konsystencję tortu."
+        ]
+      }
+    ],
+    "notes": [],
+    "images": [],
+    "source": {
+      "type": "WEB",
+      "url": "https://example.test/chatgpt-share-multistage",
+      "siteName": "ChatGPT",
+      "files": []
+    }
+  },
+  "provenance": {
+    "title": "heuristic",
+    "ingredients": "heuristic",
+    "steps": "heuristic"
+  },
+  "completeness": {
+    "score": 1.0,
+    "bestStage": "heuristic",
+    "hasTitle": true,
+    "hasIngredients": true,
+    "hasSteps": true
+  }
+}

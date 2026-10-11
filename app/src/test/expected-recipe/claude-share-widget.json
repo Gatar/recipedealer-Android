@@ -1,0 +1,48 @@
+{
+  "recipe": {
+    "title": "Placki ziemniaczane",
+    "language": "en",
+    "times": {},
+    "ingredientGroups": [
+      {
+        "items": [
+          "1 kilograms ziemniaki (najlepiej mączyste)",
+          "1 średnia cebula",
+          "1 jajko"
+        ]
+      }
+    ],
+    "stepGroups": [
+      {
+        "items": [
+          "Zetrzyj ziemniaki i cebulę: Obierz 1 kilograms ziemniaki (najlepiej mączyste) i zetrzyj razem z 1 średnia cebula.",
+          "Dopraw ciasto: Dodaj 1 jajko. Wymieszaj.",
+          "Smaż placki: Smaż na złoty kolor po 3–4 minuty z każdej strony."
+        ]
+      }
+    ],
+    "notes": [
+      "Wariacje: na słodko z cukrem i śmietaną."
+    ],
+    "images": [],
+    "source": {
+      "type": "WEB",
+      "url": "https://example.test/claude-share-widget",
+      "siteName": "Claude",
+      "files": []
+    }
+  },
+  "provenance": {
+    "title": "heuristic",
+    "ingredients": "heuristic",
+    "steps": "heuristic",
+    "notes": "heuristic"
+  },
+  "completeness": {
+    "score": 1.0,
+    "bestStage": "heuristic",
+    "hasTitle": true,
+    "hasIngredients": true,
+    "hasSteps": true
+  }
+}

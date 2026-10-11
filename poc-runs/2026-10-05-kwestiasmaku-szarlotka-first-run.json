@@ -1,0 +1,902 @@
+{
+  "attachments": [],
+  "captureId": "b6d51404-f765-4fa3-87ea-1598c41eb672",
+  "capturedAt": "2026-10-05T16:34:04.371411Z",
+  "completeness": {
+    "bestStage": "heuristic",
+    "hasIngredients": true,
+    "hasInstructions": false,
+    "hasName": true,
+    "score": 0.6
+  },
+  "diagnostics": {
+    "errors": [],
+    "notes": [
+      "intent action=android.intent.action.SEND type=text/plain referrer=android-app://com.android.shell extras={android.intent.extra.TEXT=String(46)'https://www.kwestiasmaku.com/przepis/szarlotka'}",
+      "extractionTrigger=stable",
+      "webview snapshot truncated at 20480 px"
+    ],
+    "stageTimingsMs": {
+      "stabilize": 4078,
+      "extractRoundTrip": 97,
+      "js.jsonLd": 0,
+      "js.microdata": 1,
+      "js.pluginHits": 1,
+      "js.readability": 77,
+      "js.heuristic": 78,
+      "merge": 1,
+      "ocr": 1910
+    }
+  },
+  "ocr": {
+    "blocks": [
+      {
+        "bbox": [
+          14,
+          20,
+          854,
+          132
+        ],
+        "page": 0,
+        "text": "Ta strona wykorzystuje pliki cookie aby personalizować treść,\nreklamy i analizovwać ruch w witrynie. Pozostając na tej stronie,\nzgadzasz się na korzystanie z plików cookie. Dowiedz się więcej"
+      },
+      {
+        "bbox": [
+          90,
+          215,
+          189,
+          241
+        ],
+        "page": 0,
+        "text": "MENU"
+      },
+      {
+        "bbox": [
+          58,
+          343,
+          116,
+          534
+        ],
+        "page": 0,
+        "text": "I"
+      },
+      {
+        "bbox": [
+          289,
+          215,
+          476,
+          241
+        ],
+        "page": 0,
+        "text": "ULUBIONE"
+      },
+      {
+        "bbox": [
+          64,
+          803,
+          866,
+          842
+        ],
+        "page": 0,
+        "text": "BLOG PRZELICZNIK PLACKI DANIA GŁOWNE"
+      },
+      {
+        "bbox": [
+          287,
+          400,
+          898,
+          472
+        ],
+        "page": 0,
+        "text": "kwestia smaku"
+      },
+      {
+        "bbox": [
+          40,
+          1446,
+          708,
+          1479
+        ],
+        "page": 0,
+        "text": "ZAPISZ (11830) DRUKUJ CZYTAJ OPINIE"
+      },
+      {
+        "bbox": [
+          287,
+          492,
+          632,
+          524
+        ],
+        "page": 0,
+        "text": "Wyjatkowo na co dzień"
+      },
+      {
+        "bbox": [
+          94,
+          1625,
+          908,
+          1844
+        ],
+        "page": 0,
+        "text": "Absolutnie najlepsza szarlotka, jaką jadłam.\nCiasto super kruche, cieniutki spód wyszedt\nideolo! Jest jeden problem z tq szarlotka - Za\nSzybko znika."
+      },
+      {
+        "bbox": [
+          41,
+          2114,
+          659,
+          2151
+        ],
+        "page": 0,
+        "text": "Spodobat Ci się ten przepis? Udostepnij go!"
+      },
+      {
+        "bbox": [
+          42,
+          2272,
+          930,
+          2310
+        ],
+        "page": 0,
+        "text": "Oceń przepis aby doradzić innym! Średnia: 4.7 (3208 głosów)"
+      },
+      {
+        "bbox": [
+          44,
+          2598,
+          427,
+          2652
+        ],
+        "page": 0,
+        "text": "SZARLOTKA"
+      },
+      {
+        "bbox": [
+          44,
+          2717,
+          734,
+          2764
+        ],
+        "page": 0,
+        "text": "Najlepszy przepis na szarlotkę!"
+      },
+      {
+        "bbox": [
+          68,
+          3055,
+          225,
+          3081
+        ],
+        "page": 0,
+        "text": "DLA DZIECI"
+      },
+      {
+        "bbox": [
+          69,
+          2870,
+          359,
+          2892
+        ],
+        "page": 0,
+        "text": "POPULARNE CIASTA"
+      },
+      {
+        "bbox": [
+          69,
+          2964,
+          328,
+          2986
+        ],
+        "page": 0,
+        "text": "KUCHNIA POLSKA"
+      },
+      {
+        "bbox": [
+          68,
+          3277,
+          198,
+          3298
+        ],
+        "page": 0,
+        "text": "Cynamnon"
+      },
+      {
+        "bbox": [
+          68,
+          3152,
+          358,
+          3180
+        ],
+        "page": 0,
+        "text": "CIASTA TRADYCYJNE"
+      },
+      {
+        "bbox": [
+          41,
+          3839,
+          105,
+          3861
+        ],
+        "page": 0,
+        "text": "Cm."
+      },
+      {
+        "bbox": [
+          310,
+          3058,
+          410,
+          3080
+        ],
+        "page": 0,
+        "text": "CIASTA"
+      },
+      {
+        "bbox": [
+          440,
+          2870,
+          671,
+          2892
+        ],
+        "page": 0,
+        "text": "SZYBKIE CIASTO"
+      },
+      {
+        "bbox": [
+          410,
+          2964,
+          635,
+          2986
+        ],
+        "page": 0,
+        "text": "PODWIECZORKI"
+      },
+      {
+        "bbox": [
+          491,
+          3058,
+          661,
+          3080
+        ],
+        "page": 0,
+        "text": "SZARLOTKA"
+      },
+      {
+        "bbox": [
+          715,
+          2964,
+          821,
+          2992
+        ],
+        "page": 0,
+        "text": "JABŁKA"
+      },
+      {
+        "bbox": [
+          1007,
+          24,
+          1019,
+          45
+        ],
+        "page": 0,
+        "text": "X"
+      },
+      {
+        "bbox": [
+          932,
+          816,
+          1035,
+          838
+        ],
+        "page": 0,
+        "text": "ZUPA Z"
+      },
+      {
+        "bbox": [
+          742,
+          3052,
+          970,
+          3084
+        ],
+        "page": 0,
+        "text": "CIASTA KRUCHE"
+      },
+      {
+        "bbox": [
+          41,
+          3462,
+          1038,
+          3676
+        ],
+        "page": 0,
+        "text": "Pyszna i prosta do zrobienia szarlotka na kruchym\ncieście. Każdemu się udaje i wszystkim smakuje! Dla\nekstra kruchości część masła można zastąpić smalcem\n(sekretny składnik babcinych przepisów na szarlotkę ;-)"
+      },
+      {
+        "bbox": [
+          43,
+          3718,
+          1036,
+          3811
+        ],
+        "page": 0,
+        "text": "Potrzebujemy prostokątną formę 21 x 27 cm lub\nkwadratową 24 x 24 cm lub tortownicę o średnicy 26"
+      },
+      {
+        "bbox": [
+          42,
+          1337,
+          279,
+          1371
+        ],
+        "page": 1,
+        "text": "SKŁADNIKI"
+      },
+      {
+        "bbox": [
+          41,
+          1761,
+          268,
+          1798
+        ],
+        "page": 1,
+        "text": "5 tyżek cukru"
+      },
+      {
+        "bbox": [
+          271,
+          1217,
+          936,
+          1260
+        ],
+        "page": 1,
+        "text": "DODAJ NoTATKĘ A NIE WwYGASZAJ"
+      },
+      {
+        "bbox": [
+          43,
+          1622,
+          849,
+          1712
+        ],
+        "page": 1,
+        "text": "1,5 kg jabłek (na szarlotkę najlepiej twardych i\nkwaśnych, np. szara reneta)"
+      },
+      {
+        "bbox": [
+          352,
+          1338,
+          515,
+          1374
+        ],
+        "page": 1,
+        "text": "/ 12 PORCJI"
+      },
+      {
+        "bbox": [
+          43,
+          1847,
+          434,
+          1884
+        ],
+        "page": 1,
+        "text": "1/2 tyżeczki cynamonu"
+      },
+      {
+        "bbox": [
+          41,
+          2131,
+          432,
+          2171
+        ],
+        "page": 1,
+        "text": "320 g maki (2 szklanki)"
+      },
+      {
+        "bbox": [
+          41,
+          2216,
+          419,
+          2261
+        ],
+        "page": 1,
+        "text": "250 g zimnego masła*"
+      },
+      {
+        "bbox": [
+          41,
+          2393,
+          268,
+          2430
+        ],
+        "page": 1,
+        "text": "5 łyżek cukru"
+      },
+      {
+        "bbox": [
+          56,
+          2562,
+          153,
+          2606
+        ],
+        "page": 1,
+        "text": "1 jajko"
+      },
+      {
+        "bbox": [
+          473,
+          1488,
+          603,
+          1521
+        ],
+        "page": 1,
+        "text": "JABŁKA"
+      },
+      {
+        "bbox": [
+          43,
+          2301,
+          615,
+          2346
+        ],
+        "page": 1,
+        "text": "1,5 łyżeczki proszku do pieczenia"
+      },
+      {
+        "bbox": [
+          478,
+          2000,
+          602,
+          2026
+        ],
+        "page": 1,
+        "text": "CIASTO"
+      },
+      {
+        "bbox": [
+          60,
+          2476,
+          520,
+          2518
+        ],
+        "page": 1,
+        "text": "1 tyżka cukru wanilinowego"
+      },
+      {
+        "bbox": [
+          44,
+          2790,
+          440,
+          2824
+        ],
+        "page": 1,
+        "text": "PRZYGOTOWANIE"
+      },
+      {
+        "bbox": [
+          43,
+          2662,
+          521,
+          2698
+        ],
+        "page": 1,
+        "text": "Do posypania: cukier puder"
+      },
+      {
+        "bbox": [
+          473,
+          2941,
+          603,
+          2972
+        ],
+        "page": 1,
+        "text": "JABŁKA"
+      },
+      {
+        "bbox": [
+          39,
+          3072,
+          1038,
+          3229
+        ],
+        "page": 1,
+        "text": "• Jabłka obrać, pokroić na éwiartki i wyciąć gniazda\nnasienne. Pokroić na mniejsze kawałki i włożyć do\nSzerokiego garnka lub na głeboką patelnię."
+      },
+      {
+        "bbox": [
+          42,
+          3272,
+          1039,
+          3429
+        ],
+        "page": 1,
+        "text": "Dodać cukier i cynamon i smażyć przez ok. 20\nminut co chwilę mieszając, aż jabłka zmiękną i zaczną\nsię rozpadać."
+      },
+      {
+        "bbox": [
+          478,
+          3544,
+          602,
+          3570
+        ],
+        "page": 1,
+        "text": "CIASTO"
+      },
+      {
+        "bbox": [
+          43,
+          3678,
+          1038,
+          3773
+        ],
+        "page": 1,
+        "text": "Do maki dodać pokrojone w kostkę zimne masło,\nproszek do pieczenia, cukier i cukier wanilinowy."
+      },
+      {
+        "bbox": [
+          39,
+          3818,
+          1051,
+          3974
+        ],
+        "page": 1,
+        "text": "• Składniki połączyć w jednolite ciasto (mikserem lub\nręcznie), pod koniec dodać jajko (ciasto będzie dość\nmiękkie)."
+      },
+      {
+        "bbox": [
+          124,
+          4019,
+          1038,
+          4060
+        ],
+        "page": 1,
+        "text": "Podzielić je na pół i włożyć obie połówki do"
+      },
+      {
+        "bbox": [
+          452,
+          136,
+          626,
+          164
+        ],
+        "page": 2,
+        "text": "PIECZENIE"
+      },
+      {
+        "bbox": [
+          38,
+          266,
+          1038,
+          371
+        ],
+        "page": 2,
+        "text": "• Piekarnik nagrzać do 180 stopni C (góra i dół bez\ntermoobiegu)."
+      },
+      {
+        "bbox": [
+          43,
+          416,
+          1039,
+          574
+        ],
+        "page": 2,
+        "text": "Wyjąć jedną połówkę ciasta z zamrażarki, pokroić\nnożem na plasterki i wylepić nimi spód formy.\nNastępnie wyłożyć na to jabłka."
+      },
+      {
+        "bbox": [
+          37,
+          616,
+          1037,
+          770
+        ],
+        "page": 2,
+        "text": "• Pozostałe ciasto zetrzeć na tarce bezpośrednio na\njabłka (lub pokroić ciasto na plasterki i utożyć na\nwierzchu)."
+      },
+      {
+        "bbox": [
+          43,
+          814,
+          1039,
+          909
+        ],
+        "page": 2,
+        "text": "Wstawić do piekarnika i piec przez ok. 50 minut\nlub na złoty kolor. Upieczona szarlotke przestudzić i"
+      },
+      {
+        "bbox": [
+          434,
+          1002,
+          772,
+          1049
+        ],
+        "page": 2,
+        "text": "kwestia smaku"
+      },
+      {
+        "bbox": [
+          434,
+          1054,
+          521,
+          1077
+        ],
+        "page": 2,
+        "text": "Wyiatkowo"
+      },
+      {
+        "bbox": [
+          235,
+          1626,
+          407,
+          1652
+        ],
+        "page": 2,
+        "text": "Learn more"
+      },
+      {
+        "bbox": [
+          513,
+          1054,
+          625,
+          1078
+        ],
+        "page": 2,
+        "text": "vo na co dzierń"
+      },
+      {
+        "bbox": [
+          176,
+          1142,
+          902,
+          1178
+        ],
+        "page": 2,
+        "text": "This site asks for consent to use"
+      },
+      {
+        "bbox": [
+          429,
+          1200,
+          646,
+          1250
+        ],
+        "page": 2,
+        "text": "your data"
+      },
+      {
+        "bbox": [
+          236,
+          1329,
+          919,
+          1442
+        ],
+        "page": 2,
+        "text": "Personalised advertising and content,\nadvertising and content measurement,\naudience research and services development"
+      },
+      {
+        "bbox": [
+          236,
+          1519,
+          901,
+          1542
+        ],
+        "page": 2,
+        "text": "Store and/or access information on a device"
+      },
+      {
+        "bbox": [
+          118,
+          1710,
+          932,
+          1959
+        ],
+        "page": 2,
+        "text": "Your personal data will be processed and information\nfrom your device (cookies, unique identifiers, and other\ndevice data) may be stored by, accessed by and shared\nwith 210 partners, or used specifically by this site. We\nand our partners may use precise geolocation data. List\nof partners."
+      },
+      {
+        "bbox": [
+          119,
+          1991,
+          910,
+          2197
+        ],
+        "page": 2,
+        "text": "Some vendors\nSmay process yOur personal data on the\nbasis of legitimate interest, which you can object to by\nmanaging your options below. Look for a link at the\nbottom of this page or in the site menu to manage or\nwithdraw consent in privacy and cookie settings."
+      },
+      {
+        "bbox": [
+          467,
+          2322,
+          614,
+          2349
+        ],
+        "page": 2,
+        "text": "Consent"
+      },
+      {
+        "bbox": [
+          396,
+          2478,
+          685,
+          2516
+        ],
+        "page": 2,
+        "text": "Manage options"
+      },
+      {
+        "bbox": [
+          462,
+          2780,
+          615,
+          2800
+        ],
+        "page": 2,
+        "text": "kwestia smaku"
+      },
+      {
+        "bbox": [
+          463,
+          2852,
+          615,
+          2879
+        ],
+        "page": 2,
+        "text": "Szarlotka"
+      },
+      {
+        "bbox": [
+          40,
+          20,
+          1014,
+          62
+        ],
+        "page": 3,
+        "text": "TEN PRZEPIS W WASZYM WYKONANIU DODAJ"
+      },
+      {
+        "bbox": [
+          42,
+          95,
+          292,
+          129
+        ],
+        "page": 3,
+        "text": "SWoJE ZDJĘCIE"
+      },
+      {
+        "bbox": [
+          274,
+          2273,
+          566,
+          2533
+        ],
+        "page": 3,
+        "text": "3"
+      },
+      {
+        "bbox": [
+          299,
+          1329,
+          783,
+          1392
+        ],
+        "page": 4,
+        "text": "BADŹ NA BIEŻĄCO Y"
+      },
+      {
+        "bbox": [
+          272,
+          2963,
+          802,
+          3052
+        ],
+        "page": 4,
+        "text": "© 2007-2026 kwestiasmaku.com\nWszystkie prawa zastrzeżone"
+      },
+      {
+        "bbox": [
+          189,
+          3067,
+          894,
+          3148
+        ],
+        "page": 4,
+        "text": "Kopiowanie i rozpowSzechnianie bez zgody\nkwestiasmaku.com zabronione"
+      },
+      {
+        "bbox": [
+          155,
+          3249,
+          924,
+          3279
+        ],
+        "page": 4,
+        "text": "BLOG | PRZELICZNIK | KONTAKT REGULAMIN"
+      }
+    ],
+    "source": "WEBVIEW_SNAPSHOT",
+    "text": "Ta strona wykorzystuje pliki cookie aby personalizować treść,\nreklamy i analizovwać ruch w witrynie. Pozostając na tej stronie,\nzgadzasz się na korzystanie z plików cookie. Dowiedz się więcej\nMENU\nI\nULUBIONE\nBLOG PRZELICZNIK PLACKI DANIA GŁOWNE\nkwestia smaku\nZAPISZ (11830) DRUKUJ CZYTAJ OPINIE\nWyjatkowo na co dzień\nAbsolutnie najlepsza szarlotka, jaką jadłam.\nCiasto super kruche, cieniutki spód wyszedt\nideolo! Jest jeden problem z tq szarlotka - Za\nSzybko znika.\nSpodobat Ci się ten przepis? Udostepnij go!\nOceń przepis aby doradzić innym! Średnia: 4.7 (3208 głosów)\nSZARLOTKA\nNajlepszy przepis na szarlotkę!\nDLA DZIECI\nPOPULARNE CIASTA\nKUCHNIA POLSKA\nCynamnon\nCIASTA TRADYCYJNE\nCm.\nCIASTA\nSZYBKIE CIASTO\nPODWIECZORKI\nSZARLOTKA\nJABŁKA\nX\nZUPA Z\nCIASTA KRUCHE\nPyszna i prosta do zrobienia szarlotka na kruchym\ncieście. Każdemu się udaje i wszystkim smakuje! Dla\nekstra kruchości część masła można zastąpić smalcem\n(sekretny składnik babcinych przepisów na szarlotkę ;-)\nPotrzebujemy prostokątną formę 21 x 27 cm lub\nkwadratową 24 x 24 cm lub tortownicę o średnicy 26\n\nSKŁADNIKI\n5 tyżek cukru\nDODAJ NoTATKĘ A NIE WwYGASZAJ\n1,5 kg jabłek (na szarlotkę najlepiej twardych i\nkwaśnych, np. szara reneta)\n/ 12 PORCJI\n1/2 tyżeczki cynamonu\n320 g maki (2 szklanki)\n250 g zimnego masła*\n5 łyżek cukru\n1 jajko\nJABŁKA\n1,5 łyżeczki proszku do pieczenia\nCIASTO\n1 tyżka cukru wanilinowego\nPRZYGOTOWANIE\nDo posypania: cukier puder\nJABŁKA\n• Jabłka obrać, pokroić na éwiartki i wyciąć gniazda\nnasienne. Pokroić na mniejsze kawałki i włożyć do\nSzerokiego garnka lub na głeboką patelnię.\nDodać cukier i cynamon i smażyć przez ok. 20\nminut co chwilę mieszając, aż jabłka zmiękną i zaczną\nsię rozpadać.\nCIASTO\nDo maki dodać pokrojone w kostkę zimne masło,\nproszek do pieczenia, cukier i cukier wanilinowy.\n• Składniki połączyć w jednolite ciasto (mikserem lub\nręcznie), pod koniec dodać jajko (ciasto będzie dość\nmiękkie).\nPodzielić je na pół i włożyć obie połówki do\n\nPIECZENIE\n• Piekarnik nagrzać do 180 stopni C (góra i dół bez\ntermoobiegu).\nWyjąć jedną połówkę ciasta z zamrażarki, pokroić\nnożem na plasterki i wylepić nimi spód formy.\nNastępnie wyłożyć na to jabłka.\n• Pozostałe ciasto zetrzeć na tarce bezpośrednio na\njabłka (lub pokroić ciasto na plasterki i utożyć na\nwierzchu).\nWstawić do piekarnika i piec przez ok. 50 minut\nlub na złoty kolor. Upieczona szarlotke przestudzić i\nkwestia smaku\nWyiatkowo\nLearn more\nvo na co dzierń\nThis site asks for consent to use\nyour data\nPersonalised advertising and content,\nadvertising and content measurement,\naudience research and services development\nStore and/or access information on a device\nYour personal data will be processed and information\nfrom your device (cookies, unique identifiers, and other\ndevice data) may be stored by, accessed by and shared\nwith 210 partners, or used specifically by this site. We\nand our partners may use precise geolocation data. List\nof partners.\nSome vendors\nSmay process yOur personal data on the\nbasis of legitimate interest, which you can object to by\nmanaging your options below. Look for a link at the\nbottom of this page or in the site menu to manage or\nwithdraw consent in privacy and cookie settings.\nConsent\nManage options\nkwestia smaku\nSzarlotka\n\nTEN PRZEPIS W WASZYM WYKONANIU DODAJ\nSWoJE ZDJĘCIE\n3\n\nBADŹ NA BIEŻĄCO Y\n© 2007-2026 kwestiasmaku.com\nWszystkie prawa zastrzeżone\nKopiowanie i rozpowSzechnianie bez zgody\nkwestiasmaku.com zabronione\nBLOG | PRZELICZNIK | KONTAKT REGULAMIN",
+    "truncated": true
+  },
+  "provenance": {
+    "name": "microdata",
+    "recipeIngredient": "heuristic",
+    "image": "microdata",
+    "url": "page"
+  },
+  "recipeCandidate": {
+    "@context": "https://schema.org",
+    "image": "https://www.kwestiasmaku.com/sites/v123.kwestiasmaku.com/files/szarlotka-00_2.jpg",
+    "name": "Szarlotka",
+    "recipeIngredient": [
+      "12 porcji"
+    ],
+    "recipeInstructions": [],
+    "@type": "Recipe",
+    "url": "https://www.kwestiasmaku.com/przepis/szarlotka"
+  },
+  "schemaVersion": 1,
+  "sourceApp": "com.android.shell",
+  "sourceType": "WEB_URL",
+  "url": "https://www.kwestiasmaku.com/przepis/szarlotka",
+  "web": {
+    "canonicalUrl": "https://www.kwestiasmaku.com/przepis/szarlotka",
+    "finalUrl": "https://www.kwestiasmaku.com/przepis/szarlotka",
+    "heuristic": {
+      "articleTitle": "Szarlotka",
+      "usedBodyFallback": false,
+      "ingredients": [
+        "12 porcji"
+      ],
+      "instructions": [],
+      "sections": [
+        {
+          "heading": "Składniki",
+          "kind": "ingredients",
+          "items": [
+            "12 porcji"
+          ]
+        }
+      ]
+    },
+    "jsonLd": [],
+    "lang": "pl",
+    "microdata": [
+      {
+        "image": "https://www.kwestiasmaku.com/sites/v123.kwestiasmaku.com/files/szarlotka-00_2.jpg",
+        "description": "Pyszna domowa szarlotka, najlepsza jeszcze ciepła. Idealnie kruche, maślane ciasto i prażone z cynamonem jabłka. Czy można wyobrazić sobie lepszy podwieczorek na jesienny wieczór? Do upieczenia szarlotki będziecie potrzebować niezbyt dużą blaszkę np. prostokątną 21 x 27 cm lub okrągłą tortownicę o średnicy 24 cm. Ciasto robi się szybko... i jeszcze szybciej znika :-) Dajcie znać w komentarzach jak Wam smakowała i zamieście zdjęcie Waszej szarlotki!",
+        "commentCount": "0",
+        "aggregateRating": {
+          "reviewCount": "3208",
+          "ratingValue": "4.73",
+          "@type": "AggregateRating"
+        },
+        "author": "kwestiasmaku",
+        "name": "Szarlotka",
+        "@type": "Recipe"
+      }
+    ],
+    "ogImage": "https://www.kwestiasmaku.com/sites/v123.kwestiasmaku.com/files/szarlotka-00_2.jpg",
+    "pluginHits": {
+      "wprm": {
+        "found": false,
+        "containerCount": 0,
+        "fieldMatches": {},
+        "recipe": {}
+      },
+      "tasty": {
+        "found": false,
+        "containerCount": 0,
+        "fieldMatches": {},
+        "recipe": {}
+      },
+      "mediavine": {
+        "found": false,
+        "containerCount": 0,
+        "fieldMatches": {},
+        "recipe": {}
+      }
+    },
+    "readableText": "To jest super prosty i szybki przepis. robiłam ostatnio dwa raz pod rząd i bardzo szybko znika oraz wszystkim smakowala :) \n\n Absolutnie najlepsza szarlotka, jaką jadłam. Ciasto super kruche, cieniutki spód wyszedł ideolo! Jest jeden problem z tą szarlotka - za szybko znika. \n\n Ta szarlotka smakuje dokładnie tak, jak ta jedzona za dzieciaka u babci :-) Zapisuję przepis \n\n Pierwszy raz w życiu upiekłam szarlotkę i była naprawdę IDEALNA, dokładnie taka o jakiej marzyłam! \n\n To ciasto to strzał w 10tkę! Próbowałam już różnych wariacji z gruszkami, brzoskwiniami i za każdym razem wychodzi super :-) \n\n Wszyscy mówią, że to najlepsza szarlotka. Zazwyczaj z szarej renety ale ostatnio też z przypadkowych, już nie tak kwaśnych jabłek i też pycha 😊 tylko już cukru do jabłek nie dodawałam bo same w sobie były słodkie. \n\n Ciasto przepyszne... Najlepsza szarlotka jaką jadłam.. dziękuję za przepis \n\n U mnie z cukrem brązowym. Ponadczasowa klasyka. Łatwa w przygotowaniu i przepyszna. \n\n Pyszna, delikatna z chrupiącym wierzchem 😍 Doskonały przepis 😊 \n\n To jest naprawdę najlepsza szarlotka jaką jadłam! Na jeszcze ciepłą sos toffi i lody 🤩 pycha. \n\n Najlepsza szarlotka jaką w życiu jadłam :) wychodzi zawsze, każdy prosi o więcej. \n\n Sprawdzony przepis, zawsze wychodzi, a samo ciasto jest przepyszne 😍 Jedynie dodaję więcej cynamonu. \n\n To jest super prosty i szybki przepis. robiłam ostatnio dwa raz pod rząd i bardzo szybko znika oraz wszystkim smakowala :) \n\n Absolutnie najlepsza szarlotka, jaką jadłam. Ciasto super kruche, cieniutki spód wyszedł ideolo! Jest jeden problem z tą szarlotka - za szybko znika. \nSpodobał Ci się ten przepis? Udostępnij go!\n\n Oceń przepis aby doradzić innym!Średnia: 4.7 (3208 głosów) \n\nPyszna domowa szarlotka, najlepsza jeszcze ciepła. Idealnie kruche, maślane ciasto i prażone z cynamonem jabłka. Czy można wyobrazić sobie lepszy podwieczorek na jesienny wieczór? Do upieczenia szarlotki będziecie potrzebować niezbyt dużą blaszkę np. prostokątną 21 x 27 cm lub okrągłą tortownicę o średnicy 24 cm. Ciasto robi się szybko... i jeszcze szybciej znika :-) Dajcie znać w komentarzach jak Wam smakowała i zamieście zdjęcie Waszej szarlotki!\n\n03208\n4.73\n\nkwestiasmaku \nSzarlotka\n\n Najlepszy przepis na szarlotkę! \n\n Popularne ciasta \n\n Szybkie ciasto \n\n Kuchnia polska \n\n Podwieczorki \n\n Jabłka \n\n Dla dzieci \n\n Ciasta \n\n Szarlotka \n\n Ciasta kruche \n\n Ciasta tradycyjne \n\n Pyszna i prosta do zrobienia szarlotka na kruchym cieście. Każdemu się udaje i wszystkim smakuje! Dla ekstra kruchości część masła można zastąpić smalcem (sekretny składnik babcinych przepisów na szarlotkę ;-)\nPotrzebujemy prostokątną formę 21 x 27 cm lub kwadratową 24 x 24 cm lub tortownicę o średnicy 26 cm.\n\n Składniki\n\n 12 porcji \n\n Jabłka\n\n 1,5 kg jabłek (na szarlotkę najlepiej twardych i kwaśnych, np. szara reneta)\n\n 5 łyżek cukru\n\n 1/2 łyżeczki cynamonu\n\n Ciasto\n\n 320 g mąki (2 szklanki)\n\n 250 g zimnego masła*\n\n 1,5 łyżeczki proszku do pieczenia\n\n 5 łyżek cukru\n\n 1 łyżka cukru wanilinowego\n\n 1 jajko\n\nDo posypania: cukier puder\n\n Przygotowanie \n\n Jabłka\n\n Jabłka obrać, pokroić na ćwiartki i wyciąć gniazda nasienne. Pokroić na mniejsze kawałki i włożyć do szerokiego garnka lub na głęboką patelnię.\n\n Dodać cukier i cynamon i smażyć przez ok. 20 minut co chwilę mieszając, aż jabłka zmiękną i zaczną się rozpadać.\n\n Ciasto\n\n Do mąki dodać pokrojone w kostkę zimne masło, proszek do pieczenia, cukier i cukier wanilinowy.\n\n Składniki połączyć w jednolite ciasto (mikserem lub ręcznie), pod koniec dodać jajko (ciasto będzie dość miękkie).\n\n Podzielić je na pół i włożyć obie połówki do zamrażarki na ok. 15 minut.\n\n Pieczenie\n\n Piekarnik nagrzać do 180 stopni C (góra i dół bez termoobiegu).\n\n Wyjąć jedną połówkę ciasta z zamrażarki, pokroić nożem na plasterki i wylepić nimi spód formy. Następnie wyłożyć na to jabłka.\n\n Pozostałe ciasto zetrzeć na tarce bezpośrednio na jabłka (lub pokroić ciasto na plasterki i ułożyć na wierzchu).\n\n Wstawić do piekarnika i piec przez ok. 50 minut lub na złoty kolor. Upieczoną szarlotkę przestudzić i posypać cukrem pudrem.\n\n Wskazówki \n\n * lub oleju kokosowego (zimnego) lub margaryny. Można połączyć masło z olejem kokosowym. Można też dodać trochę smalcu.\n\nSzarlotka",
+    "renderTimeMs": 4078,
+    "stabilized": true,
+    "title": "Szarlotka | Kwestia Smaku"
+  }
+}

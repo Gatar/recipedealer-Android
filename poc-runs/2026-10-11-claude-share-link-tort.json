@@ -1,0 +1,1363 @@
+{
+  "schemaVersion": 2,
+  "captureId": "4388cd4d-5c11-46ff-8915-0003eb9e862c",
+  "capturedAt": "2026-10-11T14:33:39.936382Z",
+  "recipe": {
+    "title": "Claude responded: Oto prosty przepis na tropikalny tort warstwowy z kokosem i ananasem.",
+    "language": "en",
+    "times": {},
+    "ingredientGroups": [],
+    "stepGroups": [
+      {
+        "items": [
+          "Pierwszy blat nasącz, posmaruj kremem i rozłóż część ananasów.",
+          "Przykryj drugim blatem, nasącz i wierzch oraz boki pokryj kremem.",
+          "Udekoruj wiórkami kokosowymi i plastrami ananasa.",
+          "Schłódź min. 4 godziny, najlepiej na noc, żeby krem się zestalił i warstwy się przegryzły.",
+          "Jeśli chcesz, mogę podać wersję bez pieczenia (na biszkopcie z herbatników) albo wersję z trzema warstwami."
+        ]
+      },
+      {
+        "items": [
+          "Pierwszy blat nasącz, posmaruj cienką warstwą kremu i rozłóż połowę kostek ananasa.",
+          "Przykryj drugim blatem, nasącz, posmaruj kremem i rozłóż resztę ananasa.",
+          "Przykryj trzecim blatem, nasącz i pokryj wierzch oraz boki kremem.",
+          "Udekoruj wiórkami kokosowymi i plastrami ananasa.",
+          "Schłódź min. 4 godziny, najlepiej na noc.",
+          "Przy trzech warstwach tort jest wyższy i bardziej kruchy przy krojeniu, więc warto użyć długiego, ostrego noża i kroić na zimno."
+        ]
+      }
+    ],
+    "notes": [],
+    "images": [
+      "https://claude.ai/images/claude_ogimage.png"
+    ],
+    "source": {
+      "type": "WEB",
+      "url": "https://claude.ai/share/7239951b-e3ec-4990-8f84-a29cea884088",
+      "siteName": "Claude",
+      "sharedFrom": "com.android.shell",
+      "files": []
+    }
+  },
+  "completeness": {
+    "score": 0.6,
+    "bestStage": "heuristic",
+    "hasTitle": true,
+    "hasIngredients": false,
+    "hasSteps": true
+  },
+  "provenance": {
+    "title": "heuristic",
+    "steps": "heuristic",
+    "images": "page"
+  },
+  "web": {
+    "finalUrl": "https://claude.ai/share/7239951b-e3ec-4990-8f84-a29cea884088",
+    "heuristic": {
+      "articleTitle": "Claude",
+      "recipeHeading": "Claude responded: Oto prosty przepis na tropikalny tort warstwowy z kokosem i ananasem.",
+      "usedBodyFallback": true,
+      "servings": null,
+      "ingredients": [],
+      "instructions": [
+        {
+          "name": null,
+          "items": [
+            "Pierwszy blat nasącz, posmaruj kremem i rozłóż część ananasów.",
+            "Przykryj drugim blatem, nasącz i wierzch oraz boki pokryj kremem.",
+            "Udekoruj wiórkami kokosowymi i plastrami ananasa.",
+            "Schłódź min. 4 godziny, najlepiej na noc, żeby krem się zestalił i warstwy się przegryzły.",
+            "Jeśli chcesz, mogę podać wersję bez pieczenia (na biszkopcie z herbatników) albo wersję z trzema warstwami."
+          ]
+        },
+        {
+          "name": null,
+          "items": [
+            "Pierwszy blat nasącz, posmaruj cienką warstwą kremu i rozłóż połowę kostek ananasa.",
+            "Przykryj drugim blatem, nasącz, posmaruj kremem i rozłóż resztę ananasa.",
+            "Przykryj trzecim blatem, nasącz i pokryj wierzch oraz boki kremem.",
+            "Udekoruj wiórkami kokosowymi i plastrami ananasa.",
+            "Schłódź min. 4 godziny, najlepiej na noc.",
+            "Przy trzech warstwach tort jest wyższy i bardziej kruchy przy krojeniu, więc warto użyć długiego, ostrego noża i kroić na zimno."
+          ]
+        }
+      ],
+      "notes": []
+    },
+    "jsonLd": [
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebSite",
+            "name": "Claude",
+            "alternateName": [
+              "Claude.ai",
+              "Claude by Anthropic"
+            ],
+            "url": "https://claude.com"
+          },
+          {
+            "@type": "Organization",
+            "name": "Anthropic",
+            "url": "https://www.anthropic.com",
+            "logo": "https://claude.ai/images/claude_ogimage.png",
+            "sameAs": [
+              "https://x.com/AnthropicAI",
+              "https://www.linkedin.com/company/anthropic",
+              "https://www.youtube.com/@anthropic-ai"
+            ]
+          }
+        ]
+      }
+    ],
+    "lang": "en-US",
+    "microdata": [],
+    "ogImage": "https://claude.ai/images/claude_ogimage.png",
+    "pluginHits": {
+      "wprm": {
+        "found": false,
+        "containerCount": 0,
+        "fieldMatches": {},
+        "recipe": {}
+      },
+      "tasty": {
+        "found": false,
+        "containerCount": 0,
+        "fieldMatches": {},
+        "recipe": {}
+      },
+      "mediavine": {
+        "found": false,
+        "containerCount": 0,
+        "fieldMatches": {},
+        "recipe": {}
+      }
+    },
+    "readableText": "Shared by Bartek. This is a copy of a chat between Claude and Bartek. Content may include unverified or unsafe content that does not represent the views of Anthropic. Shared snapshot may contain attachments and data not displayed here.You said: Jak zrobic warstwowy tort o tropikalnym smaku (kokos, ananas)?Jak zrobic warstwowy tort o tropikalnym smaku (kokos, ananas)?14 minutes agoClaude responded: Oto prosty przepis na tropikalny tort warstwowy z kokosem i ananasem.Oto prosty przepis na tropikalny tort warstwowy z kokosem i ananasem. Memory jest pusta, więc nie ma tu nic do uwzględnienia, a pytanie nie wymaga wyszukiwania w sieci.\nBiszkopt kokosowy (2 blaty, ok. 20 cm)\n\n4 jajka, 120 g cukru, 120 g mąki pszennej, 1 łyżeczka proszku do pieczenia, 50 g wiórków kokosowych, 3 łyżki mleka kokosowego, 2 łyżki oleju.\nUbij jajka z cukrem na puch (ok. 5 minut). Delikatnie wmieszaj przesianą mąkę z proszkiem, wiórki, a na końcu mleko i olej.\nPiecz w 180°C przez ok. 25 minut, do suchego patyczka. Ostudź.\n\nKrem kokosowy\n\n400 ml mleka kokosowego, 3 żółtka, 50 g cukru, 25 g skrobi kukurydzianej, 200 g zimnego masła, 100 ml śmietany 36%.\nZagotuj mleko kokosowe. Żółtka utrzyj z cukrem i skrobią, wlej część gorącego mleka, potem wszystko wróć do garnka i gotuj, mieszając, aż zgęstnieje. Dodaj masło w kawałkach. Ostudź całkowicie.\nUbij zimną śmietanę i połącz z kremem.\n\nAnanas\n\nOk. 300 g ananasa pokrój w kostkę. Podsmaż z łyżką cukru na patelni, aż lekko skaramelizuje, i ostudź.\n\nNasączenie\n\n100 ml soku ananasowego zmieszanego z 2 łyżkami syropu cukrowego.\n\nSkładanie\n\nPierwszy blat nasącz, posmaruj kremem i rozłóż część ananasów.\nPrzykryj drugim blatem, nasącz i wierzch oraz boki pokryj kremem.\nUdekoruj wiórkami kokosowymi i plastrami ananasa.\nSchłódź min. 4 godziny, najlepiej na noc, żeby krem się zestalił i warstwy się przegryzły.\n\nJeśli chcesz, mogę podać wersję bez pieczenia (na biszkopcie z herbatników) albo wersję z trzema warstwami.14 minutes agoYou said: Daj wersje z 3 warstwami.Daj wersje z 3 warstwami.14 minutes agoClaude responded: Tort z trzema warstwami wymaga trzech blatów.Tort z trzema warstwami wymaga trzech blatów. Najłatwiej upiec dwa większe blaty i przekroić każdy na pół, ale można też upiec trzy cienkie. Proporcje podaję na tortownicę 20 cm.\nBiszkopt kokosowy (3 blaty)\n\n6 jajek, 180 g cukru, 180 g mąki pszennej, 1,5 łyżeczki proszku do pieczenia, 70 g wiórków kokosowych, 4 łyżki mleka kokosowego, 3 łyżki oleju.\nUbij jajka z cukrem na puch (ok. 6 minut). Delikatnie wmieszaj przesianą mąkę z proszkiem i wiórki, a na końcu mleko i olej.\nPodziel ciasto na dwie tortownice 20 cm (wyłożone papierem). Piecz w 180°C ok. 25 minut, do suchego patyczka. Jeden blat przekrój na pół poziomo, po ostudzeniu. Dla trzech warstw potrzebujesz 3 blatów, więc jeśli jeden z dwóch przekroisz, otrzymasz 3 blaty. Alternatywnie upiecz trzy cienkie blaty, co skraca pieczenie każdego z nich do ok. 15–18 minut.\n\nKrem kokosowy (podwójna porcja)\n\n600 ml mleka kokosowego, 4 żółtka, 70 g cukru, 35 g skrobi kukurydzianej, 250 g zimnego masła, 150 ml śmietany 36%.\nZagotuj 500 ml mleka kokosowego. Żółtka utrzyj z cukrem, skrobią i resztą mleka, wlej gorące mleko, wszystko wróć do garnka i gotuj, mieszając, aż zgęstnieje. Dodaj masło w kawałkach. Ostudź całkowicie.\nUbij zimną śmietanę i połącz z kremem.\n\nAnanas\n\nOk. 400 g ananasa pokrój w kostkę. Podsmaż z 2 łyżkami cukru, aż lekko skaramelizuje. Ostudź. Część zostaw do dekoracji.\n\nNasączenie\n\n150 ml soku ananasowego zmieszanego z 3 łyżkami syropu cukrowego.\n\nSkładanie\n\nPierwszy blat nasącz, posmaruj cienką warstwą kremu i rozłóż połowę kostek ananasa.\nPrzykryj drugim blatem, nasącz, posmaruj kremem i rozłóż resztę ananasa.\nPrzykryj trzecim blatem, nasącz i pokryj wierzch oraz boki kremem.\nUdekoruj wiórkami kokosowymi i plastrami ananasa.\nSchłódź min. 4 godziny, najlepiej na noc.\n\nPrzy trzech warstwach tort jest wyższy i bardziej kruchy przy krojeniu, więc warto użyć długiego, ostrego noża i kroić na zimno.14 minutes ago",
+    "renderTimeMs": 27319,
+    "siteName": "Claude",
+    "stabilized": false,
+    "title": "Claude",
+    "visibility": "visible"
+  },
+  "ocr": {
+    "blocks": [
+      {
+        "bbox": [
+          149,
+          85,
+          847,
+          118
+        ],
+        "page": 0,
+        "text": "Shared by Bartek. This is a copy of a chat"
+      },
+      {
+        "bbox": [
+          159,
+          134,
+          997,
+          169
+        ],
+        "page": 0,
+        "text": "between Claude and Bartek. Content may include"
+      },
+      {
+        "bbox": [
+          150,
+          190,
+          872,
+          217
+        ],
+        "page": 0,
+        "text": "unverified or unsafe content that does not"
+      },
+      {
+        "bbox": [
+          150,
+          242,
+          850,
+          276
+        ],
+        "page": 0,
+        "text": "represent the views of Anthropic. Shared"
+      },
+      {
+        "bbox": [
+          149,
+          295,
+          974,
+          330
+        ],
+        "page": 0,
+        "text": "snapshot may contain attachments and data not"
+      },
+      {
+        "bbox": [
+          149,
+          343,
+          403,
+          383
+        ],
+        "page": 0,
+        "text": "displayed here."
+      },
+      {
+        "bbox": [
+          177,
+          443,
+          291,
+          476
+        ],
+        "page": 0,
+        "text": "Report"
+      },
+      {
+        "bbox": [
+          250,
+          639,
+          995,
+          678
+        ],
+        "page": 0,
+        "text": "Jak zrobic warstwowy tort o tropikalnym"
+      },
+      {
+        "bbox": [
+          250,
+          689,
+          686,
+          728
+        ],
+        "page": 0,
+        "text": "smaku (kokos, ananas)?"
+      },
+      {
+        "bbox": [
+          770,
+          806,
+          968,
+          833
+        ],
+        "page": 0,
+        "text": "14 minutes ago"
+      },
+      {
+        "bbox": [
+          44,
+          888,
+          754,
+          929
+        ],
+        "page": 0,
+        "text": "Oto prosty przepis na tropikalny tort"
+      },
+      {
+        "bbox": [
+          44,
+          949,
+          905,
+          990
+        ],
+        "page": 0,
+        "text": "warstwowy z kokosem i ananasem. Memory"
+      },
+      {
+        "bbox": [
+          42,
+          1008,
+          665,
+          1053
+        ],
+        "page": 0,
+        "text": "jest pusta, więc nie ma tu nic do"
+      },
+      {
+        "bbox": [
+          44,
+          1077,
+          779,
+          1118
+        ],
+        "page": 0,
+        "text": "uwzględnienia, a pytanie nie wymaga"
+      },
+      {
+        "bbox": [
+          43,
+          1134,
+          471,
+          1180
+        ],
+        "page": 0,
+        "text": "wyszukiwania w sieci."
+      },
+      {
+        "bbox": [
+          44,
+          1231,
+          823,
+          1275
+        ],
+        "page": 0,
+        "text": "Biszkopt kokosowy (2 blaty, ok. 20 cm)"
+      },
+      {
+        "bbox": [
+          139,
+          1329,
+          952,
+          1370
+        ],
+        "page": 0,
+        "text": "4 jajka, 120 g cukru, 120 g mąki pszennej, 1"
+      },
+      {
+        "bbox": [
+          138,
+          1392,
+          831,
+          1433
+        ],
+        "page": 0,
+        "text": "łyżeczka proszku do pieczenia, 50 g"
+      },
+      {
+        "bbox": [
+          138,
+          1448,
+          842,
+          1499
+        ],
+        "page": 0,
+        "text": "wiórków kokosowych, 3 tyżki mleka"
+      },
+      {
+        "bbox": [
+          138,
+          1518,
+          639,
+          1559
+        ],
+        "page": 0,
+        "text": "kokosowego, 2 łyżki oleju."
+      },
+      {
+        "bbox": [
+          138,
+          1588,
+          942,
+          1630
+        ],
+        "page": 0,
+        "text": "Ubij jajka z cukrem na puch (ok. 5 minut)."
+      },
+      {
+        "bbox": [
+          138,
+          1654,
+          881,
+          1695
+        ],
+        "page": 0,
+        "text": "Delikatnie wmieszaj przesianą mąkę z"
+      },
+      {
+        "bbox": [
+          138,
+          1716,
+          955,
+          1756
+        ],
+        "page": 0,
+        "text": "proszkiem, wiórki, a na końcu mlekoiolej."
+      },
+      {
+        "bbox": [
+          138,
+          1791,
+          845,
+          1828
+        ],
+        "page": 0,
+        "text": "Piecz w 180°C przez ok. 25 minut, do"
+      },
+      {
+        "bbox": [
+          139,
+          1853,
+          654,
+          1895
+        ],
+        "page": 0,
+        "text": "suchego patyczka. Ostudź."
+      },
+      {
+        "bbox": [
+          43,
+          1973,
+          371,
+          2020
+        ],
+        "page": 0,
+        "text": "Krem kokosowy"
+      },
+      {
+        "bbox": [
+          153,
+          2070,
+          930,
+          2113
+        ],
+        "page": 0,
+        "text": "400 ml mleka kokosowego, 3 żótka, 50 g"
+      },
+      {
+        "bbox": [
+          156,
+          2132,
+          898,
+          2176
+        ],
+        "page": 0,
+        "text": "cukru, 25 g skrobi kukurydzianej, 200 g"
+      },
+      {
+        "bbox": [
+          138,
+          2199,
+          881,
+          2240
+        ],
+        "page": 0,
+        "text": "zimnego masła, 100 ml śmietany 36%."
+      },
+      {
+        "bbox": [
+          138,
+          2265,
+          931,
+          2312
+        ],
+        "page": 0,
+        "text": "Zagotuj mleko kokOsowe. Žótka utrzyjz"
+      },
+      {
+        "bbox": [
+          138,
+          2332,
+          864,
+          2380
+        ],
+        "page": 0,
+        "text": "cukrem i skrobią, wlej część gorącego"
+      },
+      {
+        "bbox": [
+          139,
+          2394,
+          926,
+          2440
+        ],
+        "page": 0,
+        "text": "mleka, potem wszystko wróć do garnkai"
+      },
+      {
+        "bbox": [
+          138,
+          2462,
+          850,
+          2503
+        ],
+        "page": 0,
+        "text": "gotuj, mieszając, aż zgęstnieje. Dodaj"
+      },
+      {
+        "bbox": [
+          139,
+          2522,
+          911,
+          2562
+        ],
+        "page": 0,
+        "text": "masło w kawałkach. Ostudź całkowicie."
+      },
+      {
+        "bbox": [
+          96,
+          2594,
+          911,
+          2640
+        ],
+        "page": 0,
+        "text": "• Ubij zimną śmietanę ipołącz z kremem."
+      },
+      {
+        "bbox": [
+          43,
+          2724,
+          195,
+          2758
+        ],
+        "page": 0,
+        "text": "Ananas"
+      },
+      {
+        "bbox": [
+          139,
+          2816,
+          820,
+          2859
+        ],
+        "page": 0,
+        "text": "Ok. 300 gananasa pokrój w kostkę."
+      },
+      {
+        "bbox": [
+          138,
+          2876,
+          850,
+          2922
+        ],
+        "page": 0,
+        "text": "Podsmażz łyżką cukru na patelni, aż"
+      },
+      {
+        "bbox": [
+          138,
+          2938,
+          716,
+          2984
+        ],
+        "page": 0,
+        "text": "lekko skaramelizuje, i ostudź."
+      },
+      {
+        "bbox": [
+          43,
+          3063,
+          275,
+          3113
+        ],
+        "page": 0,
+        "text": "Nasączenie"
+      },
+      {
+        "bbox": [
+          139,
+          3166,
+          942,
+          3205
+        ],
+        "page": 0,
+        "text": "100 ml soku ananasowego Zmieszanego z"
+      },
+      {
+        "bbox": [
+          139,
+          3229,
+          705,
+          3270
+        ],
+        "page": 0,
+        "text": "2łyžkami syropu cukrowego."
+      },
+      {
+        "bbox": [
+          44,
+          3350,
+          246,
+          3388
+        ],
+        "page": 0,
+        "text": "Składanie"
+      },
+      {
+        "bbox": [
+          74,
+          3447,
+          941,
+          3488
+        ],
+        "page": 0,
+        "text": "1. PierwSzy blat nasącz, posmaruj kremeni"
+      },
+      {
+        "bbox": [
+          148,
+          3509,
+          588,
+          3550
+        ],
+        "page": 0,
+        "text": "rozłóż część ananasów."
+      },
+      {
+        "bbox": [
+          75,
+          3585,
+          940,
+          3626
+        ],
+        "page": 0,
+        "text": "2. Przykryj drugim blatem, nasącz i wierzch"
+      },
+      {
+        "bbox": [
+          139,
+          3648,
+          635,
+          3689
+        ],
+        "page": 0,
+        "text": "oraz boki pokryj kremem."
+      },
+      {
+        "bbox": [
+          90,
+          3715,
+          797,
+          3762
+        ],
+        "page": 0,
+        "text": "3. Udekoruj wiórkami kokosowymi i"
+      },
+      {
+        "bbox": [
+          138,
+          3782,
+          499,
+          3824
+        ],
+        "page": 0,
+        "text": "plastrami ananasa."
+      },
+      {
+        "bbox": [
+          91,
+          267,
+          924,
+          318
+        ],
+        "page": 1,
+        "text": "4. Schłódź min. 4 godziny, najlepiej na noc,"
+      },
+      {
+        "bbox": [
+          138,
+          337,
+          816,
+          377
+        ],
+        "page": 1,
+        "text": "żeby krem się zestalił i warstwy się"
+      },
+      {
+        "bbox": [
+          138,
+          400,
+          356,
+          441
+        ],
+        "page": 1,
+        "text": "przegryzły."
+      },
+      {
+        "bbox": [
+          56,
+          522,
+          938,
+          572
+        ],
+        "page": 1,
+        "text": "Jeśli chcesz, mogę podać wersję bez pieczenia"
+      },
+      {
+        "bbox": [
+          47,
+          587,
+          892,
+          631
+        ],
+        "page": 1,
+        "text": "(na biszkopcie z herbatników) albo wersję z"
+      },
+      {
+        "bbox": [
+          44,
+          653,
+          413,
+          684
+        ],
+        "page": 1,
+        "text": "trzema warstwami."
+      },
+      {
+        "bbox": [
+          105,
+          739,
+          302,
+          768
+        ],
+        "page": 1,
+        "text": "14 minutes ago"
+      },
+      {
+        "bbox": [
+          542,
+          887,
+          1004,
+          926
+        ],
+        "page": 1,
+        "text": "Daj wersje z 3 warstwami."
+      },
+      {
+        "bbox": [
+          773,
+          995,
+          968,
+          1030
+        ],
+        "page": 1,
+        "text": "14 minutes ago"
+      },
+      {
+        "bbox": [
+          44,
+          1083,
+          839,
+          1121
+        ],
+        "page": 1,
+        "text": "Tort z trzema warstwami wymaga trzech"
+      },
+      {
+        "bbox": [
+          44,
+          1144,
+          895,
+          1186
+        ],
+        "page": 1,
+        "text": "blatów. Najłatwiej upiec dwa większe blaty i"
+      },
+      {
+        "bbox": [
+          44,
+          1208,
+          889,
+          1248
+        ],
+        "page": 1,
+        "text": "przekroić każdy na pół, ale można też upiec"
+      },
+      {
+        "bbox": [
+          44,
+          1272,
+          956,
+          1313
+        ],
+        "page": 1,
+        "text": "trzy cienkie. Proporcje podaję na tortownicę 20"
+      },
+      {
+        "bbox": [
+          44,
+          1343,
+          111,
+          1366
+        ],
+        "page": 1,
+        "text": "cm."
+      },
+      {
+        "bbox": [
+          44,
+          1426,
+          613,
+          1471
+        ],
+        "page": 1,
+        "text": "Biszkopt kokosowy (3 blaty)"
+      },
+      {
+        "bbox": [
+          160,
+          1520,
+          924,
+          1568
+        ],
+        "page": 1,
+        "text": "6 jajek, 180g cukru, 180 g mąki pszennej,"
+      },
+      {
+        "bbox": [
+          139,
+          1584,
+          881,
+          1631
+        ],
+        "page": 1,
+        "text": "1,5 łyżeczki proszku do pieczenia, 70 g"
+      },
+      {
+        "bbox": [
+          138,
+          1649,
+          845,
+          1691
+        ],
+        "page": 1,
+        "text": "wiórków kokosowych, 4 łyżki mleka"
+      },
+      {
+        "bbox": [
+          138,
+          1713,
+          641,
+          1754
+        ],
+        "page": 1,
+        "text": "kokosowego, 3 łyżki oleju."
+      },
+      {
+        "bbox": [
+          138,
+          1783,
+          943,
+          1824
+        ],
+        "page": 1,
+        "text": "Ubij jajka z cukrem na puch (ok. 6 minut)."
+      },
+      {
+        "bbox": [
+          138,
+          1849,
+          881,
+          1890
+        ],
+        "page": 1,
+        "text": "Delikatnie wmieszaj przesianą mąkę z"
+      },
+      {
+        "bbox": [
+          138,
+          1906,
+          880,
+          1950
+        ],
+        "page": 1,
+        "text": "proszkiem iwiórki, a na końcu mlekoi"
+      },
+      {
+        "bbox": [
+          139,
+          1975,
+          213,
+          2014
+        ],
+        "page": 1,
+        "text": "olej."
+      },
+      {
+        "bbox": [
+          138,
+          2049,
+          913,
+          2080
+        ],
+        "page": 1,
+        "text": "Podziel ciasto na dwie tortownice 20 cm"
+      },
+      {
+        "bbox": [
+          141,
+          2109,
+          920,
+          2153
+        ],
+        "page": 1,
+        "text": "(wyłożone papierem). Piecz w 180°C ok."
+      },
+      {
+        "bbox": [
+          138,
+          2175,
+          956,
+          2215
+        ],
+        "page": 1,
+        "text": "25 minut, do suchego patyczka. Jeden blat"
+      },
+      {
+        "bbox": [
+          138,
+          2237,
+          916,
+          2279
+        ],
+        "page": 1,
+        "text": "przekrój na pół poziomo, po ostudzeniu."
+      },
+      {
+        "bbox": [
+          138,
+          2300,
+          933,
+          2342
+        ],
+        "page": 1,
+        "text": "Dla trzech warstw potrzebujesz 3 blatów,"
+      },
+      {
+        "bbox": [
+          138,
+          2363,
+          825,
+          2405
+        ],
+        "page": 1,
+        "text": "więcjeśli jeden z dwóch przekroisz,"
+      },
+      {
+        "bbox": [
+          139,
+          2427,
+          922,
+          2468
+        ],
+        "page": 1,
+        "text": "otrzymasz 3 blaty. Alternatywnie upiecz"
+      },
+      {
+        "bbox": [
+          138,
+          2490,
+          869,
+          2530
+        ],
+        "page": 1,
+        "text": "trzy cienkie blaty, co skraca pieczenie"
+      },
+      {
+        "bbox": [
+          138,
+          2553,
+          801,
+          2592
+        ],
+        "page": 1,
+        "text": "każdegoz nich do ok. 15-18 minut."
+      },
+      {
+        "bbox": [
+          44,
+          2676,
+          745,
+          2720
+        ],
+        "page": 1,
+        "text": "Krem kokosowy (podwójna porcja)"
+      },
+      {
+        "bbox": [
+          138,
+          2770,
+          929,
+          2813
+        ],
+        "page": 1,
+        "text": "600 ml mleka kokosowego, 4 żótka, 70 g"
+      },
+      {
+        "bbox": [
+          139,
+          2832,
+          899,
+          2881
+        ],
+        "page": 1,
+        "text": "cukru, 35gskrobi kukurydzianej, 250 g"
+      },
+      {
+        "bbox": [
+          138,
+          2899,
+          878,
+          2941
+        ],
+        "page": 1,
+        "text": "zimnego masła, 150 ml śmietany 36%."
+      },
+      {
+        "bbox": [
+          138,
+          2969,
+          962,
+          3012
+        ],
+        "page": 1,
+        "text": "Zagotuj 500 ml mnleka kokOSOwego. Žótka"
+      },
+      {
+        "bbox": [
+          138,
+          3036,
+          893,
+          3076
+        ],
+        "page": 1,
+        "text": "utrzyj z cukrem, skrobią i resztą mleka,"
+      },
+      {
+        "bbox": [
+          138,
+          3098,
+          852,
+          3140
+        ],
+        "page": 1,
+        "text": "wlej gorące mleko, wszystko wróć do"
+      },
+      {
+        "bbox": [
+          138,
+          3162,
+          891,
+          3203
+        ],
+        "page": 1,
+        "text": "garnka i gotuj, mieszając, aż zgęstnieje."
+      },
+      {
+        "bbox": [
+          138,
+          3224,
+          808,
+          3262
+        ],
+        "page": 1,
+        "text": "Dodaj masto w kawałkach. Ostudź"
+      },
+      {
+        "bbox": [
+          138,
+          3284,
+          353,
+          3321
+        ],
+        "page": 1,
+        "text": "całkowicie."
+      },
+      {
+        "bbox": [
+          163,
+          3357,
+          911,
+          3402
+        ],
+        "page": 1,
+        "text": "Ubij zimną śmietanę i połączz kremem."
+      },
+      {
+        "bbox": [
+          43,
+          3489,
+          197,
+          3520
+        ],
+        "page": 1,
+        "text": "Ananas"
+      },
+      {
+        "bbox": [
+          139,
+          3581,
+          823,
+          3623
+        ],
+        "page": 1,
+        "text": "Ok. 400 g ananasapokrój w kostkę."
+      },
+      {
+        "bbox": [
+          156,
+          3641,
+          846,
+          3684
+        ],
+        "page": 1,
+        "text": "Podsmaż z 2 łyżkami cukru, aż lekko"
+      },
+      {
+        "bbox": [
+          142,
+          3704,
+          910,
+          3748
+        ],
+        "page": 1,
+        "text": "skaramelizuje. Ostudź. Część zostaw do"
+      },
+      {
+        "bbox": [
+          139,
+          3771,
+          327,
+          3812
+        ],
+        "page": 1,
+        "text": "dekoracji."
+      },
+      {
+        "bbox": [
+          44,
+          309,
+          274,
+          353
+        ],
+        "page": 2,
+        "text": "Nasączenie"
+      },
+      {
+        "bbox": [
+          140,
+          404,
+          940,
+          446
+        ],
+        "page": 2,
+        "text": "150 ml soku ananasowego zmieszanego z"
+      },
+      {
+        "bbox": [
+          138,
+          468,
+          706,
+          514
+        ],
+        "page": 2,
+        "text": "3 łyżkami syropu cukrowego."
+      },
+      {
+        "bbox": [
+          44,
+          596,
+          248,
+          628
+        ],
+        "page": 2,
+        "text": "Składanie"
+      },
+      {
+        "bbox": [
+          74,
+          691,
+          886,
+          732
+        ],
+        "page": 2,
+        "text": "1. Pierwszy blat nasącz, posmaruj cienką"
+      },
+      {
+        "bbox": [
+          138,
+          752,
+          884,
+          796
+        ],
+        "page": 2,
+        "text": "warstwą kremu irozłóż połowę kostek"
+      },
+      {
+        "bbox": [
+          139,
+          825,
+          308,
+          848
+        ],
+        "page": 2,
+        "text": "ananasa."
+      },
+      {
+        "bbox": [
+          76,
+          890,
+          958,
+          930
+        ],
+        "page": 2,
+        "text": "2. Przykryj drugim blatem, nasącz, posmaruj"
+      },
+      {
+        "bbox": [
+          138,
+          950,
+          761,
+          989
+        ],
+        "page": 2,
+        "text": "krememirozłóż resztę ananasa."
+      },
+      {
+        "bbox": [
+          74,
+          1020,
+          916,
+          1068
+        ],
+        "page": 2,
+        "text": "3. Przykryj trzecimn blatem, nasącz i polkryj"
+      },
+      {
+        "bbox": [
+          138,
+          1090,
+          662,
+          1122
+        ],
+        "page": 2,
+        "text": "wierzch oraz boki kremem."
+      },
+      {
+        "bbox": [
+          91,
+          1160,
+          797,
+          1204
+        ],
+        "page": 2,
+        "text": "4. Udekoruj wiórkami kokOSOwymi i"
+      },
+      {
+        "bbox": [
+          159,
+          1227,
+          506,
+          1264
+        ],
+        "page": 2,
+        "text": "plastrami ananasa."
+      },
+      {
+        "bbox": [
+          176,
+          1296,
+          791,
+          1320
+        ],
+        "page": 2,
+        "text": "obtdh nin aadinw noilaniai"
+      },
+      {
+        "bbox": [
+          65,
+          1361,
+          347,
+          1408
+        ],
+        "page": 2,
+        "text": "Cookie settings"
+      },
+      {
+        "bbox": [
+          65,
+          1464,
+          939,
+          1497
+        ],
+        "page": 2,
+        "text": "We use cookies to deliver and improve oUr services,"
+      },
+      {
+        "bbox": [
+          65,
+          1517,
+          938,
+          1553
+        ],
+        "page": 2,
+        "text": "analyze site usage, and if yoU agree, to cUstomize or"
+      },
+      {
+        "bbox": [
+          66,
+          1569,
+          1005,
+          1605
+        ],
+        "page": 2,
+        "text": "personalize your experience and market our services to"
+      },
+      {
+        "bbox": [
+          77,
+          1619,
+          755,
+          1655
+        ],
+        "page": 2,
+        "text": "you. YoU can read our Cookie Policy here."
+      },
+      {
+        "bbox": [
+          143,
+          1732,
+          323,
+          1759
+        ],
+        "page": 2,
+        "text": "Customize"
+      },
+      {
+        "bbox": [
+          516,
+          1732,
+          622,
+          1764
+        ],
+        "page": 2,
+        "text": "Reject"
+      },
+      {
+        "bbox": [
+          814,
+          1732,
+          936,
+          1766
+        ],
+        "page": 2,
+        "text": "Accept"
+      }
+    ],
+    "source": "WEBVIEW_SNAPSHOT",
+    "text": "Shared by Bartek. This is a copy of a chat\nbetween Claude and Bartek. Content may include\nunverified or unsafe content that does not\nrepresent the views of Anthropic. Shared\nsnapshot may contain attachments and data not\ndisplayed here.\nReport\nJak zrobic warstwowy tort o tropikalnym\nsmaku (kokos, ananas)?\n14 minutes ago\nOto prosty przepis na tropikalny tort\nwarstwowy z kokosem i ananasem. Memory\njest pusta, więc nie ma tu nic do\nuwzględnienia, a pytanie nie wymaga\nwyszukiwania w sieci.\nBiszkopt kokosowy (2 blaty, ok. 20 cm)\n4 jajka, 120 g cukru, 120 g mąki pszennej, 1\nłyżeczka proszku do pieczenia, 50 g\nwiórków kokosowych, 3 tyżki mleka\nkokosowego, 2 łyżki oleju.\nUbij jajka z cukrem na puch (ok. 5 minut).\nDelikatnie wmieszaj przesianą mąkę z\nproszkiem, wiórki, a na końcu mlekoiolej.\nPiecz w 180°C przez ok. 25 minut, do\nsuchego patyczka. Ostudź.\nKrem kokosowy\n400 ml mleka kokosowego, 3 żótka, 50 g\ncukru, 25 g skrobi kukurydzianej, 200 g\nzimnego masła, 100 ml śmietany 36%.\nZagotuj mleko kokOsowe. Žótka utrzyjz\ncukrem i skrobią, wlej część gorącego\nmleka, potem wszystko wróć do garnkai\ngotuj, mieszając, aż zgęstnieje. Dodaj\nmasło w kawałkach. Ostudź całkowicie.\n• Ubij zimną śmietanę ipołącz z kremem.\nAnanas\nOk. 300 gananasa pokrój w kostkę.\nPodsmażz łyżką cukru na patelni, aż\nlekko skaramelizuje, i ostudź.\nNasączenie\n100 ml soku ananasowego Zmieszanego z\n2łyžkami syropu cukrowego.\nSkładanie\n1. PierwSzy blat nasącz, posmaruj kremeni\nrozłóż część ananasów.\n2. Przykryj drugim blatem, nasącz i wierzch\noraz boki pokryj kremem.\n3. Udekoruj wiórkami kokosowymi i\nplastrami ananasa.\n\n4. Schłódź min. 4 godziny, najlepiej na noc,\nżeby krem się zestalił i warstwy się\nprzegryzły.\nJeśli chcesz, mogę podać wersję bez pieczenia\n(na biszkopcie z herbatników) albo wersję z\ntrzema warstwami.\n14 minutes ago\nDaj wersje z 3 warstwami.\n14 minutes ago\nTort z trzema warstwami wymaga trzech\nblatów. Najłatwiej upiec dwa większe blaty i\nprzekroić każdy na pół, ale można też upiec\ntrzy cienkie. Proporcje podaję na tortownicę 20\ncm.\nBiszkopt kokosowy (3 blaty)\n6 jajek, 180g cukru, 180 g mąki pszennej,\n1,5 łyżeczki proszku do pieczenia, 70 g\nwiórków kokosowych, 4 łyżki mleka\nkokosowego, 3 łyżki oleju.\nUbij jajka z cukrem na puch (ok. 6 minut).\nDelikatnie wmieszaj przesianą mąkę z\nproszkiem iwiórki, a na końcu mlekoi\nolej.\nPodziel ciasto na dwie tortownice 20 cm\n(wyłożone papierem). Piecz w 180°C ok.\n25 minut, do suchego patyczka. Jeden blat\nprzekrój na pół poziomo, po ostudzeniu.\nDla trzech warstw potrzebujesz 3 blatów,\nwięcjeśli jeden z dwóch przekroisz,\notrzymasz 3 blaty. Alternatywnie upiecz\ntrzy cienkie blaty, co skraca pieczenie\nkażdegoz nich do ok. 15-18 minut.\nKrem kokosowy (podwójna porcja)\n600 ml mleka kokosowego, 4 żótka, 70 g\ncukru, 35gskrobi kukurydzianej, 250 g\nzimnego masła, 150 ml śmietany 36%.\nZagotuj 500 ml mnleka kokOSOwego. Žótka\nutrzyj z cukrem, skrobią i resztą mleka,\nwlej gorące mleko, wszystko wróć do\ngarnka i gotuj, mieszając, aż zgęstnieje.\nDodaj masto w kawałkach. Ostudź\ncałkowicie.\nUbij zimną śmietanę i połączz kremem.\nAnanas\nOk. 400 g ananasapokrój w kostkę.\nPodsmaż z 2 łyżkami cukru, aż lekko\nskaramelizuje. Ostudź. Część zostaw do\ndekoracji.\n\nNasączenie\n150 ml soku ananasowego zmieszanego z\n3 łyżkami syropu cukrowego.\nSkładanie\n1. Pierwszy blat nasącz, posmaruj cienką\nwarstwą kremu irozłóż połowę kostek\nananasa.\n2. Przykryj drugim blatem, nasącz, posmaruj\nkrememirozłóż resztę ananasa.\n3. Przykryj trzecimn blatem, nasącz i polkryj\nwierzch oraz boki kremem.\n4. Udekoruj wiórkami kokOSOwymi i\nplastrami ananasa.\nobtdh nin aadinw noilaniai\nCookie settings\nWe use cookies to deliver and improve oUr services,\nanalyze site usage, and if yoU agree, to cUstomize or\npersonalize your experience and market our services to\nyou. YoU can read our Cookie Policy here.\nCustomize\nReject\nAccept",
+    "truncated": false
+  },
+  "attachments": [],
+  "diagnostics": {
+    "errors": [],
+    "notes": [
+      "intent action=android.intent.action.SEND type=text/plain referrer=android-app://com.android.shell extras={android.intent.extra.TEXT=String(60)'https://claude.ai/share/7239951b-e3ec-4990-8f84-a29cea884088'}",
+      "mode=visible",
+      "re-extracted 4x after incomplete results",
+      "extractionTrigger=retry"
+    ],
+    "stageTimingsMs": {
+      "stabilize": 27319,
+      "extractRoundTrip": 25,
+      "js.jsonLd": 0,
+      "js.microdata": 0,
+      "js.pluginHits": 1,
+      "js.readability": 10,
+      "js.heuristic": 12,
+      "merge": 0,
+      "ocr": 1451
+    }
+  }
+}

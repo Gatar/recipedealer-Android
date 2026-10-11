@@ -1,0 +1,47 @@
+{
+  "recipe": {
+    "title": "Szarlotka babci Hani",
+    "language": "pl",
+    "times": {},
+    "ingredientGroups": [
+      {
+        "items": [
+          "1 kg kwaśnych jabłek",
+          "3 szklanki mąki pszennej",
+          "200 g masła",
+          "1 szklanka cukru",
+          "2 łyżeczki cynamonu"
+        ]
+      }
+    ],
+    "stepGroups": [
+      {
+        "items": [
+          "Mąkę, masło i cukier szybko zagnieć w jednolite ciasto, a następnie podziel je na dwie części i schłodź w lodówce przez pół godziny.",
+          "Jabłka obierz, zetrzyj na grubych oczkach tarki i wymieszaj z cynamonem. Połowę ciasta wyłóż na blaszkę, przykryj jabłkami i zetrzyj na wierzch resztę ciasta.",
+          "Piecz w temperaturze 180°C przez około 50 minut, aż wierzch się zarumieni.",
+          "Podawaj ciepłą lub całkiem wystudzoną, posypaną cukrem pudrem. Smacznego!"
+        ]
+      }
+    ],
+    "notes": [],
+    "images": [],
+    "source": {
+      "type": "WEB",
+      "url": "https://example.test/plain-article-pl",
+      "files": []
+    }
+  },
+  "provenance": {
+    "title": "heuristic",
+    "ingredients": "heuristic",
+    "steps": "heuristic"
+  },
+  "completeness": {
+    "score": 1.0,
+    "bestStage": "heuristic",
+    "hasTitle": true,
+    "hasIngredients": true,
+    "hasSteps": true
+  }
+}

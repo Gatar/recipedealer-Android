@@ -1,0 +1,840 @@
+{
+  "schemaVersion": 2,
+  "captureId": "94963acd-b5e4-458c-83ca-3230ef758acb",
+  "capturedAt": "2026-10-09T19:48:51.195506Z",
+  "recipe": {
+    "title": "Bun Cha - Vietnamese Meatballs",
+    "language": "en",
+    "servings": {
+      "text": "2",
+      "count": 2
+    },
+    "times": {
+      "prepMinutes": 20,
+      "cookMinutes": 10,
+      "totalMinutes": 30
+    },
+    "ingredientGroups": [
+      {
+        "name": "Meatballs",
+        "items": [
+          "250 – 300 g/8 – 10 oz pork mince (ground pork)(Note 1)",
+          "1 tbsp fish sauce (Note 2)",
+          "2 tsp white sugar",
+          "1/3 cup finely chopped green onions / scallions",
+          "1 clove garlic, minced",
+          "Pinch of white pepper and salt",
+          "2 tsp lemongrass paste or fresh finely chopped, optional (Note 4)",
+          "1 1/2 tbsp oil, for cooking"
+        ]
+      },
+      {
+        "name": "Nuoc Cham (Vietnamese Dressing / Sauce – Note 2)",
+        "items": [
+          "3 tbsp white sugar",
+          "3 tbsp fish sauce (Note 2)",
+          "2 tbsp rice wine vinegar",
+          "2 tbsp lime juice",
+          "1/3 cup water",
+          "1 birds eye chilli, seeded and finely chopped (Note 3)",
+          "3 cloves garlic, finely chopped"
+        ]
+      },
+      {
+        "name": "Serving (Note 4)",
+        "items": [
+          "100 g / 3.5 oz vermicelli noodles, dried",
+          "Big handful beansprouts",
+          "Few lettuce leaves, folded or shredded",
+          "Julienned carrot and white radish (daikon), optional quick pickle (Note 5)",
+          "Handful of coriander/cilantro sprigs, mint",
+          "Sliced red chilli, lime wedges (optional)"
+        ]
+      }
+    ],
+    "stepGroups": [
+      {
+        "items": [
+          "Sauce: Mix ingredients. Set aside 10 minutes+.",
+          "Noodles: Pour over boiling water and soak per packet directions. Drain, set aside."
+        ]
+      },
+      {
+        "name": "Meatballs",
+        "items": [
+          "Mix all ingredients except oil until combined.",
+          "Shape into 6 mini hamburger patties with your hands.",
+          "Heat oil in a skillet over medium high heat. Add patties and cook for 2 1/2 minutes or until golden. Flip, cook 2 minutes then remove."
+        ]
+      },
+      {
+        "name": "Assemble Bowls",
+        "items": [
+          "Place noodles in bowl. Top with a handful of beansprouts, wedge in lettuce, carrots and radish in.",
+          "Place meatballs on top, top with coriander and mint.",
+          "Spoon over a generous amount of Sauce (it's supposed to be like a soup broth), eat and be happy!"
+        ]
+      }
+    ],
+    "notes": [
+      "1. Pork: Can use chicken or turkey. Fattier the better – juicier!",
+      "2. Nuoc Cham: This sauce is not as strong / fishy as others you may have tried. It’s intended to be used almost like a soup broth. Adapt this to your taste by adjusting the quantities. You probably will not use all this sauce – but I don’t want you to run out!",
+      "3. Chilli: Birds eye chillies are small red chillies that are quite spicy. To make it less spicy, use large red chillies instead (which are not as hot) or skip it.",
+      "4. Lemongrass will gives this an extra Vietnamese flavour that westerners are familiar with. But not all Vietnamese recipes have lemongrass in it – and if I included it in everything, then they would all taste the same! Traditional Bun Cha does not have it in it, and it’s really tasty without. But it’s an optional extra!",
+      "5. Serving sides: Traditional Vietnamese food is served with lots of fresh sides. Bean sprouts and herbs such as mint and coriander/cilantro are the most common, but also pickles. You’re supposed to pile them on top of whatever your eating and eat it together.",
+      "There’s plenty of options here, so sub ingredients as desired! Shredded cabbage or other leafy greens, cucumber and even finely sliced asparagus and green beans would be ideal. I’d even throw in some cherry tomatoes!",
+      "Lettuce – if using soft lettuce (like I’ve used), tear then fold. If using crisp lettuce (eg iceberg), finely slice.",
+      "6. Quick Asian Pickled Vegetables: 1 cup julienned carrot (1 medium) 1 loosely packed cup julienned white radish / daikon 1 cup (250 ml) warm tap water 1/3 cup white sugar 1 tbsp salt 1/2 cup (125 ml)rice wine vinegar Directions: Combine sugar, salt, vinegar and water. Stir until sugar and salt are dissolved. Add vegetables and let stand for at least 1 hour to pickle. Drain.",
+      "7. What this tastes like: The pork is savoury with a touch of sweet, and caramelised on the outside. The sauce is not that strong (supposed to use alot) – sweet, balanced with mild tang and savoury. Not that spicy because there’s only 1 small chilli spread across almost 1 cup of liquid. If concerned, use a large red chilli (not as spicy) or skip it altogether. Though fish sauce is used in abundance here (as with most Vietnamese recipes!) it does not taste fishy.",
+      "8. Adapted from a few Vietnamese cookbooks, including My Vietnamese Kitchen by Uyen Luu and Hanoi Street Food by Luk This and Tom Vandenberghe.",
+      "9. Nutrition is for meatballs and sauce only, assuming all sauce is consumed."
+    ],
+    "images": [
+      "https://www.recipetineats.com/tachyon/2019/01/Vietnamese-Pork-Meatballs_6.jpg"
+    ],
+    "source": {
+      "type": "WEB",
+      "url": "https://www.recipetineats.com/bun-cha-vietnamese-meatballs/",
+      "siteName": "RecipeTin Eats",
+      "author": "Nagi",
+      "sharedFrom": "com.android.shell",
+      "files": []
+    }
+  },
+  "completeness": {
+    "score": 1.0,
+    "bestStage": "jsonLd",
+    "hasTitle": true,
+    "hasIngredients": true,
+    "hasSteps": true
+  },
+  "provenance": {
+    "title": "jsonLd",
+    "ingredients": "pluginHits",
+    "steps": "jsonLd",
+    "servings": "jsonLd",
+    "prepMinutes": "jsonLd",
+    "cookMinutes": "jsonLd",
+    "totalMinutes": "jsonLd",
+    "images": "jsonLd",
+    "notes": "pluginHits",
+    "author": "jsonLd"
+  },
+  "web": {
+    "canonicalUrl": "https://www.recipetineats.com/bun-cha-vietnamese-meatballs/",
+    "finalUrl": "https://www.recipetineats.com/bun-cha-vietnamese-meatballs/",
+    "heuristic": {
+      "articleTitle": "Bun Cha (Vietnamese Meatballs!)",
+      "usedBodyFallback": true,
+      "servings": null,
+      "ingredients": [
+        {
+          "name": "Meatballs",
+          "items": [
+            "▢ 250 – 300 g/8 – 10 oz pork mince (ground pork)(Note 1)",
+            "▢ 1 tbsp fish sauce (Note 2)",
+            "▢ 2 tsp white sugar",
+            "▢ 1/3 cup finely chopped green onions / scallions",
+            "▢ 1 clove garlic , minced",
+            "▢ Pinch of white pepper and salt",
+            "▢ 2 tsp lemongrass paste or fresh finely chopped , optional (Note 4)",
+            "▢ 1 1/2 tbsp oil , for cooking"
+          ]
+        }
+      ],
+      "instructions": [
+        {
+          "name": null,
+          "items": [
+            "Sauce: Mix ingredients. Set aside 10 minutes+.",
+            "Noodles: Pour over boiling water and soak per packet directions. Drain, set aside."
+          ]
+        },
+        {
+          "name": "Meatballs",
+          "items": [
+            "Mix all ingredients except oil until combined.",
+            "Shape into 6 mini hamburger patties with your hands.",
+            "Heat oil in a skillet over medium high heat. Add patties and cook for 2 1/2 minutes or until golden. Flip, cook 2 minutes then remove."
+          ]
+        },
+        {
+          "name": "Assemble Bowls",
+          "items": [
+            "Place noodles in bowl. Top with a handful of beansprouts, wedge in lettuce, carrots and radish in.",
+            "Place meatballs on top, top with coriander and mint.",
+            "Spoon over a generous amount of Sauce (it’s supposed to be like a soup broth), eat and be happy!"
+          ]
+        }
+      ],
+      "notes": []
+    },
+    "jsonLd": [
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "Article",
+            "@id": "https://www.recipetineats.com/bun-cha-vietnamese-meatballs/#article",
+            "isPartOf": {
+              "@id": "https://www.recipetineats.com/bun-cha-vietnamese-meatballs/"
+            },
+            "author": {
+              "name": "Nagi",
+              "@id": "https://www.recipetineats.com/#/schema/person/1684e6a75e9f91ae2e33ca2de95b47e2"
+            },
+            "headline": "Bun Cha (Vietnamese Meatballs!)",
+            "datePublished": "2019-01-23T09:27:20+00:00",
+            "dateModified": "2025-06-18T07:33:39+00:00",
+            "wordCount": 1672,
+            "commentCount": 428,
+            "image": {
+              "@id": "https://www.recipetineats.com/bun-cha-vietnamese-meatballs/#primaryimage"
+            },
+            "thumbnailUrl": "https://www.recipetineats.com/tachyon/2019/01/Vietnamese-Pork-Meatballs_6.jpg",
+            "articleSection": [
+              "BBQ Recipes",
+              "Iconic Dishes",
+              "Meatballs",
+              "Pork Recipes",
+              "Quick and Easy",
+              "Quick Dinner Recipes",
+              "Vietnamese"
+            ],
+            "inLanguage": "en-US",
+            "potentialAction": [
+              {
+                "@type": "CommentAction",
+                "name": "Comment",
+                "target": [
+                  "https://www.recipetineats.com/bun-cha-vietnamese-meatballs/#respond"
+                ]
+              }
+            ]
+          },
+          {
+            "@type": "WebPage",
+            "@id": "https://www.recipetineats.com/bun-cha-vietnamese-meatballs/",
+            "url": "https://www.recipetineats.com/bun-cha-vietnamese-meatballs/",
+            "name": "Bun Cha (Vietnamese Meatballs!) - RecipeTin Eats",
+            "isPartOf": {
+              "@id": "https://www.recipetineats.com/#website"
+            },
+            "primaryImageOfPage": {
+              "@id": "https://www.recipetineats.com/bun-cha-vietnamese-meatballs/#primaryimage"
+            },
+            "image": {
+              "@id": "https://www.recipetineats.com/bun-cha-vietnamese-meatballs/#primaryimage"
+            },
+            "thumbnailUrl": "https://www.recipetineats.com/tachyon/2019/01/Vietnamese-Pork-Meatballs_6.jpg",
+            "datePublished": "2019-01-23T09:27:20+00:00",
+            "dateModified": "2025-06-18T07:33:39+00:00",
+            "author": {
+              "@id": "https://www.recipetineats.com/#/schema/person/1684e6a75e9f91ae2e33ca2de95b47e2"
+            },
+            "description": "Bun Cha, the famous juicy pork meatballs from the streets of Hanoi. Traditional Vietnamese food - made at home! Fresh, sweet, savoury, and full of flavour.",
+            "breadcrumb": {
+              "@id": "https://www.recipetineats.com/bun-cha-vietnamese-meatballs/#breadcrumb"
+            },
+            "inLanguage": "en-US",
+            "potentialAction": [
+              {
+                "@type": "ReadAction",
+                "target": [
+                  "https://www.recipetineats.com/bun-cha-vietnamese-meatballs/"
+                ]
+              }
+            ]
+          },
+          {
+            "@type": "ImageObject",
+            "inLanguage": "en-US",
+            "@id": "https://www.recipetineats.com/bun-cha-vietnamese-meatballs/#primaryimage",
+            "url": "https://www.recipetineats.com/tachyon/2019/01/Vietnamese-Pork-Meatballs_6.jpg",
+            "contentUrl": "https://www.recipetineats.com/tachyon/2019/01/Vietnamese-Pork-Meatballs_6.jpg",
+            "width": 900,
+            "height": 1260,
+            "caption": "Overhead photo of Bun Cha - Vietnamese Meatballs noodle bowls, ready to be eaten"
+          },
+          {
+            "@type": "BreadcrumbList",
+            "@id": "https://www.recipetineats.com/bun-cha-vietnamese-meatballs/#breadcrumb",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://www.recipetineats.com/"
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Quick and Easy",
+                "item": "https://www.recipetineats.com/category/quick-and-easy/"
+              },
+              {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "Bun Cha (Vietnamese Meatballs!)"
+              }
+            ]
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://www.recipetineats.com/#website",
+            "url": "https://www.recipetineats.com/",
+            "name": "RecipeTin Eats",
+            "description": "Fast Prep, Big Flavours",
+            "potentialAction": [
+              {
+                "@type": "SearchAction",
+                "target": {
+                  "@type": "EntryPoint",
+                  "urlTemplate": "https://www.recipetineats.com/?s={search_term_string}"
+                },
+                "query-input": {
+                  "@type": "PropertyValueSpecification",
+                  "valueRequired": true,
+                  "valueName": "search_term_string"
+                }
+              }
+            ],
+            "inLanguage": "en-US"
+          },
+          {
+            "@type": "Person",
+            "@id": "https://www.recipetineats.com/#/schema/person/1684e6a75e9f91ae2e33ca2de95b47e2",
+            "name": "Nagi",
+            "image": {
+              "@type": "ImageObject",
+              "inLanguage": "en-US",
+              "@id": "https://secure.gravatar.com/avatar/75eae612677fdf550ba9a478ea595902153a0a06b8b27aaf6bc3eddcf6367244?s=96&d=https%3A%2F%2Fwww.recipetineats.com%2Ftachyon%2F2024%2F06%2Favatar-guest-temp-cache-bust-duplicate.png&r=g",
+              "url": "https://secure.gravatar.com/avatar/75eae612677fdf550ba9a478ea595902153a0a06b8b27aaf6bc3eddcf6367244?s=96&d=https%3A%2F%2Fwww.recipetineats.com%2Ftachyon%2F2024%2F06%2Favatar-guest-temp-cache-bust-duplicate.png&r=g",
+              "contentUrl": "https://secure.gravatar.com/avatar/75eae612677fdf550ba9a478ea595902153a0a06b8b27aaf6bc3eddcf6367244?s=96&d=https%3A%2F%2Fwww.recipetineats.com%2Ftachyon%2F2024%2F06%2Favatar-guest-temp-cache-bust-duplicate.png&r=g",
+              "caption": "Nagi"
+            },
+            "description": "I believe you can make great food with everyday ingredients even if you’re short on time and cost conscious. You just need to cook clever and get creative!",
+            "sameAs": [
+              "http://www.recipetineats.com/about-me/"
+            ],
+            "url": "https://www.recipetineats.com/author/nagi-maehashigmail-com/"
+          },
+          {
+            "@type": "Recipe",
+            "name": "Bun Cha - Vietnamese Meatballs",
+            "author": {
+              "@id": "https://www.recipetineats.com/#/schema/person/1684e6a75e9f91ae2e33ca2de95b47e2"
+            },
+            "description": "Recipe video above. Everything you know and love about Vietnamese food - fresh, healthy and full of flavour! Bun Cha in Vietnam is served slightly differently (read in post), but here I've made noodle bowls which are more familiar to those outside of Vietnam. See Notes for what this tastes like!",
+            "datePublished": "2019-01-23T20:27:20+00:00",
+            "image": [
+              "https://www.recipetineats.com/tachyon/2019/01/Vietnamese-Pork-Meatballs_6.jpg",
+              "https://www.recipetineats.com/tachyon/2019/01/Vietnamese-Pork-Meatballs_6.jpg?resize=500%2C500",
+              "https://www.recipetineats.com/tachyon/2019/01/Vietnamese-Pork-Meatballs_6.jpg?resize=500%2C375",
+              "https://www.recipetineats.com/tachyon/2019/01/Vietnamese-Pork-Meatballs_6.jpg?resize=480%2C270"
+            ],
+            "recipeYield": [
+              "2"
+            ],
+            "prepTime": "PT20M",
+            "cookTime": "PT10M",
+            "totalTime": "PT30M",
+            "recipeIngredient": [
+              "250 - 300 g/8 - 10 oz   pork mince ((ground pork)(Note 1))",
+              "1 tbsp fish sauce ((Note 2))",
+              "2 tsp white sugar",
+              "1/3 cup finely chopped green onions / scallions",
+              "1 clove garlic (, minced)",
+              "Pinch of white pepper and salt",
+              "2 tsp lemongrass paste or fresh finely chopped (, optional (Note 4))",
+              "1 1/2 tbsp oil (, for cooking)",
+              "3 tbsp white sugar",
+              "3 tbsp fish sauce ((Note 2))",
+              "2 tbsp rice wine vinegar",
+              "2 tbsp lime juice",
+              "1/3 cup water",
+              "1  birds eye chilli (, seeded and finely chopped (Note 3))",
+              "3 cloves garlic (, finely chopped)",
+              "100 g / 3.5 oz  vermicelli noodles (, dried)",
+              "Big handful beansprouts",
+              "Few lettuce leaves (, folded or shredded)",
+              "Julienned carrot and white radish ((daikon), optional quick pickle (Note 5))",
+              "Handful of coriander/cilantro sprigs (, mint)",
+              "Sliced red chilli (, lime wedges (optional))"
+            ],
+            "recipeInstructions": [
+              {
+                "@type": "HowToStep",
+                "text": "Sauce: Mix ingredients. Set aside 10 minutes+.",
+                "name": "Sauce: Mix ingredients. Set aside 10 minutes+.",
+                "url": "https://www.recipetineats.com/bun-cha-vietnamese-meatballs/#wprm-recipe-34119-step-0-0"
+              },
+              {
+                "@type": "HowToStep",
+                "text": "Noodles: Pour over boiling water and soak per packet directions. Drain, set aside.",
+                "name": "Noodles: Pour over boiling water and soak per packet directions. Drain, set aside.",
+                "url": "https://www.recipetineats.com/bun-cha-vietnamese-meatballs/#wprm-recipe-34119-step-0-1"
+              },
+              {
+                "@type": "HowToSection",
+                "name": "Meatballs:",
+                "itemListElement": [
+                  {
+                    "@type": "HowToStep",
+                    "text": "Mix all ingredients except oil until combined.",
+                    "name": "Mix all ingredients except oil until combined.",
+                    "url": "https://www.recipetineats.com/bun-cha-vietnamese-meatballs/#wprm-recipe-34119-step-1-0"
+                  },
+                  {
+                    "@type": "HowToStep",
+                    "text": "Shape into 6 mini hamburger patties with your hands.",
+                    "name": "Shape into 6 mini hamburger patties with your hands.",
+                    "url": "https://www.recipetineats.com/bun-cha-vietnamese-meatballs/#wprm-recipe-34119-step-1-1"
+                  },
+                  {
+                    "@type": "HowToStep",
+                    "text": "Heat oil in a skillet over medium high heat. Add patties and cook for 2 1/2 minutes or until golden. Flip, cook 2 minutes then remove.",
+                    "name": "Heat oil in a skillet over medium high heat. Add patties and cook for 2 1/2 minutes or until golden. Flip, cook 2 minutes then remove.",
+                    "url": "https://www.recipetineats.com/bun-cha-vietnamese-meatballs/#wprm-recipe-34119-step-1-2"
+                  }
+                ]
+              },
+              {
+                "@type": "HowToSection",
+                "name": "Assemble Bowls:",
+                "itemListElement": [
+                  {
+                    "@type": "HowToStep",
+                    "text": "Place noodles in bowl. Top with a handful of beansprouts, wedge in lettuce, carrots and radish in.",
+                    "name": "Place noodles in bowl. Top with a handful of beansprouts, wedge in lettuce, carrots and radish in.",
+                    "url": "https://www.recipetineats.com/bun-cha-vietnamese-meatballs/#wprm-recipe-34119-step-2-0"
+                  },
+                  {
+                    "@type": "HowToStep",
+                    "text": "Place meatballs on top, top with coriander and mint.",
+                    "name": "Place meatballs on top, top with coriander and mint.",
+                    "url": "https://www.recipetineats.com/bun-cha-vietnamese-meatballs/#wprm-recipe-34119-step-2-1"
+                  },
+                  {
+                    "@type": "HowToStep",
+                    "text": "Spoon over a generous amount of Sauce (it's supposed to be like a soup broth), eat and be happy!",
+                    "name": "Spoon over a generous amount of Sauce (it's supposed to be like a soup broth), eat and be happy!",
+                    "url": "https://www.recipetineats.com/bun-cha-vietnamese-meatballs/#wprm-recipe-34119-step-2-2"
+                  }
+                ]
+              }
+            ],
+            "aggregateRating": {
+              "@type": "AggregateRating",
+              "ratingValue": "4.98",
+              "ratingCount": "183",
+              "reviewCount": "15"
+            },
+            "review": [
+              {
+                "@type": "Review",
+                "reviewRating": {
+                  "@type": "Rating",
+                  "ratingValue": "5"
+                },
+                "reviewBody": "This is such a delicious recipe I've made multiple times for my family of three. I'm considering scaling it for a crowd - could the meatballs be cooked in the oven?",
+                "author": {
+                  "@type": "Person",
+                  "name": "Alanna"
+                },
+                "datePublished": "2026-08-09"
+              },
+              {
+                "@type": "Review",
+                "reviewRating": {
+                  "@type": "Rating",
+                  "ratingValue": "5"
+                },
+                "reviewBody": "Excellent!! My husband and I loved this recipe. Absolutely perfect as it’s written and I wouldn’t change a thing about it. Thanks for sharing it",
+                "author": {
+                  "@type": "Person",
+                  "name": "Jennifer H"
+                },
+                "datePublished": "2026-04-23"
+              },
+              {
+                "@type": "Review",
+                "reviewRating": {
+                  "@type": "Rating",
+                  "ratingValue": "5"
+                },
+                "reviewBody": "This came out fantastic!!!",
+                "author": {
+                  "@type": "Person",
+                  "name": "Richard Baum"
+                },
+                "datePublished": "2026-03-23"
+              },
+              {
+                "@type": "Review",
+                "reviewRating": {
+                  "@type": "Rating",
+                  "ratingValue": "5"
+                },
+                "reviewBody": "Delicious",
+                "author": {
+                  "@type": "Person",
+                  "name": "Kathy"
+                },
+                "datePublished": "2026-03-20"
+              },
+              {
+                "@type": "Review",
+                "reviewRating": {
+                  "@type": "Rating",
+                  "ratingValue": "5"
+                },
+                "reviewBody": "So delicious. Go to summer recipe for us. I leave out the sugar and serve with konjac noodles.",
+                "author": {
+                  "@type": "Person",
+                  "name": "Bex"
+                },
+                "datePublished": "2026-02-01"
+              },
+              {
+                "@type": "Review",
+                "reviewRating": {
+                  "@type": "Rating",
+                  "ratingValue": "5"
+                },
+                "reviewBody": "I grew up with my mom making this. This recipe brought back memories :)\r\nThank you Nagi!!",
+                "author": {
+                  "@type": "Person",
+                  "name": "Yvonne Böhm"
+                },
+                "datePublished": "2026-01-28"
+              },
+              {
+                "@type": "Review",
+                "reviewRating": {
+                  "@type": "Rating",
+                  "ratingValue": "5"
+                },
+                "reviewBody": "Hands down favourite recipe of all time! Highly, highly recommend.",
+                "author": {
+                  "@type": "Person",
+                  "name": "Leah Karam"
+                },
+                "datePublished": "2025-12-06"
+              },
+              {
+                "@type": "Review",
+                "reviewRating": {
+                  "@type": "Rating",
+                  "ratingValue": "5"
+                },
+                "reviewBody": "Made this again today, doubled the meatballs to freeze. Added lemon balm and mint from garden to salad. So good",
+                "author": {
+                  "@type": "Person",
+                  "name": "Naomi Blackburn"
+                },
+                "datePublished": "2025-11-29"
+              },
+              {
+                "@type": "Review",
+                "reviewRating": {
+                  "@type": "Rating",
+                  "ratingValue": "5"
+                },
+                "reviewBody": "I’ve made this a few times and it has become one of my favs! I switched it up last night! I made crispy skin salmon, jasmine rice with stir fry baby corn, asparagus and broccolini and used the nouc cham as the dressing! Damn! 10/10!",
+                "author": {
+                  "@type": "Person",
+                  "name": "stumpy"
+                },
+                "datePublished": "2025-10-30"
+              },
+              {
+                "@type": "Review",
+                "reviewRating": {
+                  "@type": "Rating",
+                  "ratingValue": "5"
+                },
+                "reviewBody": "So frikkin delicious oh my god. It's on the weekly rotation. Easy to make and very yummy :) Thank you Nagi!",
+                "author": {
+                  "@type": "Person",
+                  "name": "Gina"
+                },
+                "datePublished": "2025-09-20"
+              },
+              {
+                "@type": "Review",
+                "reviewRating": {
+                  "@type": "Rating",
+                  "ratingValue": "5"
+                },
+                "reviewBody": "Thank you as always for making the recipe so well written and straightforward to follow.\r\nMy 12 year old made the meatballs all by herself. I assisted in cooking it on the stove. The whole family loved it! Even my 6yo who does not like trying new food.\r\nThank you!",
+                "author": {
+                  "@type": "Person",
+                  "name": "Mary"
+                },
+                "datePublished": "2025-07-27"
+              },
+              {
+                "@type": "Review",
+                "reviewRating": {
+                  "@type": "Rating",
+                  "ratingValue": "5"
+                },
+                "reviewBody": "Thanks Nagi, this was really great: it came together quickly, was delicious and nutritious. I didn't have some things, like lemon grass, but It didn't seem to get us down. We enjoyed it very much.",
+                "author": {
+                  "@type": "Person",
+                  "name": "sue"
+                },
+                "datePublished": "2025-07-03"
+              },
+              {
+                "@type": "Review",
+                "reviewRating": {
+                  "@type": "Rating",
+                  "ratingValue": "5"
+                },
+                "reviewBody": "I loooooved this recipe! The meatballs are so flavorful.",
+                "author": {
+                  "@type": "Person",
+                  "name": "Marie"
+                },
+                "datePublished": "2025-06-03"
+              },
+              {
+                "@type": "Review",
+                "reviewRating": {
+                  "@type": "Rating",
+                  "ratingValue": "4"
+                },
+                "reviewBody": "These are super tasty, but I did find mine fell apart during cooking. Perhaps I over-mixed or didn't use pork mince with the right fat content. But the flavour was great.  They even taste great on baguettes. with the Vietnamese salad.",
+                "author": {
+                  "@type": "Person",
+                  "name": "KJM"
+                },
+                "datePublished": "2025-02-16"
+              },
+              {
+                "@type": "Review",
+                "reviewRating": {
+                  "@type": "Rating",
+                  "ratingValue": "5"
+                },
+                "reviewBody": "Made this for the first time tonight - hubby raved about it!  I added snow peas because we love them.  As suggested I poured lots of \"sauce\" over the bowl, but next time I think I'll reduce the amount so that the vegs shine a bit more!  It was a bit of preparation but worth it!",
+                "author": {
+                  "@type": "Person",
+                  "name": "Debra Caroline McCallum"
+                },
+                "datePublished": "2025-01-31"
+              }
+            ],
+            "recipeCategory": [
+              "Mains"
+            ],
+            "recipeCuisine": [
+              "Vietnamese"
+            ],
+            "keywords": "Bun Cha, Vietnamese Food, Vietnamese Meatballs",
+            "nutrition": {
+              "@type": "NutritionInformation",
+              "calories": "540 kcal",
+              "carbohydrateContent": "27 g",
+              "proteinContent": "23 g",
+              "fatContent": "37 g",
+              "saturatedFatContent": "10 g",
+              "cholesterolContent": "90 mg",
+              "sodiumContent": "2903 mg",
+              "sugarContent": "24 g",
+              "servingSize": "1 serving"
+            },
+            "@id": "https://www.recipetineats.com/bun-cha-vietnamese-meatballs/#recipe",
+            "isPartOf": {
+              "@id": "https://www.recipetineats.com/bun-cha-vietnamese-meatballs/#article"
+            },
+            "mainEntityOfPage": "https://www.recipetineats.com/bun-cha-vietnamese-meatballs/"
+          }
+        ]
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "NewsArticle",
+        "headline": "Bun Cha (Vietnamese Meatballs!)",
+        "url": "http://www.recipetineats.com/bun-cha-vietnamese-meatballs/",
+        "mainEntityOfPage": {
+          "@type": "WebPage",
+          "@id": "http://www.recipetineats.com/bun-cha-vietnamese-meatballs/"
+        },
+        "thumbnailUrl": "https://www.recipetineats.com/tachyon/2019/01/Vietnamese-Pork-Meatballs_6.jpg?resize=150%2C150",
+        "image": {
+          "@type": "ImageObject",
+          "url": "https://www.recipetineats.com/tachyon/2019/01/Vietnamese-Pork-Meatballs_6.jpg"
+        },
+        "articleSection": "BBQ Recipes",
+        "author": [
+          {
+            "@type": "Person",
+            "name": "Nagi"
+          }
+        ],
+        "creator": [
+          "Nagi"
+        ],
+        "publisher": {
+          "@type": "Organization",
+          "name": "RecipeTin Eats",
+          "logo": "https://www.recipetineats.com/tachyon/2018/12/cropped-favicon%402x.png"
+        },
+        "keywords": [
+          "Vietnamese",
+          "BBQ Recipes",
+          "Iconic Dishes",
+          "Meatballs",
+          "Pork Recipes",
+          "Quick and Easy",
+          "Quick Dinner Recipes"
+        ],
+        "dateCreated": "2019-01-23T09:27:20Z",
+        "datePublished": "2019-01-23T09:27:20Z",
+        "dateModified": "2025-06-18T07:33:39Z"
+      }
+    ],
+    "lang": "en-US",
+    "microdata": [],
+    "ogImage": "https://www.recipetineats.com/tachyon/2019/01/Vietnamese-Pork-Meatballs_6.jpg",
+    "pluginHits": {
+      "wprm": {
+        "found": true,
+        "containerCount": 2,
+        "fieldMatches": {
+          "name": 1,
+          "recipeIngredient": 21,
+          "recipeInstructions": 8,
+          "recipeYield": 1,
+          "prepTime": 1,
+          "cookTime": 1,
+          "totalTime": 1,
+          "image": 1,
+          "notes": 11
+        },
+        "recipe": {
+          "name": "Bun Cha – Vietnamese Meatballs",
+          "recipeIngredient": [
+            {
+              "name": "Meatballs:",
+              "items": [
+                "▢ 250 – 300 g/8 – 10 oz pork mince (ground pork)(Note 1)",
+                "▢ 1 tbsp fish sauce (Note 2)",
+                "▢ 2 tsp white sugar",
+                "▢ 1/3 cup finely chopped green onions / scallions",
+                "▢ 1 clove garlic , minced",
+                "▢ Pinch of white pepper and salt",
+                "▢ 2 tsp lemongrass paste or fresh finely chopped , optional (Note 4)",
+                "▢ 1 1/2 tbsp oil , for cooking"
+              ]
+            },
+            {
+              "name": "Nuoc Cham (Vietnamese Dressing / Sauce – Note 2):",
+              "items": [
+                "▢ 3 tbsp white sugar",
+                "▢ 3 tbsp fish sauce (Note 2)",
+                "▢ 2 tbsp rice wine vinegar",
+                "▢ 2 tbsp lime juice",
+                "▢ 1/3 cup water",
+                "▢ 1 birds eye chilli , seeded and finely chopped (Note 3)",
+                "▢ 3 cloves garlic , finely chopped"
+              ]
+            },
+            {
+              "name": "Serving (Note 4):",
+              "items": [
+                "▢ 100 g / 3.5 oz vermicelli noodles , dried",
+                "▢ Big handful beansprouts",
+                "▢ Few lettuce leaves , folded or shredded",
+                "▢ Julienned carrot and white radish (daikon), optional quick pickle (Note 5)",
+                "▢ Handful of coriander/cilantro sprigs , mint",
+                "▢ Sliced red chilli , lime wedges (optional)"
+              ]
+            }
+          ],
+          "recipeInstructions": [
+            {
+              "name": null,
+              "items": [
+                "Sauce: Mix ingredients. Set aside 10 minutes+.",
+                "Noodles: Pour over boiling water and soak per packet directions. Drain, set aside."
+              ]
+            },
+            {
+              "name": "Meatballs:",
+              "items": [
+                "Mix all ingredients except oil until combined.",
+                "Shape into 6 mini hamburger patties with your hands.",
+                "Heat oil in a skillet over medium high heat. Add patties and cook for 2 1/2 minutes or until golden. Flip, cook 2 minutes then remove."
+              ]
+            },
+            {
+              "name": "Assemble Bowls:",
+              "items": [
+                "Place noodles in bowl. Top with a handful of beansprouts, wedge in lettuce, carrots and radish in.",
+                "Place meatballs on top, top with coriander and mint.",
+                "Spoon over a generous amount of Sauce (it’s supposed to be like a soup broth), eat and be happy!"
+              ]
+            }
+          ],
+          "recipeYield": "2",
+          "prepTime": "Prep: 20 minutes mins",
+          "cookTime": "Cook: 10 minutes mins",
+          "totalTime": "Total: 30 minutes mins",
+          "image": "https://www.recipetineats.com/tachyon/2019/01/Vietnamese-Pork-Meatballs_6.jpg?resize=206%2C206",
+          "notes": [
+            "1. Pork: Can use chicken or turkey. Fattier the better – juicier!",
+            "2. Nuoc Cham: This sauce is not as strong / fishy as others you may have tried. It’s intended to be used almost like a soup broth. Adapt this to your taste by adjusting the quantities. You probably will not use all this sauce – but I don’t want you to run out!",
+            "3. Chilli: Birds eye chillies are small red chillies that are quite spicy. To make it less spicy, use large red chillies instead (which are not as hot) or skip it.",
+            "4. Lemongrass will gives this an extra Vietnamese flavour that westerners are familiar with. But not all Vietnamese recipes have lemongrass in it – and if I included it in everything, then they would all taste the same! Traditional Bun Cha does not have it in it, and it’s really tasty without. But it’s an optional extra!",
+            "5. Serving sides: Traditional Vietnamese food is served with lots of fresh sides. Bean sprouts and herbs such as mint and coriander/cilantro are the most common, but also pickles. You’re supposed to pile them on top of whatever your eating and eat it together.",
+            "There’s plenty of options here, so sub ingredients as desired! Shredded cabbage or other leafy greens, cucumber and even finely sliced asparagus and green beans would be ideal. I’d even throw in some cherry tomatoes!",
+            "Lettuce – if using soft lettuce (like I’ve used), tear then fold. If using crisp lettuce (eg iceberg), finely slice.",
+            "6. Quick Asian Pickled Vegetables: 1 cup julienned carrot (1 medium) 1 loosely packed cup julienned white radish / daikon 1 cup (250 ml) warm tap water 1/3 cup white sugar 1 tbsp salt 1/2 cup (125 ml)rice wine vinegar Directions: Combine sugar, salt, vinegar and water. Stir until sugar and salt are dissolved. Add vegetables and let stand for at least 1 hour to pickle. Drain.",
+            "7. What this tastes like: The pork is savoury with a touch of sweet, and caramelised on the outside. The sauce is not that strong (supposed to use alot) – sweet, balanced with mild tang and savoury. Not that spicy because there’s only 1 small chilli spread across almost 1 cup of liquid. If concerned, use a large red chilli (not as spicy) or skip it altogether. Though fish sauce is used in abundance here (as with most Vietnamese recipes!) it does not taste fishy.",
+            "8. Adapted from a few Vietnamese cookbooks, including My Vietnamese Kitchen by Uyen Luu and Hanoi Street Food by Luk This and Tom Vandenberghe.",
+            "9. Nutrition is for meatballs and sauce only, assuming all sauce is consumed."
+          ]
+        }
+      },
+      "tasty": {
+        "found": false,
+        "containerCount": 0,
+        "fieldMatches": {},
+        "recipe": {}
+      },
+      "mediavine": {
+        "found": false,
+        "containerCount": 0,
+        "fieldMatches": {},
+        "recipe": {}
+      }
+    },
+    "readableText": "Introducing Bun Cha, the famous caramelised pork meatballs from the stress of Hanoi. Traditional Vietnamese food, made at home! This is an easy Vietnamese recipe that anyone can make that’s full of flavour. No need to hunt down obscure ingredients at an Asian store!\n\nServe it over vermicelli noodles with Vietnamese Nuoc Cham Sauce and your fresh vegetables of choice.\n\nBun Cha – traditional Vietnamese street food!\n\nAny self respecting foodie visiting a new country will be armed with a list of “Must Try Foods!!“. And for visitors of Vietnam, Bun Cha should be right up there, alongside Pho, fresh rice paper rolls, and Banh Mi, to name a few favourites.\n\nIt was certainly one of the first foods I hunted down when I visited Vietnam. A top-priority!\n\nThese are photos of a Bun Cha speciality place in Hanoi that we visited. The Bun Cha was as great as we expected, and I’m happy to report the flimsy stools you spy held up for the whole meal. (Flimsy plastic stools are the norm everywhere, and we were seriously concerned every time we planted our butts down on them!)\n\nWhat is Bun Cha?\n\nBun Cha is a traditional Vietnamese pork dish that’s a speciality of Hanoi, the capital city of Vietnam. Seasoned pork patties (I call them squished meatballs) and caramelised pork belly slices are served in a broth alongside rice noodles, fresh vegetables and herbs.\n\nHow to eat Bun Cha – The idea is to use the broth for dunking the noodles, vegetables and herbs. So you dunk, slurp noodles, bite into juicy pork, try to cram in a few sprigs of herbs – and that moment when you succeed, when you get a mouthful with a bit of everything…\n\nTHAT my friends, is a big, fat mouthful that epitomises all that is great about Vietnamese food. That perfect balance of fresh, savoury, sweet, herb, citrus, tender noodles, and that juicy caramelised pork….. YES!!!\n\nAbout this Bun Cha recipe\n\nThis Bun Cha recipe I’m sharing today is a simple home version that’s a style more familiar to those of us outside of Vietnam. On point with flavour, but presented differently.\n\nTo make this a simple dinner recipe, I’ve skipped the pork belly and made noodle bowls with the sauce for spooning over, rather than serving it “soup” style. This Noodle Bowl way of serving Vietnamese food is increasingly popular here in Sydney, especially with the work lunch crowd.\n\nHow to make Vietnamese Meatballs\n\nYou’ll love how you won’t need to take a trip to an Asian store for this! You’ll also love how versatile this recipe actually is.\n\nThe Vietnamese (squished) meatballs are just made with pork, garlic, sugar, fish sauce*, salt, pepper and scallions/green onions. Fish sauce is the key seasoning here, and the touch of sugar that makes the surface beautifully caramelised.\n\nThe Vietnamese Sauce is a version of Nuoc Cham, a version of which is served with “everything” in Vietnamese cuisine (and that’s no exaggeration).\n\nThe sauce for Bun Cha is made with fish sauce*, rice wine vinegar, lime juice, sugar, garlic and chilli (hot or not hot, or even skip it). It’s diluted with water to make it more like a soup broth. In a nod to the authentic way Bun Cha is served, the idea with this recipe is to use lots of sauce. You need it, to slurp up the noodles!\n\n* I know there are people who aren’t a fan of fish sauce. But fish sauce is as Vietnamese as Banh Mi, so I really do urge you to use it if you can. This recipe is in no way “fishy” tasting like some Vietnamese foods. It’s just a savoury seasoning that has more depth of flavour than soy sauce.\n\nEssential Sides\n\nTo complete the bowl, these Vietnamese Meatballs are served traditional Bun Cha style with noodles, fresh vegetables and herbs.\n\nThe noodles are rice vermicelli noodles, found “everywhere” nowadays in Australia. Simply soak in boiling water for a couple of minutes, then drain.\n\nFresh vegetables and herbs are an essential part of Vietnamese food, and you’ll get large bowls served alongside almost every meal. Bean sprouts, mint and coriander/cilantro are the most common, as well as pickled vegetables.\n\nBut this is the sort of recipe that’s terrifically versatile that will work well with many types of vegetables. Shredded cabbage or lettuce, or other leafy greens. Finely sliced cucumber, green beans, red radish, cherry tomatoes, even asparagus. Most fresh vegetables will work great in this!\n\nIn today’s recipe, I’ve also provided a quick Asian pickled vegetables recipe which is ideal to serve with this Bun Cha recipe. But pickling is optional.\n\nThe length of the list of ingredients is actually quite deceptive because there’s a handful of repeat ingredients. So don’t be turned off just because this isn’t a 5 ingredient recipe. 🙂\n\nIt’s worth it, I promise. If you love Vietnamese food (and I don’t know anyone who doesn’t!), this one will really hit the spot! – Nagi x\n\nGet your Vietnamese fix!\n\nVietnamese Rice Paper Rolls\nLemongrass Chicken – one of my favourite things to grill!\nVietnamese Caramel Pork – another iconic Vietnamese food! Also see the Chicken version.\nVietnamese Caramelised Pork Bowls – the super quick version of the above\nVietnamese Noodle Salad\nVietnamese Chicken Salad\n\nBun Cha – Vietnamese MeatballsWatch how to make it\n\n Subscribe to my newsletter and follow along on Facebook, Pinterest and Instagram for all of the latest updates.\n\n Servings2\n Tap or hover to scale\n\n Recipe video above. Everything you know and love about Vietnamese food – fresh, healthy and full of flavour! Bun Cha in Vietnam is served slightly differently (read in post), but here I’ve made noodle bowls which are more familiar to those outside of Vietnam. See Notes for what this tastes like!\n Meatballs:▢ 250 – 300 g/8 – 10 oz pork mince (ground pork)(Note 1)▢ 1 tbsp fish sauce (Note 2)▢ 2 tsp white sugar▢ 1/3 cup finely chopped green onions / scallions▢ 1 clove garlic , minced▢ Pinch of white pepper and salt▢ 2 tsp lemongrass paste or fresh finely chopped , optional (Note 4)▢ 1 1/2 tbsp oil , for cookingNuoc Cham (Vietnamese Dressing / Sauce – Note 2):▢ 3 tbsp white sugar▢ 3 tbsp fish sauce (Note 2)▢ 2 tbsp rice wine vinegar▢ 2 tbsp lime juice▢ 1/3 cup water▢ 1 birds eye chilli , seeded and finely chopped (Note 3)▢ 3 cloves garlic , finely choppedServing (Note 4):▢ 100 g / 3.5 oz vermicelli noodles , dried▢ Big handful beansprouts▢ Few lettuce leaves , folded or shredded▢ Julienned carrot and white radish (daikon), optional quick pickle (Note 5)▢ Handful of coriander/cilantro sprigs , mint▢ Sliced red chilli , lime wedges (optional)\nCook ModePrevent screen from sleeping\n Sauce: Mix ingredients. Set aside 10 minutes+.Noodles: Pour over boiling water and soak per packet directions. Drain, set aside.Meatballs:Mix all ingredients except oil until combined.Shape into 6 mini hamburger patties with your hands.Heat oil in a skillet over medium high heat. Add patties and cook for 2 1/2 minutes or until golden. Flip, cook 2 minutes then remove.Assemble Bowls:Place noodles in bowl. Top with a handful of beansprouts, wedge in lettuce, carrots and radish in.Place meatballs on top, top with coriander and mint.Spoon over a generous amount of Sauce (it’s supposed to be like a soup broth), eat and be happy!\n\n 1. Pork: Can use chicken or turkey. Fattier the better – juicier!\n2. Nuoc Cham: This sauce is not as strong / fishy as others you may have tried. It’s intended to be used almost like a soup broth. Adapt this to your taste by adjusting the quantities. You probably will not use all this sauce – but I don’t want you to run out!\n3. Chilli: Birds eye chillies are small red chillies that are quite spicy. To make it less spicy, use large red chillies instead (which are not as hot) or skip it.\n4. Lemongrass will gives this an extra Vietnamese flavour that westerners are familiar with. But not all Vietnamese recipes have lemongrass in it – and if I included it in everything, then they would all taste the same! Traditional Bun Cha does not have it in it, and it’s really tasty without. But it’s an optional extra!\n5. Serving sides: Traditional Vietnamese food is served with lots of fresh sides. Bean sprouts and herbs such as mint and coriander/cilantro are the most common, but also pickles. You’re supposed to pile them on top of whatever your eating and eat it together.\nThere’s plenty of options here, so sub ingredients as desired! Shredded cabbage or other leafy greens, cucumber and even finely sliced asparagus and green beans would be ideal. I’d even throw in some cherry tomatoes!\nLettuce – if using soft lettuce (like I’ve used), tear then fold. If using crisp lettuce (eg iceberg), finely slice. \n6. Quick Asian Pickled Vegetables: 1 cup julienned carrot (1 medium) 1 loosely packed cup julienned white radish / daikon 1 cup (250 ml) warm tap water 1/3 cup white sugar 1 tbsp salt 1/2 cup (125 ml)rice wine vinegar Directions: Combine sugar, salt, vinegar and water. Stir until sugar and salt are dissolved. Add vegetables and let stand for at least 1 hour to pickle. Drain.\n7. What this tastes like: The pork is savoury with a touch of sweet, and caramelised on the outside. The sauce is not that strong (supposed to use alot) – sweet, balanced with mild tang and savoury. Not that spicy because there’s only 1 small chilli spread across almost 1 cup of liquid. If concerned, use a large red chilli (not as spicy) or skip it altogether. Though fish sauce is used in abundance here (as with most Vietnamese recipes!) it does not taste fishy. 8. Adapted from a few Vietnamese cookbooks, including My Vietnamese Kitchen by Uyen Luu and Hanoi Street Food by Luk This and Tom Vandenberghe.\n9. Nutrition is for meatballs and sauce only, assuming all sauce is consumed. \n\n Calories: 540cal (27%)Carbohydrates: 27g (9%)Protein: 23g (46%)Fat: 37g (57%)Saturated Fat: 10g (63%)Cholesterol: 90mg (30%)Sodium: 2903mg (126%)Potassium: 526mg (15%)Sugar: 24g (27%)Vitamin A: 165IU (3%)Vitamin C: 10.4mg (13%)Calcium: 49mg (5%)Iron: 1.6mg (9%)\n\n Keywords: Bun Cha, Vietnamese Food, Vietnamese Meatballs\n\nLife of Dozer\n\nTitle says it all – this is the Life of Dozer.",
+    "renderTimeMs": 5344,
+    "siteName": "RecipeTin Eats",
+    "stabilized": true,
+    "title": "Bun Cha (Vietnamese Meatballs!) - RecipeTin Eats"
+  },
+  "attachments": [],
+  "diagnostics": {
+    "errors": [],
+    "notes": [
+      "intent action=android.intent.action.SEND type=text/plain referrer=android-app://com.android.shell extras={android.intent.extra.TEXT=String(59)'https://www.recipetineats.com/bun-cha-vietnamese-meatballs/'}",
+      "extractionTrigger=stable"
+    ],
+    "stageTimingsMs": {
+      "stabilize": 5344,
+      "extractRoundTrip": 32,
+      "js.jsonLd": 0,
+      "js.microdata": 0,
+      "js.pluginHits": 1,
+      "js.readability": 16,
+      "js.heuristic": 19,
+      "merge": 6
+    }
+  }
+}

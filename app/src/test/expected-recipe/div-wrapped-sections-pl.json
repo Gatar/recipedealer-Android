@@ -1,0 +1,66 @@
+{
+  "recipe": {
+    "title": "Szarlotka",
+    "language": "pl",
+    "servings": {
+      "text": "12 porcji",
+      "count": 12
+    },
+    "times": {},
+    "ingredientGroups": [
+      {
+        "name": "Jabłka",
+        "items": [
+          "1,5 kg jabłek",
+          "5 łyżek cukru"
+        ]
+      },
+      {
+        "name": "Ciasto",
+        "items": [
+          "3 szklanki mąki",
+          "200 g masła",
+          "Do posypania: cukier puder"
+        ]
+      }
+    ],
+    "stepGroups": [
+      {
+        "name": "Jabłka",
+        "items": [
+          "Obrać i pokroić jabłka.",
+          "Smażyć 20 minut."
+        ]
+      },
+      {
+        "name": "Ciasto",
+        "items": [
+          "Zagnieść ciasto i schłodzić."
+        ]
+      }
+    ],
+    "notes": [
+      "* masło można zastąpić margaryną."
+    ],
+    "images": [],
+    "source": {
+      "type": "WEB",
+      "url": "https://example.test/div-wrapped-sections-pl",
+      "files": []
+    }
+  },
+  "provenance": {
+    "title": "heuristic",
+    "ingredients": "heuristic",
+    "steps": "heuristic",
+    "servings": "heuristic",
+    "notes": "heuristic"
+  },
+  "completeness": {
+    "score": 1.0,
+    "bestStage": "heuristic",
+    "hasTitle": true,
+    "hasIngredients": true,
+    "hasSteps": true
+  }
+}

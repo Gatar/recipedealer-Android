@@ -1,0 +1,149 @@
+{
+  "schemaVersion": 2,
+  "captureId": "3f3c336c-7a17-45e0-806b-6aad50190911",
+  "capturedAt": "2026-10-11T13:38:49.716804Z",
+  "recipe": {
+    "language": "en",
+    "times": {},
+    "ingredientGroups": [
+      {
+        "items": [
+          "1 kg ziemniaków (najlepiej odmiany o dużej zawartości skrobi)",
+          "1 duża cebula",
+          "1 jajko",
+          "2-3 łyżki mąki pszennej",
+          "1 płaska łyżeczka soli",
+          "Szczypta świeżo mielonego pieprzu",
+          "Olej do smażenia (np. rzepakowy)"
+        ]
+      }
+    ],
+    "stepGroups": [
+      {
+        "items": [
+          "Przygotowanie warzyw: Obierz ziemniaki oraz cebulę. Zetrzyj ziemniaki na tarce o małych oczkach. Cebulę zetrzyj również na małych oczkach lub bardzo drobno posiekaj (dzięki cebuli masa ziemniaczana nie ściemnieje).",
+          "Odsączanie masy: Zatrzyj ziemniaki do miski i odstaw na około 5 minut. Następnie odlej nadmiar wody, delikatnie przytrzymując masę dłonią. Na dnie naczynia zebranej wody pozostanie biały osad (skrobia ziemniaczana) – dodaj go z powrotem do masy ziemniaczanej.",
+          "Łączenie składników: Do startych ziemniaków z cebulą dodaj jajko, mąkę pszenną, sól oraz pieprz. Całość dokładnie wymieszaj łyżką na jednolitą masę.",
+          "Smażenie: Na patelni mocno rozgrzej solidną warstwę oleju. Nakładaj masę łyżką, formując płaskie placki. Smaż na średnim ogniu przez około 3–4 minuty z każdej strony, aż będą złociste i chrupiące.",
+          "Odsączanie z tłuszczu: Usmażone placki zdejmuj z patelni i przekładaj na talerz wyłożony ręcznikiem papierowym, aby odsączyć nadmiar oleju."
+        ]
+      }
+    ],
+    "notes": [],
+    "images": [
+      "https://www.gstatic.com/lamda/images/gemini_aurora_thumbnail_4g_e74822ff0ca4259beb718.png"
+    ],
+    "source": {
+      "type": "WEB",
+      "url": "https://gemini.google.com/share/4988cd78ce36",
+      "siteName": "Gemini",
+      "sharedFrom": "com.android.shell",
+      "files": []
+    }
+  },
+  "completeness": {
+    "score": 0.8,
+    "bestStage": "heuristic",
+    "hasTitle": false,
+    "hasIngredients": true,
+    "hasSteps": true
+  },
+  "provenance": {
+    "ingredients": "heuristic",
+    "steps": "heuristic",
+    "images": "page"
+  },
+  "web": {
+    "canonicalUrl": "https://gemini.google.com/share/4988cd78ce36",
+    "finalUrl": "https://gemini.google.com/share/4988cd78ce36?social_preview=false&skid=820df166-8a47-46ce-9dd1-cd2257e7ced0",
+    "heuristic": {
+      "articleTitle": null,
+      "usedBodyFallback": true,
+      "servings": null,
+      "ingredients": [
+        {
+          "name": null,
+          "items": [
+            "1 kg ziemniaków (najlepiej odmiany o dużej zawartości skrobi)",
+            "1 duża cebula",
+            "1 jajko",
+            "2-3 łyżki mąki pszennej",
+            "1 płaska łyżeczka soli",
+            "Szczypta świeżo mielonego pieprzu",
+            "Olej do smażenia (np. rzepakowy)"
+          ]
+        }
+      ],
+      "instructions": [
+        {
+          "name": null,
+          "items": [
+            "Przygotowanie warzyw: Obierz ziemniaki oraz cebulę. Zetrzyj ziemniaki na tarce o małych oczkach. Cebulę zetrzyj również na małych oczkach lub bardzo drobno posiekaj (dzięki cebuli masa ziemniaczana nie ściemnieje).",
+            "Odsączanie masy: Zatrzyj ziemniaki do miski i odstaw na około 5 minut. Następnie odlej nadmiar wody, delikatnie przytrzymując masę dłonią. Na dnie naczynia zebranej wody pozostanie biały osad (skrobia ziemniaczana) – dodaj go z powrotem do masy ziemniaczanej.",
+            "Łączenie składników: Do startych ziemniaków z cebulą dodaj jajko, mąkę pszenną, sól oraz pieprz. Całość dokładnie wymieszaj łyżką na jednolitą masę.",
+            "Smażenie: Na patelni mocno rozgrzej solidną warstwę oleju. Nakładaj masę łyżką, formując płaskie placki. Smaż na średnim ogniu przez około 3–4 minuty z każdej strony, aż będą złociste i chrupiące.",
+            "Odsączanie z tłuszczu: Usmażone placki zdejmuj z patelni i przekładaj na talerz wyłożony ręcznikiem papierowym, aby odsączyć nadmiar oleju."
+          ]
+        }
+      ],
+      "notes": []
+    },
+    "jsonLd": [
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "Gemini",
+        "url": "https://gemini.google.com"
+      }
+    ],
+    "lang": "en-US",
+    "microdata": [],
+    "ogImage": "https://www.gstatic.com/lamda/images/gemini_aurora_thumbnail_4g_e74822ff0ca4259beb718.png",
+    "pluginHits": {
+      "wprm": {
+        "found": false,
+        "containerCount": 0,
+        "fieldMatches": {},
+        "recipe": {}
+      },
+      "tasty": {
+        "found": false,
+        "containerCount": 0,
+        "fieldMatches": {},
+        "recipe": {}
+      },
+      "mediavine": {
+        "found": false,
+        "containerCount": 0,
+        "fieldMatches": {},
+        "recipe": {}
+      }
+    },
+    "renderTimeMs": 9000,
+    "siteName": "Gemini",
+    "stabilized": true,
+    "title": "‎Gemini - direct access to Google AI",
+    "visibility": "visible"
+  },
+  "attachments": [],
+  "diagnostics": {
+    "errors": [
+      "extractor.js readability: Failed to set the 'innerHTML' property on 'Element': This document requires 'TrustedHTML' assignment."
+    ],
+    "notes": [
+      "intent action=android.intent.action.SEND type=text/plain referrer=android-app://com.android.shell extras={android.intent.extra.TEXT=String(40)'https://share.gemini.google/rg0N4j5eYAtE'}",
+      "mode=visible",
+      "extractionTrigger=stable"
+    ],
+    "stageTimingsMs": {
+      "stabilize": 9000,
+      "extractRoundTrip": 56,
+      "js.jsonLd": 0,
+      "js.microdata": 0,
+      "js.pluginHits": 1,
+      "js.readability": 31,
+      "js.heuristic": 33,
+      "merge": 2
+    }
+  }
+}

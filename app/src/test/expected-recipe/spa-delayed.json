@@ -1,0 +1,43 @@
+{
+  "recipe": {
+    "title": "Naleśniki",
+    "language": "pl",
+    "times": {},
+    "ingredientGroups": [
+      {
+        "items": [
+          "2 szklanki mąki",
+          "2 jajka",
+          "2 szklanki mleka"
+        ]
+      }
+    ],
+    "stepGroups": [
+      {
+        "items": [
+          "Wymieszaj składniki na gładkie ciasto.",
+          "Smaż na patelni z obu stron."
+        ]
+      }
+    ],
+    "notes": [],
+    "images": [],
+    "source": {
+      "type": "WEB",
+      "url": "https://example.test/spa-delayed",
+      "files": []
+    }
+  },
+  "provenance": {
+    "title": "jsonLd",
+    "ingredients": "jsonLd",
+    "steps": "jsonLd"
+  },
+  "completeness": {
+    "score": 1.0,
+    "bestStage": "jsonLd",
+    "hasTitle": true,
+    "hasIngredients": true,
+    "hasSteps": true
+  }
+}

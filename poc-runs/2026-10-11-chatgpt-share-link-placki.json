@@ -1,0 +1,152 @@
+{
+  "schemaVersion": 2,
+  "captureId": "aa85ca72-51a1-4f49-8dd8-e4b58f5b9385",
+  "capturedAt": "2026-10-11T13:34:05.956658Z",
+  "recipe": {
+    "title": "Check out this chat",
+    "language": "en",
+    "times": {},
+    "ingredientGroups": [
+      {
+        "items": [
+          "Zaznacz składniki, które masz już w domu.",
+          "0/7",
+          "1 kg ziemniaków",
+          "1 średnia cebula",
+          "1 jajko",
+          "2 łyżki mąki pszennej",
+          "1 płaska łyżeczka soli",
+          "Szczypta pieprzu",
+          "Olej do smażenia"
+        ]
+      }
+    ],
+    "stepGroups": [
+      {
+        "name": "Przygotowanie krok po kroku",
+        "items": [
+          "1. Zetrzyj ziemniaki",
+          "Obierz ziemniaki i cebulę. Zetrzyj je na tarce o drobnych oczkach. Jeśli masa jest bardzo wodnista, odlej nadmiar płynu.",
+          "2. Przygotuj masę",
+          "Dodaj jajko, mąkę, sól i pieprz. Dokładnie wymieszaj. Masa powinna być gęsta, ale łatwa do nakładania łyżką.",
+          "3. Rozgrzej patelnię",
+          "Wlej cienką warstwę oleju i dobrze go rozgrzej. Nakładaj porcje masy łyżką, formując cienkie placki.",
+          "4. Usmaż na złoto",
+          "Smaż na średnim ogniu przez około 3–4 minuty z każdej strony, aż placki będą rumiane i chrupiące. Odsącz na ręczniku papierowym."
+        ]
+      }
+    ],
+    "notes": [],
+    "images": [
+      "https://ogimg.chatgpt.com/?postId=t_6acb90310d508191bff23df2b335f821"
+    ],
+    "source": {
+      "type": "WEB",
+      "url": "https://chatgpt.com/s/t_6acb90310d508191bff23df2b335f821",
+      "siteName": "ChatGPT",
+      "files": []
+    }
+  },
+  "completeness": {
+    "score": 1.0,
+    "bestStage": "heuristic",
+    "hasTitle": true,
+    "hasIngredients": true,
+    "hasSteps": true
+  },
+  "provenance": {
+    "title": "heuristic",
+    "ingredients": "heuristic",
+    "steps": "heuristic",
+    "images": "page"
+  },
+  "web": {
+    "finalUrl": "https://chatgpt.com/s/t_6acb90310d508191bff23df2b335f821",
+    "heuristic": {
+      "articleTitle": "Check out this chat",
+      "usedBodyFallback": false,
+      "servings": null,
+      "ingredients": [
+        {
+          "name": null,
+          "items": [
+            "Zaznacz składniki, które masz już w domu.",
+            "0/7",
+            "1 kg ziemniaków",
+            "1 średnia cebula",
+            "1 jajko",
+            "2 łyżki mąki pszennej",
+            "1 płaska łyżeczka soli",
+            "Szczypta pieprzu",
+            "Olej do smażenia"
+          ]
+        }
+      ],
+      "instructions": [
+        {
+          "name": "Przygotowanie krok po kroku",
+          "items": [
+            "1. Zetrzyj ziemniaki",
+            "Obierz ziemniaki i cebulę. Zetrzyj je na tarce o drobnych oczkach. Jeśli masa jest bardzo wodnista, odlej nadmiar płynu.",
+            "2. Przygotuj masę",
+            "Dodaj jajko, mąkę, sól i pieprz. Dokładnie wymieszaj. Masa powinna być gęsta, ale łatwa do nakładania łyżką.",
+            "3. Rozgrzej patelnię",
+            "Wlej cienką warstwę oleju i dobrze go rozgrzej. Nakładaj porcje masy łyżką, formując cienkie placki.",
+            "4. Usmaż na złoto",
+            "Smaż na średnim ogniu przez około 3–4 minuty z każdej strony, aż placki będą rumiane i chrupiące. Odsącz na ręczniku papierowym."
+          ]
+        }
+      ],
+      "notes": []
+    },
+    "jsonLd": [],
+    "lang": "en-US",
+    "microdata": [],
+    "ogImage": "https://ogimg.chatgpt.com/?postId=t_6acb90310d508191bff23df2b335f821",
+    "pluginHits": {
+      "wprm": {
+        "found": false,
+        "containerCount": 0,
+        "fieldMatches": {},
+        "recipe": {}
+      },
+      "tasty": {
+        "found": false,
+        "containerCount": 0,
+        "fieldMatches": {},
+        "recipe": {}
+      },
+      "mediavine": {
+        "found": false,
+        "containerCount": 0,
+        "fieldMatches": {},
+        "recipe": {}
+      }
+    },
+    "readableText": "This is a copy of a shared ChatGPT chat. It won't be added to memory.ChatGPT said:🥔 Placki ziemniaczane – chrupiące i złocisteOto prosty, tradycyjny przepis na domowe placki ziemniaczane — chrupiące na zewnątrz i miękkie w środku!30 minPrzygotowanie2–3 osobyPorcjeŁatwyPoziomSkładnikiZaznacz składniki, które masz już w domu.0/71 kg ziemniaków1 średnia cebula1 jajko2 łyżki mąki pszennej1 płaska łyżeczka soliSzczypta pieprzuOlej do smażeniaPrzygotowanie krok po kroku1. Zetrzyj ziemniakiObierz ziemniaki i cebulę. Zetrzyj je na tarce o drobnych oczkach. Jeśli masa jest bardzo wodnista, odlej nadmiar płynu.2. Przygotuj masęDodaj jajko, mąkę, sól i pieprz. Dokładnie wymieszaj. Masa powinna być gęsta, ale łatwa do nakładania łyżką.3. Rozgrzej patelnięWlej cienką warstwę oleju i dobrze go rozgrzej. Nakładaj porcje masy łyżką, formując cienkie placki.4. Usmaż na złotoSmaż na średnim ogniu przez około 3–4 minuty z każdej strony, aż placki będą rumiane i chrupiące. Odsącz na ręczniku papierowym.Z czym podawać?Ze śmietaną — klasycznie, z kwaśną śmietaną lub jogurtem naturalnym.Na słodko — posypane cukrem, jeśli lubisz tradycyjną wersję.Z gulaszem — jako sycący obiad, z sosem mięsnym lub pieczarkowym.Sekret naprawdę chrupiących placków: użyj ziemniaków typu mączystego, nie nakładaj zbyt grubej warstwy masy i smaż placki partiami na dobrze rozgrzanym oleju.Smacznego! 😋If you want, I can:Add tips for adjusting recipe to make placki ziemniaczane gluten-freeProvide wine or drink pairing recommendations for the potato pancakesExplain the science behind why mączysty potatoes make crispier pancakes",
+    "renderTimeMs": 11843,
+    "siteName": "ChatGPT",
+    "stabilized": true,
+    "title": "ChatGPT - Chat example",
+    "visibility": "visible"
+  },
+  "attachments": [],
+  "diagnostics": {
+    "errors": [],
+    "notes": [
+      "intent action=android.intent.action.SEND type=text/plain referrer=null clipItems=1 clipMime=text/plain extras={android.intent.extra.TEXT=String(56)'https://chatgpt.com/s/t_6acb90310d508191bff23df2b335f821', android.intent.extra.TITLE=String(12)'Chat example'}",
+      "mode=visible",
+      "extractionTrigger=stable"
+    ],
+    "stageTimingsMs": {
+      "stabilize": 11843,
+      "extractRoundTrip": 81,
+      "js.jsonLd": 0,
+      "js.microdata": 1,
+      "js.pluginHits": 0,
+      "js.readability": 29,
+      "js.heuristic": 31,
+      "merge": 3
+    }
+  }
+}

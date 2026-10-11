@@ -1,0 +1,65 @@
+{
+  "recipe": {
+    "title": "Tort czekoladowy",
+    "language": "pl",
+    "times": {},
+    "ingredientGroups": [
+      {
+        "name": "Biszkopt",
+        "items": [
+          "6 jajek",
+          "1 szklanka cukru",
+          "1 szklanka mąki"
+        ]
+      },
+      {
+        "name": "Krem",
+        "items": [
+          "500 ml śmietanki 30%",
+          "200 g gorzkiej czekolady"
+        ]
+      },
+      {
+        "name": "Składniki na polewę",
+        "items": [
+          "100 g czekolady",
+          "50 g masła"
+        ]
+      }
+    ],
+    "stepGroups": [
+      {
+        "name": "Biszkopt",
+        "items": [
+          "Ubić jajka z cukrem.",
+          "Wmieszać mąkę i upiec."
+        ]
+      },
+      {
+        "name": "Krem",
+        "items": [
+          "Zagotować śmietankę i rozpuścić w niej czekoladę."
+        ]
+      }
+    ],
+    "notes": [],
+    "images": [],
+    "source": {
+      "type": "WEB",
+      "url": "https://example.test/pseudo-headings-pl",
+      "files": []
+    }
+  },
+  "provenance": {
+    "title": "heuristic",
+    "ingredients": "heuristic",
+    "steps": "heuristic"
+  },
+  "completeness": {
+    "score": 1.0,
+    "bestStage": "heuristic",
+    "hasTitle": true,
+    "hasIngredients": true,
+    "hasSteps": true
+  }
+}
