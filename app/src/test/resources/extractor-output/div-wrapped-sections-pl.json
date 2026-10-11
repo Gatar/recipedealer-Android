@@ -1,0 +1,82 @@
+{
+  "title": "Szarlotka – Przepis",
+  "ogImage": null,
+  "siteName": null,
+  "canonicalUrl": null,
+  "finalUrl": "https://example.test/div-wrapped-sections-pl",
+  "lang": "pl",
+  "botChallenge": null,
+  "visibility": "visible",
+  "jsonLd": [],
+  "microdata": [],
+  "pluginHits": {
+    "wprm": {
+      "found": false,
+      "containerCount": 0,
+      "fieldMatches": {},
+      "recipe": {}
+    },
+    "tasty": {
+      "found": false,
+      "containerCount": 0,
+      "fieldMatches": {},
+      "recipe": {}
+    },
+    "mediavine": {
+      "found": false,
+      "containerCount": 0,
+      "fieldMatches": {},
+      "recipe": {}
+    }
+  },
+  "heuristic": {
+    "articleTitle": "Szarlotka – Przepis",
+    "recipeHeading": "Szarlotka",
+    "usedBodyFallback": false,
+    "servings": "12 porcji",
+    "ingredients": [
+      {
+        "name": "Jabłka",
+        "items": [
+          "1,5 kg jabłek",
+          "5 łyżek cukru"
+        ]
+      },
+      {
+        "name": "Ciasto",
+        "items": [
+          "3 szklanki mąki",
+          "200 g masła",
+          "Do posypania: cukier puder"
+        ]
+      }
+    ],
+    "instructions": [
+      {
+        "name": "Jabłka",
+        "items": [
+          "Obrać i pokroić jabłka.",
+          "Smażyć 20 minut."
+        ]
+      },
+      {
+        "name": "Ciasto",
+        "items": [
+          "Zagnieść ciasto i schłodzić."
+        ]
+      }
+    ],
+    "notes": [
+      "* masło można zastąpić margaryną."
+    ]
+  },
+  "readableText": "Składniki\n\n 12 porcji\n Jabłka\n 1,5 kg jabłek5 łyżek cukru\n Ciasto\n 3 szklanki mąki200 g masła\n Do posypania: cukier puder\n\n Przygotowanie\n\n Jabłka\n Obrać i pokroić jabłka.Smażyć 20 minut.\n Ciasto\n Zagnieść ciasto i schłodzić.\n\n Wskazówki\n * masło można zastąpić margaryną.\n\n To jest super prosty i szybki przepis, robiłam ostatnio dwa razy pod rząd i bardzo szybko znika, wszystkim smakowało, polecam każdemu kto lubi jabłka z cynamonem.\n Absolutnie najlepsza szarlotka, jaką jadłam. Ciasto super kruche, cieniutki spód wyszedł idealnie! Jest tylko jeden problem, za szybko znika ze stołu.\n Ta szarlotka smakuje dokładnie tak, jak ta jedzona za dzieciaka u babci, zapisuję przepis i będę piec co tydzień przez całą jesień.\n Pierwszy raz w życiu upiekłam szarlotkę i była naprawdę idealna, dokładnie taka o jakiej marzyłam, dziękuję za ten przepis z całego serca.",
+  "timingsMs": {
+    "jsonLd": 0,
+    "microdata": 0,
+    "pluginHits": 2,
+    "readability": 62,
+    "heuristic": 68
+  },
+  "errors": []
+}

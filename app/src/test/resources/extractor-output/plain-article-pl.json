@@ -1,0 +1,71 @@
+{
+  "title": "Szarlotka babci Hani – Domowa Kuchnia",
+  "ogImage": null,
+  "siteName": null,
+  "canonicalUrl": null,
+  "finalUrl": "https://example.test/plain-article-pl",
+  "lang": "pl",
+  "botChallenge": null,
+  "visibility": "visible",
+  "jsonLd": [],
+  "microdata": [],
+  "pluginHits": {
+    "wprm": {
+      "found": false,
+      "containerCount": 0,
+      "fieldMatches": {},
+      "recipe": {}
+    },
+    "tasty": {
+      "found": false,
+      "containerCount": 0,
+      "fieldMatches": {},
+      "recipe": {}
+    },
+    "mediavine": {
+      "found": false,
+      "containerCount": 0,
+      "fieldMatches": {},
+      "recipe": {}
+    }
+  },
+  "heuristic": {
+    "articleTitle": "Szarlotka babci Hani – Domowa Kuchnia",
+    "recipeHeading": "Szarlotka babci Hani",
+    "usedBodyFallback": false,
+    "servings": null,
+    "ingredients": [
+      {
+        "name": null,
+        "items": [
+          "1 kg kwaśnych jabłek",
+          "3 szklanki mąki pszennej",
+          "200 g masła",
+          "1 szklanka cukru",
+          "2 łyżeczki cynamonu"
+        ]
+      }
+    ],
+    "instructions": [
+      {
+        "name": null,
+        "items": [
+          "Mąkę, masło i cukier szybko zagnieć w jednolite ciasto, a następnie podziel je na dwie części i schłodź w lodówce przez pół godziny.",
+          "Jabłka obierz, zetrzyj na grubych oczkach tarki i wymieszaj z cynamonem. Połowę ciasta wyłóż na blaszkę, przykryj jabłkami i zetrzyj na wierzch resztę ciasta.",
+          "Piecz w temperaturze 180°C przez około 50 minut, aż wierzch się zarumieni.",
+          "Podawaj ciepłą lub całkiem wystudzoną, posypaną cukrem pudrem. Smacznego!"
+        ]
+      }
+    ],
+    "notes": []
+  },
+  "readableText": "Ten przepis przekazywany jest w mojej rodzinie od trzech pokoleń. Szarlotka zawsze wychodzi puszysta, a jabłka są lekko kwaskowate i soczyste. Najlepiej smakuje jeszcze ciepła, z gałką lodów waniliowych albo odrobiną bitej śmietany.\n W jesienne popołudnia piekę ją prawie co tydzień, bo domownicy zjadają ją w kilkanaście minut. Poniżej znajdziesz wszystko, czego potrzebujesz.\n Składniki\n\n 1 kg kwaśnych jabłek\n 3 szklanki mąki pszennej\n 200 g masła\n 1 szklanka cukru\n 2 łyżeczki cynamonu\n\n Sposób przygotowania\n Mąkę, masło i cukier szybko zagnieć w jednolite ciasto, a następnie podziel je na dwie części i schłodź w lodówce przez pół godziny.\n Jabłka obierz, zetrzyj na grubych oczkach tarki i wymieszaj z cynamonem. Połowę ciasta wyłóż na blaszkę, przykryj jabłkami i zetrzyj na wierzch resztę ciasta.\n Piecz w temperaturze 180°C przez około 50 minut, aż wierzch się zarumieni.\n Podawaj ciepłą lub całkiem wystudzoną, posypaną cukrem pudrem. Smacznego!",
+  "timingsMs": {
+    "jsonLd": 0,
+    "microdata": 0,
+    "pluginHits": 0,
+    "readability": 16,
+    "heuristic": 25
+  },
+  "errors": []
+}

@@ -1,0 +1,69 @@
+{
+  "title": "ChatGPT - Chat example",
+  "ogImage": null,
+  "siteName": "ChatGPT",
+  "canonicalUrl": null,
+  "finalUrl": "https://example.test/chatgpt-share",
+  "lang": "en",
+  "botChallenge": null,
+  "visibility": "visible",
+  "jsonLd": [],
+  "microdata": [],
+  "pluginHits": {
+    "wprm": {
+      "found": false,
+      "containerCount": 0,
+      "fieldMatches": {},
+      "recipe": {}
+    },
+    "tasty": {
+      "found": false,
+      "containerCount": 0,
+      "fieldMatches": {},
+      "recipe": {}
+    },
+    "mediavine": {
+      "found": false,
+      "containerCount": 0,
+      "fieldMatches": {},
+      "recipe": {}
+    }
+  },
+  "heuristic": {
+    "articleTitle": "Check out this chat",
+    "recipeHeading": "Placki ziemniaczane – chrupiące i złociste",
+    "usedBodyFallback": false,
+    "servings": null,
+    "ingredients": [
+      {
+        "name": null,
+        "items": [
+          "1 kg ziemniaków",
+          "1 średnia cebula",
+          "1 jajko",
+          "Olej do smażenia"
+        ]
+      }
+    ],
+    "instructions": [
+      {
+        "name": null,
+        "items": [
+          "Zetrzyj ziemniaki: Obierz ziemniaki i cebulę. Zetrzyj je na tarce o drobnych oczkach.",
+          "Przygotuj masę: Dodaj jajko i sól. Dokładnie wymieszaj.",
+          "Usmaż na złoto: Smaż na średnim ogniu przez około 3–4 minuty z każdej strony."
+        ]
+      }
+    ],
+    "notes": []
+  },
+  "readableText": "🥔 Placki ziemniaczane – chrupiące i złociste\n\n Oto prosty, tradycyjny przepis na domowe placki ziemniaczane — chrupiące na zewnątrz i miękkie w środku!\n 30 minPrzygotowanie2–3 osobyPorcjeŁatwyPoziom\n Składniki\n\n 1 kg ziemniaków\n 1 średnia cebula\n 1 jajko\n Olej do smażenia\n\n Przygotowanie krok po kroku\n\n 1. Zetrzyj ziemniakiObierz ziemniaki i cebulę. Zetrzyj je na tarce o drobnych oczkach.\n\n 2. Przygotuj masęDodaj jajko i sól. Dokładnie wymieszaj.\n\n 3. Usmaż na złotoSmaż na średnim ogniu przez około 3–4 minuty z każdej strony.\n\n Z czym podawać?\n Ze śmietaną — klasycznie, z kwaśną śmietaną.\n Smacznego! 😋",
+  "timingsMs": {
+    "jsonLd": 1,
+    "microdata": 1,
+    "pluginHits": 1,
+    "readability": 64,
+    "heuristic": 101
+  },
+  "errors": []
+}

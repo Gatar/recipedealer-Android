@@ -1,0 +1,91 @@
+{
+  "title": "Sernik klasyczny – Blog Kulinarny",
+  "ogImage": "https://example.test/img/sernik-og.jpg",
+  "siteName": null,
+  "canonicalUrl": "https://example.test/sernik-klasyczny",
+  "finalUrl": "https://example.test/complete-jsonld",
+  "lang": "pl",
+  "botChallenge": null,
+  "visibility": "visible",
+  "jsonLd": [
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "name": "Blog Kulinarny"
+        },
+        {
+          "@type": "Recipe",
+          "name": "Sernik klasyczny",
+          "image": [
+            "https://example.test/img/sernik.jpg"
+          ],
+          "recipeYield": "12 porcji",
+          "prepTime": "PT30M",
+          "cookTime": "PT1H",
+          "totalTime": "PT1H30M",
+          "recipeIngredient": [
+            "1 kg twarogu sernikowego",
+            "5 jajek",
+            "200 g cukru",
+            "1 łyżka mąki ziemniaczanej"
+          ],
+          "recipeInstructions": [
+            {
+              "@type": "HowToStep",
+              "text": "Utrzyj twaróg z cukrem."
+            },
+            {
+              "@type": "HowToStep",
+              "text": "Dodaj jajka i mąkę, wymieszaj."
+            },
+            {
+              "@type": "HowToStep",
+              "text": "Piecz 60 minut w 170°C."
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "microdata": [],
+  "pluginHits": {
+    "wprm": {
+      "found": false,
+      "containerCount": 0,
+      "fieldMatches": {},
+      "recipe": {}
+    },
+    "tasty": {
+      "found": false,
+      "containerCount": 0,
+      "fieldMatches": {},
+      "recipe": {}
+    },
+    "mediavine": {
+      "found": false,
+      "containerCount": 0,
+      "fieldMatches": {},
+      "recipe": {}
+    }
+  },
+  "heuristic": {
+    "articleTitle": "Sernik klasyczny – Blog Kulinarny",
+    "recipeHeading": null,
+    "usedBodyFallback": true,
+    "servings": null,
+    "ingredients": [],
+    "instructions": [],
+    "notes": []
+  },
+  "readableText": "Najlepszy sernik na święta.",
+  "timingsMs": {
+    "jsonLd": 1,
+    "microdata": 0,
+    "pluginHits": 0,
+    "readability": 15,
+    "heuristic": 18
+  },
+  "errors": []
+}

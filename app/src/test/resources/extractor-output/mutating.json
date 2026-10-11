@@ -1,0 +1,50 @@
+{
+  "title": "Mutating",
+  "ogImage": null,
+  "siteName": null,
+  "canonicalUrl": null,
+  "finalUrl": "https://example.test/mutating",
+  "lang": "pl",
+  "botChallenge": null,
+  "visibility": "visible",
+  "jsonLd": [],
+  "microdata": [],
+  "pluginHits": {
+    "wprm": {
+      "found": false,
+      "containerCount": 0,
+      "fieldMatches": {},
+      "recipe": {}
+    },
+    "tasty": {
+      "found": false,
+      "containerCount": 0,
+      "fieldMatches": {},
+      "recipe": {}
+    },
+    "mediavine": {
+      "found": false,
+      "containerCount": 0,
+      "fieldMatches": {},
+      "recipe": {}
+    }
+  },
+  "heuristic": {
+    "articleTitle": "Mutating",
+    "recipeHeading": null,
+    "usedBodyFallback": true,
+    "servings": null,
+    "ingredients": [],
+    "instructions": [],
+    "notes": []
+  },
+  "readableText": "0",
+  "timingsMs": {
+    "jsonLd": 0,
+    "microdata": 1,
+    "pluginHits": 0,
+    "readability": 20,
+    "heuristic": 21
+  },
+  "errors": []
+}

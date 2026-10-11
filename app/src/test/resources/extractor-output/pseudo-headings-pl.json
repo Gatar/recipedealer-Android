@@ -1,0 +1,87 @@
+{
+  "title": "Tort czekoladowy – Przepis",
+  "ogImage": null,
+  "siteName": null,
+  "canonicalUrl": null,
+  "finalUrl": "https://example.test/pseudo-headings-pl",
+  "lang": "pl",
+  "botChallenge": null,
+  "visibility": "visible",
+  "jsonLd": [],
+  "microdata": [],
+  "pluginHits": {
+    "wprm": {
+      "found": false,
+      "containerCount": 0,
+      "fieldMatches": {},
+      "recipe": {}
+    },
+    "tasty": {
+      "found": false,
+      "containerCount": 0,
+      "fieldMatches": {},
+      "recipe": {}
+    },
+    "mediavine": {
+      "found": false,
+      "containerCount": 0,
+      "fieldMatches": {},
+      "recipe": {}
+    }
+  },
+  "heuristic": {
+    "articleTitle": "Tort czekoladowy – Przepis",
+    "recipeHeading": "Tort czekoladowy",
+    "usedBodyFallback": false,
+    "servings": null,
+    "ingredients": [
+      {
+        "name": "Biszkopt",
+        "items": [
+          "6 jajek",
+          "1 szklanka cukru",
+          "1 szklanka mąki"
+        ]
+      },
+      {
+        "name": "Krem",
+        "items": [
+          "500 ml śmietanki 30%",
+          "200 g gorzkiej czekolady"
+        ]
+      },
+      {
+        "name": "Składniki na polewę",
+        "items": [
+          "100 g czekolady",
+          "50 g masła"
+        ]
+      }
+    ],
+    "instructions": [
+      {
+        "name": "Biszkopt",
+        "items": [
+          "Ubić jajka z cukrem.",
+          "Wmieszać mąkę i upiec."
+        ]
+      },
+      {
+        "name": "Krem",
+        "items": [
+          "Zagotować śmietankę i rozpuścić w niej czekoladę."
+        ]
+      }
+    ],
+    "notes": []
+  },
+  "readableText": "Tort na każdą okazję: wilgotny biszkopt i gęsty krem. Robię go na urodziny od lat i jeszcze nigdy nie zawiódł, a goście zawsze proszą o przepis.\n Składniki\n Biszkopt:\n 6 jajek1 szklanka cukru1 szklanka mąki\n Krem:\n 500 ml śmietanki 30%200 g gorzkiej czekolady\n Składniki na polewę:\n 100 g czekolady50 g masła\n Przygotowanie\n Biszkopt\n Ubić jajka z cukrem.Wmieszać mąkę i upiec.\n Krem\n Zagotować śmietankę i rozpuścić w niej czekoladę.\n Komentarze\n Pyszny!Robiłam na święta.",
+  "timingsMs": {
+    "jsonLd": 0,
+    "microdata": 0,
+    "pluginHits": 1,
+    "readability": 46,
+    "heuristic": 52
+  },
+  "errors": []
+}

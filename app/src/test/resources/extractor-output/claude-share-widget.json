@@ -1,0 +1,70 @@
+{
+  "title": "Claude",
+  "ogImage": null,
+  "siteName": "Claude",
+  "canonicalUrl": null,
+  "finalUrl": "https://example.test/claude-share-widget",
+  "lang": "en",
+  "botChallenge": null,
+  "visibility": "visible",
+  "jsonLd": [],
+  "microdata": [],
+  "pluginHits": {
+    "wprm": {
+      "found": false,
+      "containerCount": 0,
+      "fieldMatches": {},
+      "recipe": {}
+    },
+    "tasty": {
+      "found": false,
+      "containerCount": 0,
+      "fieldMatches": {},
+      "recipe": {}
+    },
+    "mediavine": {
+      "found": false,
+      "containerCount": 0,
+      "fieldMatches": {},
+      "recipe": {}
+    }
+  },
+  "heuristic": {
+    "articleTitle": "Claude",
+    "recipeHeading": "Placki ziemniaczane",
+    "usedBodyFallback": false,
+    "servings": null,
+    "ingredients": [
+      {
+        "name": null,
+        "items": [
+          "1 kilograms ziemniaki (najlepiej mączyste)",
+          "1 średnia cebula",
+          "1 jajko"
+        ]
+      }
+    ],
+    "instructions": [
+      {
+        "name": null,
+        "items": [
+          "Zetrzyj ziemniaki i cebulę: Obierz 1 kilograms ziemniaki (najlepiej mączyste) i zetrzyj razem z 1 średnia cebula.",
+          "Dopraw ciasto: Dodaj 1 jajko. Wymieszaj.",
+          "Smaż placki: Smaż na złoty kolor po 3–4 minuty z każdej strony."
+        ]
+      }
+    ],
+    "notes": [
+      "Wariacje: na słodko z cukrem i śmietaną."
+    ]
+  },
+  "readableText": "Shared by Bartek. This is a copy of a chat between Claude and Bartek.Napisz mi przepis na placki ziemniaczane.\n Placki ziemniaczaneChrupiące na brzegach, miękkie w środku – klasyk polskiej kuchni.\n 4servings\n Ingredients\n 1 kilograms ziemniaki (najlepiej mączyste)\n 1 średnia cebula\n 1 jajko\n\n Steps\n Zetrzyj ziemniaki i cebulę: Obierz 1 kilograms ziemniaki (najlepiej mączyste) i zetrzyj razem z 1 średnia cebula.\n Dopraw ciasto: Dodaj 1 jajko. Wymieszaj.\n Smaż placki: Smaż na złoty kolor po 3–4 minuty z każdej strony.\n\n NotesWariacje: na słodko z cukrem i śmietaną.\n Przepis jest gotowy powyżej – możesz zmieniać liczbę porcji.",
+  "timingsMs": {
+    "jsonLd": 0,
+    "microdata": 0,
+    "pluginHits": 1,
+    "readability": 25,
+    "heuristic": 32
+  },
+  "errors": []
+}

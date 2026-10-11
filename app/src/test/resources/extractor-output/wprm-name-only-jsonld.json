@@ -1,0 +1,95 @@
+{
+  "title": "Pierogi ruskie – Blog",
+  "ogImage": null,
+  "siteName": null,
+  "canonicalUrl": null,
+  "finalUrl": "https://example.test/wprm-name-only-jsonld",
+  "lang": "pl",
+  "botChallenge": null,
+  "visibility": "visible",
+  "jsonLd": [
+    {
+      "@context": "https://schema.org",
+      "@type": "Recipe",
+      "name": "Pierogi ruskie"
+    }
+  ],
+  "microdata": [],
+  "pluginHits": {
+    "wprm": {
+      "found": true,
+      "containerCount": 1,
+      "fieldMatches": {
+        "name": 1,
+        "recipeIngredient": 3,
+        "recipeInstructions": 3,
+        "recipeYield": 1,
+        "prepTime": 0,
+        "cookTime": 0,
+        "totalTime": 0,
+        "image": 1,
+        "notes": 0
+      },
+      "recipe": {
+        "name": "Pierogi ruskie",
+        "recipeIngredient": [
+          {
+            "name": "Ciasto",
+            "items": [
+              "500 g mąki pszennej"
+            ]
+          },
+          {
+            "name": "Farsz",
+            "items": [
+              "500 g ziemniaków",
+              "250 g twarogu"
+            ]
+          }
+        ],
+        "recipeInstructions": [
+          {
+            "name": null,
+            "items": [
+              "Zagnieć ciasto z mąki i ciepłej wody.",
+              "Ugotuj ziemniaki i zmiel je z twarogiem.",
+              "Lep pierogi i gotuj 3 minuty od wypłynięcia."
+            ]
+          }
+        ],
+        "recipeYield": "4",
+        "image": "https://example.test/img/pierogi.jpg"
+      }
+    },
+    "tasty": {
+      "found": false,
+      "containerCount": 0,
+      "fieldMatches": {},
+      "recipe": {}
+    },
+    "mediavine": {
+      "found": false,
+      "containerCount": 0,
+      "fieldMatches": {},
+      "recipe": {}
+    }
+  },
+  "heuristic": {
+    "articleTitle": "Pierogi ruskie – Blog",
+    "recipeHeading": null,
+    "usedBodyFallback": true,
+    "servings": null,
+    "ingredients": [],
+    "instructions": [],
+    "notes": []
+  },
+  "readableText": "Zagnieć ciasto z mąki i ciepłej wody.\n Ugotuj ziemniaki i zmiel je z twarogiem.\n Lep pierogi i gotuj 3 minuty od wypłynięcia.",
+  "timingsMs": {
+    "jsonLd": 1,
+    "microdata": 1,
+    "pluginHits": 6,
+    "readability": 44,
+    "heuristic": 48
+  },
+  "errors": []
+}

@@ -1,0 +1,71 @@
+{
+  "title": "Naleśniki – Przepis",
+  "ogImage": null,
+  "siteName": null,
+  "canonicalUrl": null,
+  "finalUrl": "https://example.test/spa-delayed",
+  "lang": "pl",
+  "botChallenge": null,
+  "visibility": "visible",
+  "jsonLd": [
+    {
+      "@context": "https://schema.org",
+      "@type": "Recipe",
+      "name": "Naleśniki",
+      "recipeIngredient": [
+        "2 szklanki mąki",
+        "2 jajka",
+        "2 szklanki mleka"
+      ],
+      "recipeInstructions": [
+        {
+          "@type": "HowToStep",
+          "text": "Wymieszaj składniki na gładkie ciasto."
+        },
+        {
+          "@type": "HowToStep",
+          "text": "Smaż na patelni z obu stron."
+        }
+      ]
+    }
+  ],
+  "microdata": [],
+  "pluginHits": {
+    "wprm": {
+      "found": false,
+      "containerCount": 0,
+      "fieldMatches": {},
+      "recipe": {}
+    },
+    "tasty": {
+      "found": false,
+      "containerCount": 0,
+      "fieldMatches": {},
+      "recipe": {}
+    },
+    "mediavine": {
+      "found": false,
+      "containerCount": 0,
+      "fieldMatches": {},
+      "recipe": {}
+    }
+  },
+  "heuristic": {
+    "articleTitle": "Naleśniki – Przepis",
+    "recipeHeading": null,
+    "usedBodyFallback": true,
+    "servings": null,
+    "ingredients": [],
+    "instructions": [],
+    "notes": []
+  },
+  "readableText": "Gotowe po 2 sekundach.",
+  "timingsMs": {
+    "jsonLd": 6,
+    "microdata": 5,
+    "pluginHits": 0,
+    "readability": 41,
+    "heuristic": 48
+  },
+  "errors": []
+}

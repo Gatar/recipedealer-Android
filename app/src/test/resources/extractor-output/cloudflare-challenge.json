@@ -1,0 +1,50 @@
+{
+  "title": "Just a moment...",
+  "ogImage": null,
+  "siteName": null,
+  "canonicalUrl": null,
+  "finalUrl": "https://example.test/cloudflare-challenge",
+  "lang": "en-US",
+  "botChallenge": "cloudflare",
+  "visibility": "visible",
+  "jsonLd": [],
+  "microdata": [],
+  "pluginHits": {
+    "wprm": {
+      "found": false,
+      "containerCount": 0,
+      "fieldMatches": {},
+      "recipe": {}
+    },
+    "tasty": {
+      "found": false,
+      "containerCount": 0,
+      "fieldMatches": {},
+      "recipe": {}
+    },
+    "mediavine": {
+      "found": false,
+      "containerCount": 0,
+      "fieldMatches": {},
+      "recipe": {}
+    }
+  },
+  "heuristic": {
+    "articleTitle": "Just a moment...",
+    "recipeHeading": null,
+    "usedBodyFallback": true,
+    "servings": null,
+    "ingredients": [],
+    "instructions": [],
+    "notes": []
+  },
+  "readableText": "www.example.test\n Enable JavaScript and cookies to continue",
+  "timingsMs": {
+    "jsonLd": 0,
+    "microdata": 1,
+    "pluginHits": 1,
+    "readability": 26,
+    "heuristic": 28
+  },
+  "errors": []
+}

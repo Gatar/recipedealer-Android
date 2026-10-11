@@ -1,3 +1,46 @@
 <resources>
     <string name="app_name">RecipeDealer</string>
+    <string name="share_label">Zapisz przepis</string>
+    <string name="share_toast">Zapisuję przepis…</string>
+    <string name="share_nothing">Nic do zapisania w tym udostępnieniu</string>
+
+    <string name="channel_progress">Przetwarzanie przepisów</string>
+    <string name="channel_result">Zapisane przepisy</string>
+    <string name="notif_progress_title">Przetwarzam przepis</string>
+    <plurals name="notif_progress_text">
+        <item quantity="one">%d udostępnienie w toku</item>
+        <item quantity="few">%d udostępnienia w toku</item>
+        <item quantity="many">%d udostępnień w toku</item>
+        <item quantity="other">%d udostępnienia w toku</item>
+    </plurals>
+    <string name="notif_saved">Zapisano · %1$s</string>
+    <string name="notif_summary">Składniki: %1$d, kroki: %2$d, kompletność %3$d%%</string>
+    <string name="notif_failed">Nie udało się odczytać · %1$s</string>
+    <string name="notif_failed_text">Nie znalazłem przepisu. Zrób długi zrzut ekranu strony (albo kilka zwykłych) i udostępnij go tutaj.</string>
+    <string name="notif_failed_web_text">Nie znalazłem przepisu na stronie. Dotknij, aby otworzyć stronę i spróbować ręcznie – albo udostępnij długi zrzut ekranu (lub kilka zwykłych).</string>
+    <string name="untitled">(bez tytułu)</string>
+    <string name="action_send">Wyślij</string>
+
+    <string name="list_title">Przepisy</string>
+    <string name="list_empty">Brak zapisanych przepisów.\nUdostępnij link, tekst, zdjęcie lub PDF do aplikacji RecipeDealer.</string>
+    <string name="status_extracting">Przetwarzanie…</string>
+    <string name="status_draft">Do wysłania</string>
+    <string name="status_queued">W kolejce</string>
+    <string name="status_sent">Wysłano</string>
+    <string name="status_sent_local">Zapisano lokalnie</string>
+    <string name="status_failed">Błąd</string>
+    <string name="settings">Ustawienia</string>
+    <string name="manual_entry">Dodaj ręcznie</string>
+    <string name="back">Wstecz</string>
+    <string name="retry">Ponów</string>
+    <string name="send">Wyślij</string>
+    <string name="delete">Usuń</string>
+    <string name="share_json">Udostępnij JSON</string>
+    <string name="export_zip">Eksportuj (ZIP)</string>
+    <string name="reprocess">Przetwórz ponownie</string>
+    <string name="open_page">Otwórz stronę</string>
+    <string name="details">Szczegóły</string>
+    <string name="raw_json">JSON capture</string>
+    <string name="delete_confirm">Usunąć ten przepis z telefonu?</string>
+    <string name="cancel">Anuluj</string>
 </resources>

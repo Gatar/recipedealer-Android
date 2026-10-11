@@ -1,0 +1,74 @@
+{
+  "title": "Zupa pomidorowa",
+  "ogImage": null,
+  "siteName": null,
+  "canonicalUrl": null,
+  "finalUrl": "https://example.test/microdata-only",
+  "lang": "pl",
+  "botChallenge": null,
+  "visibility": "visible",
+  "jsonLd": [],
+  "microdata": [
+    {
+      "name": "Zupa pomidorowa",
+      "image": "https://example.test/img/zupa.jpg",
+      "prepTime": "PT10M",
+      "cookTime": "PT40M",
+      "recipeYield": "6 porcji",
+      "recipeIngredient": [
+        "1 l bulionu",
+        "500 g przecieru pomidorowego",
+        "100 g ryżu"
+      ],
+      "recipeInstructions": [
+        {
+          "text": "Zagotuj bulion.",
+          "@type": "HowToStep"
+        },
+        {
+          "text": "Dodaj przecier i ryż, gotuj 20 minut.",
+          "@type": "HowToStep"
+        }
+      ],
+      "@type": "Recipe"
+    }
+  ],
+  "pluginHits": {
+    "wprm": {
+      "found": false,
+      "containerCount": 0,
+      "fieldMatches": {},
+      "recipe": {}
+    },
+    "tasty": {
+      "found": false,
+      "containerCount": 0,
+      "fieldMatches": {},
+      "recipe": {}
+    },
+    "mediavine": {
+      "found": false,
+      "containerCount": 0,
+      "fieldMatches": {},
+      "recipe": {}
+    }
+  },
+  "heuristic": {
+    "articleTitle": "Zupa pomidorowa",
+    "recipeHeading": null,
+    "usedBodyFallback": true,
+    "servings": null,
+    "ingredients": [],
+    "instructions": [],
+    "notes": []
+  },
+  "readableText": "6 porcji\n 1 l bulionu\n 500 g przecieru pomidorowego\n 100 g ryżu\n\n Zagotuj bulion.\n\n Dodaj przecier i ryż, gotuj 20 minut.",
+  "timingsMs": {
+    "jsonLd": 0,
+    "microdata": 2,
+    "pluginHits": 1,
+    "readability": 50,
+    "heuristic": 54
+  },
+  "errors": []
+}

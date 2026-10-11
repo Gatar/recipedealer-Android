@@ -1,0 +1,91 @@
+{
+  "title": "ChatGPT - Przepis na tort kokosowoananasowy",
+  "ogImage": null,
+  "siteName": "ChatGPT",
+  "canonicalUrl": null,
+  "finalUrl": "https://example.test/chatgpt-share-multistage",
+  "lang": "en",
+  "botChallenge": null,
+  "visibility": "visible",
+  "jsonLd": [],
+  "microdata": [],
+  "pluginHits": {
+    "wprm": {
+      "found": false,
+      "containerCount": 0,
+      "fieldMatches": {},
+      "recipe": {}
+    },
+    "tasty": {
+      "found": false,
+      "containerCount": 0,
+      "fieldMatches": {},
+      "recipe": {}
+    },
+    "mediavine": {
+      "found": false,
+      "containerCount": 0,
+      "fieldMatches": {},
+      "recipe": {}
+    }
+  },
+  "heuristic": {
+    "articleTitle": "Check out this chat",
+    "recipeHeading": "Tropikalny tort kokosowo-ananasowy",
+    "usedBodyFallback": false,
+    "servings": null,
+    "ingredients": [
+      {
+        "name": "Biszkopt kokosowy",
+        "items": [
+          "5 jajek",
+          "150 g cukru",
+          "120 g mąki pszennej tortowej"
+        ]
+      },
+      {
+        "name": "Krem kokosowy",
+        "items": [
+          "500 g mascarpone, schłodzonego",
+          "400 ml śmietanki 36%, bardzo zimnej"
+        ]
+      }
+    ],
+    "instructions": [
+      {
+        "name": "Krok 1. Upiecz biszkopt",
+        "items": [
+          "Nagrzej piekarnik do 170°C, grzanie góra–dół.",
+          "Ubij jajka z cukrem na puszystą masę.",
+          "Piecz około 30–35 minut, do suchego patyczka."
+        ]
+      },
+      {
+        "name": "Krok 2. Przygotuj krem kokosowy",
+        "items": [
+          "Umieść zimne składniki w misie.",
+          "Ubijaj, aż krem będzie gęsty."
+        ]
+      },
+      {
+        "name": null,
+        "items": [
+          "Blat 2 — biszkopt kokosowy",
+          "Krem kokosowy",
+          "Blat 1 — biszkopt kokosowy",
+          "Schemat od góry do dołu; chrupkę można pominąć, jeśli wolisz gładką konsystencję tortu."
+        ]
+      }
+    ],
+    "notes": []
+  },
+  "readableText": "🥥🍍 Tropikalny tort kokosowo-ananasowy\n 12–16Porcje3–4 godz.Czas\n 1. Z czego składa się tort?\n Proponuję warstwy smakowe, które dobrze ze sobą współgrają.\n 2. Składniki\n Biszkopt kokosowy\n 5 jajek150 g cukru120 g mąki pszennej tortowej\n Krem kokosowy\n 500 g mascarpone, schłodzonego400 ml śmietanki 36%, bardzo zimnej\n 3. Jak przygotować poszczególne elementy?\n Krok 1. Upiecz biszkopt\n Nagrzej piekarnik do 170°C, grzanie góra–dół.Ubij jajka z cukrem na puszystą masę.Piecz około 30–35 minut, do suchego patyczka.\n Krok 2. Przygotuj krem kokosowy\n Umieść zimne składniki w misie.Ubijaj, aż krem będzie gęsty.\n 4. Składanie tortu — kolejność warstw\n Blat 2 — biszkopt kokosowyKrem kokosowyBlat 1 — biszkopt kokosowy\n Schemat od góry do dołu; chrupkę można pominąć, jeśli wolisz gładką konsystencję tortu.\n Jak uzyskać naprawdę wyjątkowy smak?\n Dodaj odrobinę skórki z limonki do kremu.",
+  "timingsMs": {
+    "jsonLd": 4,
+    "microdata": 1,
+    "pluginHits": 4,
+    "readability": 48,
+    "heuristic": 75
+  },
+  "errors": []
+}
