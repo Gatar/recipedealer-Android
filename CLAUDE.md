@@ -54,6 +54,10 @@ or notification action). Setting "Wysyłaj automatycznie" sends right after extr
   and scans the live body; that error in `diagnostics.errors` is expected.
 - Loading the same Gemini share link many times in a row gets throttled (answer stops rendering) – not a bug.
 - `WebView.enableSlowWholeDocumentDraw()` is called in `RecipeDealerApp.onCreate` (must precede any WebView).
+- Chrome's link share (`text/plain`, URL in EXTRA_TEXT) carries a ~126×126 page-preview PNG in **ClipData** (no
+  EXTRA_STREAM). It must not count as a shared file (it turned link shares into 0 % IMAGE captures):
+  `ShareRouter.clipDataIsContent`. Shares via `adb am start` never have ClipData – test real-app shapes in
+  `ShareFlowTest`.
 - Page `lang` is not the content language (AI-chat share pages say `en` for Polish answers).
 
 ## Web capture (§6.3)

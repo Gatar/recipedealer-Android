@@ -66,5 +66,13 @@ object ShareRouter {
         }
     }
 
+    /**
+     * Whether ClipData URIs are shared files. Chrome puts a page-preview thumbnail (≈126×126 PNG) into the ClipData
+     * of a `text/plain` link share for the share sheet – taking it as a file turned link shares into IMAGE captures.
+     * Only a non-text share without EXTRA_STREAM falls back to ClipData.
+     */
+    fun clipDataIsContent(mimeType: String?, hasExtraStream: Boolean): Boolean =
+        !hasExtraStream && mimeType?.startsWith("text/") != true
+
     fun firstUrl(text: String): String? = EMBEDDED_URL.find(text)?.value
 }

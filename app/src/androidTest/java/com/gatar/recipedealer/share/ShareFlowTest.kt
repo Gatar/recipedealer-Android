@@ -78,6 +78,32 @@ class ShareFlowTest {
         }
     }
 
+    /** Chrome "Share" of a link: URL in EXTRA_TEXT plus a page-preview thumbnail in ClipData → still WEB. */
+    @Test fun chromeLinkShareWithPreviewIsWeb() {
+        context.container.settings.update { it.copy(backgroundMode = true) }
+        val before = context.container.store.entries.value.map { it.id }.toSet()
+        val preview = textImage("preview.png", listOf("K"))
+        val intent = Intent(Intent.ACTION_SEND).setClass(context, ShareActivity::class.java).setType("text/plain")
+            .putExtra(Intent.EXTRA_TEXT, "https://example.test/przepis")
+            .putExtra(Intent.EXTRA_SUBJECT, "Przepis | Strona")
+            .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+        intent.clipData = android.content.ClipData.newRawUri(null, preview)
+        ActivityScenario.launch<ShareActivity>(intent).use {
+            val entry = runBlocking {
+                withTimeout(10_000) {
+                    var e: com.gatar.recipedealer.store.CaptureEntry? = null
+                    while (e == null) {
+                        e = context.container.store.entries.value.firstOrNull { it.id !in before }
+                        if (e == null) delay(100)
+                    }
+                    e
+                }
+            }
+            assertEquals(SourceType.WEB, entry.type)
+            context.container.store.delete(entry.id)
+        }
+    }
+
     @Test fun textShare() {
         context.container.settings.update { it.copy(backgroundMode = true) }
         val before = context.container.store.entries.value.map { it.id }.toSet()

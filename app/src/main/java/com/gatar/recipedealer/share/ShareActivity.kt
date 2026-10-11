@@ -72,12 +72,15 @@ class ShareActivity : ComponentActivity() {
             } else {
                 intent.getParcelableExtra(Intent.EXTRA_STREAM, Uri::class.java)?.let(::add)
             }
-            if (isEmpty()) intent.clipData?.let { c -> for (i in 0 until c.itemCount) c.getItemAt(i).uri?.let(::add) }
+            if (ShareRouter.clipDataIsContent(intent.type, hasExtraStream = isNotEmpty())) {
+                intent.clipData?.let { c -> for (i in 0 until c.itemCount) c.getItemAt(i).uri?.let(::add) }
+            }
         }.distinct()
+        val ignoredPreviews = if (uris.isEmpty()) intent.clipData?.let { c -> (0 until c.itemCount).count { c.getItemAt(it).uri != null } } ?: 0 else 0
         val extras = intent.extras?.keySet()?.sorted()?.map { key ->
             @Suppress("DEPRECATION") val v = intent.extras?.get(key)
             "$key=${v?.javaClass?.simpleName ?: "null"}"
-        }.orEmpty()
+        }.orEmpty() + listOfNotNull(ignoredPreviews.takeIf { it > 0 }?.let { "clipData: $it preview URI(s) ignored" })
         return ShareRequest(
             captureId = UUID.randomUUID().toString(),
             capturedAt = Instant.now().truncatedTo(ChronoUnit.SECONDS).toString(),

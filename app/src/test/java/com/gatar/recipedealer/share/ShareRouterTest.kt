@@ -63,6 +63,12 @@ class ShareRouterTest {
         assertEquals(1, r.notes.size)
     }
 
+    @Test fun chromeLinkPreviewInClipDataIsNotAFile() {
+        assertEquals(false, ShareRouter.clipDataIsContent("text/plain", hasExtraStream = false))
+        assertEquals(true, ShareRouter.clipDataIsContent("image/png", hasExtraStream = false))
+        assertEquals(false, ShareRouter.clipDataIsContent("image/png", hasExtraStream = true))
+    }
+
     @Test fun nothingToRoute() {
         assertNull(ShareRouter.route(req("   ")))
         assertNull(ShareRouter.route(req(files = listOf(SharedFile("content://x/1", "audio/mp3", "a.mp3")))))
