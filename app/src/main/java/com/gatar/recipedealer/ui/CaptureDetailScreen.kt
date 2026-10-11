@@ -44,7 +44,9 @@ import com.gatar.recipedealer.container
 import com.gatar.recipedealer.model.Capture
 import com.gatar.recipedealer.model.CaptureJson
 import com.gatar.recipedealer.model.Group
+import com.gatar.recipedealer.model.SourceType
 import com.gatar.recipedealer.store.CaptureEntry
+import com.gatar.recipedealer.web.BrowserActivity
 import com.gatar.recipedealer.store.CaptureStatus
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -87,6 +89,12 @@ fun CaptureDetailScreen(id: String, onBack: () -> Unit, extraActions: @Composabl
                 }
                 if (entry.state.status == CaptureStatus.FAILED && container.processor.loadJob(id) != null) {
                     OutlinedButton(onClick = { CaptureService.restart(context, id) }) { Text(stringResource(R.string.reprocess)) }
+                }
+                if (entry.type == SourceType.WEB && entry.state.status != CaptureStatus.EXTRACTING &&
+                    container.processor.webUrl(id) != null) {
+                    OutlinedButton(onClick = { context.startActivity(BrowserActivity.intent(context, id)) }) {
+                        Text(stringResource(R.string.open_page))
+                    }
                 }
                 extraActions(entry)
             }

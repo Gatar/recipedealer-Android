@@ -1,4 +1,11 @@
 {
+  "source": {
+    "type": "WEB",
+    "url": "https://example.test/wprm-yoast-grouped",
+    "siteName": "RecipeTin Eats",
+    "author": "Nagi",
+    "files": []
+  },
   "recipe": {
     "title": "Bun Cha - Vietnamese Meatballs",
     "language": "en",
@@ -60,14 +67,7 @@
     ],
     "images": [
       "https://example.test/img/bun-cha.jpg"
-    ],
-    "source": {
-      "type": "WEB",
-      "url": "https://example.test/wprm-yoast-grouped",
-      "siteName": "RecipeTin Eats",
-      "author": "Nagi",
-      "files": []
-    }
+    ]
   },
   "provenance": {
     "title": "jsonLd",
@@ -83,9 +83,10 @@
   },
   "completeness": {
     "score": 1.0,
-    "bestStage": "jsonLd",
     "hasTitle": true,
     "hasIngredients": true,
-    "hasSteps": true
-  }
+    "hasSteps": true,
+    "bestStage": "jsonLd"
+  },
+  "jsonLdRecipeId": "https://example.test/bun-cha/#recipe"
 }

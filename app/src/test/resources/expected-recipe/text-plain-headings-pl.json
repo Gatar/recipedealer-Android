@@ -1,6 +1,11 @@
 {
+  "source": {
+    "type": "TEXT",
+    "files": []
+  },
   "recipe": {
     "title": "Podpłomyki",
+    "language": "pl",
     "times": {},
     "ingredientGroups": [
       {
@@ -22,12 +27,7 @@
       }
     ],
     "notes": [],
-    "images": [],
-    "source": {
-      "type": "WEB",
-      "url": "https://example.test/text-plain-headings-pl",
-      "files": []
-    }
+    "images": []
   },
   "provenance": {
     "title": "heuristic",
@@ -36,9 +36,9 @@
   },
   "completeness": {
     "score": 1.0,
-    "bestStage": "heuristic",
     "hasTitle": true,
     "hasIngredients": true,
-    "hasSteps": true
+    "hasSteps": true,
+    "bestStage": "heuristic"
   }
 }

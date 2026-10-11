@@ -1,4 +1,9 @@
 {
+  "source": {
+    "type": "WEB",
+    "url": "https://example.test/plain-article-pl",
+    "files": []
+  },
   "recipe": {
     "title": "Szarlotka babci Hani",
     "language": "pl",
@@ -25,12 +30,7 @@
       }
     ],
     "notes": [],
-    "images": [],
-    "source": {
-      "type": "WEB",
-      "url": "https://example.test/plain-article-pl",
-      "files": []
-    }
+    "images": []
   },
   "provenance": {
     "title": "heuristic",
@@ -39,9 +39,9 @@
   },
   "completeness": {
     "score": 1.0,
-    "bestStage": "heuristic",
     "hasTitle": true,
     "hasIngredients": true,
-    "hasSteps": true
+    "hasSteps": true,
+    "bestStage": "heuristic"
   }
 }

@@ -8,6 +8,9 @@ import com.gatar.recipedealer.capture.CaptureProcessor
 import com.gatar.recipedealer.capture.CleanTextOnly
 import com.gatar.recipedealer.capture.notSupported
 import com.gatar.recipedealer.model.SourceType
+import com.gatar.recipedealer.ocr.OcrEngine
+import com.gatar.recipedealer.web.ExtractorScripts
+import com.gatar.recipedealer.web.WebSourceExtractor
 import com.gatar.recipedealer.settings.SettingsRepository
 import com.gatar.recipedealer.store.CaptureStatus
 import com.gatar.recipedealer.store.CaptureStore
@@ -25,6 +28,8 @@ class RecipeDealerApp : Application() {
 
     override fun onCreate() {
         super.onCreate()
+        // Whole-page snapshots for the OCR fallback; must run before the first WebView is created.
+        WebView.enableSlowWholeDocumentDraw()
         container = AppContainer(this)
         Notifications.createChannels(this)
         // Debug builds: chrome://inspect / CDP via `adb forward tcp:9222 localabstract:webview_devtools_remote_<pid>`.
@@ -38,11 +43,13 @@ class AppContainer(val context: Context) {
     val appScope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
     val settings = SettingsRepository(context)
     val store = CaptureStore(File(context.filesDir, "captures"))
+    val scripts = ExtractorScripts(context)
+    val ocr = OcrEngine()
     val processor = CaptureProcessor(
         context, store,
         mapOf(
             SourceType.TEXT to CleanTextOnly,
-            SourceType.WEB to notSupported("web"),
+            SourceType.WEB to WebSourceExtractor(context, scripts, ocr),
             SourceType.IMAGE to notSupported("image"),
             SourceType.PDF to notSupported("pdf"),
         ),

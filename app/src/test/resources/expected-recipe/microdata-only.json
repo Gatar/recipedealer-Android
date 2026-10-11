@@ -1,4 +1,9 @@
 {
+  "source": {
+    "type": "WEB",
+    "url": "https://example.test/microdata-only",
+    "files": []
+  },
   "recipe": {
     "title": "Zupa pomidorowa",
     "language": "pl",
@@ -30,12 +35,7 @@
     "notes": [],
     "images": [
       "https://example.test/img/zupa.jpg"
-    ],
-    "source": {
-      "type": "WEB",
-      "url": "https://example.test/microdata-only",
-      "files": []
-    }
+    ]
   },
   "provenance": {
     "title": "microdata",
@@ -48,9 +48,9 @@
   },
   "completeness": {
     "score": 1.0,
-    "bestStage": "microdata",
     "hasTitle": true,
     "hasIngredients": true,
-    "hasSteps": true
+    "hasSteps": true,
+    "bestStage": "microdata"
   }
 }

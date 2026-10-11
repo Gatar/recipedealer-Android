@@ -53,6 +53,21 @@ object CaptureBuilder {
             ),
         )
     }
+
+    /** A new extraction for an existing capture: identity, share and files stay, the extracted parts are replaced. */
+    fun rebuild(old: Capture, e: Extraction): Capture {
+        val recipe = RecipeCleanup.finish(e.recipe)
+        return old.copy(
+            source = old.source.copy(url = e.url ?: old.source.url, siteName = e.siteName ?: old.source.siteName,
+                author = e.author ?: old.source.author),
+            recipe = recipe,
+            completeness = Completeness.of(recipe, e.provenance),
+            provenance = e.provenance,
+            raw = e.raw.copy(text = e.raw.text ?: old.raw.text),
+            attachments = e.attachments.ifEmpty { old.attachments },
+            diagnostics = Diagnostics(e.timingsMs, e.errors, e.notes),
+        )
+    }
 }
 
 /** Final, source-independent clean-ups of a recipe. */

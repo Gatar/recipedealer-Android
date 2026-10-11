@@ -1,4 +1,9 @@
 {
+  "source": {
+    "type": "WEB",
+    "url": "https://example.test/wprm-name-only-jsonld",
+    "files": []
+  },
   "recipe": {
     "title": "Pierogi ruskie",
     "language": "pl",
@@ -34,12 +39,7 @@
     "notes": [],
     "images": [
       "https://example.test/img/pierogi.jpg"
-    ],
-    "source": {
-      "type": "WEB",
-      "url": "https://example.test/wprm-name-only-jsonld",
-      "files": []
-    }
+    ]
   },
   "provenance": {
     "title": "jsonLd",
@@ -50,9 +50,9 @@
   },
   "completeness": {
     "score": 1.0,
-    "bestStage": "pluginHits",
     "hasTitle": true,
     "hasIngredients": true,
-    "hasSteps": true
+    "hasSteps": true,
+    "bestStage": "pluginHits"
   }
 }

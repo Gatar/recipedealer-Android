@@ -44,8 +44,25 @@ or notification action). Setting "Wysyłaj automatycznie" sends right after extr
 - adb shell cannot grant MediaStore read access: feed test files via `run-as … cp` into the app's files dir and
   share through the app's FileProvider. Long texts: push a file and use `--es android.intent.extra.TEXT "$(cat …)"`.
   `\n` inside an adb `--es` string arrives literally, not as a newline.
-- The PoC used the same package name; `files/captures/` on the emulator may hold loose PoC test files (ignored).
+- The PoC used the same package name: its leftover `shared_prefs/settings.xml` (e.g. `backgroundMode=false`) is
+  read by this app. `adb shell pm clear com.gatar.recipedealer` (+ re-grant POST_NOTIFICATIONS) for a clean state.
+- Pages with Trusted Types (Gemini) reject `innerHTML` and `DOMParser` – the extractor reports a readability error
+  and scans the live body; that error in `diagnostics.errors` is expected.
+- Loading the same Gemini share link many times in a row gets throttled (answer stops rendering) – not a bug.
+- `WebView.enableSlowWholeDocumentDraw()` is called in `RecipeDealerApp.onCreate` (must precede any WebView).
 - Page `lang` is not the content language (AI-chat share pages say `en` for Polish answers).
+
+## Web capture (§6.3)
+`web/WebCapture.kt` (`WebCaptureRunner`): off-screen WebView → 5 s DOM quiet or 15 s hard timeout → extractor →
+Cloudflare wait (≤30 s, never OCR the challenge) → consent-wall check → late-content retries every 5 s until 30 s →
+OCR fallback (whole-page snapshot, tiled ML Kit, OCR text through `loadText`, fills only missing parts, provenance
+`ocr`). `ExtractorMerge` merges JSON-LD → microdata → plugins → heuristic with the group rule. `recipe.language`
+comes from the content (`LanguageGuess`), page `lang` only breaks ties. `completeness.bestStage` = strongest stage
+that gave ingredients or steps. `BrowserActivity` is the visible WebView (failure notification, background mode off).
 
 ## State
 - M1 skeleton: done (share target + routing, capture model + schema + contract tests, local sender, capture list).
+- M2 web capture: done. Verified on the emulator: kwestiasmaku (timeout trigger, heuristic groups), recipetineats
+  (WPRM groups + JSON-LD), allrecipes, aniagotuje (microdata), ChatGPT / Gemini / Claude share links, 6 shares at
+  once; visible WebView auto-extract. Claude "tort" share gives only assembly steps (known §9 case → backend).
+  `ExtractorWebViewTest` (instrumented) matches all 15 goldens.

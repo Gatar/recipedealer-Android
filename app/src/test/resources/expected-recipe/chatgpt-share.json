@@ -1,7 +1,13 @@
 {
+  "source": {
+    "type": "WEB",
+    "url": "https://example.test/chatgpt-share",
+    "siteName": "ChatGPT",
+    "files": []
+  },
   "recipe": {
     "title": "Placki ziemniaczane – chrupiące i złociste",
-    "language": "en",
+    "language": "pl",
     "times": {},
     "ingredientGroups": [
       {
@@ -23,13 +29,7 @@
       }
     ],
     "notes": [],
-    "images": [],
-    "source": {
-      "type": "WEB",
-      "url": "https://example.test/chatgpt-share",
-      "siteName": "ChatGPT",
-      "files": []
-    }
+    "images": []
   },
   "provenance": {
     "title": "heuristic",
@@ -38,9 +38,9 @@
   },
   "completeness": {
     "score": 1.0,
-    "bestStage": "heuristic",
     "hasTitle": true,
     "hasIngredients": true,
-    "hasSteps": true
+    "hasSteps": true,
+    "bestStage": "heuristic"
   }
 }

@@ -1,4 +1,9 @@
 {
+  "source": {
+    "type": "WEB",
+    "url": "https://example.test/pseudo-headings-pl",
+    "files": []
+  },
   "recipe": {
     "title": "Tort czekoladowy",
     "language": "pl",
@@ -43,12 +48,7 @@
       }
     ],
     "notes": [],
-    "images": [],
-    "source": {
-      "type": "WEB",
-      "url": "https://example.test/pseudo-headings-pl",
-      "files": []
-    }
+    "images": []
   },
   "provenance": {
     "title": "heuristic",
@@ -57,9 +57,9 @@
   },
   "completeness": {
     "score": 1.0,
-    "bestStage": "heuristic",
     "hasTitle": true,
     "hasIngredients": true,
-    "hasSteps": true
+    "hasSteps": true,
+    "bestStage": "heuristic"
   }
 }

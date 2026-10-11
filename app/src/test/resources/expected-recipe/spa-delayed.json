@@ -1,4 +1,9 @@
 {
+  "source": {
+    "type": "WEB",
+    "url": "https://example.test/spa-delayed",
+    "files": []
+  },
   "recipe": {
     "title": "Naleśniki",
     "language": "pl",
@@ -21,12 +26,7 @@
       }
     ],
     "notes": [],
-    "images": [],
-    "source": {
-      "type": "WEB",
-      "url": "https://example.test/spa-delayed",
-      "files": []
-    }
+    "images": []
   },
   "provenance": {
     "title": "jsonLd",
@@ -35,9 +35,9 @@
   },
   "completeness": {
     "score": 1.0,
-    "bestStage": "jsonLd",
     "hasTitle": true,
     "hasIngredients": true,
-    "hasSteps": true
+    "hasSteps": true,
+    "bestStage": "jsonLd"
   }
 }

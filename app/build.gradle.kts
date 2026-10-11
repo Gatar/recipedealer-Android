@@ -38,6 +38,8 @@ android {
     testOptions {
         unitTests.isReturnDefaultValues = true
     }
+    // The instrumented extractor test compares the real WebView against the JVM goldens.
+    sourceSets.getByName("androidTest").assets.srcDir("src/test/resources")
 }
 
 // Golden tests: `./gradlew :app:testDebugUnitTest -PupdateGolden` rewrites the expected files instead of comparing.

@@ -1,5 +1,10 @@
 {
+  "source": {
+    "type": "TEXT",
+    "files": []
+  },
   "recipe": {
+    "language": "pl",
     "times": {},
     "ingredientGroups": [
       {
@@ -75,12 +80,7 @@
       }
     ],
     "notes": [],
-    "images": [],
-    "source": {
-      "type": "WEB",
-      "url": "https://example.test/text-selection-gemini-cake",
-      "files": []
-    }
+    "images": []
   },
   "provenance": {
     "ingredients": "heuristic",
@@ -88,9 +88,9 @@
   },
   "completeness": {
     "score": 0.8,
-    "bestStage": "heuristic",
     "hasTitle": false,
     "hasIngredients": true,
-    "hasSteps": true
+    "hasSteps": true,
+    "bestStage": "heuristic"
   }
 }

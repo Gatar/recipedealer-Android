@@ -1,17 +1,26 @@
 package com.gatar.recipedealer.capture
 
+import android.app.PendingIntent
 import android.content.Context
 import com.gatar.recipedealer.Notifications
 import com.gatar.recipedealer.R
 import com.gatar.recipedealer.model.Capture
 import com.gatar.recipedealer.model.SourceType
 import com.gatar.recipedealer.store.CaptureEntry
+import com.gatar.recipedealer.web.BrowserActivity
+import com.gatar.recipedealer.web.WebFailure
 
 object ResultNotifier {
     fun notify(context: Context, entry: CaptureEntry) {
         val capture = entry.capture ?: return
         if (isUsable(capture)) {
             Notifications.saved(context, entry, summary(context, capture))
+        } else if (capture.source.type == SourceType.WEB) {
+            val consent = capture.diagnostics.notes.any { it.startsWith(WebFailure.CONSENT) }
+            val text = context.getString(if (consent) R.string.notif_failed_consent_text else R.string.notif_failed_web_text)
+            val open = PendingIntent.getActivity(context, entry.id.hashCode(), BrowserActivity.intent(context, entry.id),
+                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+            Notifications.failed(context, entry, text, open)
         } else {
             Notifications.failed(context, entry, context.getString(R.string.notif_failed_text))
         }

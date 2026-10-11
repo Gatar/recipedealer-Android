@@ -93,11 +93,16 @@ data class Completeness(
     val bestStage: String,
 ) {
     companion object {
-        /** Title 0.2, ingredients 0.4, steps 0.4. `bestStage`: the stage that gave the ingredients or steps. */
+        /**
+         * Title 0.2, ingredients 0.4, steps 0.4. `bestStage`: the strongest stage that gave ingredients or steps
+         * (else the title's stage) – lets the backend see "only heuristic / OCR" captures.
+         */
         fun of(recipe: Recipe, provenance: Map<String, String>): Completeness {
             val hasTitle = !recipe.title.isNullOrBlank()
             val score = (if (hasTitle) 2 else 0) + (if (recipe.hasIngredients) 4 else 0) + (if (recipe.hasSteps) 4 else 0)
-            val best = provenance["ingredients"] ?: provenance["steps"] ?: provenance["title"] ?: "none"
+            val content = listOfNotNull(provenance["ingredients"], provenance["steps"])
+            val best = content.minByOrNull { Stage.STRENGTH.indexOf(it).let { i -> if (i < 0) Int.MAX_VALUE else i } }
+                ?: provenance["title"] ?: "none"
             return Completeness(score / 10.0, hasTitle, recipe.hasIngredients, recipe.hasSteps, best)
         }
     }
@@ -175,4 +180,7 @@ object Stage {
     const val PAGE = "page"
     const val MANUAL = "manual"
     const val USER = "user"
+
+    /** Strongest first. */
+    val STRENGTH = listOf(USER, MANUAL, JSON_LD, MICRODATA, PLUGIN, HEURISTIC, OCR, PAGE)
 }

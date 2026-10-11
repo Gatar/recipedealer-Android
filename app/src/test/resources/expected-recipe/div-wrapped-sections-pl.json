@@ -1,4 +1,9 @@
 {
+  "source": {
+    "type": "WEB",
+    "url": "https://example.test/div-wrapped-sections-pl",
+    "files": []
+  },
   "recipe": {
     "title": "Szarlotka",
     "language": "pl",
@@ -42,12 +47,7 @@
     "notes": [
       "* masło można zastąpić margaryną."
     ],
-    "images": [],
-    "source": {
-      "type": "WEB",
-      "url": "https://example.test/div-wrapped-sections-pl",
-      "files": []
-    }
+    "images": []
   },
   "provenance": {
     "title": "heuristic",
@@ -58,9 +58,9 @@
   },
   "completeness": {
     "score": 1.0,
-    "bestStage": "heuristic",
     "hasTitle": true,
     "hasIngredients": true,
-    "hasSteps": true
+    "hasSteps": true,
+    "bestStage": "heuristic"
   }
 }

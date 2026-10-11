@@ -10,9 +10,12 @@ import androidx.activity.ComponentActivity
 import androidx.lifecycle.lifecycleScope
 import com.gatar.recipedealer.MainActivity
 import com.gatar.recipedealer.R
+import com.gatar.recipedealer.capture.CaptureJob
 import com.gatar.recipedealer.capture.CaptureProcessor
 import com.gatar.recipedealer.capture.CaptureService
 import com.gatar.recipedealer.container
+import com.gatar.recipedealer.model.SourceType
+import com.gatar.recipedealer.web.BrowserActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -40,11 +43,22 @@ class ShareActivity : ComponentActivity() {
         lifecycleScope.launch {
             val job = container.processor.start(request, route)
             val copied = withContext(Dispatchers.IO) { copyFiles(route.files, File(job.filesDir, CaptureProcessor.INCOMING)) }
-            CaptureService.start(this@ShareActivity, request.copy(files = copied), route.copy(files = copied))
-            if (container.settings.current.backgroundMode) {
-                Toast.makeText(this@ShareActivity, R.string.share_toast, Toast.LENGTH_SHORT).show()
-            } else {
-                startActivity(MainActivity.openCaptureIntent(this@ShareActivity, request.captureId))
+            val local = request.copy(files = copied)
+            val localRoute = route.copy(files = copied)
+            val background = container.settings.current.backgroundMode
+            when {
+                background -> {
+                    CaptureService.start(this@ShareActivity, local, localRoute)
+                    Toast.makeText(this@ShareActivity, R.string.share_toast, Toast.LENGTH_SHORT).show()
+                }
+                route.type == SourceType.WEB -> {
+                    container.processor.saveJob(CaptureJob(local, localRoute, job.filesDir))
+                    startActivity(BrowserActivity.intent(this@ShareActivity, request.captureId))
+                }
+                else -> {
+                    CaptureService.start(this@ShareActivity, local, localRoute)
+                    startActivity(MainActivity.openCaptureIntent(this@ShareActivity, request.captureId))
+                }
             }
             finish()
             overrideActivityTransition(Activity.OVERRIDE_TRANSITION_CLOSE, 0, 0)

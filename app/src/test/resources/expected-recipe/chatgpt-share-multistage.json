@@ -1,7 +1,13 @@
 {
+  "source": {
+    "type": "WEB",
+    "url": "https://example.test/chatgpt-share-multistage",
+    "siteName": "ChatGPT",
+    "files": []
+  },
   "recipe": {
     "title": "Tropikalny tort kokosowo-ananasowy",
-    "language": "en",
+    "language": "pl",
     "times": {},
     "ingredientGroups": [
       {
@@ -46,13 +52,7 @@
       }
     ],
     "notes": [],
-    "images": [],
-    "source": {
-      "type": "WEB",
-      "url": "https://example.test/chatgpt-share-multistage",
-      "siteName": "ChatGPT",
-      "files": []
-    }
+    "images": []
   },
   "provenance": {
     "title": "heuristic",
@@ -61,9 +61,9 @@
   },
   "completeness": {
     "score": 1.0,
-    "bestStage": "heuristic",
     "hasTitle": true,
     "hasIngredients": true,
-    "hasSteps": true
+    "hasSteps": true,
+    "bestStage": "heuristic"
   }
 }

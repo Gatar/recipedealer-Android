@@ -1,7 +1,13 @@
 {
+  "source": {
+    "type": "WEB",
+    "url": "https://example.test/claude-share-widget",
+    "siteName": "Claude",
+    "files": []
+  },
   "recipe": {
     "title": "Placki ziemniaczane",
-    "language": "en",
+    "language": "pl",
     "times": {},
     "ingredientGroups": [
       {
@@ -24,13 +30,7 @@
     "notes": [
       "Wariacje: na słodko z cukrem i śmietaną."
     ],
-    "images": [],
-    "source": {
-      "type": "WEB",
-      "url": "https://example.test/claude-share-widget",
-      "siteName": "Claude",
-      "files": []
-    }
+    "images": []
   },
   "provenance": {
     "title": "heuristic",
@@ -40,9 +40,9 @@
   },
   "completeness": {
     "score": 1.0,
-    "bestStage": "heuristic",
     "hasTitle": true,
     "hasIngredients": true,
-    "hasSteps": true
+    "hasSteps": true,
+    "bestStage": "heuristic"
   }
 }

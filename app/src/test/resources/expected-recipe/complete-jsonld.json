@@ -1,4 +1,9 @@
 {
+  "source": {
+    "type": "WEB",
+    "url": "https://example.test/sernik-klasyczny",
+    "files": []
+  },
   "recipe": {
     "title": "Sernik klasyczny",
     "language": "pl",
@@ -33,12 +38,7 @@
     "notes": [],
     "images": [
       "https://example.test/img/sernik.jpg"
-    ],
-    "source": {
-      "type": "WEB",
-      "url": "https://example.test/sernik-klasyczny",
-      "files": []
-    }
+    ]
   },
   "provenance": {
     "title": "jsonLd",
@@ -52,9 +52,9 @@
   },
   "completeness": {
     "score": 1.0,
-    "bestStage": "jsonLd",
     "hasTitle": true,
     "hasIngredients": true,
-    "hasSteps": true
+    "hasSteps": true,
+    "bestStage": "jsonLd"
   }
 }

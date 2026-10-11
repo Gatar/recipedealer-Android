@@ -43,4 +43,13 @@
     <string name="raw_json">JSON capture</string>
     <string name="delete_confirm">Usunąć ten przepis z telefonu?</string>
     <string name="cancel">Anuluj</string>
+
+    <string name="extract_now">Wyodrębnij teraz</string>
+    <string name="browser_loading">Wczytuję stronę…</string>
+    <string name="browser_extracting">Szukam przepisu…</string>
+    <string name="browser_not_found">Nie widzę jeszcze przepisu. Przewiń lub zamknij okienka, potem „Wyodrębnij teraz”.</string>
+    <string name="browser_consent">Strona pyta o zgodę (cookies) – odpowiedz, potem przepis wczyta się sam.</string>
+    <string name="browser_challenge">Strona sprawdza przeglądarkę – poczekaj albo wykonaj test.</string>
+    <string name="browser_abandoned">Przerwano w przeglądarce</string>
+    <string name="notif_failed_consent_text">Strona wymaga zgody (cookies). Dotknij, aby ją otworzyć i odpowiedzieć – kolejne przepisy z tej strony zapiszą się już same.</string>
 </resources>

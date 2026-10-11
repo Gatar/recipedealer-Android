@@ -70,13 +70,30 @@ class CaptureProcessor(
         } catch (e: Exception) {
             Extraction(errors = listOf("extract: ${e.javaClass.simpleName}: ${e.message}"))
         }
-        val withTotal = extraction.copy(timingsMs = extraction.timingsMs + ("total" to System.currentTimeMillis() - t0))
-        val capture = CaptureBuilder.build(job.request, job.route, withTotal, clientInfo())
+        val total = extraction.timingsMs["total"] ?: (System.currentTimeMillis() - t0)
+        return finish(job, extraction.copy(timingsMs = extraction.timingsMs + ("total" to total)))
+    }
+
+    private fun finish(job: CaptureJob, extraction: Extraction): CaptureEntry {
+        val capture = CaptureBuilder.build(job.request, job.route, extraction, clientInfo())
         // The copied originals are not needed any more unless an extractor kept them as attachments.
         File(job.filesDir, INCOMING).deleteRecursively()
         File(store.dir(job.id), JOB).delete()
         return store.saveCapture(capture, CaptureStatus.DRAFT)
     }
+
+    /**
+     * Result from outside the service (the visible WebView): built from the saved job when the capture is still
+     * being set up, else on top of the existing capture (same id, share and capture time).
+     */
+    fun complete(id: String, extraction: Extraction): CaptureEntry? {
+        loadJob(id)?.let { return finish(it, extraction) }
+        val old = store.get(id)?.capture ?: return null
+        return store.saveCapture(CaptureBuilder.rebuild(old, extraction), CaptureStatus.DRAFT)
+    }
+
+    /** The URL a WEB capture should (re)load. */
+    fun webUrl(id: String): String? = store.get(id)?.capture?.source?.url ?: loadJob(id)?.route?.url
 
     fun clientInfo() = ClientInfo(
         appVersion = context.packageManager.getPackageInfo(context.packageName, 0).versionName ?: "?",
