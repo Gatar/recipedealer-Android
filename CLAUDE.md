@@ -16,6 +16,10 @@ The full task description is `final-app.md` (sections referenced below as §N).
 D1 Kotlin + Compose · D2 Polish UI · D3 bearer token in settings (pluggable) · D4 one multipart PUT per capture ·
 D5 manual entry form → `MANUAL` capture.
 
+Deviation from §6.5 / §7.2 (told the user): a `screenshot` attachment (long screenshot: page URL shared along, or
+height > 2.5 × width) keeps its width (≤ 1600 px) and full height (≤ 20 000 px) instead of a 1600 px long edge –
+a 1080×11513 page scaled to 1600 px would be ~150 px wide and unreadable for vision.
+
 Own assumption: captures are **not** sent automatically by default – the user reviews and taps "Wyślij" (preview
 or notification action). Setting "Wysyłaj automatycznie" sends right after extraction.
 
@@ -60,9 +64,22 @@ OCR fallback (whole-page snapshot, tiled ML Kit, OCR text through `loadText`, fi
 comes from the content (`LanguageGuess`), page `lang` only breaks ties. `completeness.bestStage` = strongest stage
 that gave ingredients or steps. `BrowserActivity` is the visible WebView (failure notification, background mode off).
 
+## Text, images, PDF (§6.4–6.6)
+- TEXT: `web/TextSourceExtractor` – `loadText` + `run()` in an off-screen WebView with an empty page (~0.5 s).
+- IMAGE: `capture/FileExtractors.kt` – EXIF rotation, ML Kit lines (not blocks), tiles 4096/512 for tall images
+  (`ocr/Tiling.kt`, a line belongs to the tile holding its vertical center), wide images subsampled to ≤ 3000 px for
+  OCR, JPEG attachments. No on-device structuring (recipe stays empty; backend does it). OCR text of several
+  images / pages is joined with `\f`; `lines[].page` is the image / page index.
+- PDF: text layer (`PdfRenderer.Page.getTextContents()`, API 35+ or ext S ≥ 13) + OCR of each page at 1600 px on
+  white, ≤ 10 pages, original attached as `document-N.pdf`.
+- `am start` has no array-of-URI extra: SEND_MULTIPLE is covered by `ShareFlowTest` (instrumented).
+
 ## State
 - M1 skeleton: done (share target + routing, capture model + schema + contract tests, local sender, capture list).
 - M2 web capture: done. Verified on the emulator: kwestiasmaku (timeout trigger, heuristic groups), recipetineats
   (WPRM groups + JSON-LD), allrecipes, aniagotuje (microdata), ChatGPT / Gemini / Claude share links, 6 shares at
   once; visible WebView auto-extract. Claude "tort" share gives only assembly steps (known §9 case → backend).
   `ExtractorWebViewTest` (instrumented) matches all 15 goldens.
+- M3 text / images / PDF: done. Verified: Gemini cake text selection (0.46 s, same as golden), rotated typewritten
+  photo (EXIF 90°), synthetic 1080×11513 screenshot (186/186 lines, no duplicates, in order, 1.2 s OCR), the three
+  household PDFs (text layer + OCR, 0.4–0.6 s each).

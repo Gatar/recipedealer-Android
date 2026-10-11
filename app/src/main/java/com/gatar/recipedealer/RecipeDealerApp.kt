@@ -5,11 +5,12 @@ import android.content.Context
 import android.content.pm.ApplicationInfo
 import android.webkit.WebView
 import com.gatar.recipedealer.capture.CaptureProcessor
-import com.gatar.recipedealer.capture.CleanTextOnly
-import com.gatar.recipedealer.capture.notSupported
+import com.gatar.recipedealer.capture.ImageSourceExtractor
+import com.gatar.recipedealer.capture.PdfSourceExtractor
 import com.gatar.recipedealer.model.SourceType
 import com.gatar.recipedealer.ocr.OcrEngine
 import com.gatar.recipedealer.web.ExtractorScripts
+import com.gatar.recipedealer.web.TextSourceExtractor
 import com.gatar.recipedealer.web.WebSourceExtractor
 import com.gatar.recipedealer.settings.SettingsRepository
 import com.gatar.recipedealer.store.CaptureStatus
@@ -48,10 +49,10 @@ class AppContainer(val context: Context) {
     val processor = CaptureProcessor(
         context, store,
         mapOf(
-            SourceType.TEXT to CleanTextOnly,
+            SourceType.TEXT to TextSourceExtractor(context, scripts),
             SourceType.WEB to WebSourceExtractor(context, scripts, ocr),
-            SourceType.IMAGE to notSupported("image"),
-            SourceType.PDF to notSupported("pdf"),
+            SourceType.IMAGE to ImageSourceExtractor(ocr),
+            SourceType.PDF to PdfSourceExtractor(ocr),
         ),
     )
     private val uploadRunner = CaptureUploadRunner(store)

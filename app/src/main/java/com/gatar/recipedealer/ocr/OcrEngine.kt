@@ -12,8 +12,11 @@ import kotlin.coroutines.resumeWithException
 interface TileSource {
     val width: Int
     val height: Int
-    /** Renders `[top, bottom)` at full width. The caller recycles the bitmap. */
+    /** Rendered bitmaps are this many times smaller than the source coordinates. */
+    val sample: Int get() = 1
+    /** Renders `[top, bottom)` at full width (subsampled by [sample]). The caller recycles the bitmap. */
     suspend fun render(top: Int, bottom: Int): Bitmap
+    fun close() {}
 }
 
 data class OcrResult(val lines: List<TextLine>, val truncated: Boolean) {
@@ -37,10 +40,16 @@ class OcrEngine {
 
     /** Tiled recognition of a tall source, lines in reading order. */
     suspend fun recognize(source: TileSource, maxTiles: Int): OcrResult {
-        val (tiles, truncated) = Tiling.tiles(source.height, maxTiles)
-        val lines = tiles.flatMap { tile ->
-            val bmp = source.render(tile.top, tile.bottom)
-            try { Tiling.own(tile, recognize(bmp)) } finally { bmp.recycle() }
+        val s = source.sample
+        val (tiles, truncated) = Tiling.tiles(source.height, maxTiles, Tiling.TILE * s, Tiling.OVERLAP * s)
+        val lines = try {
+            tiles.flatMap { tile ->
+                val bmp = source.render(tile.top, tile.bottom)
+                val found = try { recognize(bmp) } finally { bmp.recycle() }
+                Tiling.own(tile, found.map { TextLine(it.text, it.left * s, it.top * s, it.right * s, it.bottom * s) })
+            }
+        } finally {
+            source.close()
         }
         return OcrResult(Tiling.readingOrder(lines), truncated)
     }
