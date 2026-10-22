@@ -11,7 +11,10 @@ import androidx.work.WorkManager
 import androidx.work.WorkerParameters
 import androidx.work.workDataOf
 import com.gatar.recipedealer.Notifications
+import com.gatar.recipedealer.api.ApiResult
+import com.gatar.recipedealer.api.CaptureStates
 import com.gatar.recipedealer.container
+import com.gatar.recipedealer.inbox.Inbox
 import com.gatar.recipedealer.settings.AppSettings
 import com.gatar.recipedealer.store.CaptureStatus
 import java.util.concurrent.TimeUnit
@@ -93,16 +96,26 @@ class UploadWorker(context: Context, params: WorkerParameters) : CoroutineWorker
     }
 }
 
-/** Optional `GET /v1/captures/{id}`: shows the backend's title or a "needs your help" note; gives up quietly. */
+/**
+ * `GET /v1/captures/{id}` after the upload until processing ends; then a notification when the user has to decide
+ * (`needs_decision`) or help (`needs_attention`), so the capture does not wait silently.
+ */
 class StatusWorker(context: Context, params: WorkerParameters) : CoroutineWorker(context, params) {
     override suspend fun doWork(): Result {
         val id = UploadQueue.id(inputData) ?: return Result.failure()
         val c = applicationContext.container
-        val s = c.settings.current
-        if (!s.hasBackend) return Result.success()
-        val status = HttpCaptureSender(s.baseUrl, s.token).status(id) ?: return Result.success()
-        c.store.updateState(id) { it.copy(backendStatus = status.status, backendTitles = status.titles, backendMessage = status.message) }
-        val pending = status.status == "accepted" || status.status == "processing"
-        return if (pending && runAttemptCount < 8) Result.retry() else Result.success()
+        val before = c.store.get(id)?.state?.backendStatus
+        val view = when (val r = c.inbox.load(id)) {
+            is ApiResult.Ok -> r.value
+            is ApiResult.Retry -> return if (runAttemptCount < 8) Result.retry() else Result.success()
+            is ApiResult.Unauthorized -> { UploadQueue.pauseForAuth(applicationContext); return Result.failure() }
+            else -> return Result.success()
+        }
+        val pending = view.status == CaptureStates.ACCEPTED || view.status == CaptureStates.PROCESSING
+        if (pending) return if (runAttemptCount < 8) Result.retry() else Result.success()
+        if (view.status != before && view.status in Inbox.WAITING) {
+            c.store.get(id)?.let { Notifications.decisionNeeded(applicationContext, it.id, it.title ?: view.title, view) }
+        }
+        return Result.success()
     }
 }

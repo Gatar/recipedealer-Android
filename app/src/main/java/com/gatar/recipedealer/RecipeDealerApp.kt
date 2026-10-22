@@ -4,7 +4,9 @@ import android.app.Application
 import android.content.Context
 import android.content.pm.ApplicationInfo
 import android.webkit.WebView
+import com.gatar.recipedealer.api.BackendClient
 import com.gatar.recipedealer.capture.CaptureProcessor
+import com.gatar.recipedealer.inbox.Inbox
 import com.gatar.recipedealer.capture.ImageSourceExtractor
 import com.gatar.recipedealer.capture.PdfSourceExtractor
 import com.gatar.recipedealer.model.SourceType
@@ -53,10 +55,14 @@ class AppContainer(val context: Context) {
             SourceType.PDF to PdfSourceExtractor(ocr),
         ),
     )
+    val inbox = Inbox(store, ::backend)
     init {
         processor.markInterrupted()
     }
 
     /** Queue a capture for sending (backend from the settings, else the local sender). */
     fun send(id: String) = UploadQueue.enqueue(context, id)
+
+    /** Client for the backend in the settings; null without one (local mode). */
+    fun backend(): BackendClient? = settings.current.takeIf { it.hasBackend }?.let { BackendClient(it.baseUrl, it.token) }
 }

@@ -14,6 +14,7 @@ import androidx.compose.ui.layout.ContentScale
 import com.gatar.recipedealer.Notifications
 import com.gatar.recipedealer.capture.RecipeDraft
 import com.gatar.recipedealer.capture.RecipeEdits
+import com.gatar.recipedealer.inbox.Inbox
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.File
@@ -69,7 +70,12 @@ import com.gatar.recipedealer.store.CaptureStatus
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CaptureDetailScreen(id: String, onBack: () -> Unit, extraActions: @Composable (CaptureEntry) -> Unit = {}) {
+fun CaptureDetailScreen(
+    id: String,
+    onBack: () -> Unit,
+    onDecide: (String) -> Unit = {},
+    extraActions: @Composable (CaptureEntry) -> Unit = {},
+) {
     val context = LocalContext.current
     val container = context.container
     val entries by container.store.entries.collectAsStateWithLifecycle()
@@ -136,6 +142,9 @@ fun CaptureDetailScreen(id: String, onBack: () -> Unit, extraActions: @Composabl
                     }
                 }
                 if (entry.state.status == CaptureStatus.SENT && entry.state.destination != LocalCaptureSender.DESTINATION) {
+                    if (entry.state.backendStatus in Inbox.WAITING || entry.state.backendRecipes.isNotEmpty()) {
+                        Button(onClick = { onDecide(id) }) { Text(stringResource(R.string.decide)) }
+                    }
                     OutlinedButton(onClick = { UploadQueue.scheduleStatusNow(context, id) }) { Text(stringResource(R.string.refresh_status)) }
                 }
                 extraActions(entry)
@@ -160,14 +169,16 @@ fun CaptureDetailScreen(id: String, onBack: () -> Unit, extraActions: @Composabl
 
 @Composable
 private fun StatusBlock(entry: CaptureEntry) {
+    val context = LocalContext.current
     val c = entry.capture
     Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
         Text(statusText(entry), color = statusColor(entry.state.status), style = MaterialTheme.typography.labelLarge)
         entry.state.error?.let { Text(it, color = MaterialTheme.colorScheme.error, style = MaterialTheme.typography.bodySmall) }
         entry.state.backendStatus?.let { st ->
             val titles = entry.state.backendTitles.takeIf { it.isNotEmpty() }?.joinToString(prefix = " · ") ?: ""
-            Text(stringResource(R.string.backend_status, st) + titles, style = MaterialTheme.typography.bodySmall)
+            Text(stringResource(R.string.backend_status, backendStatusLabel(context, st)) + titles, style = MaterialTheme.typography.bodySmall)
         }
+        backendReasonText(context, entry.state.backendReason)?.let { Text(it, style = MaterialTheme.typography.bodySmall) }
         entry.state.backendMessage?.let { Text(it, style = MaterialTheme.typography.bodySmall) }
         if (c != null) {
             val source = listOfNotNull(c.source.type.name, c.source.siteName, c.share.sourceApp).joinToString(" · ")

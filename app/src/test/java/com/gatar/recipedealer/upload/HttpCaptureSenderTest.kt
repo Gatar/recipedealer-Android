@@ -116,14 +116,6 @@ class HttpCaptureSenderTest {
         assertEquals(0, server.requestCount)
     }
 
-    @Test fun statusEndpoint() = runTest {
-        respond(200, """{"captureId":"$id","status":"done","recipes":[{"recipeId":"r1","title":"Gofry holenderskie"},{"recipeId":"r2","title":"Wafle"}],"message":null}""")
-        respond(404, "")
-        assertEquals(BackendStatus("done", listOf("Gofry holenderskie", "Wafle"), null), sender().status(id))
-        assertEquals("GET", server.takeRequest().method)
-        assertNull(sender().status(id))
-    }
-
     @Test fun health() = runTest {
         respond(200, """{"status":"ok"}"""); respond(401, ""); respond(500, "")
         assertEquals(HttpCaptureSender.Health.Ok, sender().health())

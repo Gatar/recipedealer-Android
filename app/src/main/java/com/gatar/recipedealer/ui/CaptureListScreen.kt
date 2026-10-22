@@ -56,7 +56,7 @@ fun CaptureListScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(stringResource(R.string.list_title)) },
+                title = { Text(stringResource(R.string.tab_captures)) },
                 actions = {
                     onManual?.let {
                         IconButton(onClick = it) { Icon(Icons.Default.Edit, stringResource(R.string.manual_entry)) }
@@ -124,7 +124,7 @@ fun statusText(entry: CaptureEntry): String = when (entry.state.status) {
     CaptureStatus.DRAFT -> stringResource(R.string.status_draft)
     CaptureStatus.QUEUED -> stringResource(R.string.status_queued)
     CaptureStatus.SENT -> if (entry.state.destination == "local") stringResource(R.string.status_sent_local)
-        else stringResource(R.string.status_sent) + (entry.state.backendStatus?.let { " · $it" } ?: "")
+        else stringResource(R.string.status_sent) + (entry.state.backendStatus?.let { " · " + backendStatusLabel(LocalContext.current, it) } ?: "")
     CaptureStatus.FAILED -> stringResource(R.string.status_failed)
 }
 

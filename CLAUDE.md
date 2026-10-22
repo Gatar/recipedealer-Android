@@ -32,7 +32,9 @@ or notification action). Setting "Wysyłaj automatycznie" sends right after extr
 - `api/` – `BackendClient` (everything after the upload: inbox, decisions, sync feed, recipes, revisions, search,
   blobs, edit lock) → `ApiResult`; `ApiModels.kt` response DTOs. Backend `recipe` objects stay `JsonObject`;
   `RecipeJson.merge` writes form edits over them so keys the app does not model survive a save.
-- `ui/` – Compose screens.
+- `inbox/Inbox.kt` – captures waiting for the user (`GET /v1/captures`, all phones of the household) and the
+  NEW / UPDATE decisions; every CaptureView seen updates the local `state.json` (`backendStatus`, `candidates`, …).
+- `ui/` – Compose screens; bottom tabs in `MainActivity` (Do decyzji · Udostępnienia), decision screen per capture.
 - Seed assets (§10, do not rewrite): `app/src/main/assets/{extractor.js,Readability.js,stability-observer.js}`,
   fixtures in `app/src/androidTest/assets/fixtures/`, `tools/generate-extractor-fixtures.js`,
   `app/src/test/resources/expected-recipe/` (PoC merge output – starting point only), `recipe-photos/`, `poc-runs/`.
@@ -80,6 +82,12 @@ that gave ingredients or steps. `BrowserActivity` is the visible WebView (failur
 - PDF: text layer (`PdfRenderer.Page.getTextContents()`, API 35+ or ext S ≥ 13) + OCR of each page at 1600 px on
   white, ≤ 10 pages, original attached as `document-N.pdf`.
 - `am start` has no array-of-URI extra: SEND_MULTIPLE is covered by `ShareFlowTest` (instrumented).
+
+## Backend decisions (RecipeDealerBE)
+Every processed capture ends in `needs_decision`: nothing becomes a recipe until the user picks, per extracted
+candidate, "Nowy przepis" or "Aktualizuj: <match>" (`GET /v1/recipes/candidates`, URL matches preselected).
+`StatusWorker` polls while `accepted` / `processing`, then notifies on `needs_decision` / `needs_attention`
+(tap → decision screen). `recipe_gone` / `already_resolved` reload the capture. Server messages come in English.
 
 ## Preview, editing, manual entry (§6.7, D5)
 - `capture/RecipeEdits.kt`: `RecipeDraft` (form strings ↔ Recipe, items one per line), `applyEdit` (changed fields →

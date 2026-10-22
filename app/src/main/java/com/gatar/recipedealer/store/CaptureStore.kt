@@ -1,5 +1,7 @@
 package com.gatar.recipedealer.store
 
+import com.gatar.recipedealer.api.ExtractedCandidate
+import com.gatar.recipedealer.api.RecipeRef
 import com.gatar.recipedealer.model.Capture
 import com.gatar.recipedealer.model.CaptureJson
 import com.gatar.recipedealer.model.SourceType
@@ -38,10 +40,14 @@ data class CaptureState(
     val needsAuth: Boolean = false,
     /** Where it was sent: "local" or the backend base URL. */
     val destination: String? = null,
-    /** From `GET /v1/captures/{id}` (optional). */
+    /** From `GET /v1/captures/{id}` (CaptureView). */
     val backendStatus: String? = null,
     val backendMessage: String? = null,
     val backendTitles: List<String> = emptyList(),
+    val backendReason: String? = null,
+    val backendRecipes: List<RecipeRef> = emptyList(),
+    /** Extracted recipes waiting for the NEW / UPDATE decision (`needs_decision`). */
+    val candidates: List<ExtractedCandidate> = emptyList(),
 )
 
 data class CaptureEntry(val id: String, val capturedAt: String, val state: CaptureState, val capture: Capture?) {

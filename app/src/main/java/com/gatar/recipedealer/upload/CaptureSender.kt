@@ -17,13 +17,9 @@ sealed interface SendResult {
     data class Retry(val reason: String) : SendResult
 }
 
-/** Processing status from `GET /v1/captures/{id}` (optional endpoint). */
-data class BackendStatus(val status: String, val titles: List<String>, val message: String?)
-
-/** Sends a capture plus its attachment files (by attachment `name`). Kept behind an interface: the real API may differ. */
+/** Sends a capture plus its attachment files (by attachment `name`). The status afterwards: `api.BackendClient`. */
 interface CaptureSender {
     suspend fun send(capture: Capture, files: Map<String, File>): SendResult
-    suspend fun status(captureId: String): BackendStatus? = null
 }
 
 /** No backend configured: the capture already lives in app storage; "sending" just marks it saved locally. */

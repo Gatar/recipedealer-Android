@@ -8,6 +8,8 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import androidx.core.app.NotificationCompat
+import com.gatar.recipedealer.api.CaptureStates
+import com.gatar.recipedealer.api.CaptureView
 import com.gatar.recipedealer.store.CaptureEntry
 
 object Notifications {
@@ -60,6 +62,24 @@ object Notifications {
             .setAutoCancel(true)
             .build()
         notify(context, entry.id, n)
+    }
+
+    /** The backend processed the capture: the user decides NEW / UPDATE (or has to help). Tap → decision screen. */
+    fun decisionNeeded(context: Context, captureId: String, title: String?, view: CaptureView) {
+        val attention = view.status == CaptureStates.NEEDS_ATTENTION
+        val text = view.message ?: context.getString(if (attention) R.string.notif_attention_text else R.string.notif_decision_text)
+        val name = title ?: context.getString(R.string.untitled)
+        val n = NotificationCompat.Builder(context, CH_RESULT)
+            .setSmallIcon(R.drawable.ic_stat_recipe)
+            .setContentTitle(context.getString(if (attention) R.string.notif_attention else R.string.notif_decision, name))
+            .setContentText(text)
+            .setStyle(NotificationCompat.BigTextStyle().bigText(text))
+            .setContentIntent(PendingIntent.getActivity(context, captureId.hashCode() + 1,
+                MainActivity.openDecisionIntent(context, captureId),
+                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE))
+            .setAutoCancel(true)
+            .build()
+        notify(context, captureId, n)
     }
 
     /** 401 / 403 from the backend: the queue is stopped until the token is fixed. */

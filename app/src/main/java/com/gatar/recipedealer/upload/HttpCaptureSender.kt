@@ -5,7 +5,6 @@ import com.gatar.recipedealer.model.CaptureJson
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.JsonArray
-import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.contentOrNull
 import kotlinx.serialization.json.jsonObject
@@ -21,8 +20,8 @@ import java.io.IOException
 import java.util.concurrent.TimeUnit
 
 /**
- * The example REST API (final-app.md §8): `PUT /v1/captures/{id}` multipart (part `capture` + one part per
- * attachment, named like `attachments[].name`), `GET /v1/captures/{id}`, `GET /v1/health`; bearer token (D3).
+ * The upload (final-app.md §8): `PUT /v1/captures/{id}` multipart (part `capture` + one part per attachment, named
+ * like `attachments[].name`) and `GET /v1/health`; bearer token (D3). Everything after the upload: `api.BackendClient`.
  */
 class HttpCaptureSender(
     baseUrl: String,
@@ -67,23 +66,6 @@ class HttpCaptureSender(
         ((o["details"] as? JsonArray)?.mapNotNull { (it as? JsonPrimitive)?.contentOrNull }.orEmpty() +
             listOfNotNull((o["error"] as? JsonPrimitive)?.contentOrNull)).distinct()
     }.getOrDefault(emptyList())
-
-    /** Optional endpoint: null when unavailable or unknown (the app works without it). */
-    override suspend fun status(captureId: String): BackendStatus? = withContext(Dispatchers.IO) {
-        runCatching {
-            client.newCall(request("/v1/captures/$captureId").get().build()).execute().use { r ->
-                if (!r.isSuccessful) return@use null
-                val o = CaptureJson.parseToJsonElement(r.body!!.string()).jsonObject
-                BackendStatus(
-                    status = (o["status"] as? JsonPrimitive)?.contentOrNull ?: return@use null,
-                    titles = (o["recipes"] as? JsonArray).orEmpty().mapNotNull {
-                        ((it as? JsonObject)?.get("title") as? JsonPrimitive)?.contentOrNull
-                    },
-                    message = (o["message"] as? JsonPrimitive)?.contentOrNull,
-                )
-            }
-        }.getOrNull()
-    }
 
     sealed interface Health {
         data object Ok : Health
