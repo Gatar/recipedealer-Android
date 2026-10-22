@@ -29,6 +29,9 @@ or notification action). Setting "Wysyłaj automatycznie" sends right after extr
 - `capture/` – `CaptureService` (shortService FGS), `CaptureProcessor`, `CaptureBuilder`, extractors per source.
 - `store/CaptureStore.kt` – file-based store: `files/captures/<id>/{capture.json,state.json,job.json,files/}`.
 - `upload/` – `CaptureSender` (local / HTTP), upload runner.
+- `api/` – `BackendClient` (everything after the upload: inbox, decisions, sync feed, recipes, revisions, search,
+  blobs, edit lock) → `ApiResult`; `ApiModels.kt` response DTOs. Backend `recipe` objects stay `JsonObject`;
+  `RecipeJson.merge` writes form edits over them so keys the app does not model survive a save.
 - `ui/` – Compose screens.
 - Seed assets (§10, do not rewrite): `app/src/main/assets/{extractor.js,Readability.js,stability-observer.js}`,
   fixtures in `app/src/androidTest/assets/fixtures/`, `tools/generate-extractor-fixtures.js`,
