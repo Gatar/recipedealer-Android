@@ -11,7 +11,12 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.History
 import androidx.compose.material.icons.filled.Inbox
+import androidx.compose.material3.IconButton
+import androidx.navigation.NavType
+import androidx.navigation.navArgument
 import androidx.compose.material.icons.filled.Restaurant
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.Badge
@@ -43,6 +48,8 @@ import com.gatar.recipedealer.ui.DecisionScreen
 import com.gatar.recipedealer.ui.InboxScreen
 import com.gatar.recipedealer.ui.ManualEntryScreen
 import com.gatar.recipedealer.ui.RecipeDetailScreen
+import com.gatar.recipedealer.ui.RecipeEditScreen
+import com.gatar.recipedealer.ui.RevisionsScreen
 import com.gatar.recipedealer.ui.RecipeListScreen
 import com.gatar.recipedealer.ui.SettingsScreen
 import com.gatar.recipedealer.ui.theme.RecipeDealerTheme
@@ -105,6 +112,8 @@ class MainActivity : ComponentActivity() {
 object Routes {
     const val RECIPES = "recipes"
     const val RECIPE = "recipe/{id}"
+    const val EDIT = "recipe/{id}/edit?revision={revision}"
+    const val REVISIONS = "recipe/{id}/revisions"
     const val LIST = "list"
     const val INBOX = "inbox"
     const val CAPTURE = "capture/{id}"
@@ -114,6 +123,8 @@ object Routes {
     fun capture(id: String) = "capture/$id"
     fun decision(id: String) = "decision/$id"
     fun recipe(id: String) = "recipe/$id"
+    fun edit(id: String, revision: String? = null) = "recipe/$id/edit" + (revision?.let { "?revision=$it" } ?: "")
+    fun revisions(id: String) = "recipe/$id/revisions"
 }
 
 private data class Tab(val route: String, val label: Int, val icon: ImageVector)
@@ -169,11 +180,37 @@ private fun AppNavHost(nav: NavHostController) {
                 )
             }
             composable(Routes.RECIPE) { back ->
+                val id = back.arguments?.getString("id").orEmpty()
                 RecipeDetailScreen(
-                    recipeId = back.arguments?.getString("id").orEmpty(),
+                    recipeId = id,
                     onBack = { nav.popBackStack() },
                     onOpenRecipe = { nav.navigate(Routes.recipe(it)) { popUpTo(Routes.RECIPE) { inclusive = true } } },
+                    actions = {
+                        if (container.settings.current.hasBackend) {
+                            IconButton(onClick = { nav.navigate(Routes.revisions(id)) }) {
+                                Icon(Icons.Default.History, stringResource(R.string.revisions_title))
+                            }
+                            IconButton(onClick = { nav.navigate(Routes.edit(id)) }) {
+                                Icon(Icons.Default.Edit, stringResource(R.string.recipe_edit))
+                            }
+                        }
+                    },
                 )
+            }
+            composable(
+                Routes.EDIT,
+                arguments = listOf(navArgument("revision") { type = NavType.StringType; nullable = true }),
+            ) {
+                RecipeEditScreen(
+                    onClose = { nav.popBackStack() },
+                    onDeleted = { nav.popBackStack(Routes.RECIPES, inclusive = false) },
+                )
+            }
+            composable(Routes.REVISIONS) { back ->
+                val id = back.arguments?.getString("id").orEmpty()
+                RevisionsScreen(id, onBack = { nav.popBackStack() }, onApply = { rev ->
+                    nav.navigate(Routes.edit(id, rev)) { popUpTo(Routes.RECIPE) }
+                })
             }
             composable(Routes.LIST) {
                 CaptureListScreen(

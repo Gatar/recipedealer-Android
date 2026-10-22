@@ -244,7 +244,7 @@ private fun Thumbnail(file: File) {
     bitmap?.let { Image(it, null, Modifier.fillMaxWidth().heightIn(max = 360.dp), contentScale = ContentScale.Fit, alignment = Alignment.TopStart) }
 }
 
-private val NullableDraftSaver = Saver<RecipeDraft?, String>(
+internal val NullableDraftSaver = Saver<RecipeDraft?, String>(
     save = { d -> d?.let { CaptureJson.encodeToString(RecipeDraft.serializer(), it) } ?: "" },
     restore = { s -> s.takeIf { it.isNotEmpty() }?.let { CaptureJson.decodeFromString(RecipeDraft.serializer(), it) } },
 )

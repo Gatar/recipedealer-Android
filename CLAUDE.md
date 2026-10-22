@@ -94,6 +94,16 @@ candidate, "Nowy przepis" or "Aktualizuj: <match>" (`GET /v1/recipes/candidates`
 `StatusWorker` polls while `accepted` / `processing`, then notifies on `needs_decision` / `needs_attention`
 (tap → decision screen). `recipe_gone` / `already_resolved` reload the capture. Server messages come in English.
 
+## Recipes: sync, search, editing (RecipeDealerBE)
+- The recipe list reads only `RecipeCache` (works offline). Search: `GET /v1/recipes/search`, offline / while
+  loading `LocalSearch` (words in title or ingredients, diacritics ignored, no typo tolerance).
+- Editing is online only: `RecipeEditSession` (GET head → POST lock → heartbeat every 2 min → POST revision with
+  `Lock-Id` + `If-Match`, or DELETE recipe, or release). `RecipeEditViewModel.onCleared` releases the lock on back /
+  cancel; a killed app lets the 5 min lease expire (until then the server reports the phone itself as the editor).
+  412 / lost lock keep the form text. Applying a revision / machine proposal = editor prefilled with it.
+- ETag is built from `headRevisionId` (`etagOf`), never taken from the header: Caddy's `encode gzip` rewrites it to
+  `"<id>-gzip"` and the backend then answers 412 to `If-Match`.
+
 ## Preview, editing, manual entry (§6.7, D5)
 - `capture/RecipeEdits.kt`: `RecipeDraft` (form strings ↔ Recipe, items one per line), `applyEdit` (changed fields →
   provenance `user`, raw untouched, completeness recomputed), `manualCapture` (`MANUAL`, provenance `manual`).
@@ -107,6 +117,10 @@ candidate, "Nowy przepis" or "Aktualizuj: <match>" (`GET /v1/recipes/candidates`
   (WPRM groups + JSON-LD), allrecipes, aniagotuje (microdata), ChatGPT / Gemini / Claude share links, 6 shares at
   once; visible WebView auto-extract. Claude "tort" share gives only assembly steps (known §9 case → backend).
   `ExtractorWebViewTest` (instrumented) matches all 15 goldens.
+- Backend API (2026-10-22): client, decisions, recipe list / sync / detail, search, editing – done. Verified on the
+  emulator against https://2.31.66.200: share → needs_decision notification → "Nowy przepis" → done → listed after
+  sync; search with a typo; edit with lock + save + history; lock released on back. Not verified on the real server:
+  recipe delete (unit tests only), blob thumbnails (web captures have none; `recipe.images[0]` fallback used).
 - M3 text / images / PDF: done. Verified: Gemini cake text selection (0.46 s, same as golden), rotated typewritten
   photo (EXIF 90°), synthetic 1080×11513 screenshot (186/186 lines, no duplicates, in order, 1.2 s OCR), the three
   household PDFs (text layer + OCR, 0.4–0.6 s each).

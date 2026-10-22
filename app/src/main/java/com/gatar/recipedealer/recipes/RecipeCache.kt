@@ -29,8 +29,6 @@ data class CachedRecipe(
     val urls: List<String> = emptyList(),
     val origin: String? = null,
     val lock: LockInfo? = null,
-    /** ETag of the detail GET (`If-None-Match`); dropped when the feed brings another head. */
-    val etag: String? = null,
 ) {
     val title: String? get() = (recipe["title"] as? JsonPrimitive)?.contentOrNull?.takeIf { it.isNotBlank() }
     fun content(): Recipe = RecipeJson.decode(recipe)
@@ -88,7 +86,6 @@ class RecipeCache(private val file: File) {
                 urls = old?.urls.orEmpty(),
                 origin = old?.origin,
                 lock = old?.lock,
-                etag = old?.etag?.takeIf { old.headRevisionId == item.headRevisionId },
             )
             if (new != old) changed++
             byId[item.recipeId] = new
@@ -112,7 +109,7 @@ class RecipeCache(private val file: File) {
 
     /** A fresh `GET /v1/recipes/{id}` (or the result of a save). */
     @Synchronized
-    fun putDetail(view: RecipeView, etag: String?) {
+    fun putDetail(view: RecipeView) {
         val old = get(view.recipeId)
         val new = CachedRecipe(
             recipeId = view.recipeId,
@@ -125,7 +122,6 @@ class RecipeCache(private val file: File) {
             urls = view.urls,
             origin = view.origin,
             lock = view.lock,
-            etag = etag,
         )
         write(data.copy(recipes = data.recipes.filterNot { it.recipeId == view.recipeId } + new))
     }

@@ -69,6 +69,7 @@ import com.gatar.recipedealer.api.ApiErrors
 import com.gatar.recipedealer.api.ApiResult
 import com.gatar.recipedealer.container
 import com.gatar.recipedealer.api.SearchHit
+import com.gatar.recipedealer.api.etagOf
 import com.gatar.recipedealer.recipes.CachedRecipe
 import com.gatar.recipedealer.recipes.ImageCache
 import com.gatar.recipedealer.recipes.LocalSearch
@@ -267,8 +268,8 @@ fun RecipeDetailScreen(
     var mergedInto by remember { mutableStateOf(container.recipes.redirect(recipeId)) }
     LaunchedEffect(recipeId) {
         val client = container.backend() ?: return@LaunchedEffect
-        when (val r = client.recipe(recipeId, container.recipes.get(recipeId)?.etag)) {
-            is ApiResult.Ok -> container.recipes.putDetail(r.value, r.etag)
+        when (val r = client.recipe(recipeId, container.recipes.get(recipeId)?.headRevisionId?.let(::etagOf))) {
+            is ApiResult.Ok -> container.recipes.putDetail(r.value)
             ApiResult.NotModified -> {}
             is ApiResult.Failed -> if (r.code == 410) {
                 val target = if (r.error == ApiErrors.RECIPE_MERGED) r.details.firstNotNullOfOrNull { UUID.find(it)?.value } else null

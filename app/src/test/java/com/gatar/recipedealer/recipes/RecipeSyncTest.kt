@@ -123,19 +123,19 @@ class RecipeSyncTest {
         assertEquals(1, RecipeCache(file).recipes.value.size)
     }
 
-    @Test fun detailKeepsEtagUntilTheHeadChanges() = runTest {
+    @Test fun detailFieldsSurviveLaterSyncs() = runTest {
         page(live("a", "Gofry", head = "h1"), "c1", hasMore = false)
         sync.sync()
         val view = ApiJson.decodeFromString(RecipeView.serializer(),
-            """{"recipeId":"a","headRevisionId":"h1","recipe":{"title":"Gofry"},"urls":["https://site.pl/gofry"],"updatedAt":"2026-10-22T10:00:00Z"}""")
-        cache.putDetail(view, "\"h1\"")
-        page(live("a", "Gofry", head = "h1"), "c2", hasMore = false)
+            """{"recipeId":"a","headRevisionId":"h1","origin":"USER","recipe":{"title":"Gofry"},"urls":["https://site.pl/gofry"],"updatedAt":"2026-10-22T10:00:00Z"}""")
+        cache.putDetail(view)
+        page(live("a", "Gofry!", head = "h2"), "c2", hasMore = false)
         sync.sync()
-        assertEquals("\"h1\"", cache.get("a")!!.etag)
-        assertEquals(listOf("https://site.pl/gofry"), cache.get("a")!!.urls)
-        page(live("a", "Gofry!", head = "h2"), "c3", hasMore = false)
-        sync.sync()
-        assertNull(cache.get("a")!!.etag)
+        cache.get("a")!!.let {
+            assertEquals("h2", it.headRevisionId)
+            assertEquals(listOf("https://site.pl/gofry"), it.urls)
+            assertEquals("USER", it.origin)
+        }
         cache.remove("a")
         assertTrue(cache.recipes.value.isEmpty())
     }

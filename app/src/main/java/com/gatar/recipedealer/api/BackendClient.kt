@@ -39,6 +39,12 @@ sealed interface ApiResult<out T> {
 
 fun <T> ApiResult<T>.valueOrNull(): T? = (this as? ApiResult.Ok)?.value
 
+/**
+ * The recipe ETag is `"<headRevisionId>"`. Built from the body, not taken from the `ETag` header: a compressing
+ * proxy rewrites that header (Caddy's `encode` sends `"<id>-gzip"`), and the backend would answer 412 to it.
+ */
+fun etagOf(headRevisionId: String) = "\"$headRevisionId\""
+
 /** A non-Ok result passed on as another result type (every variant but Ok is `ApiResult<Nothing>`). */
 @Suppress("UNCHECKED_CAST")
 fun <T> ApiResult<*>.failure(): ApiResult<T> {
