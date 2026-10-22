@@ -7,6 +7,10 @@ import android.webkit.WebView
 import com.gatar.recipedealer.api.BackendClient
 import com.gatar.recipedealer.capture.CaptureProcessor
 import com.gatar.recipedealer.inbox.Inbox
+import com.gatar.recipedealer.recipes.ImageCache
+import com.gatar.recipedealer.recipes.RecipeCache
+import com.gatar.recipedealer.recipes.RecipeSync
+import com.gatar.recipedealer.recipes.SyncWorker
 import com.gatar.recipedealer.capture.ImageSourceExtractor
 import com.gatar.recipedealer.capture.PdfSourceExtractor
 import com.gatar.recipedealer.model.SourceType
@@ -32,6 +36,7 @@ class RecipeDealerApp : Application() {
         WebView.enableSlowWholeDocumentDraw()
         container = AppContainer(this)
         UploadQueue.resume(this, includeAuthFailures = false)
+        SyncWorker.schedulePeriodic(this)
         Notifications.createChannels(this)
         // Debug builds: chrome://inspect / CDP via `adb forward tcp:9222 localabstract:webview_devtools_remote_<pid>`.
         if (applicationInfo.flags and ApplicationInfo.FLAG_DEBUGGABLE != 0) WebView.setWebContentsDebuggingEnabled(true)
@@ -56,6 +61,9 @@ class AppContainer(val context: Context) {
         ),
     )
     val inbox = Inbox(store, ::backend)
+    val recipes = RecipeCache(File(context.filesDir, "recipes/recipes.json"))
+    val recipeSync = RecipeSync(recipes, ::backend)
+    val images = ImageCache(File(context.filesDir, "recipes/images"), ::backend)
     init {
         processor.markInterrupted()
     }

@@ -127,4 +127,13 @@
     <string name="decision_confirm">Zatwierdź</string>
     <string name="decision_result">Przepisy</string>
     <string name="open_recipe">Otwórz</string>
+    <string name="sort_title">A–Z</string>
+    <string name="sort_updated">Najnowsze</string>
+    <string name="recipes_empty">Brak przepisów.\nUdostępnij przepis do aplikacji, a potem zdecyduj o nim w zakładce „Do decyzji”.</string>
+    <string name="recipe_needs_review">Przepis wymaga sprawdzenia</string>
+    <string name="recipe_source">Źródło</string>
+    <string name="recipe_offline">Bez połączenia – pokazuję zapisaną wersję.</string>
+    <string name="recipe_deleted">Ten przepis został usunięty.</string>
+    <string name="recipe_merged">Ten przepis połączono z innym.</string>
+    <string name="recipe_open_merged">Otwórz połączony przepis</string>
 </resources>

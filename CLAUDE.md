@@ -34,7 +34,12 @@ or notification action). Setting "Wysyłaj automatycznie" sends right after extr
   `RecipeJson.merge` writes form edits over them so keys the app does not model survive a save.
 - `inbox/Inbox.kt` – captures waiting for the user (`GET /v1/captures`, all phones of the household) and the
   NEW / UPDATE decisions; every CaptureView seen updates the local `state.json` (`backendStatus`, `candidates`, …).
-- `ui/` – Compose screens; bottom tabs in `MainActivity` (Do decyzji · Udostępnienia), decision screen per capture.
+- `recipes/` – `RecipeCache` (offline list, one JSON file `files/recipes/recipes.json` with the sync cursor and
+  merge redirects), `RecipeSync` (`GET /v1/recipes` paging; no / malformed cursor → full sync that drops recipes
+  the feed no longer lists), `SyncWorker` (hourly + "now"; also refreshes the inbox), `ImageCache` (blobs with the
+  token, forever; `recipe.images[0]` URLs without the token).
+- `ui/` – Compose screens; bottom tabs in `MainActivity` (Przepisy · Do decyzji · Udostępnienia), decision screen
+  per capture, recipe list / detail from the cache.
 - Seed assets (§10, do not rewrite): `app/src/main/assets/{extractor.js,Readability.js,stability-observer.js}`,
   fixtures in `app/src/androidTest/assets/fixtures/`, `tools/generate-extractor-fixtures.js`,
   `app/src/test/resources/expected-recipe/` (PoC merge output – starting point only), `recipe-photos/`, `poc-runs/`.

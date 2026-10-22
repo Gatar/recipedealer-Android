@@ -39,6 +39,13 @@ sealed interface ApiResult<out T> {
 
 fun <T> ApiResult<T>.valueOrNull(): T? = (this as? ApiResult.Ok)?.value
 
+/** A non-Ok result passed on as another result type (every variant but Ok is `ApiResult<Nothing>`). */
+@Suppress("UNCHECKED_CAST")
+fun <T> ApiResult<*>.failure(): ApiResult<T> {
+    check(this !is ApiResult.Ok) { "not a failure: $this" }
+    return this as ApiResult<T>
+}
+
 /** Error codes of `ApiResult.Failed.error`. */
 object ApiErrors {
     const val NOT_FOUND = "not_found"

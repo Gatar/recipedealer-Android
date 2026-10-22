@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Inbox
+import androidx.compose.material.icons.filled.Restaurant
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.Badge
 import androidx.compose.material3.BadgedBox
@@ -41,6 +42,8 @@ import com.gatar.recipedealer.ui.CaptureListScreen
 import com.gatar.recipedealer.ui.DecisionScreen
 import com.gatar.recipedealer.ui.InboxScreen
 import com.gatar.recipedealer.ui.ManualEntryScreen
+import com.gatar.recipedealer.ui.RecipeDetailScreen
+import com.gatar.recipedealer.ui.RecipeListScreen
 import com.gatar.recipedealer.ui.SettingsScreen
 import com.gatar.recipedealer.ui.theme.RecipeDealerTheme
 
@@ -100,6 +103,8 @@ class MainActivity : ComponentActivity() {
 }
 
 object Routes {
+    const val RECIPES = "recipes"
+    const val RECIPE = "recipe/{id}"
     const val LIST = "list"
     const val INBOX = "inbox"
     const val CAPTURE = "capture/{id}"
@@ -108,11 +113,13 @@ object Routes {
     const val MANUAL = "manual"
     fun capture(id: String) = "capture/$id"
     fun decision(id: String) = "decision/$id"
+    fun recipe(id: String) = "recipe/$id"
 }
 
 private data class Tab(val route: String, val label: Int, val icon: ImageVector)
 
 private val TABS = listOf(
+    Tab(Routes.RECIPES, R.string.list_title, Icons.Default.Restaurant),
     Tab(Routes.INBOX, R.string.tab_inbox, Icons.Default.Inbox),
     Tab(Routes.LIST, R.string.tab_captures, Icons.Default.Share),
 )
@@ -123,7 +130,10 @@ private fun AppNavHost(nav: NavHostController) {
     val current by nav.currentBackStackEntryAsState()
     val route = current?.destination?.route
     val inbox by container.inbox.items.collectAsStateWithLifecycle()
-    LaunchedEffect(Unit) { container.inbox.refresh() }
+    LaunchedEffect(Unit) {
+        container.inbox.refresh()
+        container.recipeSync.sync()
+    }
     Scaffold(
         bottomBar = {
             if (TABS.any { it.route == route }) {
@@ -150,7 +160,21 @@ private fun AppNavHost(nav: NavHostController) {
             }
         },
     ) { padding ->
-        NavHost(nav, startDestination = Routes.LIST, modifier = Modifier.padding(padding).consumeWindowInsets(padding)) {
+        NavHost(nav, startDestination = Routes.RECIPES, modifier = Modifier.padding(padding).consumeWindowInsets(padding)) {
+            composable(Routes.RECIPES) {
+                RecipeListScreen(
+                    onOpen = { nav.navigate(Routes.recipe(it)) },
+                    onSettings = { nav.navigate(Routes.SETTINGS) },
+                    onManual = { nav.navigate(Routes.MANUAL) },
+                )
+            }
+            composable(Routes.RECIPE) { back ->
+                RecipeDetailScreen(
+                    recipeId = back.arguments?.getString("id").orEmpty(),
+                    onBack = { nav.popBackStack() },
+                    onOpenRecipe = { nav.navigate(Routes.recipe(it)) { popUpTo(Routes.RECIPE) { inclusive = true } } },
+                )
+            }
             composable(Routes.LIST) {
                 CaptureListScreen(
                     onOpen = { nav.navigate(Routes.capture(it)) },
@@ -167,12 +191,16 @@ private fun AppNavHost(nav: NavHostController) {
                 )
             }
             composable(Routes.DECISION) { back ->
-                DecisionScreen(captureId = back.arguments?.getString("id").orEmpty(), onBack = { nav.popBackStack() })
+                DecisionScreen(
+                    captureId = back.arguments?.getString("id").orEmpty(),
+                    onBack = { nav.popBackStack() },
+                    onOpenRecipe = { nav.navigate(Routes.recipe(it)) },
+                )
             }
             composable(Routes.SETTINGS) { SettingsScreen(onBack = { nav.popBackStack() }) }
             composable(Routes.MANUAL) {
                 ManualEntryScreen(onBack = { nav.popBackStack() }, onSaved = { id ->
-                    nav.navigate(Routes.capture(id)) { popUpTo(Routes.LIST) }
+                    nav.navigate(Routes.capture(id)) { popUpTo(nav.graph.findStartDestination().id) }
                 })
             }
         }

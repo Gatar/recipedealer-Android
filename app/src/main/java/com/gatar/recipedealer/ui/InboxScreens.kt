@@ -133,8 +133,11 @@ fun DecisionScreen(captureId: String, onBack: () -> Unit, onOpenRecipe: ((String
         // after recipe_gone / already_resolved the inbox reloaded the capture
         view = (r as? ApiResult.Ok)?.value ?: container.inbox.items.value.firstOrNull { it.captureId == captureId }
             ?: container.store.get(captureId)?.let(::cachedView) ?: view
-        if (r is ApiResult.Ok) Notifications.cancel(context, captureId)
         busy = false
+        if (r is ApiResult.Ok) {
+            Notifications.cancel(context, captureId)
+            container.recipeSync.sync()
+        }
     }
     LaunchedEffect(captureId) { load() }
 

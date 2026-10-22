@@ -1,6 +1,5 @@
 package com.gatar.recipedealer.ui
 
-import android.graphics.BitmapFactory
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.heightIn
@@ -9,7 +8,6 @@ import androidx.compose.runtime.produceState
 import androidx.compose.runtime.saveable.Saver
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.ImageBitmap
-import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import com.gatar.recipedealer.Notifications
 import com.gatar.recipedealer.capture.RecipeDraft
@@ -61,6 +59,7 @@ import com.gatar.recipedealer.container
 import com.gatar.recipedealer.model.Capture
 import com.gatar.recipedealer.model.CaptureJson
 import com.gatar.recipedealer.model.Group
+import com.gatar.recipedealer.model.Recipe
 import com.gatar.recipedealer.model.SourceType
 import com.gatar.recipedealer.store.CaptureEntry
 import com.gatar.recipedealer.upload.LocalCaptureSender
@@ -202,18 +201,7 @@ private fun StatusBlock(entry: CaptureEntry) {
 fun RecipeView(c: Capture, filesDir: File? = null) {
     val r = c.recipe
     Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-        r.title?.let { Text(it, style = MaterialTheme.typography.headlineSmall) }
-        val meta = listOfNotNull(
-            r.servings?.text?.let { "Porcje: $it" },
-            r.times.prepMinutes?.let { "Przygotowanie: $it min" },
-            r.times.cookMinutes?.let { "Gotowanie: $it min" },
-            r.times.totalMinutes?.let { "Razem: $it min" },
-            r.language?.let { "Język: $it" },
-        )
-        if (meta.isNotEmpty()) Text(meta.joinToString(" · "), style = MaterialTheme.typography.bodySmall)
-        if (r.ingredientGroups.isNotEmpty()) Section("Składniki") { Groups(r.ingredientGroups, numbered = false) }
-        if (r.stepGroups.isNotEmpty()) Section("Przygotowanie") { Groups(r.stepGroups, numbered = true) }
-        if (r.notes.isNotEmpty()) Section("Wskazówki") { r.notes.forEach { Text("• $it") } }
+        RecipeContent(r)
         c.raw.text?.takeIf { !r.hasIngredients && !r.hasSteps }?.let { Section("Tekst") { Text(it) } }
         c.raw.ocr?.text?.takeIf { it.isNotBlank() }?.let { Section("Tekst z OCR") { Text(it, style = MaterialTheme.typography.bodySmall) } }
         c.raw.pdfText?.takeIf { it.isNotBlank() }?.let { Section("Tekst z PDF") { Text(it, style = MaterialTheme.typography.bodySmall) } }
@@ -229,18 +217,29 @@ fun RecipeView(c: Capture, filesDir: File? = null) {
     }
 }
 
+/** Title, servings / times, ingredient and step groups, notes: the capture preview and the recipe detail. */
+@Composable
+fun RecipeContent(r: Recipe, showTitle: Boolean = true) {
+    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+        if (showTitle) r.title?.let { Text(it, style = MaterialTheme.typography.headlineSmall) }
+        val meta = listOfNotNull(
+            r.servings?.text?.let { "Porcje: $it" },
+            r.times.prepMinutes?.let { "Przygotowanie: $it min" },
+            r.times.cookMinutes?.let { "Gotowanie: $it min" },
+            r.times.totalMinutes?.let { "Razem: $it min" },
+            r.language?.let { "Język: $it" },
+        )
+        if (meta.isNotEmpty()) Text(meta.joinToString(" · "), style = MaterialTheme.typography.bodySmall)
+        if (r.ingredientGroups.isNotEmpty()) Section("Składniki") { Groups(r.ingredientGroups, numbered = false) }
+        if (r.stepGroups.isNotEmpty()) Section("Przygotowanie") { Groups(r.stepGroups, numbered = true) }
+        if (r.notes.isNotEmpty()) Section("Wskazówki") { r.notes.forEach { Text("• $it") } }
+    }
+}
+
 @Composable
 private fun Thumbnail(file: File) {
     val bitmap by produceState<ImageBitmap?>(null, file) {
-        value = withContext(Dispatchers.IO) {
-            runCatching {
-                val o = BitmapFactory.Options().apply { inJustDecodeBounds = true }
-                BitmapFactory.decodeFile(file.path, o)
-                var s = 1
-                while (o.outWidth / (s * 2) >= 400) s *= 2
-                BitmapFactory.decodeFile(file.path, BitmapFactory.Options().apply { inSampleSize = s })?.asImageBitmap()
-            }.getOrNull()
-        }
+        value = withContext(Dispatchers.IO) { decodeSampled(file, 400) }
     }
     bitmap?.let { Image(it, null, Modifier.fillMaxWidth().heightIn(max = 360.dp), contentScale = ContentScale.Fit, alignment = Alignment.TopStart) }
 }
