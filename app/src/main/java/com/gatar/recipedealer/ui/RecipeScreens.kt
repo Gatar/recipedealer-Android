@@ -23,9 +23,14 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.Sort
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Restaurant
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -63,9 +68,12 @@ import com.gatar.recipedealer.R
 import com.gatar.recipedealer.api.ApiErrors
 import com.gatar.recipedealer.api.ApiResult
 import com.gatar.recipedealer.container
+import com.gatar.recipedealer.api.SearchHit
 import com.gatar.recipedealer.recipes.CachedRecipe
 import com.gatar.recipedealer.recipes.ImageCache
+import com.gatar.recipedealer.recipes.LocalSearch
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.File
@@ -92,11 +100,30 @@ fun RecipeListScreen(onOpen: (String) -> Unit, onSettings: () -> Unit, onManual:
         refreshing = false
     }
     val collator = remember { Collator.getInstance(Locale.forLanguageTag("pl")) }
-    val shown = remember(recipes, sort) {
+    val sorted = remember(recipes, sort) {
         when (sort) {
             RecipeSort.TITLE -> recipes.sortedWith(compareBy(collator) { it.title.orEmpty() })
             RecipeSort.UPDATED -> recipes.sortedByDescending { it.updatedAt }
         }
+    }
+    // Search: the server (diacritics, typos, ingredients); meanwhile and offline a local filter over the cache.
+    var query by rememberSaveable { mutableStateOf("") }
+    var hits by remember { mutableStateOf<List<SearchHit>?>(null) }
+    var searchNote by remember { mutableStateOf<String?>(null) }
+    LaunchedEffect(query) {
+        hits = null
+        searchNote = null
+        if (query.isBlank()) return@LaunchedEffect
+        delay(300)
+        val r = container.backend()?.search(query.trim()) ?: return@LaunchedEffect
+        if (r is ApiResult.Ok) hits = r.value else searchNote = context.getString(R.string.search_local)
+    }
+    val local = remember(recipes, query) { LocalSearch.filter(recipes, query) }
+    val byId = remember(recipes) { recipes.associateBy { it.recipeId } }
+    val shown: List<ListRow> = when {
+        query.isBlank() -> sorted.map(::ListRow)
+        hits != null -> hits!!.map { h -> ListRow(h, byId[h.recipeId]) }
+        else -> local.map(::ListRow)
     }
     Scaffold(
         topBar = {
@@ -115,17 +142,32 @@ fun RecipeListScreen(onOpen: (String) -> Unit, onSettings: () -> Unit, onManual:
     ) { padding ->
         PullToRefreshBox(refreshing, onRefresh = { refresh() }, Modifier.fillMaxSize().padding(padding)) {
             LazyColumn(Modifier.fillMaxSize()) {
+                item {
+                    OutlinedTextField(
+                        query, { query = it },
+                        Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp),
+                        placeholder = { Text(stringResource(R.string.search_hint)) },
+                        leadingIcon = { Icon(Icons.Default.Search, null) },
+                        trailingIcon = {
+                            if (query.isNotEmpty()) IconButton(onClick = { query = "" }) { Icon(Icons.Default.Close, stringResource(R.string.search_clear)) }
+                        },
+                        singleLine = true,
+                        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
+                    )
+                }
                 error?.let { item { Text(it, Modifier.padding(horizontal = 16.dp, vertical = 8.dp), color = MaterialTheme.colorScheme.error) } }
+                if (query.isNotBlank()) searchNote?.let {
+                    item { Text(it, Modifier.padding(horizontal = 16.dp), style = MaterialTheme.typography.bodySmall) }
+                }
                 if (shown.isEmpty()) {
                     item {
                         Box(Modifier.fillMaxWidth().padding(32.dp), contentAlignment = Alignment.Center) {
-                            Text(stringResource(R.string.recipes_empty), textAlign = TextAlign.Center)
+                            Text(stringResource(if (query.isBlank()) R.string.recipes_empty else R.string.search_empty), textAlign = TextAlign.Center)
                         }
                     }
                 }
                 items(shown, key = { it.recipeId }) { r ->
-                    RecipeRow(r.title, r.sourceSummary, r.needsReview, imageKey = r.thumbnailBlob ?: r.recipeId,
-                        thumbnail = { recipeImage(r, it) }) { onOpen(r.recipeId) }
+                    RecipeRow(r.title, r.subtitle, r.needsReview, r.imageKey, r.thumbnail) { onOpen(r.recipeId) }
                     HorizontalDivider()
                 }
             }
@@ -163,6 +205,23 @@ fun RecipeRow(
             }
         }
     }
+}
+
+/** A row of the recipe list: a cached recipe or a search hit (plus its cached recipe, if any). */
+private class ListRow(
+    val recipeId: String,
+    val title: String?,
+    val subtitle: String?,
+    val needsReview: Boolean,
+    val imageKey: Any,
+    val thumbnail: suspend (ImageCache) -> File?,
+) {
+    constructor(r: CachedRecipe) : this(r.recipeId, r.title, r.sourceSummary, r.needsReview,
+        r.thumbnailBlob ?: r.recipeId, { recipeImage(r, it) })
+
+    constructor(h: SearchHit, cached: CachedRecipe?) : this(h.recipeId, h.title ?: cached?.title, h.sourceSummary ?: cached?.sourceSummary,
+        cached?.needsReview == true, h.thumbnailBlob ?: h.recipeId,
+        { images -> h.thumbnailBlob?.let { images.blob(it) } ?: cached?.let { recipeImage(it, images) } })
 }
 
 /** The blob thumbnail, else the first `recipe.images` URL. */

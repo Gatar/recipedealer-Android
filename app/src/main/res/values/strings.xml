@@ -136,4 +136,8 @@
     <string name="recipe_deleted">Ten przepis został usunięty.</string>
     <string name="recipe_merged">Ten przepis połączono z innym.</string>
     <string name="recipe_open_merged">Otwórz połączony przepis</string>
+    <string name="search_hint">Szukaj (tytuł, składnik)</string>
+    <string name="search_clear">Wyczyść</string>
+    <string name="search_empty">Nic nie znaleziono.</string>
+    <string name="search_local">Bez połączenia – szukam tylko w przepisach zapisanych na telefonie.</string>
 </resources>
