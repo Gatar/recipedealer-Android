@@ -125,6 +125,11 @@ fun CaptureDetailScreen(
                 val c = entry.capture
                 if (c != null && editable) {
                     Button(onClick = { container.send(id); Notifications.cancel(context, id) }) { Text(stringResource(R.string.send)) }
+                    if (container.settings.current.hasBackend) {
+                        OutlinedButton(onClick = { container.sendAsNew(id); Notifications.cancel(context, id) }) {
+                            Text(stringResource(R.string.send_as_new))
+                        }
+                    }
                     OutlinedButton(onClick = { editing = RecipeDraft.from(c.recipe) }) { Text(stringResource(R.string.edit)) }
                 }
                 if (c != null) {

@@ -51,6 +51,19 @@ class Inbox(private val store: CaptureStore, private val backend: () -> BackendC
         return r
     }
 
+    /**
+     * "Wyślij jako nowy": NEW for every candidate without a stored decision. Returns the last CaptureView (usually
+     * `done`), or the first failure.
+     */
+    suspend fun resolveAllAsNew(view: CaptureView): ApiResult<CaptureView> {
+        var last: ApiResult<CaptureView> = ApiResult.Ok(view)
+        for (c in view.candidates.filter { it.resolution == null }) {
+            last = resolve(view.captureId, c.index, Resolution.new())
+            if (last !is ApiResult.Ok) return last
+        }
+        return last
+    }
+
     fun record(view: CaptureView) {
         recordLocal(view)
         _items.update { list ->

@@ -71,6 +71,12 @@ class AppContainer(val context: Context) {
     /** Queue a capture for sending (backend from the settings, else the local sender). */
     fun send(id: String) = UploadQueue.enqueue(context, id)
 
+    /** "Wyślij jako nowy": send, and decide NEW for every extracted recipe without asking. */
+    fun sendAsNew(id: String) {
+        store.updateState(id) { it.copy(asNew = true) }
+        send(id)
+    }
+
     /** Client for the backend in the settings; null without one (local mode). */
     fun backend(): BackendClient? = settings.current.takeIf { it.hasBackend }?.let { BackendClient(it.baseUrl, it.token) }
 }

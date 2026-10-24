@@ -34,6 +34,7 @@
     <string name="back">Wstecz</string>
     <string name="retry">Ponów</string>
     <string name="send">Wyślij</string>
+    <string name="send_as_new">Wyślij jako nowy</string>
     <string name="delete">Usuń</string>
     <string name="share_json">Udostępnij JSON</string>
     <string name="export_zip">Eksportuj (ZIP)</string>

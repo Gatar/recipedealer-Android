@@ -48,6 +48,8 @@ data class CaptureState(
     val backendRecipes: List<RecipeRef> = emptyList(),
     /** Extracted recipes waiting for the NEW / UPDATE decision (`needs_decision`). */
     val candidates: List<ExtractedCandidate> = emptyList(),
+    /** "Wyślij jako nowy": every extracted recipe becomes a new one, no decision asked. */
+    val asNew: Boolean = false,
 )
 
 data class CaptureEntry(val id: String, val capturedAt: String, val state: CaptureState, val capture: Capture?) {

@@ -13,6 +13,8 @@ import androidx.work.workDataOf
 import com.gatar.recipedealer.Notifications
 import com.gatar.recipedealer.api.ApiResult
 import com.gatar.recipedealer.api.CaptureStates
+import com.gatar.recipedealer.api.Resolution
+import com.gatar.recipedealer.recipes.SyncWorker
 import com.gatar.recipedealer.container
 import com.gatar.recipedealer.inbox.Inbox
 import com.gatar.recipedealer.settings.AppSettings
@@ -78,7 +80,11 @@ class UploadWorker(context: Context, params: WorkerParameters) : CoroutineWorker
         if (entry.state.status == CaptureStatus.SENT) return Result.success()
         return when (val r = CaptureUploadRunner(c.store).upload(id, UploadQueue.senderFor(c.settings.current))) {
             is SendResult.Accepted -> {
-                if (r.destination != LocalCaptureSender.DESTINATION) UploadQueue.scheduleStatus(applicationContext, id)
+                if (r.destination != LocalCaptureSender.DESTINATION) {
+                    // the server stores a decision sent before processing ends: the usual single recipe needs nothing more
+                    if (entry.state.asNew) c.backend()?.resolve(id, 0, Resolution.new())
+                    UploadQueue.scheduleStatus(applicationContext, id)
+                }
                 Result.success()
             }
             is SendResult.Retry -> if (runAttemptCount + 1 >= UploadQueue.MAX_ATTEMPTS) {
@@ -113,6 +119,16 @@ class StatusWorker(context: Context, params: WorkerParameters) : CoroutineWorker
         }
         val pending = view.status == CaptureStates.ACCEPTED || view.status == CaptureStates.PROCESSING
         if (pending) return if (runAttemptCount < 8) Result.retry() else Result.success()
+        if (view.status == CaptureStates.NEEDS_DECISION && c.store.get(id)?.state?.asNew == true) {
+            // "Wyślij jako nowy": the rest of the candidates (a page with several recipes) without asking
+            val r = c.inbox.resolveAllAsNew(view)
+            if (r is ApiResult.Ok) {
+                SyncWorker.syncNow(applicationContext)
+                return Result.success()
+            }
+            c.inbox.load(id)
+        }
+        if (view.status == CaptureStates.DONE && c.store.get(id)?.state?.asNew == true) SyncWorker.syncNow(applicationContext)
         if (view.status != before && view.status in Inbox.WAITING) {
             c.store.get(id)?.let { Notifications.decisionNeeded(applicationContext, it.id, it.title ?: view.title, view) }
         }

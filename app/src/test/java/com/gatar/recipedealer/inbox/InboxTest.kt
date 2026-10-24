@@ -103,6 +103,31 @@ class InboxTest {
         assertEquals(CaptureStates.DONE, store.get(cid)!!.state.backendStatus)
     }
 
+    @Test fun resolveAllAsNewSkipsStoredDecisions() = runTest {
+        val two = """{"captureId":"$cid","status":"needs_decision","candidates":[
+            {"index":0,"title":"Gofry","resolution":"NEW"},{"index":1,"title":"Wafle"},{"index":2,"title":"Racuchy"}]}"""
+        respond(200, """{"captureId":"$cid","status":"needs_decision","candidates":[{"index":0,"resolution":"NEW"},{"index":1,"resolution":"NEW"},{"index":2}]}""")
+        respond(200, done)
+        val view = com.gatar.recipedealer.api.ApiJson.decodeFromString(com.gatar.recipedealer.api.CaptureView.serializer(), two)
+        val r = inbox.resolveAllAsNew(view)
+        assertEquals(CaptureStates.DONE, (r as ApiResult.Ok).value.status)
+        listOf(1, 2).forEach { i ->
+            server.takeRequest().let {
+                assertEquals("/v1/captures/$cid/extracted/$i/resolution", it.path)
+                assertEquals("""{"action":"NEW"}""", it.body.readUtf8())
+            }
+        }
+        assertEquals(2, server.requestCount)
+    }
+
+    @Test fun resolveAllAsNewStopsOnFailure() = runTest {
+        respond(503, "")
+        val view = com.gatar.recipedealer.api.CaptureView(cid, CaptureStates.NEEDS_DECISION,
+            candidates = listOf(com.gatar.recipedealer.api.ExtractedCandidate(0), com.gatar.recipedealer.api.ExtractedCandidate(1)))
+        assertTrue(inbox.resolveAllAsNew(view) is ApiResult.Retry)
+        assertEquals(1, server.requestCount)
+    }
+
     @Test fun noBackend() = runTest {
         val local = Inbox(store) { null }
         assertEquals(Inbox.NO_BACKEND, local.refresh())
