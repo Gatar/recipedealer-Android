@@ -14,6 +14,8 @@ data class AppSettings(
     val backgroundMode: Boolean = true,
     /** Send right after extraction instead of waiting for the user in the preview. */
     val autoSend: Boolean = false,
+    /** Recipe detail as the kitchen-tablet layout (title + photo side by side, sections on ecru cards). */
+    val tabletView: Boolean = false,
 ) {
     val hasBackend get() = baseUrl.isNotBlank()
 }
@@ -32,6 +34,7 @@ class SettingsRepository(context: Context) {
             .putString(TOKEN, s.token.trim())
             .putBoolean(BACKGROUND, s.backgroundMode)
             .putBoolean(AUTO_SEND, s.autoSend)
+            .putBoolean(TABLET_VIEW, s.tabletView)
             .apply()
         _settings.value = read()
     }
@@ -41,6 +44,7 @@ class SettingsRepository(context: Context) {
         token = prefs.getString(TOKEN, "").orEmpty(),
         backgroundMode = prefs.getBoolean(BACKGROUND, true),
         autoSend = prefs.getBoolean(AUTO_SEND, false),
+        tabletView = prefs.getBoolean(TABLET_VIEW, false),
     )
 
     private companion object {
@@ -48,5 +52,6 @@ class SettingsRepository(context: Context) {
         const val TOKEN = "token"
         const val BACKGROUND = "backgroundMode"
         const val AUTO_SEND = "autoSend"
+        const val TABLET_VIEW = "tabletView"
     }
 }

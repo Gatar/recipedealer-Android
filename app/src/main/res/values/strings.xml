@@ -66,6 +66,10 @@
     <string name="settings_background_desc">Po udostępnieniu zostajesz w aplikacji źródłowej; wynik przyjdzie jako powiadomienie.</string>
     <string name="settings_autosend">Wysyłaj automatycznie</string>
     <string name="settings_autosend_desc">Wysyła zaraz po odczytaniu, bez przeglądania.</string>
+    <string name="settings_tablet">Widok tabletu</string>
+    <string name="settings_tablet_desc">Przepis: tytuł i zdjęcie obok siebie, pod spodem składniki i kroki na dużych kartach.</string>
+    <string name="view_tablet">Widok tabletu</string>
+    <string name="view_phone">Widok telefonu</string>
     <string name="settings_https_only">Adres musi zaczynać się od https://</string>
     <string name="health_ok">Połączenie działa</string>
     <string name="health_unauthorized">Serwer odrzucił token (401/403)</string>

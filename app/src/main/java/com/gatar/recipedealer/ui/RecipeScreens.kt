@@ -25,6 +25,10 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.Sort
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.material.icons.filled.PhoneAndroid
+import androidx.compose.material.icons.filled.TabletAndroid
+import androidx.compose.ui.graphics.Color
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Restaurant
 import androidx.compose.material.icons.filled.Search
@@ -226,11 +230,11 @@ private class ListRow(
 }
 
 /** The blob thumbnail, else the first `recipe.images` URL. */
-private suspend fun recipeImage(r: CachedRecipe, images: ImageCache): File? =
+internal suspend fun recipeImage(r: CachedRecipe, images: ImageCache): File? =
     r.thumbnailBlob?.let { images.blob(it) } ?: r.content().images.firstOrNull()?.let { images.url(it) }
 
 @Composable
-private fun cachedImage(key: Any, maxWidth: Int, load: suspend (ImageCache) -> File?): ImageBitmap? {
+internal fun cachedImage(key: Any, maxWidth: Int, load: suspend (ImageCache) -> File?): ImageBitmap? {
     val images = LocalContext.current.container.images
     val bitmap by produceState<ImageBitmap?>(null, key) {
         value = load(images)?.let { f -> withContext(Dispatchers.IO) { decodeSampled(f, maxWidth) } }
@@ -266,6 +270,8 @@ fun RecipeDetailScreen(
     val uri = LocalUriHandler.current
     var note by remember { mutableStateOf<String?>(null) }
     var mergedInto by remember { mutableStateOf(container.recipes.redirect(recipeId)) }
+    val settings by container.settings.settings.collectAsStateWithLifecycle()
+    val tablet = settings.tabletView
     LaunchedEffect(recipeId) {
         val client = container.backend() ?: return@LaunchedEffect
         when (val r = client.recipe(recipeId, container.recipes.get(recipeId)?.headRevisionId?.let(::etagOf))) {
@@ -288,27 +294,45 @@ fun RecipeDetailScreen(
                 navigationIcon = {
                     IconButton(onClick = onBack) { Icon(Icons.AutoMirrored.Default.ArrowBack, stringResource(R.string.back)) }
                 },
-                actions = { cached?.let { actions(it) } },
+                actions = {
+                    // the same switch as in the settings, at hand in the kitchen
+                    IconButton(onClick = { container.settings.update { it.copy(tabletView = !it.tabletView) } }) {
+                        if (tablet) Icon(Icons.Default.PhoneAndroid, stringResource(R.string.view_phone))
+                        else Icon(Icons.Default.TabletAndroid, stringResource(R.string.view_tablet))
+                    }
+                    cached?.let { actions(it) }
+                },
             )
         },
+        containerColor = if (tablet) Color.White else MaterialTheme.colorScheme.background,
     ) { padding ->
-        Column(
-            Modifier.fillMaxSize().padding(padding).verticalScroll(rememberScrollState()).padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp),
-        ) {
+        @Composable
+        fun ColumnScope.status() {
             note?.let { Text(it, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant) }
             mergedInto?.let { target ->
                 TextButton(onClick = { onOpenRecipe(target) }) { Text(stringResource(R.string.recipe_open_merged)) }
             }
+            if (cached == null && note == null && mergedInto == null) Text(stringResource(R.string.loading))
+            if (cached?.needsReview == true) Banner(stringResource(R.string.recipe_needs_review))
+            cached?.lock?.lockedBy?.let { Banner(stringResource(R.string.edit_locked_by, it)) }
+        }
+        if (tablet && cached != null) {
+            val recipe = remember(cached.recipe) { cached.content() }
+            Box(Modifier.fillMaxSize().padding(padding)) { TabletRecipeView(cached, recipe) { status() } }
+            return@Scaffold
+        }
+        Column(
+            Modifier.fillMaxSize().padding(padding).verticalScroll(rememberScrollState()).padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(12.dp),
+        ) {
             if (cached == null) {
-                if (note == null && mergedInto == null) Text(stringResource(R.string.loading))
+                status()
                 return@Column
             }
+            status()
             cachedImage(cached.thumbnailBlob ?: cached.recipeId, 1080) { recipeImage(cached, it) }?.let {
                 Image(it, null, Modifier.fillMaxWidth().heightIn(max = 280.dp).clip(RoundedCornerShape(12.dp)), contentScale = ContentScale.Crop)
             }
-            if (cached.needsReview) Banner(stringResource(R.string.recipe_needs_review))
-            cached.lock?.lockedBy?.let { Banner(stringResource(R.string.edit_locked_by, it)) }
             val recipe = remember(cached.recipe) { cached.content() }
             Text(cached.title ?: stringResource(R.string.untitled), style = MaterialTheme.typography.headlineSmall)
             RecipeContent(recipe, showTitle = false)

@@ -54,13 +54,14 @@ fun SettingsScreen(onBack: () -> Unit) {
     var token by remember { mutableStateOf(initial.token) }
     var background by remember { mutableStateOf(initial.backgroundMode) }
     var autoSend by remember { mutableStateOf(initial.autoSend) }
+    var tabletView by remember { mutableStateOf(initial.tabletView) }
     var health by remember { mutableStateOf<String?>(null) }
     val scope = rememberCoroutineScope()
     val urlValid = url.isBlank() || isAllowedUrl(url.trim())
 
     fun save() {
         val backendChanged = url.trim().trimEnd('/') != repo.current.baseUrl || token.trim() != repo.current.token
-        repo.update { it.copy(baseUrl = url, token = token, backgroundMode = background, autoSend = autoSend) }
+        repo.update { it.copy(baseUrl = url, token = token, backgroundMode = background, autoSend = autoSend, tabletView = tabletView) }
         if (backendChanged) UploadQueue.resume(context, includeAuthFailures = true)
         Toast.makeText(context, R.string.settings_saved, Toast.LENGTH_SHORT).show()
     }
@@ -118,6 +119,7 @@ fun SettingsScreen(onBack: () -> Unit) {
             HorizontalDivider()
             SwitchRow(stringResource(R.string.settings_background), stringResource(R.string.settings_background_desc), background) { background = it }
             SwitchRow(stringResource(R.string.settings_autosend), stringResource(R.string.settings_autosend_desc), autoSend) { autoSend = it }
+            SwitchRow(stringResource(R.string.settings_tablet), stringResource(R.string.settings_tablet_desc), tabletView) { tabletView = it }
             Button(onClick = { save(); onBack() }, enabled = urlValid, modifier = Modifier.fillMaxWidth()) {
                 Text(stringResource(R.string.settings_save))
             }
