@@ -43,6 +43,23 @@ class RecipeEditsTest {
         assertEquals(true, RecipeDraft.from(Recipe()).sameContentAs(RecipeDraft()))
     }
 
+    @Test fun imageUrlReplacesTheMainPhotoOnly() {
+        val r = recipe.copy(images = listOf("https://e/a.jpg", "https://e/b.jpg"))
+        val d = RecipeDraft.from(r)
+        assertEquals("https://e/a.jpg", d.imageUrl)
+        assertEquals(listOf("https://e/new.jpg", "https://e/b.jpg"), d.copy(imageUrl = " https://e/new.jpg ").toRecipe(r).images)
+        assertEquals(listOf("https://e/b.jpg"), d.copy(imageUrl = "").toRecipe(r).images)
+        assertEquals(true, d.copy(imageUrl = "https://e/a.jpg  ").sameContentAs(d))
+        assertEquals(false, d.copy(imageUrl = "https://e/new.jpg").sameContentAs(d))
+        val c = Capture(captureId = "3f6c1a52-8a0e-4c5e-9a43-2a1f0d6b7c11", capturedAt = "2026-10-11T10:00:00Z",
+            client = client, share = ShareInfo(), source = Source(SourceType.WEB, "https://e/x"), recipe = r,
+            provenance = mapOf("images" to Stage.PAGE))
+        val edited = RecipeEdits.applyEdit(c, d.copy(imageUrl = "https://e/new.jpg").toRecipe(r))
+        assertEquals(Stage.USER, edited.provenance["images"])
+        assertEquals(true, com.gatar.recipedealer.ui.isImageUrl("https://e/x.jpg"))
+        assertEquals(false, com.gatar.recipedealer.ui.isImageUrl("e/x.jpg"))
+    }
+
     @Test fun anyTextEditIsAChange() {
         val d = RecipeDraft.from(recipe)
         val g = d.ingredientGroups.single()

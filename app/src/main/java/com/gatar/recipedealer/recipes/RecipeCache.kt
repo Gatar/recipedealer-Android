@@ -11,6 +11,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.contentOrNull
@@ -40,6 +41,11 @@ data class CachedRecipe(
     val detailEtag: String? get() = detailRevisionId?.takeIf { it == headRevisionId }?.let(::etagOf)
 
     val title: String? get() = (recipe["title"] as? JsonPrimitive)?.contentOrNull?.takeIf { it.isNotBlank() }
+    /** `images[0]`: the page's photo or one the user set in the editor. */
+    val imageUrl: String? get() = ((recipe["images"] as? JsonArray)?.firstOrNull() as? JsonPrimitive)?.contentOrNull
+        ?.takeIf { it.isNotBlank() }
+    /** Changes whenever the shown photo changes (bitmap cache key). */
+    val imageKey: String get() = imageUrl ?: thumbnailBlob ?: recipeId
     fun content(): Recipe = RecipeJson.decode(recipe)
 }
 

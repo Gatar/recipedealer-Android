@@ -222,16 +222,19 @@ private class ListRow(
     val thumbnail: suspend (ImageCache) -> File?,
 ) {
     constructor(r: CachedRecipe) : this(r.recipeId, r.title, r.sourceSummary, r.needsReview,
-        r.thumbnailBlob ?: r.recipeId, { recipeImage(r, it) })
+        r.imageKey, { recipeImage(r, it) })
 
     constructor(h: SearchHit, cached: CachedRecipe?) : this(h.recipeId, h.title ?: cached?.title, h.sourceSummary ?: cached?.sourceSummary,
-        cached?.needsReview == true, h.thumbnailBlob ?: h.recipeId,
-        { images -> h.thumbnailBlob?.let { images.blob(it) } ?: cached?.let { recipeImage(it, images) } })
+        cached?.needsReview == true, cached?.imageKey ?: h.thumbnailBlob ?: h.recipeId,
+        { images -> cached?.let { recipeImage(it, images) } ?: h.thumbnailBlob?.let { images.blob(it) } })
 }
 
-/** The blob thumbnail, else the first `recipe.images` URL. */
+/**
+ * `images[0]` (the page's photo, or one the user set in the editor), else the blob thumbnail (photo / PDF captures
+ * have no image URL). The URL goes first: the server does not change `thumbnailBlob` when the user edits the photo.
+ */
 internal suspend fun recipeImage(r: CachedRecipe, images: ImageCache): File? =
-    r.thumbnailBlob?.let { images.blob(it) } ?: r.content().images.firstOrNull()?.let { images.url(it) }
+    r.imageUrl?.let { images.url(it) } ?: r.thumbnailBlob?.let { images.blob(it) }
 
 @Composable
 internal fun cachedImage(key: Any, maxWidth: Int, load: suspend (ImageCache) -> File?): ImageBitmap? {
@@ -336,7 +339,7 @@ fun RecipeDetailScreen(
                 return@Column
             }
             status()
-            cachedImage(cached.thumbnailBlob ?: cached.recipeId, 1080) { recipeImage(cached, it) }?.let {
+            cachedImage(cached.imageKey, 1080) { recipeImage(cached, it) }?.let {
                 Image(it, null, Modifier.fillMaxWidth().heightIn(max = 280.dp).clip(RoundedCornerShape(12.dp)), contentScale = ContentScale.Crop)
             }
             val recipe = remember(cached.recipe) { cached.content() }

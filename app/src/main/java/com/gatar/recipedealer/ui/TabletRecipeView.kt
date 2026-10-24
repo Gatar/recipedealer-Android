@@ -76,7 +76,7 @@ fun TabletRecipeView(cached: CachedRecipe, recipe: Recipe, banners: @Composable 
                     else MaterialTheme.typography.bodySmall, color = InkMuted) }
             }
             Card(Modifier.weight(2f)) {
-                val image = cachedImage(cached.thumbnailBlob ?: cached.recipeId, 1600) { recipeImage(cached, it) }
+                val image = cachedImage(cached.imageKey, 1600) { recipeImage(cached, it) }
                 val photo = Modifier.fillMaxWidth().aspectRatio(3f / 2f).clip(RoundedCornerShape(12.dp))
                 if (image != null) Image(image, null, photo, contentScale = ContentScale.Crop)
                 else Box(photo.background(Color.White.copy(alpha = 0.6f)), contentAlignment = Alignment.Center) {

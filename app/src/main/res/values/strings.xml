@@ -88,6 +88,8 @@
     <string name="field_prep">Przyg.</string>
     <string name="field_cook">Gotow.</string>
     <string name="field_total">Razem</string>
+    <string name="field_image_url">Zdjęcie – adres (https://…)</string>
+    <string name="field_image_url_invalid">Adres zdjęcia musi zaczynać się od https:// lub http://</string>
     <string name="field_group_name">Nazwa grupy (opcjonalnie)</string>
     <string name="field_ingredients_hint">Składniki – jeden w linii</string>
     <string name="field_steps_hint">Kroki – jeden w linii</string>

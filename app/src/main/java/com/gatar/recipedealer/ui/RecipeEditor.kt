@@ -28,6 +28,18 @@ import com.gatar.recipedealer.R
 import com.gatar.recipedealer.capture.GroupDraft
 import com.gatar.recipedealer.capture.RecipeDraft
 import com.gatar.recipedealer.model.CaptureJson
+import com.gatar.recipedealer.container
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.produceState
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.withContext
 
 /** Keeps the form across configuration changes and process death. */
 val RecipeDraftSaver = Saver<RecipeDraft, String>(
@@ -56,12 +68,38 @@ fun RecipeEditor(draft: RecipeDraft, onChange: (RecipeDraft) -> Unit) {
                 label = { Text(stringResource(R.string.field_total)) }, suffix = { Text("min") }, singleLine = true,
                 keyboardOptions = number)
         }
+        ImageUrlField(draft.imageUrl) { onChange(draft.copy(imageUrl = it)) }
         GroupsEditor(stringResource(R.string.section_ingredients), stringResource(R.string.field_ingredients_hint),
             draft.ingredientGroups) { onChange(draft.copy(ingredientGroups = it)) }
         GroupsEditor(stringResource(R.string.section_steps), stringResource(R.string.field_steps_hint),
             draft.stepGroups) { onChange(draft.copy(stepGroups = it)) }
         OutlinedTextField(draft.notes, { onChange(draft.copy(notes = it)) }, Modifier.fillMaxWidth().heightIn(min = 96.dp),
             label = { Text(stringResource(R.string.section_notes)) }, keyboardOptions = sentences)
+    }
+}
+
+/** `https://…` or `http://…` (blank = no photo). */
+fun isImageUrl(s: String) = s.isBlank() || Regex("^https?://\\S+$").matches(s.trim())
+
+/** The main photo as a URL, with a preview once the typing stops. */
+@Composable
+private fun ImageUrlField(url: String, onChange: (String) -> Unit) {
+    val valid = isImageUrl(url)
+    OutlinedTextField(url, onChange, Modifier.fillMaxWidth(), singleLine = true,
+        label = { Text(stringResource(R.string.field_image_url)) },
+        isError = !valid,
+        supportingText = { if (!valid) Text(stringResource(R.string.field_image_url_invalid)) },
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Uri))
+    val images = LocalContext.current.container.images
+    val preview by produceState<ImageBitmap?>(null, url) {
+        value = null
+        if (url.isBlank() || !valid) return@produceState
+        delay(600)
+        value = images.url(url.trim())?.let { f -> withContext(Dispatchers.IO) { decodeSampled(f, 600) } }
+    }
+    preview?.let {
+        Image(it, null, Modifier.fillMaxWidth().heightIn(max = 200.dp).clip(RoundedCornerShape(12.dp)),
+            contentScale = ContentScale.Crop)
     }
 }
 

@@ -29,10 +29,13 @@ data class RecipeDraft(
     val ingredientGroups: List<GroupDraft> = listOf(GroupDraft()),
     val stepGroups: List<GroupDraft> = listOf(GroupDraft()),
     val notes: String = "",
+    /** The main photo (`images[0]`) as a URL; blank removes it. */
+    val imageUrl: String = "",
 ) {
-    /** The edited recipe; [base] keeps what the form does not show (images, language). */
+    /** The edited recipe; [base] keeps what the form does not show (further images, language). */
     fun toRecipe(base: Recipe = Recipe()): Recipe {
         val recipe = base.copy(
+            images = listOfNotNull(imageUrl.trim().ifEmpty { null }) + base.images.drop(1),
             title = title.trim().ifEmpty { null },
             servings = servings.trim().ifEmpty { null }?.let { Servings(it, ExtractorMerge.servingsCount(it)) },
             times = Times(minutes(prepMinutes), minutes(cookMinutes), minutes(totalMinutes)),
@@ -59,6 +62,7 @@ data class RecipeDraft(
         ingredientGroups = normalizedGroups(ingredientGroups),
         stepGroups = normalizedGroups(stepGroups),
         notes = text(notes),
+        imageUrl = imageUrl.trim(),
     )
 
     companion object {
@@ -71,6 +75,7 @@ data class RecipeDraft(
             ingredientGroups = r.ingredientGroups.map { GroupDraft(it.name.orEmpty(), it.items.joinToString("\n")) }.ifEmpty { listOf(GroupDraft()) },
             stepGroups = r.stepGroups.map { GroupDraft(it.name.orEmpty(), it.items.joinToString("\n")) }.ifEmpty { listOf(GroupDraft()) },
             notes = r.notes.joinToString("\n"),
+            imageUrl = r.images.firstOrNull().orEmpty(),
         )
 
         private fun lines(s: String) = s.lines().map(String::trim).filter(String::isNotEmpty)
@@ -94,6 +99,7 @@ object RecipeEdits {
         "ingredients" to { r -> r.ingredientGroups },
         "steps" to { r -> r.stepGroups },
         "notes" to { r -> r.notes },
+        "images" to { r -> r.images },
     )
 
     /** The user corrected the recipe in the preview: raw material stays unchanged, edited fields get provenance `user`. */

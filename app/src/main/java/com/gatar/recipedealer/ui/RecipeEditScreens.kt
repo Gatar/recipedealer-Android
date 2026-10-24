@@ -150,7 +150,7 @@ fun RecipeEditScreen(onClose: () -> Unit, onDeleted: () -> Unit, vm: RecipeEditV
             // read and found fine: the same save, but it says what it means (the server then clears needsReview)
             val unchanged = state.initial?.let { d.sameContentAs(RecipeDraft.from(it)) } == true
             FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                Button(enabled = !busy && state.phase == Phase.EDITING, onClick = {
+                Button(enabled = !busy && state.phase == Phase.EDITING && isImageUrl(d.imageUrl), onClick = {
                     scope.launch {
                         busy = true
                         val r = session?.save(d.toRecipe(state.initial ?: Recipe()))
