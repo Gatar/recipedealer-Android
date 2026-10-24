@@ -61,7 +61,11 @@ object ExtractorMerge {
             }
             return null
         }
+        // no stage found a recipe heading (e.g. a blog post without markup): the article's title is still the best name
+        // – unless the page is a bot challenge ("Just a moment...")
         val title = pick("title") { it.title }
+            ?: output["heuristic"].obj()?.str("articleTitle")?.takeIf { it.isNotBlank() && output.str("botChallenge") == null }
+                ?.also { prov["title"] = Stage.PAGE }
         val ingredients = pickGroups("ingredients", candidates, prov) { it.ingredients }
         val steps = pickGroups("steps", candidates, prov) { it.steps }
         val servings = pick("servings") { it.servings }
