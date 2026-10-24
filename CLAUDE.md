@@ -110,6 +110,14 @@ candidate, "Nowy przepis" or "Aktualizuj: <match>" (`GET /v1/recipes/candidates`
 - ETag is built from `headRevisionId` (`etagOf`), never taken from the header: Caddy's `encode gzip` rewrites it to
   `"<id>-gzip"` and the backend then answers 412 to `If-Match`.
 
+## Waiting for backend changes (postponed, backend not to be touched for now – user, 2026-10-24)
+- Photo from a file on the device: decided (a) – a backend upload endpoint (e.g. `POST /v1/blobs` → blob id the
+  recipe then references). Rejected (b): a `data:` URI JPEG inside `recipe.images` (bloats every sync).
+  Until then the photo can only be replaced by URL (editor field `imageUrl` = `images[0]`).
+- "Zatwierdzam bez zmian" clearing `needsReview` (see above).
+- Token by logging in: only admin `POST /v1/admin/enrollments` exists (HTTP Basic admin); a nicer per-user
+  registration in the backend is preferred. The token stays entered by hand.
+
 ## Preview, editing, manual entry (§6.7, D5)
 - `capture/RecipeEdits.kt`: `RecipeDraft` (form strings ↔ Recipe, items one per line), `applyEdit` (changed fields →
   provenance `user`, raw untouched, completeness recomputed), `manualCapture` (`MANUAL`, provenance `manual`).
