@@ -26,6 +26,7 @@ import androidx.compose.material.icons.automirrored.filled.Sort
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.material.icons.filled.OpenInBrowser
 import androidx.compose.material.icons.filled.PhoneAndroid
 import androidx.compose.material.icons.filled.TabletAndroid
 import androidx.compose.ui.graphics.Color
@@ -295,6 +296,12 @@ fun RecipeDetailScreen(
                     IconButton(onClick = onBack) { Icon(Icons.AutoMirrored.Default.ArrowBack, stringResource(R.string.back)) }
                 },
                 actions = {
+                    // only recipes that came from a web page have urls (text / photos / PDF / manual have none)
+                    cached?.urls?.firstOrNull { it.startsWith("http") }?.let { url ->
+                        IconButton(onClick = { runCatching { uri.openUri(url) } }) {
+                            Icon(Icons.Default.OpenInBrowser, stringResource(R.string.open_in_browser))
+                        }
+                    }
                     // the same switch as in the settings, at hand in the kitchen
                     IconButton(onClick = { container.settings.update { it.copy(tabletView = !it.tabletView) } }) {
                         if (tablet) Icon(Icons.Default.PhoneAndroid, stringResource(R.string.view_phone))

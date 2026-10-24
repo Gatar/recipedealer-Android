@@ -147,6 +147,8 @@ fun RecipeEditScreen(onClose: () -> Unit, onDeleted: () -> Unit, vm: RecipeEditV
             }
             val d = draft ?: return@Column
             RecipeEditor(d) { draft = it }
+            // read and found fine: the same save, but it says what it means (the server then clears needsReview)
+            val unchanged = state.initial?.let { d.sameContentAs(RecipeDraft.from(it)) } == true
             FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 Button(enabled = !busy && state.phase == Phase.EDITING, onClick = {
                     scope.launch {
@@ -158,7 +160,7 @@ fun RecipeEditScreen(onClose: () -> Unit, onDeleted: () -> Unit, vm: RecipeEditV
                             onClose()
                         }
                     }
-                }) { Text(stringResource(R.string.save_recipe)) }
+                }) { Text(stringResource(if (unchanged) R.string.approve_unchanged else R.string.save_recipe)) }
                 OutlinedButton(onClick = ::close) { Text(stringResource(R.string.cancel)) }
                 TextButton(enabled = !busy && state.phase == Phase.EDITING, onClick = { confirmDelete = true }) {
                     Text(stringResource(R.string.recipe_delete), color = MaterialTheme.colorScheme.error)

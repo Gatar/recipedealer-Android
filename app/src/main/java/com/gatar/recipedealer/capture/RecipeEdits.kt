@@ -43,6 +43,24 @@ data class RecipeDraft(
         return recipe.copy(language = LanguageGuess.of(recipe) ?: base.language)
     }
 
+    /**
+     * Same content as [other] for the user: whitespace around lines, blank lines and empty groups do not count
+     * (they disappear in [toRecipe] anyway). Compared on the form, not on the recipe: [toRecipe] re-guesses the
+     * language and the servings count, which would look like a change.
+     */
+    fun sameContentAs(other: RecipeDraft) = normalized() == other.normalized()
+
+    private fun normalized() = RecipeDraft(
+        title = text(title),
+        servings = text(servings),
+        prepMinutes = minutes(prepMinutes)?.toString().orEmpty(),
+        cookMinutes = minutes(cookMinutes)?.toString().orEmpty(),
+        totalMinutes = minutes(totalMinutes)?.toString().orEmpty(),
+        ingredientGroups = normalizedGroups(ingredientGroups),
+        stepGroups = normalizedGroups(stepGroups),
+        notes = text(notes),
+    )
+
     companion object {
         fun from(r: Recipe) = RecipeDraft(
             title = r.title.orEmpty(),
@@ -56,6 +74,9 @@ data class RecipeDraft(
         )
 
         private fun lines(s: String) = s.lines().map(String::trim).filter(String::isNotEmpty)
+        private fun text(s: String) = lines(s).joinToString("\n")
+        private fun normalizedGroups(gs: List<GroupDraft>) =
+            gs.map { GroupDraft(it.name.trim().trimEnd(':').trim(), text(it.text)) }.filter { it.text.isNotEmpty() }
         private fun minutes(s: String) = s.trim().toIntOrNull()?.takeIf { it > 0 }
         private fun groups(gs: List<GroupDraft>) =
             gs.map { Group(it.name.trim().trimEnd(':').trim().ifEmpty { null }, lines(it.text)) }.filter { it.items.isNotEmpty() }

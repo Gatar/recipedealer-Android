@@ -146,6 +146,8 @@
     <string name="edit_lock_lost">Utracono blokadę edycji – zapis się nie uda. Skopiuj swój tekst, zanim zamkniesz edytor.</string>
     <string name="edit_head_changed">Ktoś zmienił ten przepis w międzyczasie. Twój tekst jest nadal w formularzu – skopiuj go, potem wczytaj aktualną wersję.</string>
     <string name="edit_reload">Wczytaj aktualną wersję</string>
+    <string name="approve_unchanged">Zatwierdzam bez zmian</string>
+    <string name="open_in_browser">Otwórz w przeglądarce</string>
     <string name="recipe_delete">Usuń przepis</string>
     <string name="recipe_delete_confirm">Usunąć ten przepis ze wszystkich telefonów?</string>
     <string name="revisions_title">Historia</string>

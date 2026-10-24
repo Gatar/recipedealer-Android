@@ -29,6 +29,30 @@ class RecipeEditsTest {
         assertEquals(recipe, RecipeDraft.from(recipe).toRecipe(recipe))
     }
 
+    @Test fun whitespaceIsNotAChange() {
+        val d = RecipeDraft.from(recipe)
+        val g = d.ingredientGroups.single()
+        val spaced = d.copy(
+            title = "Szarlotka ",
+            servings = " 12 porcji",
+            notes = "Uwaga  \n\n",
+            ingredientGroups = listOf(g.copy(name = "Ciasto:", text = "320 g mąki \n  1 jajko\n"), GroupDraft()),
+            stepGroups = d.stepGroups + GroupDraft("  ", "  "),
+        )
+        assertEquals(true, spaced.sameContentAs(d))
+        assertEquals(true, RecipeDraft.from(Recipe()).sameContentAs(RecipeDraft()))
+    }
+
+    @Test fun anyTextEditIsAChange() {
+        val d = RecipeDraft.from(recipe)
+        val g = d.ingredientGroups.single()
+        assertEquals(false, d.copy(title = "Szarlotka babci").sameContentAs(d))
+        assertEquals(false, d.copy(ingredientGroups = listOf(g.copy(text = "330 g mąki\n1 jajko"))).sameContentAs(d))
+        assertEquals(false, d.copy(ingredientGroups = listOf(g.copy(name = "Kruche"))).sameContentAs(d))
+        assertEquals(false, d.copy(cookMinutes = "55").sameContentAs(d))
+        assertEquals(false, d.copy(notes = "").sameContentAs(d))
+    }
+
     @Test fun draftParsing() {
         val r = RecipeDraft(
             title = "  Pierogi ", servings = "4", prepMinutes = "x", cookMinutes = "0", totalMinutes = " 90 ",
