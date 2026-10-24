@@ -101,6 +101,9 @@ candidate, "Nowy przepis" or "Aktualizuj: <match>" (`GET /v1/recipes/candidates`
   `Lock-Id` + `If-Match`, or DELETE recipe, or release). `RecipeEditViewModel.onCleared` releases the lock on back /
   cancel; a killed app lets the 5 min lease expire (until then the server reports the phone itself as the editor).
   412 / lost lock keep the form text. Applying a revision / machine proposal = editor prefilled with it.
+- "Zatwierdzam bez zmian" (editor, `RecipeDraft.sameContentAs`) sends the normal save. Known gap: the backend answers
+  200 to content equal to the head and keeps `needsReview`; clearing it needs a backend change (a USER revision when
+  the head needs review). Backend not to be touched for now (user, 2026-10-24).
 - Tablet view (`ui/TabletRecipeView.kt`): a setting (`tabletView`, also the phone/tablet icon on the recipe detail),
   not chosen by screen size. White page, ecru rounded cards: title 1/3 + photo 2/3, then ingredients, steps, notes.
   Fixed light colors also in the dark theme. Samsung's eye comfort filter tints screenshots (white looks cream).
