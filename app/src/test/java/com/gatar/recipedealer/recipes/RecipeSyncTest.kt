@@ -123,6 +123,18 @@ class RecipeSyncTest {
         assertEquals(1, RecipeCache(file).recipes.value.size)
     }
 
+    @Test fun conditionalGetOnlyWhenTheHeadsDetailIsCached() = runTest {
+        page(live("a", "Gofry", head = "h1"), "c1", hasMore = false)
+        sync.sync()
+        assertNull("feed only: no urls yet, a 304 would hide them", cache.get("a")!!.detailEtag)
+        cache.putDetail(ApiJson.decodeFromString(RecipeView.serializer(),
+            """{"recipeId":"a","headRevisionId":"h1","recipe":{"title":"Gofry"},"urls":["https://site.pl/gofry"]}"""))
+        assertEquals("\"h1\"", cache.get("a")!!.detailEtag)
+        page(live("a", "Gofry!", head = "h2"), "c2", hasMore = false)
+        sync.sync()
+        assertNull("new head from the feed: fetch the detail again", cache.get("a")!!.detailEtag)
+    }
+
     @Test fun detailFieldsSurviveLaterSyncs() = runTest {
         page(live("a", "Gofry", head = "h1"), "c1", hasMore = false)
         sync.sync()

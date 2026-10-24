@@ -4,6 +4,7 @@ import com.gatar.recipedealer.api.ApiJson
 import com.gatar.recipedealer.api.LockInfo
 import com.gatar.recipedealer.api.RecipeJson
 import com.gatar.recipedealer.api.RecipeView
+import com.gatar.recipedealer.api.etagOf
 import com.gatar.recipedealer.api.SyncItem
 import com.gatar.recipedealer.model.Recipe
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -29,7 +30,15 @@ data class CachedRecipe(
     val urls: List<String> = emptyList(),
     val origin: String? = null,
     val lock: LockInfo? = null,
+    /**
+     * Head revision whose detail (urls, origin, lock) is stored. The feed brings the same head without those fields,
+     * so a conditional GET may only use the ETag when this matches [headRevisionId] (else the 304 hides the urls).
+     */
+    val detailRevisionId: String? = null,
 ) {
+    /** `If-None-Match` for the detail GET, or null when the detail of this head was never loaded. */
+    val detailEtag: String? get() = detailRevisionId?.takeIf { it == headRevisionId }?.let(::etagOf)
+
     val title: String? get() = (recipe["title"] as? JsonPrimitive)?.contentOrNull?.takeIf { it.isNotBlank() }
     fun content(): Recipe = RecipeJson.decode(recipe)
 }
@@ -86,6 +95,7 @@ class RecipeCache(private val file: File) {
                 urls = old?.urls.orEmpty(),
                 origin = old?.origin,
                 lock = old?.lock,
+                detailRevisionId = old?.detailRevisionId,
             )
             if (new != old) changed++
             byId[item.recipeId] = new
@@ -122,6 +132,7 @@ class RecipeCache(private val file: File) {
             urls = view.urls,
             origin = view.origin,
             lock = view.lock,
+            detailRevisionId = view.headRevisionId,
         )
         write(data.copy(recipes = data.recipes.filterNot { it.recipeId == view.recipeId } + new))
     }

@@ -74,7 +74,6 @@ import com.gatar.recipedealer.api.ApiErrors
 import com.gatar.recipedealer.api.ApiResult
 import com.gatar.recipedealer.container
 import com.gatar.recipedealer.api.SearchHit
-import com.gatar.recipedealer.api.etagOf
 import com.gatar.recipedealer.recipes.CachedRecipe
 import com.gatar.recipedealer.recipes.ImageCache
 import com.gatar.recipedealer.recipes.LocalSearch
@@ -275,7 +274,7 @@ fun RecipeDetailScreen(
     val tablet = settings.tabletView
     LaunchedEffect(recipeId) {
         val client = container.backend() ?: return@LaunchedEffect
-        when (val r = client.recipe(recipeId, container.recipes.get(recipeId)?.headRevisionId?.let(::etagOf))) {
+        when (val r = client.recipe(recipeId, container.recipes.get(recipeId)?.detailEtag)) {
             is ApiResult.Ok -> container.recipes.putDetail(r.value)
             ApiResult.NotModified -> {}
             is ApiResult.Failed -> if (r.code == 410) {
