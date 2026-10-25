@@ -2,13 +2,12 @@
 
 Android app (Kotlin + Jetpack Compose, minSdk 34) that receives shares (link, text, images, PDF), extracts the
 recipe on the device and sends a **capture** (structured recipe + all raw material) to a backend over HTTPS / REST.
-The full task description is `final-app.md` (sections referenced below as §N).
+The full task description is `final-app.md` (sections referenced below as §N). Backend: `../RecipeDealerBE-PoC`
+(separate repo). Shared rules (language, contract, deployment order, VPS, permission pitfalls): `../CLAUDE.md`.
 
 ## Rules
-- Conversation with the user in Polish; code, comments, docs and commit messages in English. App UI in Polish.
 - Commit per milestone step; never commit secrets (backend token lives only in app settings).
-- Keep the data model minimal. The contract is `schema/capture-v1.json` (`schemaVersion` 1): an incompatible
-  change means a new version + new schema file, never an edit.
+- Keep the data model minimal; the contract `schema/capture-v1.json` follows the rules in `../CLAUDE.md`.
 - Do not tune the heading heuristics to a single AI-chat answer; the backend handles the rest.
 - When a decision or assumption in `final-app.md` turns out wrong: tell the user, update the docs.
 
