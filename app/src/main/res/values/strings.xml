@@ -163,7 +163,6 @@
     <string name="search_clear">Wyczyść</string>
     <string name="search_empty">Nic nie znaleziono.</string>
     <string name="search_local">Bez połączenia – szukam tylko w przepisach zapisanych na telefonie.</string>
-    <string name="tags">Tagi</string>
     <string name="tags_column_show">Pokaż tagi</string>
     <string name="tags_column_hide">Ukryj tagi</string>
     <string name="tags_clear">Wyczyść</string>

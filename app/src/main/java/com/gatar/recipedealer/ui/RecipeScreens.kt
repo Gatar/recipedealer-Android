@@ -134,7 +134,11 @@ fun RecipeListScreen(onOpen: (String) -> Unit, onSettings: () -> Unit, onManual:
     val settings by container.settings.settings.collectAsStateWithLifecycle()
     val used = remember(catalog, recipes) { TagFilter.used(catalog, recipes) }
     var selectedTags by rememberSaveable { mutableStateOf(setOf<String>()) }
-    var foldedCategories by rememberSaveable { mutableStateOf(setOf<String>()) }
+    // only the first two categories start unfolded; the user's taps flip that default per category
+    var flippedCategories by rememberSaveable { mutableStateOf(setOf<String>()) }
+    val foldedCategories = remember(used, flippedCategories) {
+        used.filterIndexed { i, uc -> (i >= 2) != (uc.category.name in flippedCategories) }.map { it.category.name }.toSet()
+    }
     val showColumn = settings.tagColumn && used.isNotEmpty()
     // a hidden column does not filter
     val activeTags = remember(selectedTags, used, showColumn) {
@@ -213,7 +217,7 @@ fun RecipeListScreen(onOpen: (String) -> Unit, onSettings: () -> Unit, onManual:
                     selected = activeTags,
                     collapsed = foldedCategories,
                     onToggle = { id -> selectedTags = if (id in activeTags) activeTags - id else activeTags + id },
-                    onFold = { name -> foldedCategories = if (name in foldedCategories) foldedCategories - name else foldedCategories + name },
+                    onFold = { name -> flippedCategories = if (name in flippedCategories) flippedCategories - name else flippedCategories + name },
                     onClear = { selectedTags = emptySet() },
                     onManage = onTags,
                     modifier = Modifier.weight(1f).fillMaxHeight(),

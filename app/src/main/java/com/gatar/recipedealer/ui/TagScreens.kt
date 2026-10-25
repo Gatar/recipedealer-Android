@@ -2,6 +2,7 @@ package com.gatar.recipedealer.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -27,9 +28,7 @@ import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.ArrowUpward
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material.icons.filled.ExpandLess
-import androidx.compose.material.icons.filled.ExpandMore
-import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.filled.Tune
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Card
 import androidx.compose.material3.Checkbox
@@ -58,7 +57,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -76,9 +79,30 @@ import com.gatar.recipedealer.recipes.TagFilter
 import com.gatar.recipedealer.recipes.UsedCategory
 import kotlinx.coroutines.launch
 
+/** Muted sage pills of the tag column; a tag is lighter than its category, a selected tag darker. */
+private class PillColors(
+    val category: Color, val onCategory: Color,
+    val tag: Color, val onTag: Color,
+    val selected: Color, val onSelected: Color,
+)
+
+private val LightPills = PillColors(
+    category = Color(0xFFBAC7AD), onCategory = Color(0xFF2C3528),
+    tag = Color(0xFFEDF0E9), onTag = Color(0xFF3A4336),
+    selected = Color(0xFF9AAE8E), onSelected = Color(0xFF1C2618),
+)
+
+private val DarkPills = PillColors(
+    category = Color(0xFF2A3327), onCategory = Color(0xFFD5DECE),
+    tag = Color(0xFF4D5949), onTag = Color(0xFFE6EBE1),
+    selected = Color(0xFF8BA07F), onSelected = Color(0xFF141C11),
+)
+
+private val PillShape = RoundedCornerShape(10.dp)
+
 /**
  * The tag column next to the recipe list: only categories and tags some recipe carries, in the tag manager's order;
- * categories fold, tags toggle the filter.
+ * category pills fold (a folded one is faded), tag pills toggle the filter.
  */
 @Composable
 fun TagColumn(
@@ -91,54 +115,44 @@ fun TagColumn(
     onManage: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    LazyColumn(modifier) {
+    val pills = if (isSystemInDarkTheme()) DarkPills else LightPills
+    LazyColumn(modifier.padding(horizontal = 6.dp)) {
         item {
-            Row(Modifier.fillMaxWidth().padding(start = 8.dp), verticalAlignment = Alignment.CenterVertically) {
-                Text(stringResource(R.string.tags), Modifier.weight(1f), style = MaterialTheme.typography.labelLarge)
+            Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
                 IconButton(onClick = onManage) {
-                    Icon(Icons.Default.Settings, stringResource(R.string.tag_manager), Modifier.size(18.dp))
+                    Icon(Icons.Default.Tune, stringResource(R.string.tag_manager), Modifier.size(20.dp))
                 }
-            }
-        }
-        if (selected.isNotEmpty()) {
-            item {
-                TextButton(onClick = onClear, Modifier.padding(horizontal = 4.dp)) {
-                    Text(stringResource(R.string.tags_clear), style = MaterialTheme.typography.labelMedium)
+                if (selected.isNotEmpty()) {
+                    TextButton(onClick = onClear) {
+                        Text(stringResource(R.string.tags_clear), style = MaterialTheme.typography.labelMedium)
+                    }
                 }
             }
         }
         used.forEach { uc ->
             val folded = uc.category.name in collapsed
             item(key = "c:" + uc.category.name) {
-                Row(
-                    Modifier.fillMaxWidth().clickable { onFold(uc.category.name) }.padding(start = 8.dp, top = 8.dp, bottom = 4.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    Text(uc.category.title, Modifier.weight(1f), style = MaterialTheme.typography.titleSmall,
-                        color = MaterialTheme.colorScheme.primary)
-                    Icon(if (folded) Icons.Default.ExpandMore else Icons.Default.ExpandLess, null, Modifier.size(18.dp))
-                }
+                Pill(uc.category.title, pills.category.copy(alpha = if (folded) 0.5f else 1f), pills.onCategory,
+                    MaterialTheme.typography.titleSmall,
+                    Modifier.padding(top = 10.dp, bottom = 4.dp).clip(PillShape).clickable { onFold(uc.category.name) })
             }
             if (!folded) {
-                items(uc.tags, key = { it.first.id }) { (tag, count) ->
+                items(uc.tags, key = { it.first.id }) { (tag, _) ->
                     val on = tag.id in selected
-                    Row(
-                        Modifier.fillMaxWidth().padding(horizontal = 4.dp, vertical = 1.dp)
-                            .background(if (on) MaterialTheme.colorScheme.secondaryContainer else MaterialTheme.colorScheme.surface,
-                                RoundedCornerShape(6.dp))
-                            .toggleable(on, role = Role.Checkbox) { onToggle(tag.id) }
-                            .padding(horizontal = 6.dp, vertical = 6.dp),
-                        verticalAlignment = Alignment.CenterVertically,
-                    ) {
-                        Text(tag.title, Modifier.weight(1f), style = MaterialTheme.typography.bodySmall,
-                            color = if (on) MaterialTheme.colorScheme.onSecondaryContainer else MaterialTheme.colorScheme.onSurface)
-                        Text(count.toString(), style = MaterialTheme.typography.labelSmall,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant)
-                    }
+                    Pill(tag.title, if (on) pills.selected else pills.tag, if (on) pills.onSelected else pills.onTag,
+                        MaterialTheme.typography.bodySmall,
+                        Modifier.padding(horizontal = 6.dp, vertical = 4.dp).clip(PillShape)
+                            .toggleable(on, role = Role.Checkbox) { onToggle(tag.id) })
                 }
             }
         }
     }
+}
+
+@Composable
+private fun Pill(text: String, color: Color, textColor: Color, style: TextStyle, modifier: Modifier) {
+    Text(text, modifier.fillMaxWidth().background(color, PillShape).padding(horizontal = 8.dp, vertical = 6.dp),
+        color = textColor, style = style, textAlign = TextAlign.Center, maxLines = 2, overflow = TextOverflow.Ellipsis)
 }
 
 /** The recipe's tags as small chips (tag titles, catalog order); ids missing from the catalog are skipped. */

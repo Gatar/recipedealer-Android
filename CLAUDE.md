@@ -118,11 +118,12 @@ candidate, "Nowy przepis" or "Aktualizuj: <match>" (`GET /v1/recipes/candidates`
   = backend without tags = empty catalog), `TagFilter` (column content, AND across categories / OR inside one, slug).
   Tag changes against such a backend: a 404 without the backend's `not_found` code = missing route (`isMissingRoute`)
   → "Serwer nie obsługuje jeszcze tagów". `Resolution.tags` is omitted when empty (old body for old backends).
-- Recipe list: tag column on the right (1/4 width) with only the tags some cached recipe carries, foldable
-  categories, local counts; the label icon in the top bar hides it (`tagColumn` setting; a hidden column does not
+- Recipe list: tag column on the right (1/4 width) with only the tags some cached recipe carries, as centered pills
+  (fixed muted sage colors, light / dark: tag lighter than its category, selected tag stronger); category pills fold,
+  only the first two start unfolded; no counts shown; the label icon in the top bar hides it (`tagColumn` setting; a hidden column does not
   filter). `ui/TagScreens.kt`: column, chips, picker, `TagManagerScreen` (online; up/down arrows instead of drag;
   every change answers with the whole catalog, then a sync picks up renamed / moved / deleted tag ids).
-- Entry to the tag manager: gear in the tag column header, and Settings.
+- Entry to the tag manager: sliders icon (`Tune`) in the tag column header, and Settings.
 
 ## Waiting for backend changes (postponed, backend not to be touched for now – user, 2026-10-24)
 - Photo from a file on the device: decided (a) – a backend upload endpoint (e.g. `POST /v1/blobs` → blob id the
