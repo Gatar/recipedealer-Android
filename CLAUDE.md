@@ -100,9 +100,9 @@ candidate, "Nowy przepis" or "Aktualizuj: <match>" (`GET /v1/recipes/candidates`
   `Lock-Id` + `If-Match`, or DELETE recipe, or release). `RecipeEditViewModel.onCleared` releases the lock on back /
   cancel; a killed app lets the 5 min lease expire (until then the server reports the phone itself as the editor).
   412 / lost lock keep the form text. Applying a revision / machine proposal = editor prefilled with it.
-- "Zatwierdzam bez zmian" (editor, `RecipeDraft.sameContentAs`) sends the normal save. Known gap: the backend answers
-  200 to content equal to the head and keeps `needsReview`; clearing it needs a backend change (a USER revision when
-  the head needs review). Backend not to be touched for now (user, 2026-10-24).
+- "Zatwierdzam bez zmian" (editor, `RecipeDraft.sameContentAs`) sends the normal save. Since backend 4857305
+  (2026-10-25) content equal to a head that `needsReview` gives 201 with a new USER head without `needsReview`; equal
+  content otherwise gives 200 (no revision). Older backends answered 200 and kept the flag.
 - Tablet view (`ui/TabletRecipeView.kt`): a setting (`tabletView`, also the phone/tablet icon on the recipe detail),
   not chosen by screen size. White page, ecru rounded cards: title 1/3 + photo 2/3, then ingredients, steps, notes.
   Fixed light colors also in the dark theme. Samsung's eye comfort filter tints screenshots (white looks cream).
@@ -128,7 +128,6 @@ candidate, "Nowy przepis" or "Aktualizuj: <match>" (`GET /v1/recipes/candidates`
 - Photo from a file on the device: decided (a) – a backend upload endpoint (e.g. `POST /v1/blobs` → blob id the
   recipe then references). Rejected (b): a `data:` URI JPEG inside `recipe.images` (bloats every sync).
   Until then the photo can only be replaced by URL (editor field `imageUrl` = `images[0]`).
-- "Zatwierdzam bez zmian" clearing `needsReview` (see above).
 - Token by logging in: only admin `POST /v1/admin/enrollments` exists (HTTP Basic admin); a nicer per-user
   registration in the backend is preferred. The token stays entered by hand.
 
