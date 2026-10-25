@@ -307,6 +307,7 @@ fun RecipeDetailScreen(
     recipeId: String,
     onBack: () -> Unit,
     onOpenRecipe: (String) -> Unit,
+    onTags: () -> Unit = {},
     actions: @Composable (CachedRecipe) -> Unit = {},
 ) {
     val context = LocalContext.current
@@ -333,7 +334,8 @@ fun RecipeDetailScreen(
             is ApiResult.Failed -> note = if (r.error == ApiErrors.UNKNOWN_TAG) {
                 container.tags.refresh(client)
                 context.getString(R.string.tag_unknown)
-            } else apiErrorText(context, r)
+            } else if (isMissingRoute(r)) context.getString(R.string.tags_unsupported)
+            else apiErrorText(context, r)
             else -> note = apiErrorText(context, r)
         }
     }
@@ -394,7 +396,8 @@ fun RecipeDetailScreen(
             if (tablet && cached != null) TagChips(cached.tags, catalog)
         }
         if (picking && cached != null) {
-            TagPickerDialog(catalog, cached.tags, onDismiss = { picking = false }, onConfirm = ::saveTags)
+            TagPickerDialog(catalog, cached.tags, onDismiss = { picking = false },
+                onManage = { picking = false; onTags() }, onConfirm = ::saveTags)
         }
         if (tablet && cached != null) {
             val recipe = remember(cached.recipe) { cached.content() }

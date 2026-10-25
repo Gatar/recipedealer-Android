@@ -193,6 +193,7 @@
     <string name="tag_rename_note">Zmiana identyfikatora zmienia go we wszystkich przepisach.</string>
     <string name="tag_exists">Taki identyfikator już istnieje.</string>
     <string name="tag_unknown">Tego tagu już nie ma – odśwież listę.</string>
+    <string name="tags_unsupported">Serwer nie obsługuje jeszcze tagów.</string>
     <string name="tag_empty_category">Brak tagów w tej kategorii.</string>
     <string name="tag_manager_empty">Brak kategorii. Zacznij od „Dodaj kategorię”, np. Posiłek (posilek) z tagami Śniadanie, Obiad, Kolacja.</string>
     <string name="save">Zapisz</string>

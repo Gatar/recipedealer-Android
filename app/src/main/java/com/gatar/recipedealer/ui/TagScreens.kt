@@ -160,14 +160,22 @@ fun TagChips(tagIds: List<String>, catalog: TagCatalog, modifier: Modifier = Mod
 
 /** Checkboxes over the whole catalog; [onConfirm] gets the chosen ids in catalog order. */
 @Composable
-fun TagPickerDialog(catalog: TagCatalog, initial: Collection<String>, onDismiss: () -> Unit, onConfirm: (List<String>) -> Unit) {
+fun TagPickerDialog(
+    catalog: TagCatalog,
+    initial: Collection<String>,
+    onDismiss: () -> Unit,
+    onManage: (() -> Unit)? = null,
+    onConfirm: (List<String>) -> Unit,
+) {
     var chosen by remember { mutableStateOf(initial.toSet()) }
+    // nothing to save without tags: offer the tag manager instead
+    val noTags = catalog.categories.all { it.tags.isEmpty() }
     AlertDialog(
         onDismissRequest = onDismiss,
         title = { Text(stringResource(R.string.tags_edit)) },
         text = {
             Column(Modifier.heightIn(max = 480.dp).verticalScroll(rememberScrollState())) {
-                if (catalog.categories.all { it.tags.isEmpty() }) Text(stringResource(R.string.tags_none_defined))
+                if (noTags) Text(stringResource(R.string.tags_none_defined))
                 catalog.categories.filter { it.tags.isNotEmpty() }.forEach { c ->
                     Text(c.title, Modifier.padding(top = 8.dp), style = MaterialTheme.typography.titleSmall,
                         color = MaterialTheme.colorScheme.primary)
@@ -185,9 +193,9 @@ fun TagPickerDialog(catalog: TagCatalog, initial: Collection<String>, onDismiss:
             }
         },
         confirmButton = {
-            TextButton(onClick = { onConfirm(catalog.categories.flatMap { it.tags }.map { it.id }.filter { it in chosen }) }) {
+            if (!noTags) TextButton(onClick = { onConfirm(catalog.categories.flatMap { it.tags }.map { it.id }.filter { it in chosen }) }) {
                 Text(stringResource(R.string.save))
-            }
+            } else if (onManage != null) TextButton(onClick = onManage) { Text(stringResource(R.string.tag_manager)) }
         },
         dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.cancel)) } },
     )
@@ -230,6 +238,7 @@ fun TagManagerScreen(onBack: () -> Unit) {
         }
         error = when {
             r is ApiResult.Failed && r.error == ApiErrors.TAG_EXISTS -> context.getString(R.string.tag_exists)
+            isMissingRoute(r) -> context.getString(R.string.tags_unsupported)
             r is ApiResult.Failed && r.code == 404 -> context.getString(R.string.tag_unknown)
             else -> apiErrorText(context, r)
         }
@@ -261,7 +270,8 @@ fun TagManagerScreen(onBack: () -> Unit) {
             item {
                 Text(stringResource(R.string.tag_manager_online), Modifier.padding(top = 8.dp), style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant)
-                error?.let { Text(it, color = MaterialTheme.colorScheme.error) }
+                // an open dialog shows the error itself
+                if (dialog == null) error?.let { Text(it, color = MaterialTheme.colorScheme.error) }
                 if (busy) Text(stringResource(R.string.loading), style = MaterialTheme.typography.bodySmall)
                 if (catalog.categories.isEmpty() && !busy) Text(stringResource(R.string.tag_manager_empty))
             }

@@ -7,6 +7,12 @@ import com.gatar.recipedealer.api.ApiResult
 import com.gatar.recipedealer.api.CaptureStates
 import com.gatar.recipedealer.inbox.Inbox
 
+/**
+ * A 404 without the backend's own `not_found` code: the route itself is missing (a backend from before the
+ * feature), not the object it names.
+ */
+fun isMissingRoute(r: ApiResult<*>) = r is ApiResult.Failed && r.code == 404 && r.error != ApiErrors.NOT_FOUND
+
 /** Polish text for a failed backend call; null for success. */
 fun apiErrorText(context: Context, r: ApiResult<*>): String? = when (r) {
     is ApiResult.Ok, ApiResult.NotModified -> null

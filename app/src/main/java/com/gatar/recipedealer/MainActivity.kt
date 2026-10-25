@@ -189,6 +189,7 @@ private fun AppNavHost(nav: NavHostController) {
                     recipeId = id,
                     onBack = { nav.popBackStack() },
                     onOpenRecipe = { nav.navigate(Routes.recipe(it)) { popUpTo(Routes.RECIPE) { inclusive = true } } },
+                    onTags = { nav.navigate(Routes.TAGS) },
                     actions = {
                         if (container.settings.current.hasBackend) {
                             IconButton(onClick = { nav.navigate(Routes.revisions(id)) }) {

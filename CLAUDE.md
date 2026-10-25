@@ -117,6 +117,8 @@ candidate, "Nowy przepis" or "Aktualizuj: <match>" (`GET /v1/recipes/candidates`
   no revision) and with "Nowy przepis" on the decision screen (`Resolution.tags`). Not with UPDATE.
 - `recipes/Tags.kt`: `TagCatalogStore` (`files/recipes/tags.json`, refreshed at the start of every `RecipeSync`; a 404
   = backend without tags = empty catalog), `TagFilter` (column content, AND across categories / OR inside one, slug).
+  Tag changes against such a backend: a 404 without the backend's `not_found` code = missing route (`isMissingRoute`)
+  → "Serwer nie obsługuje jeszcze tagów". `Resolution.tags` is omitted when empty (old body for old backends).
 - Recipe list: tag column on the right (1/4 width) with only the tags some cached recipe carries, foldable
   categories, local counts; the label icon in the top bar hides it (`tagColumn` setting; a hidden column does not
   filter). `ui/TagScreens.kt`: column, chips, picker, `TagManagerScreen` (online; up/down arrows instead of drag;
