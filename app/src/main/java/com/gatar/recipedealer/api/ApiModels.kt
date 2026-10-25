@@ -62,13 +62,16 @@ data class ExtractedCandidate(
     val targetRecipeId: String? = null,
 )
 
-/** Body of `PUT /v1/captures/{id}/extracted/{index}/resolution`. */
+/**
+ * Body of `PUT /v1/captures/{id}/extracted/{index}/resolution`; [tags] (NEW only) go to the new recipe.
+ * Absent when empty, so a backend without tags gets the old body.
+ */
 @Serializable
-data class Resolution(val action: String, val recipeId: String? = null) {
+data class Resolution(val action: String, val recipeId: String? = null, val tags: List<String>? = null) {
     companion object {
         const val NEW = "NEW"
         const val UPDATE = "UPDATE"
-        fun new() = Resolution(NEW)
+        fun new(tags: List<String> = emptyList()) = Resolution(NEW, tags = tags.ifEmpty { null })
         fun update(recipeId: String) = Resolution(UPDATE, recipeId)
     }
 }
@@ -102,6 +105,8 @@ data class SyncItem(
     val recipe: JsonObject? = null,
     val sourceSummary: String? = null,
     val thumbnailBlob: String? = null,
+    /** Tag ids (`category:tag`) in catalog order. */
+    val tags: List<String> = emptyList(),
 ) {
     val removed get() = deleted || mergedInto != null || recipe == null
 }
@@ -118,6 +123,7 @@ data class RecipeView(
     val sourceSummary: String? = null,
     val thumbnailBlob: String? = null,
     val urls: List<String> = emptyList(),
+    val tags: List<String> = emptyList(),
     val createdAt: String? = null,
     val updatedAt: String? = null,
     /** Only while someone edits the recipe. */
@@ -153,6 +159,33 @@ data class SearchHit(
     val thumbnailBlob: String? = null,
     val updatedAt: String? = null,
 )
+
+/** `GET /v1/tags` and the answer of every catalog change: categories and tags in the user's order. */
+@Serializable
+data class TagCatalog(val categories: List<TagCategory> = emptyList()) {
+    val tags: Map<String, Tag> get() = categories.flatMap { it.tags }.associateBy { it.id }
+    fun category(tagId: String): TagCategory? = categories.firstOrNull { it.name == tagId.substringBefore(':') }
+}
+
+/** [name] is the stable id (`meal`), [title] what the app shows ("Posiłek"). */
+@Serializable
+data class TagCategory(val name: String, val title: String, val tags: List<Tag> = emptyList())
+
+/** [id] = `category:name`; [recipeCount]: live recipes carrying it (server side). */
+@Serializable
+data class Tag(val id: String, val name: String, val title: String, val recipeCount: Int = 0)
+
+/** Create / change a category; null fields stay unchanged, [position] is 0-based. */
+@Serializable
+data class CategoryChange(val name: String? = null, val title: String? = null, val position: Int? = null)
+
+/** Create / change a tag; [category] moves it. */
+@Serializable
+data class TagChange(val name: String? = null, val title: String? = null, val category: String? = null, val position: Int? = null)
+
+/** `PUT /v1/recipes/{id}/tags` body and answer. */
+@Serializable
+data class RecipeTags(val tags: List<String>)
 
 /** `POST /v1/recipes/{id}/lock` and its heartbeat. */
 @Serializable

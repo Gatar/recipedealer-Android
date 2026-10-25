@@ -15,6 +15,7 @@ import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.Label
 import androidx.compose.material3.AssistChip
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
@@ -206,6 +207,10 @@ private fun CandidateCard(captureId: String, c: ExtractedCandidate, enabled: Boo
         mutableStateOf(c.targetRecipeId ?: if (c.resolution == Resolution.NEW) NEW
             else options.firstOrNull { it.matchReason == "URL" }?.recipeId ?: NEW)
     }
+    // tags for a new recipe (an update keeps the recipe's own tags)
+    val catalog by context.container.tags.catalog.collectAsStateWithLifecycle()
+    var tags by remember(c) { mutableStateOf(listOf<String>()) }
+    var picking by remember { mutableStateOf(false) }
     Card(Modifier.fillMaxWidth()) {
         Column(Modifier.padding(12.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
             Text(c.title ?: stringResource(R.string.untitled), style = MaterialTheme.typography.titleMedium)
@@ -224,12 +229,20 @@ private fun CandidateCard(captureId: String, c: ExtractedCandidate, enabled: Boo
                 OptionRow(label, choice == m.recipeId) { choice = m.recipeId }
             }
             OptionRow(stringResource(R.string.decision_new), choice == NEW) { choice = NEW }
+            if (choice == NEW && catalog.categories.any { it.tags.isNotEmpty() }) {
+                TagChips(tags, catalog, Modifier.padding(start = 12.dp))
+                TextButton(onClick = { picking = true }) {
+                    Icon(Icons.AutoMirrored.Default.Label, null)
+                    Text(stringResource(R.string.tags_choose), Modifier.padding(start = 8.dp))
+                }
+            }
             Button(
                 enabled = enabled,
-                onClick = { onDecide(if (choice == NEW) Resolution.new() else Resolution.update(choice)) },
+                onClick = { onDecide(if (choice == NEW) Resolution.new(tags) else Resolution.update(choice)) },
             ) { Text(stringResource(R.string.decision_confirm)) }
         }
     }
+    if (picking) TagPickerDialog(catalog, tags, onDismiss = { picking = false }) { tags = it; picking = false }
 }
 
 @Composable

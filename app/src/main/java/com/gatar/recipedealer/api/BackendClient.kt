@@ -65,6 +65,8 @@ object ApiErrors {
     const val LOCK_EXPIRED = "lock_expired"
     const val HEAD_CHANGED = "head_changed"
     const val IF_MATCH_REQUIRED = "if_match_required"
+    const val TAG_EXISTS = "tag_exists"
+    const val UNKNOWN_TAG = "unknown_tag"
 }
 
 /**
@@ -124,6 +126,37 @@ class BackendClient(
     suspend fun blob(sha256: String): ApiResult<ByteArray> =
         execute(request(url("/v1/blobs/$sha256")).header("Accept", "*/*").get()) { r -> r.body!!.bytes() }
 
+    // --- tags ---
+
+    suspend fun tags() = call(get(url("/v1/tags")), TagCatalog.serializer())
+
+    suspend fun createCategory(change: CategoryChange) =
+        call(request(url("/v1/tags/categories")).post(json(encode(CategoryChange.serializer(), change))), TagCatalog.serializer())
+
+    suspend fun updateCategory(category: String, change: CategoryChange) =
+        call(request(url("/v1/tags/categories/$category")).patch(json(encode(CategoryChange.serializer(), change))),
+            TagCatalog.serializer())
+
+    /** Also deletes its tags and their assignments. */
+    suspend fun deleteCategory(category: String) =
+        call(request(url("/v1/tags/categories/$category")).delete(), TagCatalog.serializer())
+
+    suspend fun createTag(category: String, change: TagChange) =
+        call(request(url("/v1/tags/categories/$category/tags")).post(json(encode(TagChange.serializer(), change))),
+            TagCatalog.serializer())
+
+    suspend fun updateTag(category: String, tag: String, change: TagChange) =
+        call(request(url("/v1/tags/categories/$category/tags/$tag")).patch(json(encode(TagChange.serializer(), change))),
+            TagCatalog.serializer())
+
+    suspend fun deleteTag(category: String, tag: String) =
+        call(request(url("/v1/tags/categories/$category/tags/$tag")).delete(), TagCatalog.serializer())
+
+    /** Replaces the recipe's tags (no edit lock); the answer lists them in catalog order. */
+    suspend fun setRecipeTags(recipeId: String, tags: List<String>) =
+        call(request(url("/v1/recipes/$recipeId/tags")).put(json(encode(RecipeTags.serializer(), RecipeTags(tags)))),
+            RecipeTags.serializer())
+
     // --- editing ---
 
     suspend fun lock(recipeId: String): ApiResult<EditLock> =
@@ -160,6 +193,8 @@ class BackendClient(
     }
 
     private fun get(url: HttpUrl) = request(url).get()
+
+    private fun <T> encode(serializer: KSerializer<T>, value: T) = ApiJson.encodeToString(serializer, value)
 
     private suspend fun <T> call(b: Request.Builder, serializer: KSerializer<T>): ApiResult<T> =
         execute(b) { r -> ApiJson.decodeFromString(serializer, r.body!!.string()) }

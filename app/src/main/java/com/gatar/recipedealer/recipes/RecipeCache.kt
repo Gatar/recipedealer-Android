@@ -27,6 +27,8 @@ data class CachedRecipe(
     val recipe: JsonObject,
     val sourceSummary: String? = null,
     val thumbnailBlob: String? = null,
+    /** Tag ids (`category:tag`) in catalog order. */
+    val tags: List<String> = emptyList(),
     /** From `GET /v1/recipes/{id}`. */
     val urls: List<String> = emptyList(),
     val origin: String? = null,
@@ -98,6 +100,7 @@ class RecipeCache(private val file: File) {
                 recipe = item.recipe!!,
                 sourceSummary = item.sourceSummary,
                 thumbnailBlob = item.thumbnailBlob,
+                tags = item.tags,
                 urls = old?.urls.orEmpty(),
                 origin = old?.origin,
                 lock = old?.lock,
@@ -135,12 +138,19 @@ class RecipeCache(private val file: File) {
             recipe = view.recipe,
             sourceSummary = view.sourceSummary,
             thumbnailBlob = view.thumbnailBlob,
+            tags = view.tags,
             urls = view.urls,
             origin = view.origin,
             lock = view.lock,
             detailRevisionId = view.headRevisionId,
         )
         write(data.copy(recipes = data.recipes.filterNot { it.recipeId == view.recipeId } + new))
+    }
+
+    /** The answer of `PUT /v1/recipes/{id}/tags` (the next sync brings the same). */
+    @Synchronized
+    fun setTags(id: String, tags: List<String>) {
+        write(data.copy(recipes = data.recipes.map { if (it.recipeId == id) it.copy(tags = tags) else it }))
     }
 
     /** 410 from the detail GET, or a delete. */

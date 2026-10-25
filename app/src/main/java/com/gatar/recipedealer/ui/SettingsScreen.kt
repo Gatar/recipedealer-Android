@@ -1,6 +1,7 @@
 package com.gatar.recipedealer.ui
 
 import android.widget.Toast
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -43,10 +44,10 @@ import com.gatar.recipedealer.upload.HttpCaptureSender
 import com.gatar.recipedealer.upload.UploadQueue
 import kotlinx.coroutines.launch
 
-/** Backend base URL and token (D3), background mode, auto-send. */
+/** Backend base URL and token (D3), background mode, auto-send; entry to the tag manager. */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SettingsScreen(onBack: () -> Unit) {
+fun SettingsScreen(onBack: () -> Unit, onTags: () -> Unit) {
     val context = LocalContext.current
     val repo = context.container.settings
     val initial = remember { repo.current }
@@ -120,6 +121,13 @@ fun SettingsScreen(onBack: () -> Unit) {
             SwitchRow(stringResource(R.string.settings_background), stringResource(R.string.settings_background_desc), background) { background = it }
             SwitchRow(stringResource(R.string.settings_autosend), stringResource(R.string.settings_autosend_desc), autoSend) { autoSend = it }
             SwitchRow(stringResource(R.string.settings_tablet), stringResource(R.string.settings_tablet_desc), tabletView) { tabletView = it }
+            if (repo.current.hasBackend) {
+                Column(Modifier.fillMaxWidth().clickable(onClick = onTags).padding(vertical = 4.dp)) {
+                    Text(stringResource(R.string.tag_manager), style = MaterialTheme.typography.bodyLarge)
+                    Text(stringResource(R.string.tag_manager_desc), style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant)
+                }
+            }
             Button(onClick = { save(); onBack() }, enabled = urlValid, modifier = Modifier.fillMaxWidth()) {
                 Text(stringResource(R.string.settings_save))
             }

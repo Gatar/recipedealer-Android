@@ -11,14 +11,21 @@ import kotlinx.coroutines.sync.withLock
 /**
  * Incremental sync of [RecipeCache] from `GET /v1/recipes`: pages while `hasMore`, the cursor saved after every
  * page; no cursor (first sync, or a malformed one) → full sync that also drops recipes the feed no longer lists.
- * Runs on app start, pull-to-refresh, after a decision or an edit, and periodically (SyncWorker).
+ * The tag catalog is refreshed first, so the recipes' tag ids are known. Runs on app start, pull-to-refresh, after
+ * a decision or an edit, and periodically (SyncWorker).
  */
-class RecipeSync(private val cache: RecipeCache, private val backend: () -> BackendClient?, private val pageSize: Int = PAGE) {
+class RecipeSync(
+    private val cache: RecipeCache,
+    private val backend: () -> BackendClient?,
+    private val pageSize: Int = PAGE,
+    private val tags: TagCatalogStore? = null,
+) {
     private val mutex = Mutex()
 
     /** Number of changed recipes. */
     suspend fun sync(): ApiResult<Int> = mutex.withLock {
         val client = backend() ?: return Inbox.NO_BACKEND
+        tags?.refresh(client)?.let { if (it !is ApiResult.Ok) return it.failure() }
         var cursor = cache.cursor
         var full = cursor == null
         var reset = false

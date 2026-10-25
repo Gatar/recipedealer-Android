@@ -110,6 +110,19 @@ candidate, "Nowy przepis" or "Aktualizuj: <match>" (`GET /v1/recipes/candidates`
 - ETag is built from `headRevisionId` (`etagOf`), never taken from the header: Caddy's `encode gzip` rewrites it to
   `"<id>-gzip"` and the backend then answers 412 to `If-Match`.
 
+## Tags (agreed with the user 2026-10-25)
+- Two levels `category:tag`; each level has a `name` (stable readable id, `[a-z0-9-]`, e.g. `meal:breakfast`) and
+  a `title` (shown, "Posiłek" / "Śniadanie"). Order everywhere = the tag manager's order. No ingredient tags.
+- Assigned manually only: recipe detail (label icon → `TagPickerDialog` → `PUT /v1/recipes/{id}/tags`, no edit lock,
+  no revision) and with "Nowy przepis" on the decision screen (`Resolution.tags`). Not with UPDATE.
+- `recipes/Tags.kt`: `TagCatalogStore` (`files/recipes/tags.json`, refreshed at the start of every `RecipeSync`; a 404
+  = backend without tags = empty catalog), `TagFilter` (column content, AND across categories / OR inside one, slug).
+- Recipe list: tag column on the right (1/4 width) with only the tags some cached recipe carries, foldable
+  categories, local counts; the label icon in the top bar hides it (`tagColumn` setting; a hidden column does not
+  filter). `ui/TagScreens.kt`: column, chips, picker, `TagManagerScreen` (online; up/down arrows instead of drag;
+  every change answers with the whole catalog, then a sync picks up renamed / moved / deleted tag ids).
+- Entry to the tag manager: gear in the tag column header, and Settings.
+
 ## Waiting for backend changes (postponed, backend not to be touched for now – user, 2026-10-24)
 - Photo from a file on the device: decided (a) – a backend upload endpoint (e.g. `POST /v1/blobs` → blob id the
   recipe then references). Rejected (b): a `data:` URI JPEG inside `recipe.images` (bloats every sync).

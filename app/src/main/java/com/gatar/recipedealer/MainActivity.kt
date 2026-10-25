@@ -52,6 +52,7 @@ import com.gatar.recipedealer.ui.RecipeEditScreen
 import com.gatar.recipedealer.ui.RevisionsScreen
 import com.gatar.recipedealer.ui.RecipeListScreen
 import com.gatar.recipedealer.ui.SettingsScreen
+import com.gatar.recipedealer.ui.TagManagerScreen
 import com.gatar.recipedealer.ui.theme.RecipeDealerTheme
 
 class MainActivity : ComponentActivity() {
@@ -120,6 +121,7 @@ object Routes {
     const val DECISION = "decision/{id}"
     const val SETTINGS = "settings"
     const val MANUAL = "manual"
+    const val TAGS = "tags"
     fun capture(id: String) = "capture/$id"
     fun decision(id: String) = "decision/$id"
     fun recipe(id: String) = "recipe/$id"
@@ -177,8 +179,10 @@ private fun AppNavHost(nav: NavHostController) {
                     onOpen = { nav.navigate(Routes.recipe(it)) },
                     onSettings = { nav.navigate(Routes.SETTINGS) },
                     onManual = { nav.navigate(Routes.MANUAL) },
+                    onTags = { nav.navigate(Routes.TAGS) },
                 )
             }
+            composable(Routes.TAGS) { TagManagerScreen(onBack = { nav.popBackStack() }) }
             composable(Routes.RECIPE) { back ->
                 val id = back.arguments?.getString("id").orEmpty()
                 RecipeDetailScreen(
@@ -234,7 +238,9 @@ private fun AppNavHost(nav: NavHostController) {
                     onOpenRecipe = { nav.navigate(Routes.recipe(it)) },
                 )
             }
-            composable(Routes.SETTINGS) { SettingsScreen(onBack = { nav.popBackStack() }) }
+            composable(Routes.SETTINGS) {
+                SettingsScreen(onBack = { nav.popBackStack() }, onTags = { nav.navigate(Routes.TAGS) })
+            }
             composable(Routes.MANUAL) {
                 ManualEntryScreen(onBack = { nav.popBackStack() }, onSaved = { id ->
                     nav.navigate(Routes.capture(id)) { popUpTo(nav.graph.findStartDestination().id) }

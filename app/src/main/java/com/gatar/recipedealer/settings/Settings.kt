@@ -16,6 +16,8 @@ data class AppSettings(
     val autoSend: Boolean = false,
     /** Recipe detail as the kitchen-tablet layout (title + photo side by side, sections on ecru cards). */
     val tabletView: Boolean = false,
+    /** The tag column next to the recipe list. */
+    val tagColumn: Boolean = true,
 ) {
     val hasBackend get() = baseUrl.isNotBlank()
 }
@@ -35,6 +37,7 @@ class SettingsRepository(context: Context) {
             .putBoolean(BACKGROUND, s.backgroundMode)
             .putBoolean(AUTO_SEND, s.autoSend)
             .putBoolean(TABLET_VIEW, s.tabletView)
+            .putBoolean(TAG_COLUMN, s.tagColumn)
             .apply()
         _settings.value = read()
     }
@@ -45,6 +48,7 @@ class SettingsRepository(context: Context) {
         backgroundMode = prefs.getBoolean(BACKGROUND, true),
         autoSend = prefs.getBoolean(AUTO_SEND, false),
         tabletView = prefs.getBoolean(TABLET_VIEW, false),
+        tagColumn = prefs.getBoolean(TAG_COLUMN, true),
     )
 
     private companion object {
@@ -53,5 +57,6 @@ class SettingsRepository(context: Context) {
         const val BACKGROUND = "backgroundMode"
         const val AUTO_SEND = "autoSend"
         const val TABLET_VIEW = "tabletView"
+        const val TAG_COLUMN = "tagColumn"
     }
 }

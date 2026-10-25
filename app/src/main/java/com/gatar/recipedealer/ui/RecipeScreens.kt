@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
@@ -22,6 +23,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.Label
 import androidx.compose.material.icons.automirrored.filled.Sort
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.filled.Close
@@ -39,6 +41,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.VerticalDivider
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -77,6 +80,7 @@ import com.gatar.recipedealer.api.SearchHit
 import com.gatar.recipedealer.recipes.CachedRecipe
 import com.gatar.recipedealer.recipes.ImageCache
 import com.gatar.recipedealer.recipes.LocalSearch
+import com.gatar.recipedealer.recipes.TagFilter
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -90,7 +94,7 @@ private enum class RecipeSort { TITLE, UPDATED }
 /** "Przepisy": the offline recipe cache (sync feed), pull-to-refresh syncs. */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun RecipeListScreen(onOpen: (String) -> Unit, onSettings: () -> Unit, onManual: () -> Unit) {
+fun RecipeListScreen(onOpen: (String) -> Unit, onSettings: () -> Unit, onManual: () -> Unit, onTags: () -> Unit) {
     val context = LocalContext.current
     val container = context.container
     val recipes by container.recipes.recipes.collectAsStateWithLifecycle()
@@ -125,11 +129,25 @@ fun RecipeListScreen(onOpen: (String) -> Unit, onSettings: () -> Unit, onManual:
     }
     val local = remember(recipes, query) { LocalSearch.filter(recipes, query) }
     val byId = remember(recipes) { recipes.associateBy { it.recipeId } }
-    val shown: List<ListRow> = when {
+    // Tag column: AND across categories, OR inside one; selections of tags no recipe carries any more are ignored.
+    val catalog by container.tags.catalog.collectAsStateWithLifecycle()
+    val settings by container.settings.settings.collectAsStateWithLifecycle()
+    val used = remember(catalog, recipes) { TagFilter.used(catalog, recipes) }
+    var selectedTags by rememberSaveable { mutableStateOf(setOf<String>()) }
+    var foldedCategories by rememberSaveable { mutableStateOf(setOf<String>()) }
+    val showColumn = settings.tagColumn && used.isNotEmpty()
+    // a hidden column does not filter
+    val activeTags = remember(selectedTags, used, showColumn) {
+        if (!showColumn) emptySet()
+        else selectedTags.filter { id -> used.any { uc -> uc.tags.any { it.first.id == id } } }.toSet()
+    }
+    val unfiltered: List<ListRow> = when {
         query.isBlank() -> sorted.map(::ListRow)
         hits != null -> hits!!.map { h -> ListRow(h, byId[h.recipeId]) }
         else -> local.map(::ListRow)
     }
+    val shown = if (activeTags.isEmpty()) unfiltered
+        else unfiltered.filter { TagFilter.matches(byId[it.recipeId]?.tags.orEmpty(), activeTags) }
     Scaffold(
         topBar = {
             TopAppBar(
@@ -139,42 +157,67 @@ fun RecipeListScreen(onOpen: (String) -> Unit, onSettings: () -> Unit, onManual:
                         Icon(Icons.AutoMirrored.Default.Sort, null)
                         Text(stringResource(if (sort == RecipeSort.TITLE) R.string.sort_title else R.string.sort_updated))
                     }
+                    if (used.isNotEmpty()) {
+                        IconButton(onClick = { container.settings.update { it.copy(tagColumn = !it.tagColumn) } }) {
+                            Icon(Icons.AutoMirrored.Default.Label,
+                                stringResource(if (settings.tagColumn) R.string.tags_column_hide else R.string.tags_column_show))
+                        }
+                    }
                     IconButton(onClick = onManual) { Icon(Icons.Default.Edit, stringResource(R.string.manual_entry)) }
                     IconButton(onClick = onSettings) { Icon(Icons.Default.Settings, stringResource(R.string.settings)) }
                 },
             )
         },
     ) { padding ->
-        PullToRefreshBox(refreshing, onRefresh = { refresh() }, Modifier.fillMaxSize().padding(padding)) {
-            LazyColumn(Modifier.fillMaxSize()) {
-                item {
-                    OutlinedTextField(
-                        query, { query = it },
-                        Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp),
-                        placeholder = { Text(stringResource(R.string.search_hint)) },
-                        leadingIcon = { Icon(Icons.Default.Search, null) },
-                        trailingIcon = {
-                            if (query.isNotEmpty()) IconButton(onClick = { query = "" }) { Icon(Icons.Default.Close, stringResource(R.string.search_clear)) }
-                        },
-                        singleLine = true,
-                        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
-                    )
-                }
-                error?.let { item { Text(it, Modifier.padding(horizontal = 16.dp, vertical = 8.dp), color = MaterialTheme.colorScheme.error) } }
-                if (query.isNotBlank()) searchNote?.let {
-                    item { Text(it, Modifier.padding(horizontal = 16.dp), style = MaterialTheme.typography.bodySmall) }
-                }
-                if (shown.isEmpty()) {
+        Row(Modifier.fillMaxSize().padding(padding)) {
+            PullToRefreshBox(refreshing, onRefresh = { refresh() }, Modifier.weight(3f).fillMaxHeight()) {
+                LazyColumn(Modifier.fillMaxSize()) {
                     item {
-                        Box(Modifier.fillMaxWidth().padding(32.dp), contentAlignment = Alignment.Center) {
-                            Text(stringResource(if (query.isBlank()) R.string.recipes_empty else R.string.search_empty), textAlign = TextAlign.Center)
+                        OutlinedTextField(
+                            query, { query = it },
+                            Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp),
+                            placeholder = { Text(stringResource(R.string.search_hint)) },
+                            leadingIcon = { Icon(Icons.Default.Search, null) },
+                            trailingIcon = {
+                                if (query.isNotEmpty()) IconButton(onClick = { query = "" }) { Icon(Icons.Default.Close, stringResource(R.string.search_clear)) }
+                            },
+                            singleLine = true,
+                            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
+                        )
+                    }
+                    error?.let { item { Text(it, Modifier.padding(horizontal = 16.dp, vertical = 8.dp), color = MaterialTheme.colorScheme.error) } }
+                    if (query.isNotBlank()) searchNote?.let {
+                        item { Text(it, Modifier.padding(horizontal = 16.dp), style = MaterialTheme.typography.bodySmall) }
+                    }
+                    if (shown.isEmpty()) {
+                        item {
+                            Box(Modifier.fillMaxWidth().padding(32.dp), contentAlignment = Alignment.Center) {
+                                Text(stringResource(when {
+                                    activeTags.isNotEmpty() && unfiltered.isNotEmpty() -> R.string.tags_filter_empty
+                                    query.isBlank() -> R.string.recipes_empty
+                                    else -> R.string.search_empty
+                                }), textAlign = TextAlign.Center)
+                            }
                         }
                     }
+                    items(shown, key = { it.recipeId }) { r ->
+                        RecipeRow(r.title, r.subtitle, r.needsReview, r.imageKey, r.thumbnail) { onOpen(r.recipeId) }
+                        HorizontalDivider()
+                    }
                 }
-                items(shown, key = { it.recipeId }) { r ->
-                    RecipeRow(r.title, r.subtitle, r.needsReview, r.imageKey, r.thumbnail) { onOpen(r.recipeId) }
-                    HorizontalDivider()
-                }
+            }
+            if (showColumn) {
+                VerticalDivider()
+                TagColumn(
+                    used = used,
+                    selected = activeTags,
+                    collapsed = foldedCategories,
+                    onToggle = { id -> selectedTags = if (id in activeTags) activeTags - id else activeTags + id },
+                    onFold = { name -> foldedCategories = if (name in foldedCategories) foldedCategories - name else foldedCategories + name },
+                    onClear = { selectedTags = emptySet() },
+                    onManage = onTags,
+                    modifier = Modifier.weight(1f).fillMaxHeight(),
+                )
             }
         }
     }
@@ -275,6 +318,25 @@ fun RecipeDetailScreen(
     var mergedInto by remember { mutableStateOf(container.recipes.redirect(recipeId)) }
     val settings by container.settings.settings.collectAsStateWithLifecycle()
     val tablet = settings.tabletView
+    val catalog by container.tags.catalog.collectAsStateWithLifecycle()
+    val scope = rememberCoroutineScope()
+    var picking by remember { mutableStateOf(false) }
+    // tags are assigned without the edit lock, online only
+    fun saveTags(tags: List<String>) = scope.launch {
+        picking = false
+        val client = container.backend() ?: return@launch
+        when (val r = client.setRecipeTags(recipeId, tags)) {
+            is ApiResult.Ok -> {
+                container.recipes.setTags(recipeId, r.value.tags)
+                note = context.getString(R.string.tags_saved)
+            }
+            is ApiResult.Failed -> note = if (r.error == ApiErrors.UNKNOWN_TAG) {
+                container.tags.refresh(client)
+                context.getString(R.string.tag_unknown)
+            } else apiErrorText(context, r)
+            else -> note = apiErrorText(context, r)
+        }
+    }
     LaunchedEffect(recipeId) {
         val client = container.backend() ?: return@LaunchedEffect
         when (val r = client.recipe(recipeId, container.recipes.get(recipeId)?.detailEtag)) {
@@ -304,6 +366,11 @@ fun RecipeDetailScreen(
                             Icon(Icons.Default.OpenInBrowser, stringResource(R.string.open_in_browser))
                         }
                     }
+                    if (cached != null && settings.hasBackend) {
+                        IconButton(onClick = { picking = true }) {
+                            Icon(Icons.AutoMirrored.Default.Label, stringResource(R.string.tags_edit))
+                        }
+                    }
                     // the same switch as in the settings, at hand in the kitchen
                     IconButton(onClick = { container.settings.update { it.copy(tabletView = !it.tabletView) } }) {
                         if (tablet) Icon(Icons.Default.PhoneAndroid, stringResource(R.string.view_phone))
@@ -324,6 +391,10 @@ fun RecipeDetailScreen(
             if (cached == null && note == null && mergedInto == null) Text(stringResource(R.string.loading))
             if (cached?.needsReview == true) Banner(stringResource(R.string.recipe_needs_review))
             cached?.lock?.lockedBy?.let { Banner(stringResource(R.string.edit_locked_by, it)) }
+            if (tablet && cached != null) TagChips(cached.tags, catalog)
+        }
+        if (picking && cached != null) {
+            TagPickerDialog(catalog, cached.tags, onDismiss = { picking = false }, onConfirm = ::saveTags)
         }
         if (tablet && cached != null) {
             val recipe = remember(cached.recipe) { cached.content() }
@@ -344,6 +415,7 @@ fun RecipeDetailScreen(
             }
             val recipe = remember(cached.recipe) { cached.content() }
             Text(cached.title ?: stringResource(R.string.untitled), style = MaterialTheme.typography.headlineSmall)
+            TagChips(cached.tags, catalog)
             RecipeContent(recipe, showTitle = false)
             if (cached.sourceSummary != null || cached.urls.isNotEmpty()) {
                 Text(stringResource(R.string.recipe_source), style = MaterialTheme.typography.titleMedium)

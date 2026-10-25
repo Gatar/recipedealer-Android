@@ -11,6 +11,7 @@ import com.gatar.recipedealer.recipes.ImageCache
 import com.gatar.recipedealer.recipes.RecipeCache
 import com.gatar.recipedealer.recipes.RecipeSync
 import com.gatar.recipedealer.recipes.SyncWorker
+import com.gatar.recipedealer.recipes.TagCatalogStore
 import com.gatar.recipedealer.capture.ImageSourceExtractor
 import com.gatar.recipedealer.capture.PdfSourceExtractor
 import com.gatar.recipedealer.model.SourceType
@@ -62,7 +63,8 @@ class AppContainer(val context: Context) {
     )
     val inbox = Inbox(store, ::backend)
     val recipes = RecipeCache(File(context.filesDir, "recipes/recipes.json"))
-    val recipeSync = RecipeSync(recipes, ::backend)
+    val tags = TagCatalogStore(File(context.filesDir, "recipes/tags.json"))
+    val recipeSync = RecipeSync(recipes, ::backend, tags = tags)
     val images = ImageCache(File(context.filesDir, "recipes/images"), ::backend)
     init {
         processor.markInterrupted()
