@@ -88,8 +88,11 @@ that gave ingredients or steps. `BrowserActivity` is the visible WebView (failur
 - `am start` has no array-of-URI extra: SEND_MULTIPLE is covered by `ShareFlowTest` (instrumented).
 
 ## Backend decisions (RecipeDealerBE)
-Every processed capture ends in `needs_decision`: nothing becomes a recipe until the user picks, per extracted
-candidate, "Nowy przepis" or "Aktualizuj: <match>" (`GET /v1/recipes/candidates`, URL matches preselected).
+A processed capture ends in `needs_decision` when there is a real choice: the user picks, per extracted candidate,
+"Nowy przepis" or "Aktualizuj: <match>" (`GET /v1/recipes/candidates`, URL matches preselected). Since backend
+2026-10-27 a candidate that matches no recipe becomes a new recipe without asking (capture goes straight to `done`);
+app follow-up: `StatusWorker` syncs on `done` only for "Wyślij jako nowy", so such a recipe shows up with the next
+sync.
 `StatusWorker` polls while `accepted` / `processing`, then notifies on `needs_decision` / `needs_attention`
 (tap → decision screen). `recipe_gone` / `already_resolved` reload the capture. Server messages come in English.
 
@@ -129,8 +132,14 @@ candidate, "Nowy przepis" or "Aktualizuj: <match>" (`GET /v1/recipes/candidates`
 - Photo from a file on the device: decided (a) – a backend upload endpoint (e.g. `POST /v1/blobs` → blob id the
   recipe then references). Rejected (b): a `data:` URI JPEG inside `recipe.images` (bloats every sync).
   Until then the photo can only be replaced by URL (editor field `imageUrl` = `images[0]`).
-- Token by logging in: only admin `POST /v1/admin/enrollments` exists (HTTP Basic admin); a nicer per-user
-  registration in the backend is preferred. The token stays entered by hand.
+- Token by logging in: **done in the backend (2026-10-27)**, the app does not use it yet. `POST /v1/auth/register`
+  (user name, password, device name, household registration code) and `POST /v1/auth/login` return a token; the
+  token field disappears from the UI (kept in storage), a 401 leads to the login screen; existing users without a
+  password set one with `PUT /v1/me/password`. Details: `RecipeDealerBE-PoC/docs/api.md` (Accounts).
+  Send a stable device name (e.g. the model, editable): logging in again with the same name replaces that device's
+  token and keeps its id, a new name adds a device. Errors to show in Polish: `invalid_credentials`,
+  `registration_disabled`, `user_limit_reached`, `too_many_requests` (login limits, also with the right password).
+  A deleted user or revoked device gets 401 → login screen.
 
 ## Preview, editing, manual entry (§6.7, D5)
 - `capture/RecipeEdits.kt`: `RecipeDraft` (form strings ↔ Recipe, items one per line), `applyEdit` (changed fields →
@@ -148,7 +157,8 @@ candidate, "Nowy przepis" or "Aktualizuj: <match>" (`GET /v1/recipes/candidates`
 - Backend API (2026-10-22): client, decisions, recipe list / sync / detail, search, editing – done. Verified on the
   emulator against https://2.31.66.200: share → needs_decision notification → "Nowy przepis" → done → listed after
   sync; search with a typo; edit with lock + save + history; lock released on back. Not verified on the real server:
-  recipe delete (unit tests only), blob thumbnails (web captures have none; `recipe.images[0]` fallback used).
+  recipe delete (unit tests only), blob thumbnails. Since backend 2026-10-27 web recipes get `thumbnailBlob` too
+  (server copy of `images[0]`); the app still shows the `images[0]` URL first, blob as fallback.
 - M3 text / images / PDF: done. Verified: Gemini cake text selection (0.46 s, same as golden), rotated typewritten
   photo (EXIF 90°), synthetic 1080×11513 screenshot (186/186 lines, no duplicates, in order, 1.2 s OCR), the three
   household PDFs (text layer + OCR, 0.4–0.6 s each).
