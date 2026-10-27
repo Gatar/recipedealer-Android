@@ -47,7 +47,7 @@ data class CachedRecipe(
     val imageUrl: String? get() = ((recipe["images"] as? JsonArray)?.firstOrNull() as? JsonPrimitive)?.contentOrNull
         ?.takeIf { it.isNotBlank() }
     /** Changes whenever the shown photo changes (bitmap cache key). */
-    val imageKey: String get() = imageUrl ?: thumbnailBlob ?: recipeId
+    val imageKey: String get() = thumbnailBlob ?: imageUrl ?: recipeId
     fun content(): Recipe = RecipeJson.decode(recipe)
 }
 

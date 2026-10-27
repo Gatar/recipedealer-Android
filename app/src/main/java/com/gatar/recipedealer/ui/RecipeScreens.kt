@@ -277,11 +277,12 @@ private class ListRow(
 }
 
 /**
- * `images[0]` (the page's photo, or one the user set in the editor), else the blob thumbnail (photo / PDF captures
- * have no image URL). The URL goes first: the server does not change `thumbnailBlob` when the user edits the photo.
+ * The blob thumbnail (the server's copy of `images[0]`, or a photo / screenshot of the capture), else `images[0]`
+ * itself. The blob goes first: it survives the page changing or dropping its photo. After a photo edit the server
+ * copies the new URL within about a minute and the recipe comes again in the sync feed.
  */
 internal suspend fun recipeImage(r: CachedRecipe, images: ImageCache): File? =
-    r.imageUrl?.let { images.url(it) } ?: r.thumbnailBlob?.let { images.blob(it) }
+    r.thumbnailBlob?.let { images.blob(it) } ?: r.imageUrl?.let { images.url(it) }
 
 @Composable
 internal fun cachedImage(key: Any, maxWidth: Int, load: suspend (ImageCache) -> File?): ImageBitmap? {

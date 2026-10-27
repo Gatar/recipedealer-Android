@@ -162,8 +162,9 @@ A processed capture ends in `needs_decision` when there is a real choice: the us
 - Backend API (2026-10-22): client, decisions, recipe list / sync / detail, search, editing – done. Verified on the
   emulator against https://2.31.66.200: share → needs_decision notification → "Nowy przepis" → done → listed after
   sync; search with a typo; edit with lock + save + history; lock released on back. Not verified on the real server:
-  recipe delete (unit tests only), blob thumbnails. Since backend 2026-10-27 web recipes get `thumbnailBlob` too
-  (server copy of `images[0]`); the app still shows the `images[0]` URL first, blob as fallback.
+  recipe delete (verified by the user 2026-10-27: deleted on the tablet, gone on the emulator after sync).
+  Since backend 2026-10-27 web recipes get `thumbnailBlob` too (server copy of `images[0]`, original bytes): the
+  app shows the blob first, the `images[0]` URL only as a fallback (`recipeImage`); verified on the emulator.
 - M3 text / images / PDF: done. Verified: Gemini cake text selection (0.46 s, same as golden), rotated typewritten
   photo (EXIF 90°), synthetic 1080×11513 screenshot (186/186 lines, no duplicates, in order, 1.2 s OCR), the three
   household PDFs (text layer + OCR, 0.4–0.6 s each).
