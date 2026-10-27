@@ -54,12 +54,43 @@
     <string name="browser_abandoned">Przerwano w przeglądarce</string>
     <string name="notif_failed_consent_text">Strona wymaga zgody (cookies). Dotknij, aby ją otworzyć i odpowiedzieć – kolejne przepisy z tej strony zapiszą się już same.</string>
 
-    <string name="notif_auth_title">Wysyłanie wstrzymane</string>
-    <string name="notif_auth_text">Serwer odrzucił token. Sprawdź adres i token w ustawieniach.</string>
+    <string name="notif_auth_title">Zaloguj się ponownie</string>
+    <string name="notif_auth_text">Serwer nie przyjmuje już logowania z tego urządzenia. Wysyłanie wstrzymane do ponownego zalogowania.</string>
     <string name="settings_backend">Serwer</string>
     <string name="settings_url">Adres serwera (https://…)</string>
     <string name="settings_url_hint">Puste = zapis tylko na telefonie</string>
-    <string name="settings_token">Token</string>
+    <string name="settings_account">Konto</string>
+    <string name="settings_logged_in">Zalogowano jako %1$s (urządzenie: %2$s)</string>
+    <string name="settings_enrolled">To urządzenie dodał administrator. Ustaw hasło, żeby móc się zalogować po reinstalacji lub na innym urządzeniu.</string>
+    <string name="settings_logged_out">Nie zalogowano.</string>
+    <string name="settings_rejected">Serwer odrzucił logowanie z tego urządzenia.</string>
+    <string name="settings_logout">Wyloguj</string>
+    <string name="logout_confirm">Wylogować? Przepisy zostaną na urządzeniu, ale do wysyłania i edycji trzeba będzie zalogować się ponownie.</string>
+    <string name="login">Zaloguj się</string>
+    <string name="register">Załóż konto</string>
+    <string name="login_title">Logowanie</string>
+    <string name="login_user">Nazwa użytkownika</string>
+    <string name="login_password">Hasło</string>
+    <string name="login_device">Nazwa urządzenia</string>
+    <string name="login_device_hint">Ta sama nazwa przy kolejnym logowaniu = to samo urządzenie na serwerze.</string>
+    <string name="login_code">Kod rejestracyjny domu</string>
+    <string name="login_working">Łączę…</string>
+    <string name="login_offline_hint">Bez logowania przepisy z pamięci urządzenia nadal są dostępne – wróć strzałką.</string>
+    <string name="login_ok">Zalogowano jako %1$s</string>
+    <string name="password_set">Ustaw hasło</string>
+    <string name="password_change">Zmień hasło</string>
+    <string name="password_current">Obecne hasło (puste, jeśli jeszcze go nie ustawiono)</string>
+    <string name="password_new">Nowe hasło</string>
+    <string name="password_repeat">Powtórz nowe hasło</string>
+    <string name="password_mismatch">Hasła się różnią</string>
+    <string name="password_saved">Hasło zapisane</string>
+    <string name="auth_invalid_credentials">Zła nazwa użytkownika lub hasło.</string>
+    <string name="auth_wrong_current_password">Złe obecne hasło.</string>
+    <string name="auth_registration_disabled">Serwer nie pozwala zakładać kont (brak kodu rejestracyjnego).</string>
+    <string name="auth_invalid_registration_code">Zły kod rejestracyjny.</string>
+    <string name="auth_user_exists">Taki użytkownik już istnieje – zaloguj się (konto od administratora: najpierw ustaw hasło na urządzeniu, które ma już dostęp).</string>
+    <string name="auth_user_limit_reached">Osiągnięto limit użytkowników na serwerze.</string>
+    <string name="auth_too_many_requests">Za dużo nieudanych prób. Spróbuj ponownie za kilkanaście minut.</string>
     <string name="settings_test">Testuj połączenie</string>
     <string name="settings_save">Zapisz</string>
     <string name="settings_saved">Zapisano ustawienia</string>
@@ -73,7 +104,7 @@
     <string name="view_phone">Widok telefonu</string>
     <string name="settings_https_only">Adres musi zaczynać się od https://</string>
     <string name="health_ok">Połączenie działa</string>
-    <string name="health_unauthorized">Serwer odrzucił token (401/403)</string>
+    <string name="health_unauthorized">Serwer odrzucił logowanie z tego urządzenia – zaloguj się ponownie.</string>
     <string name="health_failed">Błąd połączenia: %1$s</string>
     <string name="health_testing">Sprawdzam…</string>
     <string name="refresh_status">Odśwież status</string>
@@ -103,7 +134,7 @@
     <string name="tab_captures">Udostępnienia</string>
     <string name="loading">Wczytuję…</string>
     <string name="api_offline">Brak połączenia z serwerem (%1$s)</string>
-    <string name="api_no_backend">Nie ustawiono serwera – podaj adres i token w ustawieniach.</string>
+    <string name="api_no_backend">Nie ustawiono serwera – zaloguj się w ustawieniach.</string>
     <string name="api_recipe_gone">Wybrany przepis został usunięty. Wybierz ponownie.</string>
     <string name="api_already_resolved">Ten przepis rozstrzygnięto już inaczej (może na innym telefonie).</string>
     <string name="api_not_found">Serwer nie zna tego elementu.</string>

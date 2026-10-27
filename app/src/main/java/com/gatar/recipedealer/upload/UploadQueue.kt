@@ -51,9 +51,12 @@ object UploadQueue {
             .forEach { enqueue(context, it.id) }
     }
 
-    /** 401 / 403: stop the queue until the token is changed. */
+    /** 401 / 403: stop the queue until a new login; the app opens the login screen. Notifies once per rejection. */
     fun pauseForAuth(context: Context) {
         WorkManager.getInstance(context).cancelAllWorkByTag(TAG)
+        val settings = context.container.settings
+        if (settings.current.authRejected) return
+        settings.update { it.copy(authRejected = true) }
         Notifications.authNeeded(context)
     }
 

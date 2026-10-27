@@ -46,6 +46,8 @@ import com.gatar.recipedealer.ui.CaptureDetailScreen
 import com.gatar.recipedealer.ui.CaptureListScreen
 import com.gatar.recipedealer.ui.DecisionScreen
 import com.gatar.recipedealer.ui.InboxScreen
+import com.gatar.recipedealer.ui.LoginScreen
+import com.gatar.recipedealer.ui.PasswordScreen
 import com.gatar.recipedealer.ui.ManualEntryScreen
 import com.gatar.recipedealer.ui.RecipeDetailScreen
 import com.gatar.recipedealer.ui.RecipeEditScreen
@@ -86,7 +88,7 @@ class MainActivity : ComponentActivity() {
     }
 
     private fun target(intent: Intent): String? = when {
-        intent.getBooleanExtra(EXTRA_SETTINGS, false) -> Routes.SETTINGS
+        intent.getBooleanExtra(EXTRA_LOGIN, false) -> Routes.LOGIN
         intent.getStringExtra(EXTRA_DECISION_ID) != null -> Routes.decision(intent.getStringExtra(EXTRA_DECISION_ID)!!)
         else -> intent.getStringExtra(EXTRA_CAPTURE_ID)?.let(Routes::capture)
     }
@@ -94,10 +96,10 @@ class MainActivity : ComponentActivity() {
     companion object {
         private const val EXTRA_CAPTURE_ID = "captureId"
         private const val EXTRA_DECISION_ID = "decisionCaptureId"
-        private const val EXTRA_SETTINGS = "openSettings"
+        private const val EXTRA_LOGIN = "openLogin"
 
-        fun openSettingsIntent(context: Context) = Intent(context, MainActivity::class.java)
-            .putExtra(EXTRA_SETTINGS, true)
+        fun openLoginIntent(context: Context) = Intent(context, MainActivity::class.java)
+            .putExtra(EXTRA_LOGIN, true)
             .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_SINGLE_TOP)
 
         fun openCaptureIntent(context: Context, captureId: String) = Intent(context, MainActivity::class.java)
@@ -122,6 +124,8 @@ object Routes {
     const val SETTINGS = "settings"
     const val MANUAL = "manual"
     const val TAGS = "tags"
+    const val LOGIN = "login"
+    const val PASSWORD = "password"
     fun capture(id: String) = "capture/$id"
     fun decision(id: String) = "decision/$id"
     fun recipe(id: String) = "recipe/$id"
@@ -143,9 +147,14 @@ private fun AppNavHost(nav: NavHostController) {
     val current by nav.currentBackStackEntryAsState()
     val route = current?.destination?.route
     val inbox by container.inbox.items.collectAsStateWithLifecycle()
+    val settings by container.settings.settings.collectAsStateWithLifecycle()
     LaunchedEffect(Unit) {
         container.inbox.refresh()
         container.recipeSync.sync()
+    }
+    // no token, or the server rejected it (also while the app is open): the login screen; back = offline use
+    LaunchedEffect(settings.needsLogin) {
+        if (settings.needsLogin) nav.navigate(Routes.LOGIN) { launchSingleTop = true }
     }
     Scaffold(
         bottomBar = {
@@ -240,8 +249,19 @@ private fun AppNavHost(nav: NavHostController) {
                 )
             }
             composable(Routes.SETTINGS) {
-                SettingsScreen(onBack = { nav.popBackStack() }, onTags = { nav.navigate(Routes.TAGS) })
+                SettingsScreen(
+                    onBack = { nav.popBackStack() },
+                    onTags = { nav.navigate(Routes.TAGS) },
+                    onLogin = { nav.navigate(Routes.LOGIN) },
+                    onPassword = { nav.navigate(Routes.PASSWORD) },
+                )
             }
+            composable(Routes.LOGIN) {
+                LoginScreen(onBack = { nav.popBackStack() }, onDone = {
+                    if (!nav.popBackStack()) nav.navigate(Routes.RECIPES)
+                })
+            }
+            composable(Routes.PASSWORD) { PasswordScreen(onBack = { nav.popBackStack() }) }
             composable(Routes.MANUAL) {
                 ManualEntryScreen(onBack = { nav.popBackStack() }, onSaved = { id ->
                     nav.navigate(Routes.capture(id)) { popUpTo(nav.graph.findStartDestination().id) }

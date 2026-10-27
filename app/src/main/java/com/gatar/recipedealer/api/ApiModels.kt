@@ -196,6 +196,22 @@ object Origins {
     const val USER = "USER"
 }
 
+/** `POST /v1/auth/register`. */
+@Serializable
+data class RegisterRequest(val userName: String, val password: String, val deviceName: String, val registrationCode: String)
+
+/** `POST /v1/auth/login`. */
+@Serializable
+data class LoginRequest(val userName: String, val password: String, val deviceName: String)
+
+/** Registration and login; the token is shown only here. */
+@Serializable
+data class Session(val token: String, val userId: String? = null, val deviceId: String? = null, val userName: String)
+
+/** `PUT /v1/me/password`; [currentPassword] once the user has a password (omitted when null). */
+@Serializable
+data class PasswordChange(val password: String, val currentPassword: String? = null)
+
 /** The backend's recipe JSON ↔ the app's [Recipe]. */
 object RecipeJson {
     private val known = Recipe.serializer().descriptor.let { d -> (0 until d.elementsCount).map(d::getElementName).toSet() }

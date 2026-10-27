@@ -330,6 +330,56 @@ class BackendClientTest {
         assertEquals(ApiResult.Failed(412, ApiErrors.HEAD_CHANGED), client().deleteRecipe(rid, lockId))
     }
 
+    // --- accounts ---
+
+    private val session = """{"token":"rd_new","userId":"u1","deviceId":"d1","userName":"Ania"}"""
+
+    @Test fun loginAndRegisterWithoutToken() = runTest {
+        respond(201, session); respond(201, session)
+        val s = client().login(LoginRequest("ania", "pw", "Pixel 9")).valueOrNull()!!
+        assertEquals(Session("rd_new", "u1", "d1", "Ania"), s)
+        server.takeRequest().apply {
+            assertEquals("POST", method)
+            assertEquals("/api/v1/auth/login", path)
+            assertNull(getHeader("Authorization"))
+            assertEquals("""{"userName":"ania","password":"pw","deviceName":"Pixel 9"}""", body.readUtf8())
+        }
+        assertTrue(client().register(RegisterRequest("Ania", "pw", "Tab", "kod")) is ApiResult.Ok)
+        server.takeRequest().apply {
+            assertEquals("/api/v1/auth/register", path)
+            assertNull(getHeader("Authorization"))
+            assertEquals("""{"userName":"Ania","password":"pw","deviceName":"Tab","registrationCode":"kod"}""", body.readUtf8())
+        }
+    }
+
+    @Test fun setPasswordOmitsMissingCurrent() = runTest {
+        respond(204); respond(204)
+        assertEquals(ApiResult.Ok(Unit, 204), client().setPassword(PasswordChange("new")))
+        server.takeRequest().apply {
+            assertCall("PUT", "/api/v1/me/password")
+            assertEquals("""{"password":"new"}""", body.readUtf8())
+        }
+        client().setPassword(PasswordChange("new", "old"))
+        assertEquals("""{"password":"new","currentPassword":"old"}""", server.takeRequest().body.readUtf8())
+    }
+
+    @Test fun accountErrorsAreAnswersNotDeadTokens() = runTest {
+        var rejected = 0
+        val c = BackendClient(server.url("/api").toString(), "secret", onUnauthorized = { rejected++ })
+        respond(401, """{"error":"invalid_credentials","details":["x"]}""")
+        respond(403, """{"error":"registration_disabled"}""")
+        respond(403, """{"error":"invalid_credentials"}""")
+        respond(429, """{"error":"too_many_requests"}""")
+        respond(401, """{"error":"unauthorized"}""")
+        assertEquals(ApiResult.Failed(401, ApiErrors.INVALID_CREDENTIALS, listOf("x")), c.login(LoginRequest("a", "b", "c")))
+        assertEquals(ApiResult.Failed(403, ApiErrors.REGISTRATION_DISABLED), c.register(RegisterRequest("a", "b", "c", "d")))
+        assertEquals(ApiResult.Failed(403, ApiErrors.INVALID_CREDENTIALS), c.setPassword(PasswordChange("n", "o")))
+        assertEquals(ApiResult.Failed(429, ApiErrors.TOO_MANY_REQUESTS), c.login(LoginRequest("a", "b", "c")))
+        assertEquals(0, rejected)
+        assertEquals(ApiResult.Unauthorized(401), c.capture(cid))
+        assertEquals(1, rejected)
+    }
+
     // --- common ---
 
     @Test fun authRetryAndNetworkErrors() = runTest {

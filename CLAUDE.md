@@ -12,7 +12,7 @@ The full task description is `final-app.md` (sections referenced below as §N). 
 - When a decision or assumption in `final-app.md` turns out wrong: tell the user, update the docs.
 
 ## Decisions (§3, agreed with the user 2026-10-11)
-D1 Kotlin + Compose · D2 Polish UI · D3 bearer token in settings (pluggable) · D4 one multipart PUT per capture ·
+D1 Kotlin + Compose · D2 Polish UI · D3 bearer token in settings (pluggable; since 2026-10-27 from login) · D4 one multipart PUT per capture ·
 D5 manual entry form → `MANUAL` capture.
 
 Deviation from §6.5 / §7.2 (told the user): a `screenshot` attachment (long screenshot: page URL shared along, or
@@ -131,14 +131,20 @@ A processed capture ends in `needs_decision` when there is a real choice: the us
 - Photo from a file on the device: decided (a) – a backend upload endpoint (e.g. `POST /v1/blobs` → blob id the
   recipe then references). Rejected (b): a `data:` URI JPEG inside `recipe.images` (bloats every sync).
   Until then the photo can only be replaced by URL (editor field `imageUrl` = `images[0]`).
-- Token by logging in: **done in the backend (2026-10-27)**, the app does not use it yet. `POST /v1/auth/register`
-  (user name, password, device name, household registration code) and `POST /v1/auth/login` return a token; the
-  token field disappears from the UI (kept in storage), a 401 leads to the login screen; existing users without a
-  password set one with `PUT /v1/me/password`. Details: `RecipeDealerBE-PoC/docs/api.md` (Accounts).
-  Send a stable device name (e.g. the model, editable): logging in again with the same name replaces that device's
-  token and keeps its id, a new name adds a device. Errors to show in Polish: `invalid_credentials`,
-  `registration_disabled`, `user_limit_reached`, `too_many_requests` (login limits, also with the right password).
-  A deleted user or revoked device gets 401 → login screen.
+
+## Accounts (backend 2026-10-27, `docs/api.md` Accounts)
+- `ui/AccountScreens.kt`: `LoginScreen` (login / "Załóż konto" with the household registration code; server URL,
+  user, password, device name = `Settings.Global.DEVICE_NAME` or the model, editable and stored so a re-login keeps
+  the server's device) and `PasswordScreen` (`PUT /v1/me/password`; current password optional for a device the admin
+  enrolled). `AppContainer.signIn` / `signOut` (forgets the token locally only).
+- The token is not shown anywhere (kept in `settings`). Settings → "Konto": logged in as / enrolled by the admin
+  ("Ustaw hasło", no logout until the user can log in) / logged out.
+- A dead token: every `ApiResult.Unauthorized` (BackendClient's `onUnauthorized`, upload, workers) →
+  `UploadQueue.pauseForAuth` sets `authRejected` (+ one notification, tap → login). `AppSettings.needsLogin`
+  (no token or rejected) opens the login screen; back = offline use of the cache.
+- `BackendClient`: 401 / 403 / 429 with an endpoint-specific code (`invalid_credentials`, `registration_disabled`,
+  `too_many_requests`, …) are `Failed`, not `Unauthorized` / `Retry`; Polish texts in `ApiTexts` without the
+  server's English details.
 
 ## Preview, editing, manual entry (§6.7, D5)
 - `capture/RecipeEdits.kt`: `RecipeDraft` (form strings ↔ Recipe, items one per line), `applyEdit` (changed fields →

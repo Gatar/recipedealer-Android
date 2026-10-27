@@ -19,13 +19,25 @@ fun apiErrorText(context: Context, r: ApiResult<*>): String? = when (r) {
     is ApiResult.Unauthorized -> context.getString(R.string.health_unauthorized)
     is ApiResult.Retry -> context.getString(R.string.api_offline, r.reason)
     is ApiResult.Locked -> context.getString(R.string.edit_locked_by, r.lockedBy ?: "?")
-    is ApiResult.Failed -> when (r.error) {
+    is ApiResult.Failed -> accountErrorText(context, r) ?: when (r.error) {
         Inbox.NO_BACKEND.error -> context.getString(R.string.api_no_backend)
         ApiErrors.RECIPE_GONE -> context.getString(R.string.api_recipe_gone)
         ApiErrors.ALREADY_RESOLVED -> context.getString(R.string.api_already_resolved)
         ApiErrors.NOT_FOUND -> context.getString(R.string.api_not_found)
         else -> null
     }.let { text -> listOfNotNull(text ?: "HTTP ${r.code}: ${r.error ?: "?"}", r.details.joinToString("\n").ifEmpty { null }).joinToString("\n") }
+}
+
+/** Login, registration, password: the Polish text says it all, without the server's English details. */
+private fun accountErrorText(context: Context, r: ApiResult.Failed): String? = when (r.error) {
+    ApiErrors.INVALID_CREDENTIALS -> context.getString(
+        if (r.code == 403) R.string.auth_wrong_current_password else R.string.auth_invalid_credentials)
+    ApiErrors.REGISTRATION_DISABLED -> context.getString(R.string.auth_registration_disabled)
+    ApiErrors.INVALID_REGISTRATION_CODE -> context.getString(R.string.auth_invalid_registration_code)
+    ApiErrors.USER_EXISTS -> context.getString(R.string.auth_user_exists)
+    ApiErrors.USER_LIMIT_REACHED -> context.getString(R.string.auth_user_limit_reached)
+    ApiErrors.TOO_MANY_REQUESTS -> context.getString(R.string.auth_too_many_requests)
+    else -> null
 }
 
 /** `CaptureView.status` for the user. */

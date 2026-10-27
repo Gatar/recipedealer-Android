@@ -27,7 +27,7 @@ sealed interface ApiResult<out T> {
     data class Ok<T>(val value: T, val code: Int = 200, val etag: String? = null) : ApiResult<T>
     /** 304 for a conditional GET. */
     data object NotModified : ApiResult<Nothing>
-    /** 401 / 403: the existing "needs auth" handling. */
+    /** 401 / 403 without an endpoint-specific code: the device token is not valid → log in again. */
     data class Unauthorized(val code: Int) : ApiResult<Nothing>
     /** 409 `locked`: someone else edits the recipe. */
     data class Locked(val lockedBy: String?, val expiresAt: String?) : ApiResult<Nothing>
@@ -67,19 +67,42 @@ object ApiErrors {
     const val IF_MATCH_REQUIRED = "if_match_required"
     const val TAG_EXISTS = "tag_exists"
     const val UNKNOWN_TAG = "unknown_tag"
+    const val UNAUTHORIZED = "unauthorized"
+    const val INVALID_CREDENTIALS = "invalid_credentials"
+    const val REGISTRATION_DISABLED = "registration_disabled"
+    const val INVALID_REGISTRATION_CODE = "invalid_registration_code"
+    const val USER_EXISTS = "user_exists"
+    const val USER_LIMIT_REACHED = "user_limit_reached"
+    const val TOO_MANY_REQUESTS = "too_many_requests"
 }
 
 /**
  * Everything after the upload (which stays in [HttpCaptureSender]): capture status / inbox / decisions, recipe
- * candidates, the sync feed, recipe detail and revisions, search, blobs and editing with the edit lock.
- * Bearer token on every call (D3).
+ * candidates, the sync feed, recipe detail and revisions, search, blobs and editing with the edit lock; accounts.
+ * Bearer token on every call but registration and login. [onUnauthorized] runs on every [ApiResult.Unauthorized].
  */
 class BackendClient(
     baseUrl: String,
     private val token: String?,
     private val client: OkHttpClient = HttpCaptureSender.defaultClient,
+    private val onUnauthorized: () -> Unit = {},
 ) {
     private val base = baseUrl.trim().trimEnd('/')
+
+    // --- accounts ---
+
+    suspend fun register(request: RegisterRequest): ApiResult<Session> =
+        call(request(url("/v1/auth/register"), authorize = false).post(json(encode(RegisterRequest.serializer(), request))),
+            Session.serializer())
+
+    /** With a device name the user already has, replaces that device's token. */
+    suspend fun login(request: LoginRequest): ApiResult<Session> =
+        call(request(url("/v1/auth/login"), authorize = false).post(json(encode(LoginRequest.serializer(), request))),
+            Session.serializer())
+
+    /** Sets (enrolled user without one) or changes the token user's password; 403 `invalid_credentials` = wrong current. */
+    suspend fun setPassword(change: PasswordChange): ApiResult<Unit> =
+        execute(request(url("/v1/me/password")).put(json(encode(PasswordChange.serializer(), change)))) { }
 
     // --- captures ---
 
@@ -187,8 +210,8 @@ class BackendClient(
     private fun url(path: String, query: HttpUrl.Builder.() -> Unit = {}): HttpUrl =
         (base + path).toHttpUrl().newBuilder().apply(query).build()
 
-    private fun request(url: HttpUrl) = Request.Builder().url(url).apply {
-        if (!token.isNullOrBlank()) header("Authorization", "Bearer $token")
+    private fun request(url: HttpUrl, authorize: Boolean = true) = Request.Builder().url(url).apply {
+        if (authorize && !token.isNullOrBlank()) header("Authorization", "Bearer $token")
         header("Accept", "application/json")
     }
 
@@ -205,12 +228,10 @@ class BackendClient(
                 when (r.code) {
                     in 200..299 -> ApiResult.Ok(parse(r), r.code, r.header("ETag"))
                     304 -> ApiResult.NotModified
-                    401, 403 -> ApiResult.Unauthorized(r.code)
-                    429 -> ApiResult.Retry("HTTP 429")
                     in 500..599 -> ApiResult.Retry("HTTP ${r.code}")
                     else -> failure(r.code, r.body?.string().orEmpty())
                 }
-            }
+            }.also { if (it is ApiResult.Unauthorized) onUnauthorized() }
         } catch (e: IOException) {
             ApiResult.Retry("${e.javaClass.simpleName}: ${e.message}")
         } catch (e: SerializationException) {
@@ -220,11 +241,17 @@ class BackendClient(
         }
     }
 
-    /** `{"error": "<code>", "details": [...]}`, or the 409 lock shape `{"error": "locked", "lockedBy", "expiresAt"}`. */
+    /**
+     * `{"error": "<code>", "details": [...]}`, or the 409 lock shape `{"error": "locked", "lockedBy", "expiresAt"}`.
+     * 401 / 403 with an endpoint-specific code (`invalid_credentials`, `registration_disabled`, …) and 429 with a
+     * code (login limits) are answers for the user, not a dead token or a reason to retry.
+     */
     private fun failure(code: Int, body: String): ApiResult<Nothing> {
         val o = runCatching { ApiJson.parseToJsonElement(body).jsonObject }.getOrNull()
         fun str(key: String) = (o?.get(key) as? JsonPrimitive)?.contentOrNull
         val error = str("error")
+        if ((code == 401 || code == 403) && (error == null || error == ApiErrors.UNAUTHORIZED)) return ApiResult.Unauthorized(code)
+        if (code == 429 && error == null) return ApiResult.Retry("HTTP 429")
         if (code == 409 && error == "locked") return ApiResult.Locked(str("lockedBy"), str("expiresAt"))
         val details = (o?.get("details") as? JsonArray)?.mapNotNull { (it as? JsonPrimitive)?.contentOrNull }.orEmpty()
         return ApiResult.Failed(code, error, details)

@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.pm.ApplicationInfo
 import android.webkit.WebView
 import com.gatar.recipedealer.api.BackendClient
+import com.gatar.recipedealer.api.Session
 import com.gatar.recipedealer.capture.CaptureProcessor
 import com.gatar.recipedealer.inbox.Inbox
 import com.gatar.recipedealer.recipes.ImageCache
@@ -79,6 +80,26 @@ class AppContainer(val context: Context) {
         send(id)
     }
 
-    /** Client for the backend in the settings; null without one (local mode). */
-    fun backend(): BackendClient? = settings.current.takeIf { it.hasBackend }?.let { BackendClient(it.baseUrl, it.token) }
+    /** Client for the backend in the settings; null without one (local mode). A dead token → login screen. */
+    fun backend(): BackendClient? = settings.current.takeIf { it.hasBackend }?.let {
+        BackendClient(it.baseUrl, it.token, onUnauthorized = { UploadQueue.pauseForAuth(context) })
+    }
+
+    /** After registration / login: the new token for [baseUrl]; the queue blocked by auth goes again. */
+    fun signIn(baseUrl: String, deviceName: String, session: Session) {
+        settings.update {
+            it.copy(baseUrl = baseUrl, token = session.token, userName = session.userName, deviceName = deviceName, authRejected = false)
+        }
+        Notifications.cancelAuth(context)
+        UploadQueue.resume(context, includeAuthFailures = true)
+        SyncWorker.syncNow(context)
+    }
+
+    /** Forgets the token (the server keeps the device; the next login with the same device name reuses it). */
+    fun signOut() = settings.update { it.copy(token = "", userName = "", authRejected = false) }
+
+    /** The device name from the system settings ("Galaxy Tab A8"), else the model. */
+    fun defaultDeviceName(): String =
+        android.provider.Settings.Global.getString(context.contentResolver, android.provider.Settings.Global.DEVICE_NAME)
+            ?.takeIf { it.isNotBlank() } ?: android.os.Build.MODEL
 }

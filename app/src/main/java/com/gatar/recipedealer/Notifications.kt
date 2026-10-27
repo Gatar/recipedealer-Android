@@ -82,18 +82,20 @@ object Notifications {
         notify(context, captureId, n)
     }
 
-    /** 401 / 403 from the backend: the queue is stopped until the token is fixed. */
+    /** 401 / 403 from the backend: the queue is stopped until the next login. Tap → login screen. */
     fun authNeeded(context: Context) {
         val n = NotificationCompat.Builder(context, CH_RESULT)
             .setSmallIcon(R.drawable.ic_stat_recipe)
             .setContentTitle(context.getString(R.string.notif_auth_title))
             .setContentText(context.getString(R.string.notif_auth_text))
-            .setContentIntent(PendingIntent.getActivity(context, 2, MainActivity.openSettingsIntent(context),
+            .setContentIntent(PendingIntent.getActivity(context, 2, MainActivity.openLoginIntent(context),
                 PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE))
             .setAutoCancel(true)
             .build()
         context.getSystemService(NotificationManager::class.java).notify(AUTH_ID, n)
     }
+
+    fun cancelAuth(context: Context) = context.getSystemService(NotificationManager::class.java).cancel(AUTH_ID)
 
     private const val AUTH_ID = 2
 
