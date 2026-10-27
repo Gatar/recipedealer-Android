@@ -39,9 +39,10 @@ android {
     buildTypes {
         release {
             signingConfigs.findByName("release")?.let { signingConfig = it }
+            // No R8: optimizing only androidx / kotlin(x) made kotlin.text classes inaccessible to the app's own code
+            // (IllegalAccessError at start, 2026-10-27). The release runs the same code as the tested debug build.
             optimization {
-                enable = true
-                packageScope = setOf("androidx.**", "kotlin.**", "kotlinx.**")
+                enable = false
             }
         }
     }
