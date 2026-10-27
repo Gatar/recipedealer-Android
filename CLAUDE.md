@@ -140,6 +140,8 @@ A processed capture ends in `needs_decision` when there is a real choice: the us
 - The token is not shown anywhere (kept in `settings`). Settings → "Konto": user and device name / enrolled by the
   admin (names unknown: no endpoint returns them for a token; they come with the first login, so the text suggests
   logout + login) / logged out. "Wyloguj" always (enrolled: the dialog warns a password is needed).
+- Verified 2026-10-27 by the user on the tablet: set password (enrolled device), logout + login, reinstall + login
+  (recipes and photos synced again). On the emulator: wrong password → Polish error against the real server.
 - Default server `AppSettings.DEFAULT_BASE_URL` = `https://2.31.66.200` (fresh install and an empty login form);
   editable, a URL cleared by the user stays blank (local mode).
 - A dead token: every `ApiResult.Unauthorized` (BackendClient's `onUnauthorized`, upload, workers) →
