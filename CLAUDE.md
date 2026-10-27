@@ -137,8 +137,11 @@ A processed capture ends in `needs_decision` when there is a real choice: the us
   user, password, device name = `Settings.Global.DEVICE_NAME` or the model, editable and stored so a re-login keeps
   the server's device) and `PasswordScreen` (`PUT /v1/me/password`; current password optional for a device the admin
   enrolled). `AppContainer.signIn` / `signOut` (forgets the token locally only).
-- The token is not shown anywhere (kept in `settings`). Settings → "Konto": logged in as / enrolled by the admin
-  ("Ustaw hasło", no logout until the user can log in) / logged out.
+- The token is not shown anywhere (kept in `settings`). Settings → "Konto": user and device name / enrolled by the
+  admin (names unknown: no endpoint returns them for a token; they come with the first login, so the text suggests
+  logout + login) / logged out. "Wyloguj" always (enrolled: the dialog warns a password is needed).
+- Default server `AppSettings.DEFAULT_BASE_URL` = `https://2.31.66.200` (fresh install and an empty login form);
+  editable, a URL cleared by the user stays blank (local mode).
 - A dead token: every `ApiResult.Unauthorized` (BackendClient's `onUnauthorized`, upload, workers) →
   `UploadQueue.pauseForAuth` sets `authRejected` (+ one notification, tap → login). `AppSettings.needsLogin`
   (no token or rejected) opens the login screen; back = offline use of the cache.

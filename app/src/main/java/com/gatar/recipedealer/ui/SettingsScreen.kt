@@ -28,6 +28,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -66,6 +67,8 @@ fun SettingsScreen(onBack: () -> Unit, onTags: () -> Unit, onLogin: () -> Unit, 
     var confirmLogout by remember { mutableStateOf(false) }
     val scope = rememberCoroutineScope()
     val urlValid = url.isBlank() || isAllowedUrl(url.trim())
+    // a login from here may store another server address: keep the field (and a later "Zapisz") in step
+    LaunchedEffect(account.baseUrl) { url = account.baseUrl }
 
     fun save() {
         val backendChanged = url.trim().trimEnd('/') != repo.current.baseUrl
@@ -77,7 +80,10 @@ fun SettingsScreen(onBack: () -> Unit, onTags: () -> Unit, onLogin: () -> Unit, 
     if (confirmLogout) {
         AlertDialog(
             onDismissRequest = { confirmLogout = false },
-            text = { Text(stringResource(R.string.logout_confirm)) },
+            text = {
+                Text(stringResource(R.string.logout_confirm) +
+                    if (repo.current.userName.isBlank()) "\n\n" + stringResource(R.string.logout_confirm_enrolled) else "")
+            },
             confirmButton = {
                 TextButton(onClick = { confirmLogout = false; container.signOut() }) { Text(stringResource(R.string.settings_logout)) }
             },
@@ -129,15 +135,16 @@ fun SettingsScreen(onBack: () -> Unit, onTags: () -> Unit, onLogin: () -> Unit, 
             health?.let { Text(it, style = MaterialTheme.typography.bodyMedium) }
             HorizontalDivider()
             Text(stringResource(R.string.settings_account), style = MaterialTheme.typography.titleMedium)
-            Text(
-                when {
-                    account.authRejected -> stringResource(R.string.settings_rejected)
-                    account.token.isBlank() -> stringResource(R.string.settings_logged_out)
-                    account.userName.isBlank() -> stringResource(R.string.settings_enrolled)
-                    else -> stringResource(R.string.settings_logged_in, account.userName, account.deviceName)
-                },
-                style = MaterialTheme.typography.bodyMedium,
-            )
+            when {
+                account.authRejected -> Text(stringResource(R.string.settings_rejected), style = MaterialTheme.typography.bodyMedium)
+                account.token.isBlank() -> Text(stringResource(R.string.settings_logged_out), style = MaterialTheme.typography.bodyMedium)
+                // no endpoint tells the names behind an admin's token: they come with the first login
+                account.userName.isBlank() -> Text(stringResource(R.string.settings_enrolled), style = MaterialTheme.typography.bodyMedium)
+                else -> {
+                    LabeledValue(stringResource(R.string.login_user), account.userName)
+                    LabeledValue(stringResource(R.string.login_device), account.deviceName)
+                }
+            }
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 if (account.needsLogin) {
                     Button(onClick = onLogin) { Text(stringResource(R.string.login)) }
@@ -145,10 +152,7 @@ fun SettingsScreen(onBack: () -> Unit, onTags: () -> Unit, onLogin: () -> Unit, 
                     OutlinedButton(onClick = onPassword) {
                         Text(stringResource(if (account.userName.isBlank()) R.string.password_set else R.string.password_change))
                     }
-                    // an enrolled device without a password could not log in again: no logout until it has one
-                    if (account.userName.isNotBlank()) {
-                        OutlinedButton(onClick = { confirmLogout = true }) { Text(stringResource(R.string.settings_logout)) }
-                    }
+                    OutlinedButton(onClick = { confirmLogout = true }) { Text(stringResource(R.string.settings_logout)) }
                 }
             }
             HorizontalDivider()
@@ -177,6 +181,14 @@ fun isAllowedUrl(url: String): Boolean {
         "https" -> true
         "http" -> u.host == "10.0.2.2" || u.host == "localhost"
         else -> false
+    }
+}
+
+@Composable
+private fun LabeledValue(label: String, value: String) {
+    Column {
+        Text(label, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+        Text(value.ifBlank { "–" }, style = MaterialTheme.typography.bodyLarge)
     }
 }
 

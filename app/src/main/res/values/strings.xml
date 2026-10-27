@@ -60,12 +60,12 @@
     <string name="settings_url">Adres serwera (https://…)</string>
     <string name="settings_url_hint">Puste = zapis tylko na telefonie</string>
     <string name="settings_account">Konto</string>
-    <string name="settings_logged_in">Zalogowano jako %1$s (urządzenie: %2$s)</string>
-    <string name="settings_enrolled">To urządzenie dodał administrator. Ustaw hasło, żeby móc się zalogować po reinstalacji lub na innym urządzeniu.</string>
+    <string name="settings_enrolled">To urządzenie dodał administrator, więc aplikacja nie zna jeszcze nazwy użytkownika ani urządzenia. Jeśli masz już hasło, wyloguj się i zaloguj nim – nazwy pojawią się tutaj. Bez hasła najpierw je ustaw.</string>
     <string name="settings_logged_out">Nie zalogowano.</string>
     <string name="settings_rejected">Serwer odrzucił logowanie z tego urządzenia.</string>
     <string name="settings_logout">Wyloguj</string>
     <string name="logout_confirm">Wylogować? Przepisy zostaną na urządzeniu, ale do wysyłania i edycji trzeba będzie zalogować się ponownie.</string>
+    <string name="logout_confirm_enrolled">Do ponownego logowania potrzebne są nazwa użytkownika i hasło. Jeśli hasło nie jest jeszcze ustawione, najpierw użyj „Ustaw hasło”.</string>
     <string name="login">Zaloguj się</string>
     <string name="register">Załóż konto</string>
     <string name="login_title">Logowanie</string>

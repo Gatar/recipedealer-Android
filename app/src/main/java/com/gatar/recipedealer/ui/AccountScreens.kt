@@ -43,6 +43,7 @@ import com.gatar.recipedealer.api.PasswordChange
 import com.gatar.recipedealer.api.RegisterRequest
 import com.gatar.recipedealer.container
 import com.gatar.recipedealer.inbox.Inbox
+import com.gatar.recipedealer.settings.AppSettings
 import kotlinx.coroutines.launch
 
 /**
@@ -56,7 +57,7 @@ fun LoginScreen(onBack: () -> Unit, onDone: () -> Unit) {
     val container = context.container
     val initial = remember { container.settings.current }
     var register by remember { mutableStateOf(false) }
-    var url by remember { mutableStateOf(initial.baseUrl) }
+    var url by remember { mutableStateOf(initial.baseUrl.ifBlank { AppSettings.DEFAULT_BASE_URL }) }
     var user by remember { mutableStateOf(initial.userName) }
     var password by remember { mutableStateOf("") }
     var device by remember { mutableStateOf(initial.deviceName.ifBlank { container.defaultDeviceName() }) }

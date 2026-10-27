@@ -29,6 +29,11 @@ data class AppSettings(
 
     /** No usable token: the app asks for a login. */
     val needsLogin get() = token.isBlank() || authRejected
+
+    companion object {
+        /** The household's server; editable, and blank still means local mode. */
+        const val DEFAULT_BASE_URL = "https://2.31.66.200"
+    }
 }
 
 /** Plain SharedPreferences (excluded from backups: allowBackup=false). */
@@ -56,7 +61,8 @@ class SettingsRepository(context: Context) {
     }
 
     private fun read() = AppSettings(
-        baseUrl = prefs.getString(BASE_URL, "").orEmpty(),
+        // a fresh install talks to the household's server; a URL cleared by the user stays blank
+        baseUrl = prefs.getString(BASE_URL, AppSettings.DEFAULT_BASE_URL).orEmpty(),
         token = prefs.getString(TOKEN, "").orEmpty(),
         userName = prefs.getString(USER_NAME, "").orEmpty(),
         deviceName = prefs.getString(DEVICE_NAME, "").orEmpty(),
