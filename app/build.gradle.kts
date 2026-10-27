@@ -20,8 +20,25 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    // Release key outside both repos (`../signing/`, see CLAUDE.md "Release APK"); without it the release stays unsigned.
+    val signingDir = rootProject.file("../signing")
+    val releaseKeystore = File(signingDir, "recipedealer-release.jks")
+    val releasePassword = File(signingDir, "store-password.txt")
+    signingConfigs {
+        if (releaseKeystore.exists() && releasePassword.exists()) {
+            create("release") {
+                storeFile = releaseKeystore
+                storeType = "pkcs12"
+                storePassword = releasePassword.readText().trim()
+                keyAlias = "recipedealer"
+                keyPassword = storePassword
+            }
+        }
+    }
+
     buildTypes {
         release {
+            signingConfigs.findByName("release")?.let { signingConfig = it }
             optimization {
                 enable = true
                 packageScope = setOf("androidx.**", "kotlin.**", "kotlinx.**")

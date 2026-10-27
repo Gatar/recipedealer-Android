@@ -52,6 +52,15 @@ or notification action). Setting "Wysyłaj automatycznie" sends right after extr
   reinstall (`installDebug`) before manual tests.
 - adb lives in `~/Library/Android/sdk/platform-tools/adb`; emulator AVD `Pixel_9` (Android 37).
 
+## Release APK (phones get it as a file, no Play Store, no adb)
+- Signing key outside both repos: `../signing/recipedealer-release.jks` (PKCS12, alias `recipedealer`) + its password
+  in `../signing/store-password.txt`; `app/build.gradle.kts` picks them up, without them the release is unsigned.
+  Losing the key = no updates (uninstall + new login). The user keeps a backup. Never commit or print the password.
+- Build: `./gradlew :app:assembleRelease` (in the sandbox add `-x lintVitalAnalyzeRelease -x lintVitalReportRelease
+  -x lintVitalRelease`: lint downloads its deps). Copy to `../apk/RecipeDealer-<versionName>.apk`.
+- Raise `versionCode` / `versionName` for every APK handed out. A device with the debug build (debug key) has to
+  uninstall once before the release installs (unsent captures are lost; recipes come back with the login).
+
 ## Gotchas
 - `am start` with a share while the app is on screen is delivered to the running instance – force-stop first.
 - adb shell cannot grant MediaStore read access: feed test files via `run-as … cp` into the app's files dir and
