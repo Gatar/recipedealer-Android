@@ -60,7 +60,10 @@ or notification action). Setting "Wysyłaj automatycznie" sends right after extr
   -x lintVitalRelease`: lint downloads its deps). Copy to `../apk/RecipeDealer-<versionName>.apk`.
 - 1.0.0 verified on the emulator (2026-10-27, fresh install): login screen with the default URL, sync + blob photos,
   settings names, connection test, detail + tags, history, server search with a typo, TEXT share → send → `done`
-  without asking → listed right away. No app crash.
+  without asking → listed right away. No app crash. 1.0.1 (versionCode 2) installed over it keeps login and data.
+- Feeding files into a release build (no `run-as`): `adb push` to `/sdcard/Download/…`, open the Files app
+  (`am start -a android.intent.action.VIEW -t vnd.android.document/directory -d content://com.android.externalstorage.documents/document/primary%3ADownload%2F<dir>`),
+  long-press one file → Share → RecipeDealer; "Cancel" the selection before the next file (it can stay selected).
 - Raise `versionCode` / `versionName` for every APK handed out. A device with the debug build (debug key) has to
   uninstall once before the release installs (unsent captures are lost; recipes come back with the login).
 
@@ -105,7 +108,9 @@ A processed capture ends in `needs_decision` when there is a real choice: the us
 2026-10-27 a candidate that matches no recipe becomes a new recipe without asking (capture goes straight to `done`);
 `StatusWorker` syncs on every `done`, so such a recipe shows up right away.
 `StatusWorker` polls while `accepted` / `processing`, then notifies on `needs_decision` / `needs_attention`
-(tap → decision screen). `recipe_gone` / `already_resolved` reload the capture. Server messages come in English.
+(tap → decision screen). Exception `Inbox.needsUser`: `needs_attention` with reason `AWAITING_EXTRACTION` (photos /
+PDFs: the backend's `PassthroughExtractor` cannot structure OCR text) is not in "Do decyzji" and not notified; the
+capture list shows "czeka na odczyt na serwerze" (the NEW decision is kept on the server). `recipe_gone` / `already_resolved` reload the capture. Server messages come in English.
 
 ## Recipes: sync, search, editing (RecipeDealerBE)
 - The recipe list reads only `RecipeCache` (works offline). Search: `GET /v1/recipes/search`, offline / while
@@ -143,6 +148,9 @@ A processed capture ends in `needs_decision` when there is a real choice: the us
 - Photo from a file on the device: decided (a) – a backend upload endpoint (e.g. `POST /v1/blobs` → blob id the
   recipe then references). Rejected (b): a `data:` URI JPEG inside `recipe.images` (bloats every sync).
   Until then the photo can only be replaced by URL (editor field `imageUrl` = `images[0]`).
+- LLM / vision extractor in the backend (README "phase 2", user 2026-10-27: needed). Until then IMAGE / PDF captures
+  stay `AWAITING_EXTRACTION`. 9 household recipes (`../przepisy/`, 7 PDF + PNG + JPG) were sent 2026-10-27 with
+  "Wyślij jako nowy" and wait there; check that the extractor picks up such captures.
 
 ## Accounts (backend 2026-10-27, `docs/api.md` Accounts)
 - `ui/AccountScreens.kt`: `LoginScreen` (login / "Załóż konto" with the household registration code; server URL,

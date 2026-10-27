@@ -53,7 +53,7 @@ fun backendStatusLabel(context: Context, status: String): String = when (status)
 /** `CaptureView.reason`; the server's `message` is shown next to it. */
 fun backendReasonText(context: Context, reason: String?): String? = when (reason) {
     "PROCESSING_FAILED" -> context.getString(R.string.reason_processing_failed)
-    "AWAITING_EXTRACTION" -> context.getString(R.string.reason_awaiting_extraction)
+    Inbox.AWAITING_EXTRACTION -> context.getString(R.string.reason_awaiting_extraction)
     "TARGET_GONE" -> context.getString(R.string.reason_target_gone)
     else -> reason
 }

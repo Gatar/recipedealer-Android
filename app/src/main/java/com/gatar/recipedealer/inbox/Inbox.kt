@@ -25,7 +25,7 @@ class Inbox(private val store: CaptureStore, private val backend: () -> BackendC
         val client = backend() ?: return NO_BACKEND
         val r = client.captures()
         if (r is ApiResult.Ok) {
-            _items.value = r.value
+            _items.value = r.value.filter(::needsUser)
             r.value.forEach(::recordLocal)
         }
         return r
@@ -68,7 +68,7 @@ class Inbox(private val store: CaptureStore, private val backend: () -> BackendC
         recordLocal(view)
         _items.update { list ->
             val rest = list.filterNot { it.captureId == view.captureId }
-            if (view.status in WAITING) (listOf(view) + rest).sortedByDescending { it.receivedAt.orEmpty() } else rest
+            if (needsUser(view)) (listOf(view) + rest).sortedByDescending { it.receivedAt.orEmpty() } else rest
         }
     }
 
@@ -88,6 +88,14 @@ class Inbox(private val store: CaptureStore, private val backend: () -> BackendC
 
     companion object {
         val WAITING = setOf(CaptureStates.NEEDS_DECISION, CaptureStates.NEEDS_ATTENTION)
+        /** `needs_attention`: nothing could be extracted yet (photos / PDFs until the backend's LLM extractor). */
+        const val AWAITING_EXTRACTION = "AWAITING_EXTRACTION"
+
+        /**
+         * Something the user can do now: a decision, or help with a failure. A capture awaiting the server's extraction
+         * is not (the decision is kept, the server picks it up later): it stays only in "Udostępnienia", no notification.
+         */
+        fun needsUser(view: CaptureView) = view.status in WAITING && view.reason != AWAITING_EXTRACTION
         private val RELOAD_ON = setOf(ApiErrors.RECIPE_GONE, ApiErrors.ALREADY_RESOLVED)
         val NO_BACKEND = ApiResult.Failed(0, "no_backend")
     }

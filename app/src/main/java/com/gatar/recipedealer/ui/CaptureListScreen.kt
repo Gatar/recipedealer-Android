@@ -40,6 +40,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.gatar.recipedealer.R
 import com.gatar.recipedealer.container
+import com.gatar.recipedealer.inbox.Inbox
 import com.gatar.recipedealer.model.SourceType
 import com.gatar.recipedealer.store.CaptureEntry
 import com.gatar.recipedealer.store.CaptureStatus
@@ -124,7 +125,10 @@ fun statusText(entry: CaptureEntry): String = when (entry.state.status) {
     CaptureStatus.DRAFT -> stringResource(R.string.status_draft)
     CaptureStatus.QUEUED -> stringResource(R.string.status_queued)
     CaptureStatus.SENT -> if (entry.state.destination == "local") stringResource(R.string.status_sent_local)
-        else stringResource(R.string.status_sent) + (entry.state.backendStatus?.let { " · " + backendStatusLabel(LocalContext.current, it) } ?: "")
+        else stringResource(R.string.status_sent) + (entry.state.backendStatus?.let {
+            " · " + if (entry.state.backendReason == Inbox.AWAITING_EXTRACTION) stringResource(R.string.backend_awaiting_extraction)
+            else backendStatusLabel(LocalContext.current, it)
+        } ?: "")
     CaptureStatus.FAILED -> stringResource(R.string.status_failed)
 }
 

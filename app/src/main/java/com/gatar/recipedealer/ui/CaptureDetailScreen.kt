@@ -146,7 +146,8 @@ fun CaptureDetailScreen(
                     }
                 }
                 if (entry.state.status == CaptureStatus.SENT && entry.state.destination != LocalCaptureSender.DESTINATION) {
-                    if (entry.state.backendStatus in Inbox.WAITING || entry.state.backendRecipes.isNotEmpty()) {
+                    val waiting = entry.state.backendStatus in Inbox.WAITING && entry.state.backendReason != Inbox.AWAITING_EXTRACTION
+                    if (waiting || entry.state.backendRecipes.isNotEmpty()) {
                         Button(onClick = { onDecide(id) }) { Text(stringResource(R.string.decide)) }
                     }
                     OutlinedButton(onClick = { UploadQueue.scheduleStatusNow(context, id) }) { Text(stringResource(R.string.refresh_status)) }

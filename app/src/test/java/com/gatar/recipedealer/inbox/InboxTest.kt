@@ -60,6 +60,17 @@ class InboxTest {
         assertEquals(null, store.get("other-phone"))
     }
 
+    @Test fun awaitingExtractionStaysOutOfTheInboxButUpdatesLocalState() = runTest {
+        val awaiting = """{"captureId":"$cid","status":"needs_attention","reason":"AWAITING_EXTRACTION"}"""
+        respond(200, """[$awaiting,{"captureId":"other-phone","status":"needs_attention","reason":"AWAITING_EXTRACTION"}]""")
+        respond(200, awaiting)
+        inbox.refresh()
+        assertEquals(emptyList<String>(), inbox.items.value.map { it.captureId })
+        assertEquals(Inbox.AWAITING_EXTRACTION, store.get(cid)!!.state.backendReason)
+        inbox.load(cid)
+        assertEquals(emptyList<String>(), inbox.items.value.map { it.captureId })
+    }
+
     @Test fun resolveNewMakesCaptureDoneAndLeavesTheInbox() = runTest {
         respond(200, "[$needsDecision]")
         respond(200, done)

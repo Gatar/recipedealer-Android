@@ -143,9 +143,10 @@
     <string name="backend_processing">przetwarzanie na serwerze</string>
     <string name="backend_needs_decision">do decyzji</string>
     <string name="backend_needs_attention">wymaga uwagi</string>
+    <string name="backend_awaiting_extraction">czeka na odczyt na serwerze</string>
     <string name="backend_done">gotowe</string>
     <string name="reason_processing_failed">Serwer nie zdołał przetworzyć tego udostępnienia.</string>
-    <string name="reason_awaiting_extraction">Nie udało się odczytać składników ani kroków.</string>
+    <string name="reason_awaiting_extraction">Serwer nie odczytał jeszcze składników ani kroków (zdjęcia i PDF-y odczyta automatycznie, gdy będzie to umiał). Nic nie trzeba robić.</string>
     <string name="reason_target_gone">Przepis wybrany do aktualizacji został usunięty – wybierz ponownie.</string>
     <string name="notif_decision">Do decyzji · %1$s</string>
     <string name="notif_decision_text">Nowy przepis czy aktualizacja istniejącego? Dotknij, aby zdecydować.</string>
