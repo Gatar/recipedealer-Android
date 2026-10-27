@@ -91,8 +91,7 @@ that gave ingredients or steps. `BrowserActivity` is the visible WebView (failur
 A processed capture ends in `needs_decision` when there is a real choice: the user picks, per extracted candidate,
 "Nowy przepis" or "Aktualizuj: <match>" (`GET /v1/recipes/candidates`, URL matches preselected). Since backend
 2026-10-27 a candidate that matches no recipe becomes a new recipe without asking (capture goes straight to `done`);
-app follow-up: `StatusWorker` syncs on `done` only for "Wyślij jako nowy", so such a recipe shows up with the next
-sync.
+`StatusWorker` syncs on every `done`, so such a recipe shows up right away.
 `StatusWorker` polls while `accepted` / `processing`, then notifies on `needs_decision` / `needs_attention`
 (tap → decision screen). `recipe_gone` / `already_resolved` reload the capture. Server messages come in English.
 

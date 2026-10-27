@@ -128,7 +128,8 @@ class StatusWorker(context: Context, params: WorkerParameters) : CoroutineWorker
             }
             c.inbox.load(id)
         }
-        if (view.status == CaptureStates.DONE && c.store.get(id)?.state?.asNew == true) SyncWorker.syncNow(applicationContext)
+        // also without "Wyślij jako nowy": the backend turns a candidate that matches no recipe into a new one by itself
+        if (view.status == CaptureStates.DONE) SyncWorker.syncNow(applicationContext)
         if (view.status != before && view.status in Inbox.WAITING) {
             c.store.get(id)?.let { Notifications.decisionNeeded(applicationContext, it.id, it.title ?: view.title, view) }
         }
