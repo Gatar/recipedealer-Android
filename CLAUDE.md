@@ -58,6 +58,9 @@ or notification action). Setting "Wysyłaj automatycznie" sends right after extr
   Losing the key = no updates (uninstall + new login). The user keeps a backup. Never commit or print the password.
 - Build: `./gradlew :app:assembleRelease` (in the sandbox add `-x lintVitalAnalyzeRelease -x lintVitalReportRelease
   -x lintVitalRelease`: lint downloads its deps). Copy to `../apk/RecipeDealer-<versionName>.apk`.
+- 1.0.0 verified on the emulator (2026-10-27, fresh install): login screen with the default URL, sync + blob photos,
+  settings names, connection test, detail + tags, history, server search with a typo, TEXT share → send → `done`
+  without asking → listed right away. No app crash.
 - Raise `versionCode` / `versionName` for every APK handed out. A device with the debug build (debug key) has to
   uninstall once before the release installs (unsent captures are lost; recipes come back with the login).
 
