@@ -6,6 +6,10 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.ui.Alignment
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.imePadding
@@ -25,6 +29,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
@@ -105,12 +110,47 @@ fun RecipeEditScreen(onClose: () -> Unit, onDeleted: () -> Unit, vm: RecipeEditV
     fun close() = onClose()
     BackHandler { close() }
 
+    fun save(d: RecipeDraft) = scope.launch {
+        busy = true
+        val r = session?.save(d.toRecipe(state.initial ?: Recipe()))
+        busy = false
+        if (r is ApiResult.Ok) {
+            SyncWorker.syncNow(context)
+            onClose()
+        }
+    }
+
     Scaffold(
         topBar = {
-            TopAppBar(
-                title = { Text(stringResource(R.string.edit_title), maxLines = 1) },
-                navigationIcon = { IconButton(onClick = ::close) { Icon(Icons.AutoMirrored.Default.ArrowBack, stringResource(R.string.back)) } },
-            )
+            Column {
+                TopAppBar(
+                    title = { Text(stringResource(R.string.edit_title), maxLines = 1) },
+                    navigationIcon = { IconButton(onClick = ::close) { Icon(Icons.AutoMirrored.Default.ArrowBack, stringResource(R.string.back)) } },
+                )
+                // the actions stay at hand while the form scrolls (part of the top bar, not of the scrolled column)
+                val d = draft
+                if (d != null && state.phase in setOf(Phase.EDITING, Phase.FINISHED)) {
+                    // read and found fine: the same save, but it says what it means (the server then clears needsReview)
+                    val unchanged = state.initial?.let { d.sameContentAs(RecipeDraft.from(it)) } == true
+                    Surface(tonalElevation = 3.dp, shadowElevation = 2.dp) {
+                        // one line also on a phone: delete is an icon at the far end
+                        Row(
+                            Modifier.fillMaxWidth().padding(start = 16.dp, end = 8.dp, top = 8.dp, bottom = 8.dp),
+                            horizontalArrangement = Arrangement.spacedBy(8.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                        ) {
+                            Button(enabled = !busy && state.phase == Phase.EDITING && isImageUrl(d.imageUrl), onClick = { save(d) }) {
+                                Text(stringResource(if (unchanged) R.string.approve_unchanged else R.string.save_recipe), maxLines = 1)
+                            }
+                            OutlinedButton(onClick = ::close) { Text(stringResource(R.string.cancel), maxLines = 1) }
+                            Spacer(Modifier.weight(1f))
+                            IconButton(enabled = !busy && state.phase == Phase.EDITING, onClick = { confirmDelete = true }) {
+                                Icon(Icons.Default.Delete, stringResource(R.string.recipe_delete), tint = MaterialTheme.colorScheme.error)
+                            }
+                        }
+                    }
+                }
+            }
         },
     ) { padding ->
         Column(
@@ -147,25 +187,6 @@ fun RecipeEditScreen(onClose: () -> Unit, onDeleted: () -> Unit, vm: RecipeEditV
             }
             val d = draft ?: return@Column
             RecipeEditor(d) { draft = it }
-            // read and found fine: the same save, but it says what it means (the server then clears needsReview)
-            val unchanged = state.initial?.let { d.sameContentAs(RecipeDraft.from(it)) } == true
-            FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                Button(enabled = !busy && state.phase == Phase.EDITING && isImageUrl(d.imageUrl), onClick = {
-                    scope.launch {
-                        busy = true
-                        val r = session?.save(d.toRecipe(state.initial ?: Recipe()))
-                        busy = false
-                        if (r is ApiResult.Ok) {
-                            SyncWorker.syncNow(context)
-                            onClose()
-                        }
-                    }
-                }) { Text(stringResource(if (unchanged) R.string.approve_unchanged else R.string.save_recipe)) }
-                OutlinedButton(onClick = ::close) { Text(stringResource(R.string.cancel)) }
-                TextButton(enabled = !busy && state.phase == Phase.EDITING, onClick = { confirmDelete = true }) {
-                    Text(stringResource(R.string.recipe_delete), color = MaterialTheme.colorScheme.error)
-                }
-            }
         }
     }
     if (confirmDelete) {
