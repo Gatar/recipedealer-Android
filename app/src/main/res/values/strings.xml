@@ -146,7 +146,7 @@
     <string name="backend_processing">przetwarzanie na serwerze</string>
     <string name="backend_needs_decision">do decyzji</string>
     <string name="backend_needs_attention">wymaga uwagi</string>
-    <string name="backend_awaiting_extraction">czeka na odczyt na serwerze</string>
+    <string name="backend_awaiting_extraction">nie odczytano przepisu</string>
     <string name="backend_done">gotowe</string>
     <string name="reason_processing_failed">Serwer nie zdołał przetworzyć tego udostępnienia.</string>
     <string name="reason_awaiting_extraction">Serwer nie odczytał składników ani kroków.</string>
@@ -168,6 +168,11 @@
     <string name="reread_done">Odczytano ponownie.</string>
     <string name="reread_still_running">Odczyt wciąż trwa – dam znać powiadomieniem.</string>
     <string name="reread_unsupported">Serwer nie obsługuje jeszcze ponownego odczytu AI.</string>
+    <string name="discard">Odrzuć (to nie przepis)</string>
+    <string name="discard_confirm">Usunąć to udostępnienie razem ze zdjęciami / PDF-em z serwera i z tego telefonu? Nie da się tego cofnąć.</string>
+    <string name="discard_ok">Usuń</string>
+    <string name="discard_unsupported">Serwer nie obsługuje jeszcze odrzucania udostępnień.</string>
+    <string name="api_capture_applied">Z tego udostępnienia powstał już przepis – usuń przepis zamiast udostępnienia.</string>
     <string name="decision_title">Nowy czy aktualizacja?</string>
     <string name="decision_counts">Składniki: %1$d, kroki: %2$d</string>
     <string name="needs_review">Wymaga sprawdzenia</string>

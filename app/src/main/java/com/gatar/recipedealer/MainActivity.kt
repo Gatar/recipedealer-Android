@@ -246,6 +246,8 @@ private fun AppNavHost(nav: NavHostController) {
                     captureId = back.arguments?.getString("id").orEmpty(),
                     onBack = { nav.popBackStack() },
                     onOpenRecipe = { nav.navigate(Routes.recipe(it)) },
+                    // the capture detail below shows a deleted capture: skip it as well
+                    onDiscarded = { if (!nav.popBackStack(Routes.CAPTURE, inclusive = true)) nav.popBackStack() },
                 )
             }
             composable(Routes.SETTINGS) {

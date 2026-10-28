@@ -146,7 +146,7 @@ fun CaptureDetailScreen(
                     }
                 }
                 if (entry.state.status == CaptureStatus.SENT && entry.state.destination != LocalCaptureSender.DESTINATION) {
-                    val waiting = entry.state.backendStatus in Inbox.WAITING && entry.state.backendReason != Inbox.AWAITING_EXTRACTION
+                    val waiting = entry.state.backendStatus in Inbox.WAITING
                     if (Inbox.canReread(entry.state.backendStatus, entry.state.backendReason)) {
                         // the decision screen runs it and waits for the result
                         Button(onClick = { onDecide(id) }) { Text(stringResource(R.string.reread_ai)) }

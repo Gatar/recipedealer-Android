@@ -71,6 +71,19 @@ class Inbox(private val store: CaptureStore, private val backend: () -> BackendC
         return r
     }
 
+    /**
+     * "Odrzuć": deletes the capture on the server (an invoice shared by mistake) and on this phone. Already deleted
+     * (404 `not_found`, e.g. by another phone) counts as done.
+     */
+    suspend fun discard(captureId: String): ApiResult<Unit> {
+        val r = (backend() ?: return NO_BACKEND).deleteCapture(captureId)
+        val gone = r is ApiResult.Ok || (r is ApiResult.Failed && r.code == 404 && r.error == ApiErrors.NOT_FOUND)
+        if (!gone) return r
+        _items.update { list -> list.filterNot { it.captureId == captureId } }
+        store.delete(captureId)
+        return ApiResult.Ok(Unit)
+    }
+
     fun record(view: CaptureView) {
         recordLocal(view)
         _items.update { list ->
@@ -111,10 +124,13 @@ class Inbox(private val store: CaptureStore, private val backend: () -> BackendC
         fun isPending(status: String?) = status == CaptureStates.ACCEPTED || status == CaptureStates.PROCESSING
 
         /**
-         * Something the user can do now: a decision, or help with a failure. A capture awaiting the server's extraction
-         * is not (the decision is kept, the server picks it up later): it stays only in "Udostępnienia", no notification.
+         * Something the user can do now: a decision, or help with a failure ("Ponownie odczytaj AI", "Odrzuć").
+         * Also `AWAITING_EXTRACTION` since the server reads photos / PDFs itself: it does not come back to them.
          */
-        fun needsUser(view: CaptureView) = view.status in WAITING && view.reason != AWAITING_EXTRACTION
+        fun needsUser(view: CaptureView) = view.status in WAITING
+
+        /** "Odrzuć" (delete on the server) only for a capture that has not become a recipe. */
+        fun canDiscard(status: String?, recipes: List<*>) = status in WAITING && recipes.isEmpty()
         private val RELOAD_ON = setOf(ApiErrors.RECIPE_GONE, ApiErrors.ALREADY_RESOLVED)
         val NO_BACKEND = ApiResult.Failed(0, "no_backend")
     }

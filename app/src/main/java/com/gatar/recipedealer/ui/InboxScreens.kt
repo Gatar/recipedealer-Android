@@ -16,6 +16,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.Label
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.AssistChip
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
@@ -24,6 +25,7 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -113,7 +115,12 @@ fun InboxScreen(onOpen: (String) -> Unit) {
 /** NEW / UPDATE per extracted candidate of one capture (this phone's or another one's). */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DecisionScreen(captureId: String, onBack: () -> Unit, onOpenRecipe: ((String) -> Unit)? = null) {
+fun DecisionScreen(
+    captureId: String,
+    onBack: () -> Unit,
+    onOpenRecipe: ((String) -> Unit)? = null,
+    onDiscarded: () -> Unit = onBack,
+) {
     val context = LocalContext.current
     val container = context.container
     val entries by container.store.entries.collectAsStateWithLifecycle()
@@ -172,6 +179,18 @@ fun DecisionScreen(captureId: String, onBack: () -> Unit, onOpenRecipe: ((String
         }
         busy = false
     }
+    var confirmDiscard by remember { mutableStateOf(false) }
+    fun discard() = scope.launch {
+        busy = true
+        val r = container.inbox.discard(captureId)
+        busy = false
+        if (r is ApiResult.Ok) {
+            Notifications.cancel(context, captureId)
+            onDiscarded()
+        } else {
+            error = if (isMissingRoute(r)) context.getString(R.string.discard_unsupported) else apiErrorText(context, r)
+        }
+    }
     LaunchedEffect(captureId) { load() }
 
     Scaffold(
@@ -220,7 +239,20 @@ fun DecisionScreen(captureId: String, onBack: () -> Unit, onOpenRecipe: ((String
                     }
                 }
             }
+            if (Inbox.canDiscard(v.status, v.recipes)) {
+                OutlinedButton(onClick = { confirmDiscard = true }, enabled = !busy) { Text(stringResource(R.string.discard)) }
+            }
         }
+    }
+    if (confirmDiscard) {
+        AlertDialog(
+            onDismissRequest = { confirmDiscard = false },
+            text = { Text(stringResource(R.string.discard_confirm)) },
+            confirmButton = {
+                TextButton(onClick = { confirmDiscard = false; discard() }) { Text(stringResource(R.string.discard_ok)) }
+            },
+            dismissButton = { TextButton(onClick = { confirmDiscard = false }) { Text(stringResource(R.string.cancel)) } },
+        )
     }
 }
 

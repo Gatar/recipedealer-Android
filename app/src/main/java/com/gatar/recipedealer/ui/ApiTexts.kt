@@ -27,6 +27,7 @@ fun apiErrorText(context: Context, r: ApiResult<*>): String? = when (r) {
         ApiErrors.EXTRACTION_IN_PROGRESS -> context.getString(R.string.api_extraction_in_progress)
         ApiErrors.NO_LLM_INPUT -> context.getString(R.string.api_no_llm_input)
         ApiErrors.LLM_UNAVAILABLE -> context.getString(R.string.api_llm_unavailable)
+        ApiErrors.CAPTURE_APPLIED -> context.getString(R.string.api_capture_applied)
         else -> null
     }.let { text -> listOfNotNull(text ?: "HTTP ${r.code}: ${r.error ?: "?"}", r.details.joinToString("\n").ifEmpty { null }).joinToString("\n") }
 }

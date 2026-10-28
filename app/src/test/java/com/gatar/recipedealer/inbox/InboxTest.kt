@@ -60,15 +60,47 @@ class InboxTest {
         assertEquals(null, store.get("other-phone"))
     }
 
-    @Test fun awaitingExtractionStaysOutOfTheInboxButUpdatesLocalState() = runTest {
+    @Test fun awaitingExtractionIsInTheInbox() = runTest {
         val awaiting = """{"captureId":"$cid","status":"needs_attention","reason":"AWAITING_EXTRACTION"}"""
         respond(200, """[$awaiting,{"captureId":"other-phone","status":"needs_attention","reason":"AWAITING_EXTRACTION"}]""")
-        respond(200, awaiting)
         inbox.refresh()
-        assertEquals(emptyList<String>(), inbox.items.value.map { it.captureId })
+        assertEquals(listOf(cid, "other-phone"), inbox.items.value.map { it.captureId })
         assertEquals(Inbox.AWAITING_EXTRACTION, store.get(cid)!!.state.backendReason)
-        inbox.load(cid)
-        assertEquals(emptyList<String>(), inbox.items.value.map { it.captureId })
+    }
+
+    @Test fun discardDeletesOnTheServerAndOnThePhone() = runTest {
+        val awaiting = """{"captureId":"$cid","status":"needs_attention","reason":"AWAITING_EXTRACTION"}"""
+        respond(200, "[$awaiting]")
+        respond(204, "")
+        inbox.refresh()
+        assertTrue(inbox.discard(cid) is ApiResult.Ok)
+        assertTrue(inbox.items.value.isEmpty())
+        assertEquals(null, store.get(cid))
+        server.takeRequest()
+        server.takeRequest().let { assertEquals("DELETE", it.method); assertEquals("/v1/captures/$cid", it.path) }
+    }
+
+    @Test fun discardOfAnAlreadyDeletedCaptureIsDone() = runTest {
+        respond(404, """{"error":"not_found"}""")
+        assertTrue(inbox.discard(cid) is ApiResult.Ok)
+        assertEquals(null, store.get(cid))
+    }
+
+    @Test fun discardRefusedKeepsTheCapture() = runTest {
+        respond(409, """{"error":"capture_applied"}""")
+        respond(404, "")
+        assertEquals(ApiResult.Failed(409, ApiErrors.CAPTURE_APPLIED), inbox.discard(cid))
+        // a backend without the route: not "already deleted"
+        assertEquals(ApiResult.Failed(404, null), inbox.discard(cid))
+        assertTrue(store.get(cid) != null)
+    }
+
+    @Test fun discardOnlyBeforeARecipe() {
+        assertTrue(Inbox.canDiscard(CaptureStates.NEEDS_ATTENTION, emptyList<RecipeRef>()))
+        assertTrue(Inbox.canDiscard(CaptureStates.NEEDS_DECISION, emptyList<RecipeRef>()))
+        assertTrue(!Inbox.canDiscard(CaptureStates.NEEDS_DECISION, listOf(RecipeRef(rid))))
+        assertTrue(!Inbox.canDiscard(CaptureStates.DONE, emptyList<RecipeRef>()))
+        assertTrue(!Inbox.canDiscard(CaptureStates.PROCESSING, emptyList<RecipeRef>()))
     }
 
     @Test fun resolveNewMakesCaptureDoneAndLeavesTheInbox() = runTest {

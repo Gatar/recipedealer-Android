@@ -77,6 +77,7 @@ object ApiErrors {
     const val EXTRACTION_IN_PROGRESS = "extraction_in_progress"
     const val NO_LLM_INPUT = "no_llm_input"
     const val LLM_UNAVAILABLE = "llm_unavailable"
+    const val CAPTURE_APPLIED = "capture_applied"
 }
 
 /**
@@ -128,6 +129,13 @@ class BackendClient(
      */
     suspend fun forceLlmExtraction(captureId: String): ApiResult<CaptureView> =
         call(request(url("/v1/captures/$captureId/llm-extraction")).post(EMPTY), CaptureView.serializer())
+
+    /**
+     * Deletes a capture that never became a recipe, with its attachments; 204. 404 `not_found` also when already
+     * deleted; 409 `capture_applied` / `extraction_in_progress`.
+     */
+    suspend fun deleteCapture(captureId: String): ApiResult<Unit> =
+        execute(request(url("/v1/captures/$captureId")).delete()) { }
 
     // --- recipes ---
 

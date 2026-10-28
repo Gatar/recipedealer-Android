@@ -158,6 +158,14 @@ class BackendClientTest {
         assertEquals(ApiResult.Failed(404, null), client().forceLlmExtraction(cid))
     }
 
+    @Test fun deleteCapture() = runTest {
+        respond(204)
+        respond(409, """{"error":"capture_applied","details":["delete the recipe instead"]}""")
+        assertEquals(ApiResult.Ok(Unit, 204), client().deleteCapture(cid))
+        server.takeRequest().assertCall("DELETE", "/api/v1/captures/$cid")
+        assertEquals(ApiResult.Failed(409, ApiErrors.CAPTURE_APPLIED, listOf("delete the recipe instead")), client().deleteCapture(cid))
+    }
+
     // --- recipes ---
 
     @Test fun candidates() = runTest {

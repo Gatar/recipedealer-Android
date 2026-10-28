@@ -108,11 +108,13 @@ A processed capture ends in `needs_decision` when there is a real choice: the us
 2026-10-27 a candidate that matches no recipe becomes a new recipe without asking (capture goes straight to `done`);
 `StatusWorker` syncs on every `done`, so such a recipe shows up right away.
 `StatusWorker` polls while `accepted` / `processing`, then notifies on `needs_decision` / `needs_attention`
-(tap → decision screen). Exception `Inbox.needsUser`: `needs_attention` with reason `AWAITING_EXTRACTION` (photos /
-PDFs: the backend's `PassthroughExtractor` cannot structure OCR text) is not in "Do decyzji" and not notified; the
-capture list shows "czeka na odczyt na serwerze" (the NEW decision is kept on the server). `recipe_gone` / `already_resolved` reload the capture. Server messages come in English.
-`LLM_UNAVAILABLE` / `LLM_REQUEST_REJECTED` are in "Do decyzji" (user, 2026-10-28) with a Polish reason + the
-server's `message`. Every `needs_attention` but `TARGET_GONE` (`Inbox.canReread`) offers "Ponownie odczytaj AI" on the
+(tap → decision screen). Every `needs_attention` is in "Do decyzji" (user, 2026-10-28), also `AWAITING_EXTRACTION`
+(the server reads photos / PDFs itself now and does not come back to them), `LLM_UNAVAILABLE` /
+`LLM_REQUEST_REJECTED`, with a Polish reason + the server's `message`. `recipe_gone` / `already_resolved` reload the
+capture. Server messages come in English.
+"Odrzuć (to nie przepis)" (user, 2026-10-28; e.g. an invoice shared by mistake): decision screen, a waiting capture
+without recipes (`Inbox.canDiscard`), confirm dialog → `DELETE /v1/captures/{id}` (backend b8a3535) deletes it on the
+server and the phone; 404 `not_found` = already deleted; 409 `capture_applied`; missing route → "nie obsługuje". Every `needs_attention` but `TARGET_GONE` (`Inbox.canReread`) offers "Ponownie odczytaj AI" on the
 decision screen (the capture detail links there): `POST …/llm-extraction`, then the screen polls every 3 s (≤ 3 min)
 and says how it ended (failed again / no complete recipe, recipe unchanged / done); `StatusWorker` notifies if the
 user left. 503 `llm_unavailable` is `Failed`, not `Retry`.
