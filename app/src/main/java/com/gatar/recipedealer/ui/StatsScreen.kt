@@ -110,13 +110,14 @@ private fun RunCard(run: ExtractionRun) {
                 if (run.validationErrors.isNotEmpty()) Text("Walidacja: ${run.validationErrors.joinToString(", ")}", style = small)
                 run.errorType?.let { Text("Błąd: $it", style = small) }
                 run.stopReason?.let { Text("stop_reason: $it", style = small) }
-                Text(listOfNotNull(run.model, run.extractorVersion?.takeIf { run.model == null }).joinToString(), style = small)
-                if (run.inputTokens != null || run.outputTokens != null) {
+                // heuristic runs: no model, zero usage
+                run.model?.let { Text(it, style = small) }
+                if (run.model != null && (run.inputTokens != null || run.outputTokens != null)) {
                     Text(tokens(run.inputTokens ?: 0, run.cacheCreationInputTokens ?: 0, run.cacheReadInputTokens ?: 0,
                         run.outputTokens ?: 0), style = small)
                 }
                 val tail = listOfNotNull(run.latencyMs?.let { String.format(Locale.ROOT, "%.1f s", it / 1000.0) },
-                    run.costUsd?.let(::usd))
+                    run.costUsd?.takeIf { run.model != null }?.let(::usd))
                 if (tail.isNotEmpty()) Text(tail.joinToString(" · "), style = small)
             }
         }

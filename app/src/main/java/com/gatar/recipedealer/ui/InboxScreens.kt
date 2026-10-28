@@ -71,6 +71,8 @@ fun InboxScreen(onOpen: (String) -> Unit) {
     val context = LocalContext.current
     val container = context.container
     val items by container.inbox.items.collectAsStateWithLifecycle()
+    // photos / PDFs have no server title until a recipe is read: this phone's captures know their file name
+    val entries by container.store.entries.collectAsStateWithLifecycle()
     val scope = rememberCoroutineScope()
     var refreshing by remember { mutableStateOf(false) }
     var error by remember { mutableStateOf<String?>(null) }
@@ -96,7 +98,8 @@ fun InboxScreen(onOpen: (String) -> Unit) {
                         Modifier.fillMaxWidth().clickable { onOpen(v.captureId) }.padding(horizontal = 16.dp, vertical = 12.dp),
                         verticalArrangement = Arrangement.spacedBy(2.dp),
                     ) {
-                        Text(v.title ?: v.sourceUrl ?: stringResource(R.string.untitled), style = MaterialTheme.typography.titleMedium,
+                        val title = v.title ?: entries.firstOrNull { it.id == v.captureId }?.title ?: v.sourceUrl
+                        Text(title ?: stringResource(R.string.untitled), style = MaterialTheme.typography.titleMedium,
                             maxLines = 2, overflow = TextOverflow.Ellipsis)
                         val meta = listOfNotNull(v.receivedAt?.let(::formatInstant), backendStatusLabel(context, v.status),
                             v.candidates.size.takeIf { it > 1 }?.let { context.getString(R.string.inbox_candidates, it) })
