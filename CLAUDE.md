@@ -148,16 +148,39 @@ capture list shows "czeka na odczyt na serwerze" (the NEW decision is kept on th
 - Photo from a file on the device: decided (a) – a backend upload endpoint (e.g. `POST /v1/blobs` → blob id the
   recipe then references). Rejected (b): a `data:` URI JPEG inside `recipe.images` (bloats every sync).
   Until then the photo can only be replaced by URL (editor field `imageUrl` = `images[0]`).
-- LLM / vision extractor in the backend (README "phase 2", user 2026-10-27: needed). Until then IMAGE / PDF captures
-  stay `AWAITING_EXTRACTION`. 9 household recipes (`../przepisy/`, 7 PDF + PNG + JPG) were sent 2026-10-27 with
-  "Wyślij jako nowy" and wait there; check that the extractor picks up such captures.
-  Agreed 2026-10-28 (backend `CLAUDE.md` "LLM extraction", task `docs/add-llm-prompt.txt`): cascade heuristic →
-  Haiku → Sonnet, every LLM result `needsReview` (provenance stage `llm`). App work once the backend has it:
-  - Force LLM: `POST /v1/captures/{captureId}/llm-extraction` (any device, no limits for now), from a recipe via
-    its revisions' `captureId` and from a capture stuck in `AWAITING_EXTRACTION`; handle 409 (job already queued /
-    running) and 503 (LLM not configured). Old backend → `isMissingRoute`.
-  - "Statystyki dla nerdów" at a recipe (popup or view): `GET /v1/recipes/{recipeId}/extraction-stats` – totals,
-    per model (runs, tokens, cost) and the list of runs. Shape is final only in `docs/api.md` after implementation.
+
+## LLM extraction (backend done and deployed 2026-10-28; app work to do)
+Backend: `RecipeDealerBE-PoC/CLAUDE.md` "LLM extraction", shapes in `docs/api.md`. Cascade heuristic (the phone's
+result) → Claude Haiku → Claude Sonnet, the next step only when the previous one fails validation (title, ≥1
+ingredient, ≥1 step). Every LLM result has provenance stage `llm` and `needsReview: true`. Images and PDFs are read
+on the server now: an IMAGE / PDF capture normally ends `done` (auto-NEW) or `needs_decision`, not
+`AWAITING_EXTRACTION`. The 9 recipes from `../przepisy/` sent 2026-10-27 and 4 cookbook photos sent from the
+emulator 2026-10-28 are now recipes on production.
+Thumbnails need no app change (same `thumbnailBlob`): the server cuts the dish photo out of photos / screenshots
+(turned upright; none when the photo shows only text) and takes the largest image of PDFs; a recipe whose thumbnail
+arrives later comes again in the sync feed.
+
+App work:
+- Force LLM ("Odczytaj ponownie" or similar): `POST /v1/captures/{captureId}/llm-extraction`, no body, any device,
+  no limits. From a recipe: the `captureId` of its revisions (`GET /v1/recipes/{recipeId}/revisions`, the field is
+  omitted on user edits; offer it only when some revision has one, newest first). From a capture in the capture list
+  / inbox, also one stuck in `AWAITING_EXTRACTION`. Responses: 202 CaptureView (`processing`, then poll like after an
+  upload: `StatusWorker`); 409 `extraction_in_progress` ("trwa już odczyt"); 409 `no_llm_input` (nothing an LLM could
+  read); 503 `llm_unavailable` (no API key on the server); 404 without `not_found` → `isMissingRoute`. A forced run
+  that finds no complete recipe never changes an already applied recipe (the capture returns to its state, message
+  in English); a run on a recipe whose head the user wrote only adds a proposal (machine revision).
+- New `needs_attention` reasons: `LLM_UNAVAILABLE` (key missing / invalid / no credit) and `LLM_REQUEST_REJECTED`
+  (Claude refused the request). Show them with the server's `message`; decide with the user whether they go to
+  "Do decyzji" or behave like `AWAITING_EXTRACTION` (`Inbox.needsUser`); force LLM is the natural action there.
+- "Statystyki dla nerdów" at a recipe (popup or screen): `GET /v1/recipes/{recipeId}/extraction-stats` → `totals`
+  (runs, llmRuns, tokens incl. cache, `costUsd`), `models` (per model) and `runs` (oldest first: step
+  heuristic / haiku / sonnet, purpose pipeline / forced / comparison, status, `applied`, `validationErrors`, tokens,
+  `latencyMs`, `costUsd`, nullable fields). 404 also for a deleted / merged recipe. Typical cost: Haiku $0.001–0.003
+  per recipe, Sonnet ~$0.02.
+- `sourceSummary` of a capture without site name / URL is the lower-case source type (`image`, `pdf`); a nicer
+  Polish label ("zdjęcie", "PDF") can be done in the app or later in the backend – ask the user.
+- Then: release APK with a raised `versionCode`, verify on the emulator against production (force on a recipe,
+  stats popup), update `docs`/this file.
 
 ## Accounts (backend 2026-10-27, `docs/api.md` Accounts)
 - `ui/AccountScreens.kt`: `LoginScreen` (login / "Załóż konto" with the household registration code; server URL,
