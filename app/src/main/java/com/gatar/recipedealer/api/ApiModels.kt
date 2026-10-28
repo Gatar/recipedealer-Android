@@ -149,6 +149,66 @@ data class RevisionView(
     val recipe: JsonObject,
 )
 
+/** `GET /v1/recipes/{id}/extraction-stats` ("Statystyki dla nerdów"): every processing run behind the recipe. */
+@Serializable
+data class ExtractionStats(
+    val recipeId: String,
+    val totals: StatsTotals = StatsTotals(),
+    val models: List<ModelUsage> = emptyList(),
+    /** Oldest first. */
+    val runs: List<ExtractionRun> = emptyList(),
+)
+
+@Serializable
+data class StatsTotals(
+    val runs: Int = 0,
+    val llmRuns: Int = 0,
+    val inputTokens: Long = 0,
+    val cacheCreationInputTokens: Long = 0,
+    val cacheReadInputTokens: Long = 0,
+    val outputTokens: Long = 0,
+    val costUsd: Double? = null,
+)
+
+@Serializable
+data class ModelUsage(
+    val model: String,
+    val runs: Int = 0,
+    val inputTokens: Long = 0,
+    val cacheCreationInputTokens: Long = 0,
+    val cacheReadInputTokens: Long = 0,
+    val outputTokens: Long = 0,
+    val costUsd: Double? = null,
+)
+
+/** One cascade step; usage fields are null where the server has no value (heuristic runs, models without a price). */
+@Serializable
+data class ExtractionRun(
+    val runId: String,
+    val captureId: String? = null,
+    val startedAt: String? = null,
+    val finishedAt: String? = null,
+    val extractor: String? = null,
+    val extractorVersion: String? = null,
+    /** heuristic | haiku | sonnet */
+    val step: String? = null,
+    /** pipeline | forced | comparison */
+    val purpose: String? = null,
+    val model: String? = null,
+    /** succeeded | rejected | awaiting_extraction | failed | running */
+    val status: String? = null,
+    val applied: Boolean = false,
+    val validationErrors: List<String> = emptyList(),
+    val errorType: String? = null,
+    val stopReason: String? = null,
+    val inputTokens: Long? = null,
+    val cacheCreationInputTokens: Long? = null,
+    val cacheReadInputTokens: Long? = null,
+    val outputTokens: Long? = null,
+    val latencyMs: Long? = null,
+    val costUsd: Double? = null,
+)
+
 /** `GET /v1/recipes/search`. */
 @Serializable
 data class SearchHit(

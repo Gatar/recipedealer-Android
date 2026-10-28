@@ -160,6 +160,10 @@ class BackendClient(
     suspend fun revisions(recipeId: String) =
         call(get(url("/v1/recipes/$recipeId/revisions")), ListSerializer(RevisionView.serializer()))
 
+    /** "Statystyki dla nerdów"; 404 also for a deleted / merged recipe. */
+    suspend fun extractionStats(recipeId: String) =
+        call(get(url("/v1/recipes/$recipeId/extraction-stats")), ExtractionStats.serializer())
+
     suspend fun search(q: String) =
         call(get(url("/v1/recipes/search") { addQueryParameter("q", q) }), ListSerializer(SearchHit.serializer()))
 

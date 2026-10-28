@@ -45,6 +45,7 @@ import androidx.navigation.compose.rememberNavController
 import com.gatar.recipedealer.ui.CaptureDetailScreen
 import com.gatar.recipedealer.ui.CaptureListScreen
 import com.gatar.recipedealer.ui.DecisionScreen
+import com.gatar.recipedealer.ui.ExtractionStatsScreen
 import com.gatar.recipedealer.ui.InboxScreen
 import com.gatar.recipedealer.ui.LoginScreen
 import com.gatar.recipedealer.ui.PasswordScreen
@@ -117,6 +118,7 @@ object Routes {
     const val RECIPE = "recipe/{id}"
     const val EDIT = "recipe/{id}/edit?revision={revision}"
     const val REVISIONS = "recipe/{id}/revisions"
+    const val STATS = "recipe/{id}/stats"
     const val LIST = "list"
     const val INBOX = "inbox"
     const val CAPTURE = "capture/{id}"
@@ -131,6 +133,7 @@ object Routes {
     fun recipe(id: String) = "recipe/$id"
     fun edit(id: String, revision: String? = null) = "recipe/$id/edit" + (revision?.let { "?revision=$it" } ?: "")
     fun revisions(id: String) = "recipe/$id/revisions"
+    fun stats(id: String) = "recipe/$id/stats"
 }
 
 private data class Tab(val route: String, val label: Int, val icon: ImageVector)
@@ -199,6 +202,7 @@ private fun AppNavHost(nav: NavHostController) {
                     onBack = { nav.popBackStack() },
                     onOpenRecipe = { nav.navigate(Routes.recipe(it)) { popUpTo(Routes.RECIPE) { inclusive = true } } },
                     onTags = { nav.navigate(Routes.TAGS) },
+                    onStats = { nav.navigate(Routes.stats(id)) },
                     actions = {
                         if (container.settings.current.hasBackend) {
                             IconButton(onClick = { nav.navigate(Routes.revisions(id)) }) {
@@ -219,6 +223,9 @@ private fun AppNavHost(nav: NavHostController) {
                     onClose = { nav.popBackStack() },
                     onDeleted = { nav.popBackStack(Routes.RECIPES, inclusive = false) },
                 )
+            }
+            composable(Routes.STATS) { back ->
+                ExtractionStatsScreen(back.arguments?.getString("id").orEmpty(), onBack = { nav.popBackStack() })
             }
             composable(Routes.REVISIONS) { back ->
                 val id = back.arguments?.getString("id").orEmpty()

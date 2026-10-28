@@ -313,6 +313,7 @@ fun RecipeDetailScreen(
     onBack: () -> Unit,
     onOpenRecipe: (String) -> Unit,
     onTags: () -> Unit = {},
+    onStats: () -> Unit = {},
     actions: @Composable (CachedRecipe) -> Unit = {},
 ) {
     val context = LocalContext.current
@@ -433,6 +434,8 @@ fun RecipeDetailScreen(
                         modifier = Modifier.clickable { runCatching { uri.openUri(url) } })
                 }
             }
+            // phone view only: the tablet view is for cooking
+            if (settings.hasBackend) TextButton(onClick = onStats) { Text(stringResource(R.string.stats_title)) }
         }
     }
 }

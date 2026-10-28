@@ -168,6 +168,8 @@
     <string name="reread_done">Odczytano ponownie.</string>
     <string name="reread_still_running">Odczyt wciąż trwa – dam znać powiadomieniem.</string>
     <string name="reread_unsupported">Serwer nie obsługuje jeszcze ponownego odczytu AI.</string>
+    <string name="stats_title">Statystyki dla nerdów</string>
+    <string name="stats_unsupported">Serwer nie obsługuje jeszcze statystyk.</string>
     <string name="discard">Odrzuć (to nie przepis)</string>
     <string name="discard_confirm">Usunąć to udostępnienie razem ze zdjęciami / PDF-em z serwera i z tego telefonu? Nie da się tego cofnąć.</string>
     <string name="discard_ok">Usuń</string>

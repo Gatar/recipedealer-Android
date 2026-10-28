@@ -178,13 +178,11 @@ App work:
   in English); a run on a recipe whose head the user wrote only adds a proposal (machine revision).
 - Done (see "Backend decisions"): force LLM from a capture (decision screen) and the new `needs_attention` reasons
   `LLM_UNAVAILABLE` / `LLM_REQUEST_REJECTED` in "Do decyzji". Still to do: force LLM from a recipe.
-- "Statystyki dla nerdów" at a recipe (popup or screen): `GET /v1/recipes/{recipeId}/extraction-stats` → `totals`
-  (runs, llmRuns, tokens incl. cache, `costUsd`), `models` (per model) and `runs` (oldest first: step
-  heuristic / haiku / sonnet, purpose pipeline / forced / comparison, status, `applied`, `validationErrors`, tokens,
-  `latencyMs`, `costUsd`, nullable fields). 404 also for a deleted / merged recipe. Typical cost: Haiku $0.001–0.003
-  per recipe, Sonnet ~$0.02.
-- `sourceSummary` of a capture without site name / URL is the lower-case source type (`image`, `pdf`); a nicer
-  Polish label ("zdjęcie", "PDF") can be done in the app or later in the backend – ask the user.
+- Done: "Statystyki dla nerdów" (`ui/StatsScreen.kt`, route `recipe/{id}/stats`): text button at the end of the
+  phone recipe view (not in the tablet view) → `GET /v1/recipes/{recipeId}/extraction-stats`: totals, per model, runs
+  oldest first with Polish step / status labels, raw validation errors, tokens, latency, cost in USD (4 decimals).
+  Typical cost: Haiku $0.001–0.003 per recipe, Sonnet ~$0.02.
+- `sourceSummary` stays the lower-case source type (`image`, `pdf`) for now (user, 2026-10-28: no renaming).
 - Then: release APK with a raised `versionCode`, verify on the emulator against production (force on a recipe,
   stats popup), update `docs`/this file.
 

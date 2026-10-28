@@ -158,6 +158,40 @@ class BackendClientTest {
         assertEquals(ApiResult.Failed(404, null), client().forceLlmExtraction(cid))
     }
 
+    @Test fun extractionStats() = runTest {
+        respond(200, """{"recipeId":"$rid",
+            "totals":{"runs":3,"llmRuns":2,"inputTokens":2100,"cacheCreationInputTokens":0,"cacheReadInputTokens":1000,
+                      "outputTokens":350,"costUsd":0.007135},
+            "models":[{"model":"claude-haiku-5-5","runs":1,"inputTokens":100,"cacheCreationInputTokens":0,
+                       "cacheReadInputTokens":0,"outputTokens":50,"costUsd":0.000035}],
+            "runs":[{"runId":"r1","captureId":"$cid","startedAt":"2026-10-28T10:00:00Z","finishedAt":"2026-10-28T10:00:00Z",
+                     "extractor":"passthrough","extractorVersion":"1","step":"heuristic","purpose":"pipeline","model":null,
+                     "status":"rejected","applied":false,"validationErrors":["no_steps"],"errorType":null,"stopReason":null,
+                     "inputTokens":0,"cacheCreationInputTokens":0,"cacheReadInputTokens":0,"outputTokens":0,
+                     "latencyMs":null,"costUsd":0},
+                    {"runId":"r2","step":"haiku","purpose":"forced","model":"claude-haiku-5-5","status":"succeeded",
+                     "applied":true,"stopReason":"end_turn","inputTokens":100,"outputTokens":50,"latencyMs":2100,
+                     "costUsd":null,"futureField":1}]}""")
+        respond(404, """{"error":"not_found"}""")
+        val s = client().extractionStats(rid).valueOrNull()!!
+        server.takeRequest().assertCall("GET", "/api/v1/recipes/$rid/extraction-stats")
+        assertEquals(StatsTotals(3, 2, 2100, 0, 1000, 350, 0.007135), s.totals)
+        assertEquals("claude-haiku-5-5", s.models.single().model)
+        assertEquals(listOf("r1", "r2"), s.runs.map { it.runId })
+        s.runs[0].let {
+            assertEquals(listOf("no_steps"), it.validationErrors)
+            assertNull(it.model)
+            assertNull(it.latencyMs)
+        }
+        s.runs[1].let {
+            assertTrue(it.applied)
+            assertEquals(2100L, it.latencyMs)
+            assertNull(it.costUsd)
+            assertNull(it.captureId)
+        }
+        assertEquals(ApiResult.Failed(404, ApiErrors.NOT_FOUND), client().extractionStats(rid))
+    }
+
     @Test fun deleteCapture() = runTest {
         respond(204)
         respond(409, """{"error":"capture_applied","details":["delete the recipe instead"]}""")
