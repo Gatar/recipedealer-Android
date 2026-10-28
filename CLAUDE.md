@@ -151,6 +151,13 @@ capture list shows "czeka na odczyt na serwerze" (the NEW decision is kept on th
 - LLM / vision extractor in the backend (README "phase 2", user 2026-10-27: needed). Until then IMAGE / PDF captures
   stay `AWAITING_EXTRACTION`. 9 household recipes (`../przepisy/`, 7 PDF + PNG + JPG) were sent 2026-10-27 with
   "Wyślij jako nowy" and wait there; check that the extractor picks up such captures.
+  Agreed 2026-10-28 (backend `CLAUDE.md` "LLM extraction", task `docs/add-llm-prompt.txt`): cascade heuristic →
+  Haiku → Sonnet, every LLM result `needsReview` (provenance stage `llm`). App work once the backend has it:
+  - Force LLM: `POST /v1/captures/{captureId}/llm-extraction` (any device, no limits for now), from a recipe via
+    its revisions' `captureId` and from a capture stuck in `AWAITING_EXTRACTION`; handle 409 (job already queued /
+    running) and 503 (LLM not configured). Old backend → `isMissingRoute`.
+  - "Statystyki dla nerdów" at a recipe (popup or view): `GET /v1/recipes/{recipeId}/extraction-stats` – totals,
+    per model (runs, tokens, cost) and the list of runs. Shape is final only in `docs/api.md` after implementation.
 
 ## Accounts (backend 2026-10-27, `docs/api.md` Accounts)
 - `ui/AccountScreens.kt`: `LoginScreen` (login / "Załóż konto" with the household registration code; server URL,
