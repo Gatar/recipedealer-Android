@@ -24,6 +24,9 @@ fun apiErrorText(context: Context, r: ApiResult<*>): String? = when (r) {
         ApiErrors.RECIPE_GONE -> context.getString(R.string.api_recipe_gone)
         ApiErrors.ALREADY_RESOLVED -> context.getString(R.string.api_already_resolved)
         ApiErrors.NOT_FOUND -> context.getString(R.string.api_not_found)
+        ApiErrors.EXTRACTION_IN_PROGRESS -> context.getString(R.string.api_extraction_in_progress)
+        ApiErrors.NO_LLM_INPUT -> context.getString(R.string.api_no_llm_input)
+        ApiErrors.LLM_UNAVAILABLE -> context.getString(R.string.api_llm_unavailable)
         else -> null
     }.let { text -> listOfNotNull(text ?: "HTTP ${r.code}: ${r.error ?: "?"}", r.details.joinToString("\n").ifEmpty { null }).joinToString("\n") }
 }
@@ -52,8 +55,10 @@ fun backendStatusLabel(context: Context, status: String): String = when (status)
 
 /** `CaptureView.reason`; the server's `message` is shown next to it. */
 fun backendReasonText(context: Context, reason: String?): String? = when (reason) {
-    "PROCESSING_FAILED" -> context.getString(R.string.reason_processing_failed)
+    Inbox.PROCESSING_FAILED -> context.getString(R.string.reason_processing_failed)
     Inbox.AWAITING_EXTRACTION -> context.getString(R.string.reason_awaiting_extraction)
-    "TARGET_GONE" -> context.getString(R.string.reason_target_gone)
+    Inbox.LLM_UNAVAILABLE -> context.getString(R.string.reason_llm_unavailable)
+    Inbox.LLM_REQUEST_REJECTED -> context.getString(R.string.reason_llm_request_rejected)
+    Inbox.TARGET_GONE -> context.getString(R.string.reason_target_gone)
     else -> reason
 }

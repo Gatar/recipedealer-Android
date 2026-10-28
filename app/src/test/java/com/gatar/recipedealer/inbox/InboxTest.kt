@@ -139,6 +139,34 @@ class InboxTest {
         assertEquals(1, server.requestCount)
     }
 
+    @Test fun llmFailuresAreInTheInboxAndCanBeReread() = runTest {
+        val rejected = """{"captureId":"$cid","status":"needs_attention","reason":"LLM_REQUEST_REJECTED",
+            "message":"Automatic extraction was refused: bad image"}"""
+        respond(200, """[$rejected,{"captureId":"other-phone","status":"needs_attention","reason":"LLM_UNAVAILABLE"}]""")
+        respond(202, """{"captureId":"$cid","status":"processing"}""")
+        inbox.refresh()
+        assertEquals(listOf(cid, "other-phone"), inbox.items.value.map { it.captureId })
+        assertTrue(inbox.items.value.all { Inbox.canReread(it.status, it.reason) })
+
+        val r = inbox.forceLlm(cid)
+        assertEquals(CaptureStates.PROCESSING, (r as ApiResult.Ok).value.status)
+        assertEquals(listOf("other-phone"), inbox.items.value.map { it.captureId })
+        store.get(cid)!!.state.let {
+            assertEquals(CaptureStates.PROCESSING, it.backendStatus)
+            assertEquals(null, it.backendReason)
+        }
+        server.takeRequest()
+        server.takeRequest().let { assertEquals("POST", it.method); assertEquals("/v1/captures/$cid/llm-extraction", it.path) }
+    }
+
+    @Test fun rereadOnlyForFailedExtraction() {
+        assertTrue(Inbox.canReread(CaptureStates.NEEDS_ATTENTION, Inbox.AWAITING_EXTRACTION))
+        assertTrue(Inbox.canReread(CaptureStates.NEEDS_ATTENTION, Inbox.PROCESSING_FAILED))
+        assertTrue(!Inbox.canReread(CaptureStates.NEEDS_ATTENTION, Inbox.TARGET_GONE))
+        assertTrue(!Inbox.canReread(CaptureStates.NEEDS_DECISION, null))
+        assertTrue(!Inbox.canReread(CaptureStates.DONE, null))
+    }
+
     @Test fun noBackend() = runTest {
         val local = Inbox(store) { null }
         assertEquals(Inbox.NO_BACKEND, local.refresh())

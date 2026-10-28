@@ -32,7 +32,7 @@ object CaptureStates {
 data class CaptureView(
     val captureId: String,
     val status: String,
-    /** PROCESSING_FAILED | AWAITING_EXTRACTION | TARGET_GONE */
+    /** AWAITING_EXTRACTION | PROCESSING_FAILED | LLM_UNAVAILABLE | LLM_REQUEST_REJECTED | TARGET_GONE */
     val reason: String? = null,
     val message: String? = null,
     val recipes: List<RecipeRef> = emptyList(),

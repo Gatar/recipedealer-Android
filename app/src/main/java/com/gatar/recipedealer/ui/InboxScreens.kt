@@ -56,7 +56,10 @@ import com.gatar.recipedealer.api.ExtractedCandidate
 import com.gatar.recipedealer.api.RecipeMatch
 import com.gatar.recipedealer.api.Resolution
 import com.gatar.recipedealer.container
+import com.gatar.recipedealer.inbox.Inbox
 import com.gatar.recipedealer.store.CaptureEntry
+import com.gatar.recipedealer.upload.UploadQueue
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 /** "Do decyzji": captures of the whole household waiting for a decision or for help. */
@@ -140,6 +143,35 @@ fun DecisionScreen(captureId: String, onBack: () -> Unit, onOpenRecipe: ((String
             container.recipeSync.sync()
         }
     }
+    var rereadNote by remember { mutableStateOf<String?>(null) }
+    /** Forces the LLM extraction, then polls while the screen is open; the StatusWorker notifies if the user leaves. */
+    fun reread() = scope.launch {
+        busy = true
+        rereadNote = null
+        val r = container.inbox.forceLlm(captureId)
+        error = if (isMissingRoute(r)) context.getString(R.string.reread_unsupported) else apiErrorText(context, r)
+        if (r is ApiResult.Ok) {
+            Notifications.cancel(context, captureId)
+            UploadQueue.scheduleStatus(context, captureId)
+            rereadNote = context.getString(R.string.reread_running)
+            var v = r.value
+            view = v
+            var polls = 0
+            while (Inbox.isPending(v.status) && polls++ < REREAD_POLLS) {
+                delay(REREAD_POLL_MS)
+                (container.inbox.load(captureId) as? ApiResult.Ok)?.value?.let { v = it; view = it }
+            }
+            rereadNote = context.getString(when {
+                Inbox.isPending(v.status) -> R.string.reread_still_running
+                v.status == CaptureStates.NEEDS_ATTENTION -> R.string.reread_failed
+                v.message?.startsWith(NO_COMPLETE_RECIPE) == true -> R.string.reread_no_change
+                else -> R.string.reread_done
+            })
+            if (!Inbox.isPending(v.status)) Notifications.cancel(context, captureId)
+            if (v.status == CaptureStates.DONE) container.recipeSync.sync()
+        }
+        busy = false
+    }
     LaunchedEffect(captureId) { load() }
 
     Scaffold(
@@ -164,10 +196,14 @@ fun DecisionScreen(captureId: String, onBack: () -> Unit, onOpenRecipe: ((String
                 backendReasonText(context, v.reason)?.let { Text(it, style = MaterialTheme.typography.bodyMedium) }
                 v.message?.let { Text(it, style = MaterialTheme.typography.bodyMedium) }
             }
-            if (busy) Text(stringResource(R.string.loading), style = MaterialTheme.typography.bodySmall)
+            rereadNote?.let { Text(it, style = MaterialTheme.typography.titleSmall) }
+            if (busy && rereadNote == null) Text(stringResource(R.string.loading), style = MaterialTheme.typography.bodySmall)
             error?.let { Text(it, color = MaterialTheme.colorScheme.error) }
             if (v == null) return@Column
-            if (v.status == CaptureStates.ACCEPTED || v.status == CaptureStates.PROCESSING) {
+            if (Inbox.canReread(v.status, v.reason)) {
+                Button(onClick = { reread() }, enabled = !busy) { Text(stringResource(R.string.reread_ai)) }
+            }
+            if (Inbox.isPending(v.status)) {
                 TextButton(onClick = { load() }, enabled = !busy) { Text(stringResource(R.string.refresh_status)) }
             }
             if (v.status == CaptureStates.NEEDS_DECISION) {
@@ -189,6 +225,11 @@ fun DecisionScreen(captureId: String, onBack: () -> Unit, onOpenRecipe: ((String
 }
 
 private const val NEW = "\u0000new"
+private const val REREAD_POLL_MS = 3_000L
+/** ~3 min: Haiku and then Sonnet usually answer within a minute. */
+private const val REREAD_POLLS = 60
+/** The server's message for a forced run that left an applied recipe as it was (state `done`). */
+private const val NO_COMPLETE_RECIPE = "Automatic extraction found no complete recipe"
 
 @Composable
 private fun CandidateCard(captureId: String, c: ExtractedCandidate, enabled: Boolean, onDecide: (Resolution) -> Unit) {

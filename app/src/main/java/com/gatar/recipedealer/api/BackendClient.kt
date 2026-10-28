@@ -74,6 +74,9 @@ object ApiErrors {
     const val USER_EXISTS = "user_exists"
     const val USER_LIMIT_REACHED = "user_limit_reached"
     const val TOO_MANY_REQUESTS = "too_many_requests"
+    const val EXTRACTION_IN_PROGRESS = "extraction_in_progress"
+    const val NO_LLM_INPUT = "no_llm_input"
+    const val LLM_UNAVAILABLE = "llm_unavailable"
 }
 
 /**
@@ -118,6 +121,13 @@ class BackendClient(
     suspend fun resolve(captureId: String, index: Int, resolution: Resolution): ApiResult<CaptureView> =
         call(request(url("/v1/captures/$captureId/extracted/$index/resolution"))
             .put(json(ApiJson.encodeToString(Resolution.serializer(), resolution))), CaptureView.serializer())
+
+    /**
+     * Forces the extraction cascade again from the first LLM step; 202 with the capture now `processing`.
+     * 409 `extraction_in_progress` / `no_llm_input`, 503 `llm_unavailable`.
+     */
+    suspend fun forceLlmExtraction(captureId: String): ApiResult<CaptureView> =
+        call(request(url("/v1/captures/$captureId/llm-extraction")).post(EMPTY), CaptureView.serializer())
 
     // --- recipes ---
 
@@ -228,7 +238,7 @@ class BackendClient(
                 when (r.code) {
                     in 200..299 -> ApiResult.Ok(parse(r), r.code, r.header("ETag"))
                     304 -> ApiResult.NotModified
-                    in 500..599 -> ApiResult.Retry("HTTP ${r.code}")
+                    in 500..599 -> serverFailure(r.code, r.body?.string().orEmpty())
                     else -> failure(r.code, r.body?.string().orEmpty())
                 }
             }.also { if (it is ApiResult.Unauthorized) onUnauthorized() }
@@ -255,6 +265,12 @@ class BackendClient(
         if (code == 409 && error == "locked") return ApiResult.Locked(str("lockedBy"), str("expiresAt"))
         val details = (o?.get("details") as? JsonArray)?.mapNotNull { (it as? JsonPrimitive)?.contentOrNull }.orEmpty()
         return ApiResult.Failed(code, error, details)
+    }
+
+    /** 5xx is retryable, except 503 `llm_unavailable`: no API key on the server, retrying does not help. */
+    private fun serverFailure(code: Int, body: String): ApiResult<Nothing> {
+        val f = failure(code, body)
+        return if (f is ApiResult.Failed && f.error == ApiErrors.LLM_UNAVAILABLE) f else ApiResult.Retry("HTTP $code")
     }
 
     private companion object {

@@ -111,6 +111,11 @@ A processed capture ends in `needs_decision` when there is a real choice: the us
 (tap → decision screen). Exception `Inbox.needsUser`: `needs_attention` with reason `AWAITING_EXTRACTION` (photos /
 PDFs: the backend's `PassthroughExtractor` cannot structure OCR text) is not in "Do decyzji" and not notified; the
 capture list shows "czeka na odczyt na serwerze" (the NEW decision is kept on the server). `recipe_gone` / `already_resolved` reload the capture. Server messages come in English.
+`LLM_UNAVAILABLE` / `LLM_REQUEST_REJECTED` are in "Do decyzji" (user, 2026-10-28) with a Polish reason + the
+server's `message`. Every `needs_attention` but `TARGET_GONE` (`Inbox.canReread`) offers "Ponownie odczytaj AI" on the
+decision screen (the capture detail links there): `POST …/llm-extraction`, then the screen polls every 3 s (≤ 3 min)
+and says how it ended (failed again / no complete recipe, recipe unchanged / done); `StatusWorker` notifies if the
+user left. 503 `llm_unavailable` is `Failed`, not `Retry`.
 
 ## Recipes: sync, search, editing (RecipeDealerBE)
 - The recipe list reads only `RecipeCache` (works offline). Search: `GET /v1/recipes/search`, offline / while
@@ -169,9 +174,8 @@ App work:
   read); 503 `llm_unavailable` (no API key on the server); 404 without `not_found` → `isMissingRoute`. A forced run
   that finds no complete recipe never changes an already applied recipe (the capture returns to its state, message
   in English); a run on a recipe whose head the user wrote only adds a proposal (machine revision).
-- New `needs_attention` reasons: `LLM_UNAVAILABLE` (key missing / invalid / no credit) and `LLM_REQUEST_REJECTED`
-  (Claude refused the request). Show them with the server's `message`; decide with the user whether they go to
-  "Do decyzji" or behave like `AWAITING_EXTRACTION` (`Inbox.needsUser`); force LLM is the natural action there.
+- Done (see "Backend decisions"): force LLM from a capture (decision screen) and the new `needs_attention` reasons
+  `LLM_UNAVAILABLE` / `LLM_REQUEST_REJECTED` in "Do decyzji". Still to do: force LLM from a recipe.
 - "Statystyki dla nerdów" at a recipe (popup or screen): `GET /v1/recipes/{recipeId}/extraction-stats` → `totals`
   (runs, llmRuns, tokens incl. cache, `costUsd`), `models` (per model) and `runs` (oldest first: step
   heuristic / haiku / sonnet, purpose pipeline / forced / comparison, status, `applied`, `validationErrors`, tokens,

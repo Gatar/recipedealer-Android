@@ -64,6 +64,13 @@ class Inbox(private val store: CaptureStore, private val backend: () -> BackendC
         return last
     }
 
+    /** "Ponownie odczytaj AI": the server runs the extraction again from the first LLM step; the capture is `processing`. */
+    suspend fun forceLlm(captureId: String): ApiResult<CaptureView> {
+        val r = (backend() ?: return NO_BACKEND).forceLlmExtraction(captureId)
+        if (r is ApiResult.Ok) record(r.value)
+        return r
+    }
+
     fun record(view: CaptureView) {
         recordLocal(view)
         _items.update { list ->
@@ -88,8 +95,20 @@ class Inbox(private val store: CaptureStore, private val backend: () -> BackendC
 
     companion object {
         val WAITING = setOf(CaptureStates.NEEDS_DECISION, CaptureStates.NEEDS_ATTENTION)
-        /** `needs_attention`: nothing could be extracted yet (photos / PDFs until the backend's LLM extractor). */
+        /** `needs_attention`: nothing could be extracted (no LLM step found a recipe, or none ran). */
         const val AWAITING_EXTRACTION = "AWAITING_EXTRACTION"
+        /** `needs_attention`: the server's Claude API key is missing / invalid or has no credit. */
+        const val LLM_UNAVAILABLE = "LLM_UNAVAILABLE"
+        /** `needs_attention`: the Claude API refused this capture's request. */
+        const val LLM_REQUEST_REJECTED = "LLM_REQUEST_REJECTED"
+        const val PROCESSING_FAILED = "PROCESSING_FAILED"
+        const val TARGET_GONE = "TARGET_GONE"
+
+        /** A failed extraction: "Ponownie odczytaj AI" is the way out (not for TARGET_GONE, which is a new decision). */
+        fun canReread(status: String?, reason: String?) =
+            status == CaptureStates.NEEDS_ATTENTION && reason != TARGET_GONE
+
+        fun isPending(status: String?) = status == CaptureStates.ACCEPTED || status == CaptureStates.PROCESSING
 
         /**
          * Something the user can do now: a decision, or help with a failure. A capture awaiting the server's extraction

@@ -133,6 +133,31 @@ class BackendClientTest {
         assertEquals(ApiResult.Failed(404, ApiErrors.NOT_FOUND), client().resolve(cid, 9, Resolution.new()))
     }
 
+    @Test fun forceLlmExtraction() = runTest {
+        respond(202, """{"captureId":"$cid","status":"processing"}""")
+        val r = client().forceLlmExtraction(cid) as ApiResult.Ok
+        assertEquals(202, r.code)
+        assertEquals(CaptureStates.PROCESSING, r.value.status)
+        server.takeRequest().apply {
+            assertCall("POST", "/api/v1/captures/$cid/llm-extraction")
+            assertEquals(0L, bodySize)
+        }
+    }
+
+    @Test fun forceLlmExtractionErrors() = runTest {
+        respond(409, """{"error":"extraction_in_progress","details":["capture is being processed"]}""")
+        respond(409, """{"error":"no_llm_input"}""")
+        respond(503, """{"error":"llm_unavailable","details":["no Claude API key"]}""")
+        respond(503, "")
+        respond(404, "")
+        assertEquals(ApiErrors.EXTRACTION_IN_PROGRESS, (client().forceLlmExtraction(cid) as ApiResult.Failed).error)
+        assertEquals(ApiResult.Failed(409, ApiErrors.NO_LLM_INPUT), client().forceLlmExtraction(cid))
+        // no API key on the server: an answer for the user, not a reason to retry
+        assertEquals(ApiResult.Failed(503, ApiErrors.LLM_UNAVAILABLE, listOf("no Claude API key")), client().forceLlmExtraction(cid))
+        assertEquals(ApiResult.Retry("HTTP 503"), client().forceLlmExtraction(cid))
+        assertEquals(ApiResult.Failed(404, null), client().forceLlmExtraction(cid))
+    }
+
     // --- recipes ---
 
     @Test fun candidates() = runTest {

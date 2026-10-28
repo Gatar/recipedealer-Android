@@ -138,6 +138,9 @@
     <string name="api_recipe_gone">Wybrany przepis został usunięty. Wybierz ponownie.</string>
     <string name="api_already_resolved">Ten przepis rozstrzygnięto już inaczej (może na innym telefonie).</string>
     <string name="api_not_found">Serwer nie zna tego elementu.</string>
+    <string name="api_extraction_in_progress">Trwa już odczyt na serwerze – poczekaj na wynik.</string>
+    <string name="api_no_llm_input">To udostępnienie nie ma nic, co AI mogłoby odczytać (brak zdjęć, PDF-ów i tekstu).</string>
+    <string name="api_llm_unavailable">Serwer nie ma klucza API do odczytu AI.</string>
     <string name="edit_locked_by">Edytuje teraz: %1$s</string>
     <string name="backend_accepted">przyjęte przez serwer</string>
     <string name="backend_processing">przetwarzanie na serwerze</string>
@@ -146,7 +149,9 @@
     <string name="backend_awaiting_extraction">czeka na odczyt na serwerze</string>
     <string name="backend_done">gotowe</string>
     <string name="reason_processing_failed">Serwer nie zdołał przetworzyć tego udostępnienia.</string>
-    <string name="reason_awaiting_extraction">Serwer nie odczytał jeszcze składników ani kroków (zdjęcia i PDF-y odczyta automatycznie, gdy będzie to umiał). Nic nie trzeba robić.</string>
+    <string name="reason_awaiting_extraction">Serwer nie odczytał składników ani kroków.</string>
+    <string name="reason_llm_unavailable">Odczyt AI na serwerze jest niedostępny (brak lub nieważny klucz API albo brak środków na koncie).</string>
+    <string name="reason_llm_request_rejected">AI odrzuciło to udostępnienie (np. załącznika nie da się odczytać).</string>
     <string name="reason_target_gone">Przepis wybrany do aktualizacji został usunięty – wybierz ponownie.</string>
     <string name="notif_decision">Do decyzji · %1$s</string>
     <string name="notif_decision_text">Nowy przepis czy aktualizacja istniejącego? Dotknij, aby zdecydować.</string>
@@ -156,6 +161,13 @@
     <string name="inbox_empty">Nic nie czeka na decyzję.</string>
     <string name="inbox_candidates">%1$d przepisy</string>
     <string name="decide">Zdecyduj</string>
+    <string name="reread_ai">Ponownie odczytaj AI</string>
+    <string name="reread_running">Odczytuję ponownie przez AI… To może potrwać do minuty.</string>
+    <string name="reread_failed">Ponowny odczyt AI się nie udał.</string>
+    <string name="reread_no_change">Ponowny odczyt AI nie znalazł pełnego przepisu – przepis się nie zmienił.</string>
+    <string name="reread_done">Odczytano ponownie.</string>
+    <string name="reread_still_running">Odczyt wciąż trwa – dam znać powiadomieniem.</string>
+    <string name="reread_unsupported">Serwer nie obsługuje jeszcze ponownego odczytu AI.</string>
     <string name="decision_title">Nowy czy aktualizacja?</string>
     <string name="decision_counts">Składniki: %1$d, kroki: %2$d</string>
     <string name="needs_review">Wymaga sprawdzenia</string>

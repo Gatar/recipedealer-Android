@@ -147,7 +147,10 @@ fun CaptureDetailScreen(
                 }
                 if (entry.state.status == CaptureStatus.SENT && entry.state.destination != LocalCaptureSender.DESTINATION) {
                     val waiting = entry.state.backendStatus in Inbox.WAITING && entry.state.backendReason != Inbox.AWAITING_EXTRACTION
-                    if (waiting || entry.state.backendRecipes.isNotEmpty()) {
+                    if (Inbox.canReread(entry.state.backendStatus, entry.state.backendReason)) {
+                        // the decision screen runs it and waits for the result
+                        Button(onClick = { onDecide(id) }) { Text(stringResource(R.string.reread_ai)) }
+                    } else if (waiting || entry.state.backendRecipes.isNotEmpty()) {
                         Button(onClick = { onDecide(id) }) { Text(stringResource(R.string.decide)) }
                     }
                     OutlinedButton(onClick = { UploadQueue.scheduleStatusNow(context, id) }) { Text(stringResource(R.string.refresh_status)) }
