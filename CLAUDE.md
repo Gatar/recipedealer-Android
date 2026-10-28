@@ -178,12 +178,13 @@ App work:
   in English); a run on a recipe whose head the user wrote only adds a proposal (machine revision).
 - Done (see "Backend decisions"): force LLM from a capture (decision screen) and the new `needs_attention` reasons
   `LLM_UNAVAILABLE` / `LLM_REQUEST_REJECTED` in "Do decyzji".
-- Done: force LLM from a recipe: "Ponownie odczytaj AI" at the end of the phone recipe view (next to the stats),
+- Debug builds are named `<versionName>-debug` (`versionNameSuffix`): test builds keep the last release's number.
+- Done: force LLM from a recipe: "Ponownie odczytaj AI" at the end of the recipe view, phone and tablet view (next to the stats),
   confirm dialog → `Inbox.captureOfRecipe` (newest revision with a `captureId`) → `Inbox.rereadAndWait` (shared with
   the decision screen) → sync on `done`. Verified on the emulator against production 2026-10-28 (test recipe, Haiku
   read it again, $0.0005; deleted afterwards).
 - Done: "Statystyki dla nerdów" (`ui/StatsScreen.kt`, route `recipe/{id}/stats`): text button at the end of the
-  phone recipe view (not in the tablet view) → `GET /v1/recipes/{recipeId}/extraction-stats`: totals, per model, runs
+  recipe view (phone and tablet view; `TabletRecipeView` footer) → `GET /v1/recipes/{recipeId}/extraction-stats`: totals, per model, runs
   oldest first with Polish step / status labels, raw validation errors, tokens, latency, cost in USD (4 decimals).
   Typical cost: Haiku $0.001–0.003 per recipe, Sonnet ~$0.02.
 - `sourceSummary` stays the lower-case source type (`image`, `pdf`) for now (user, 2026-10-28: no renaming).

@@ -441,13 +441,27 @@ fun RecipeDetailScreen(
             cached?.lock?.lockedBy?.let { Banner(stringResource(R.string.edit_locked_by, it)) }
             if (tablet && cached != null) TagChips(cached.tags, catalog)
         }
+        // [color]: the tablet view has fixed light colors also in the dark theme
+        @Composable
+        fun ColumnScope.tools(color: Color = Color.Unspecified) {
+            if (!settings.hasBackend) return
+            rereadNote?.let { Text(it, style = MaterialTheme.typography.titleSmall, color = color) }
+            Row {
+                TextButton(onClick = { confirmReread = true }, enabled = !rereading) {
+                    Text(stringResource(R.string.reread_ai), color = color)
+                }
+                TextButton(onClick = onStats) { Text(stringResource(R.string.stats_title), color = color) }
+            }
+        }
         if (picking && cached != null) {
             TagPickerDialog(catalog, cached.tags, onDismiss = { picking = false },
                 onManage = { picking = false; onTags() }, onConfirm = ::saveTags)
         }
         if (tablet && cached != null) {
             val recipe = remember(cached.recipe) { cached.content() }
-            Box(Modifier.fillMaxSize().padding(padding)) { TabletRecipeView(cached, recipe) { status() } }
+            Box(Modifier.fillMaxSize().padding(padding)) {
+                TabletRecipeView(cached, recipe, banners = { status() }, footer = { tools(it) })
+            }
             return@Scaffold
         }
         Column(
@@ -474,16 +488,7 @@ fun RecipeDetailScreen(
                         modifier = Modifier.clickable { runCatching { uri.openUri(url) } })
                 }
             }
-            // phone view only: the tablet view is for cooking
-            if (settings.hasBackend) {
-                rereadNote?.let { Text(it, style = MaterialTheme.typography.titleSmall) }
-                Row {
-                    TextButton(onClick = { confirmReread = true }, enabled = !rereading) {
-                        Text(stringResource(R.string.reread_ai))
-                    }
-                    TextButton(onClick = onStats) { Text(stringResource(R.string.stats_title)) }
-                }
-            }
+            tools()
         }
     }
 }

@@ -37,6 +37,10 @@ android {
     }
 
     buildTypes {
+        // test builds keep the last release's number: the suffix tells them apart in the system's app info
+        debug {
+            versionNameSuffix = "-debug"
+        }
         release {
             signingConfigs.findByName("release")?.let { signingConfig = it }
             // No R8: optimizing only androidx / kotlin(x) made kotlin.text classes inaccessible to the app's own code

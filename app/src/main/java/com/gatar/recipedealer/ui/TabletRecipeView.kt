@@ -53,7 +53,12 @@ private val Gap = 20.dp
  * full width. Chosen in the settings ("Widok tabletu"), not by screen size.
  */
 @Composable
-fun TabletRecipeView(cached: CachedRecipe, recipe: Recipe, banners: @Composable ColumnScope.() -> Unit) {
+fun TabletRecipeView(
+    cached: CachedRecipe,
+    recipe: Recipe,
+    banners: @Composable ColumnScope.() -> Unit,
+    footer: @Composable ColumnScope.(textColor: Color) -> Unit = {},
+) {
     Column(
         Modifier.fillMaxSize().background(PageBackground).verticalScroll(rememberScrollState()).padding(Gap),
         verticalArrangement = Arrangement.spacedBy(Gap),
@@ -102,6 +107,7 @@ fun TabletRecipeView(cached: CachedRecipe, recipe: Recipe, banners: @Composable 
                 recipe.notes.forEach { Text("•  $it", style = MaterialTheme.typography.bodyLarge, color = Ink) }
             }
         }
+        footer(InkMuted)
     }
 }
 
