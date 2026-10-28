@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -26,6 +27,7 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowDownward
 import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.ArrowUpward
+import androidx.compose.material.icons.filled.CleaningServices
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Tune
@@ -118,13 +120,15 @@ fun TagColumn(
     val pills = if (isSystemInDarkTheme()) DarkPills else LightPills
     LazyColumn(modifier.padding(horizontal = 6.dp)) {
         item {
-            Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
+            // Fixed height with the clear button beside the icon: selecting a tag must not push the list down.
+            Row(Modifier.fillMaxWidth().height(48.dp), horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically) {
                 IconButton(onClick = onManage) {
                     Icon(Icons.Default.Tune, stringResource(R.string.tag_manager), Modifier.size(20.dp))
                 }
                 if (selected.isNotEmpty()) {
-                    TextButton(onClick = onClear) {
-                        Text(stringResource(R.string.tags_clear), style = MaterialTheme.typography.labelMedium)
+                    IconButton(onClick = onClear) {
+                        Icon(Icons.Default.CleaningServices, stringResource(R.string.tags_clear), Modifier.size(20.dp))
                     }
                 }
             }
