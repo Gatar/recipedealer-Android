@@ -177,7 +177,11 @@ App work:
   that finds no complete recipe never changes an already applied recipe (the capture returns to its state, message
   in English); a run on a recipe whose head the user wrote only adds a proposal (machine revision).
 - Done (see "Backend decisions"): force LLM from a capture (decision screen) and the new `needs_attention` reasons
-  `LLM_UNAVAILABLE` / `LLM_REQUEST_REJECTED` in "Do decyzji". Still to do: force LLM from a recipe.
+  `LLM_UNAVAILABLE` / `LLM_REQUEST_REJECTED` in "Do decyzji".
+- Done: force LLM from a recipe: "Ponownie odczytaj AI" at the end of the phone recipe view (next to the stats),
+  confirm dialog → `Inbox.captureOfRecipe` (newest revision with a `captureId`) → `Inbox.rereadAndWait` (shared with
+  the decision screen) → sync on `done`. Verified on the emulator against production 2026-10-28 (test recipe, Haiku
+  read it again, $0.0005; deleted afterwards).
 - Done: "Statystyki dla nerdów" (`ui/StatsScreen.kt`, route `recipe/{id}/stats`): text button at the end of the
   phone recipe view (not in the tablet view) → `GET /v1/recipes/{recipeId}/extraction-stats`: totals, per model, runs
   oldest first with Polish step / status labels, raw validation errors, tokens, latency, cost in USD (4 decimals).

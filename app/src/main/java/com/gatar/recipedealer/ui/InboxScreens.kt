@@ -61,7 +61,6 @@ import com.gatar.recipedealer.container
 import com.gatar.recipedealer.inbox.Inbox
 import com.gatar.recipedealer.store.CaptureEntry
 import com.gatar.recipedealer.upload.UploadQueue
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 /** "Do decyzji": captures of the whole household waiting for a decision or for help. */
@@ -158,25 +157,17 @@ fun DecisionScreen(
     fun reread() = scope.launch {
         busy = true
         rereadNote = null
-        val r = container.inbox.forceLlm(captureId)
-        error = if (isMissingRoute(r)) context.getString(R.string.reread_unsupported) else apiErrorText(context, r)
-        if (r is ApiResult.Ok) {
+        val r = container.inbox.rereadAndWait(captureId) {
             Notifications.cancel(context, captureId)
             UploadQueue.scheduleStatus(context, captureId)
             rereadNote = context.getString(R.string.reread_running)
-            var v = r.value
+            view = it
+        }
+        error = if (isMissingRoute(r)) context.getString(R.string.reread_unsupported) else apiErrorText(context, r)
+        if (r is ApiResult.Ok) {
+            val v = r.value
             view = v
-            var polls = 0
-            while (Inbox.isPending(v.status) && polls++ < REREAD_POLLS) {
-                delay(REREAD_POLL_MS)
-                (container.inbox.load(captureId) as? ApiResult.Ok)?.value?.let { v = it; view = it }
-            }
-            rereadNote = context.getString(when {
-                Inbox.isPending(v.status) -> R.string.reread_still_running
-                v.status == CaptureStates.NEEDS_ATTENTION -> R.string.reread_failed
-                v.message?.startsWith(NO_COMPLETE_RECIPE) == true -> R.string.reread_no_change
-                else -> R.string.reread_done
-            })
+            rereadNote = rereadResultText(context, v)
             if (!Inbox.isPending(v.status)) Notifications.cancel(context, captureId)
             if (v.status == CaptureStates.DONE) container.recipeSync.sync()
         }
@@ -260,11 +251,6 @@ fun DecisionScreen(
 }
 
 private const val NEW = "\u0000new"
-private const val REREAD_POLL_MS = 3_000L
-/** ~3 min: Haiku and then Sonnet usually answer within a minute. */
-private const val REREAD_POLLS = 60
-/** The server's message for a forced run that left an applied recipe as it was (state `done`). */
-private const val NO_COMPLETE_RECIPE = "Automatic extraction found no complete recipe"
 
 @Composable
 private fun CandidateCard(captureId: String, c: ExtractedCandidate, enabled: Boolean, onDecide: (Resolution) -> Unit) {

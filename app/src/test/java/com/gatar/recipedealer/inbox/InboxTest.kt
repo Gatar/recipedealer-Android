@@ -191,6 +191,42 @@ class InboxTest {
         server.takeRequest().let { assertEquals("POST", it.method); assertEquals("/v1/captures/$cid/llm-extraction", it.path) }
     }
 
+    @Test fun rereadAndWaitPollsUntilProcessingEnds() = runTest {
+        respond(202, """{"captureId":"$cid","status":"processing"}""")
+        respond(200, """{"captureId":"$cid","status":"processing"}""")
+        respond(200, """{"captureId":"$cid","status":"done","recipes":[{"recipeId":"$rid"}],
+            "message":"${Inbox.NO_COMPLETE_RECIPE}; the recipe was not changed."}""")
+        var started: String? = null
+        val r = inbox.rereadAndWait(cid, pollMs = 10) { started = it.status }
+        assertEquals(CaptureStates.PROCESSING, started)
+        assertEquals(CaptureStates.DONE, (r as ApiResult.Ok).value.status)
+        assertEquals(3, server.requestCount)
+        assertEquals(CaptureStates.DONE, store.get(cid)!!.state.backendStatus)
+    }
+
+    @Test fun rereadAndWaitGivesUpAfterThePolls() = runTest {
+        repeat(3) { respond(if (it == 0) 202 else 200, """{"captureId":"$cid","status":"processing"}""") }
+        val r = inbox.rereadAndWait(cid, pollMs = 10, polls = 2)
+        assertEquals(CaptureStates.PROCESSING, (r as ApiResult.Ok).value.status)
+        assertEquals(3, server.requestCount)
+    }
+
+    @Test fun rereadAndWaitPassesARefusal() = runTest {
+        respond(409, """{"error":"extraction_in_progress"}""")
+        assertEquals(ApiErrors.EXTRACTION_IN_PROGRESS, (inbox.rereadAndWait(cid) as ApiResult.Failed).error)
+        assertEquals(1, server.requestCount)
+    }
+
+    @Test fun captureOfRecipeIsTheNewestRevisionWithOne() = runTest {
+        respond(200, """[{"revisionId":"r3","origin":"USER","userName":"Ania","recipe":{}},
+            {"revisionId":"r2","origin":"MACHINE","captureId":"c2","recipe":{}},
+            {"revisionId":"r1","origin":"MACHINE","captureId":"c1","recipe":{}}]""")
+        respond(200, """[{"revisionId":"r1","origin":"USER","recipe":{}}]""")
+        assertEquals("c2", (inbox.captureOfRecipe(rid) as ApiResult.Ok).value)
+        assertEquals("/v1/recipes/$rid/revisions", server.takeRequest().path)
+        assertEquals(null, (inbox.captureOfRecipe(rid) as ApiResult.Ok).value)
+    }
+
     @Test fun rereadOnlyForFailedExtraction() {
         assertTrue(Inbox.canReread(CaptureStates.NEEDS_ATTENTION, Inbox.AWAITING_EXTRACTION))
         assertTrue(Inbox.canReread(CaptureStates.NEEDS_ATTENTION, Inbox.PROCESSING_FAILED))

@@ -168,6 +168,9 @@
     <string name="reread_done">Odczytano ponownie.</string>
     <string name="reread_still_running">Odczyt wciąż trwa – dam znać powiadomieniem.</string>
     <string name="reread_unsupported">Serwer nie obsługuje jeszcze ponownego odczytu AI.</string>
+    <string name="reread_recipe_confirm">Odczytać przepis ponownie przez AI (Claude Haiku, a gdy to nie wystarczy – Sonnet)? Wynik będzie nową wersją do sprawdzenia; jeśli przepis był poprawiany ręcznie, pojawi się tylko jako propozycja w Historii.</string>
+    <string name="reread_recipe_done">Odczytano ponownie – nowa wersja jest w Historii (do sprawdzenia).</string>
+    <string name="reread_no_capture">Ten przepis nie pochodzi z udostępnienia – nie ma czego odczytać.</string>
     <string name="stats_title">Statystyki dla nerdów</string>
     <string name="stats_unsupported">Serwer nie obsługuje jeszcze statystyk.</string>
     <string name="discard">Odrzuć (to nie przepis)</string>

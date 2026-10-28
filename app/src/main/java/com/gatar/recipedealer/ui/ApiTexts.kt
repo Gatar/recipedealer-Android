@@ -5,6 +5,7 @@ import com.gatar.recipedealer.R
 import com.gatar.recipedealer.api.ApiErrors
 import com.gatar.recipedealer.api.ApiResult
 import com.gatar.recipedealer.api.CaptureStates
+import com.gatar.recipedealer.api.CaptureView
 import com.gatar.recipedealer.inbox.Inbox
 
 /**
@@ -53,6 +54,14 @@ fun backendStatusLabel(context: Context, status: String): String = when (status)
     CaptureStates.DONE -> context.getString(R.string.backend_done)
     else -> status
 }
+
+/** How "Ponownie odczytaj AI" ended, from the capture after [Inbox.rereadAndWait]. */
+fun rereadResultText(context: Context, v: CaptureView): String = context.getString(when {
+    Inbox.isPending(v.status) -> R.string.reread_still_running
+    v.status == CaptureStates.NEEDS_ATTENTION -> R.string.reread_failed
+    v.message?.startsWith(Inbox.NO_COMPLETE_RECIPE) == true -> R.string.reread_no_change
+    else -> R.string.reread_done
+})
 
 /** `CaptureView.reason`; the server's `message` is shown next to it. */
 fun backendReasonText(context: Context, reason: String?): String? = when (reason) {

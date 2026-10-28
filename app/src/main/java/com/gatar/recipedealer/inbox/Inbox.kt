@@ -6,6 +6,8 @@ import com.gatar.recipedealer.api.BackendClient
 import com.gatar.recipedealer.api.CaptureStates
 import com.gatar.recipedealer.api.CaptureView
 import com.gatar.recipedealer.api.Resolution
+import com.gatar.recipedealer.api.failure
+import kotlinx.coroutines.delay
 import com.gatar.recipedealer.store.CaptureStore
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -72,6 +74,38 @@ class Inbox(private val store: CaptureStore, private val backend: () -> BackendC
     }
 
     /**
+     * [forceLlm], then polls every [pollMs] (at most [polls] times) until processing ends. Returns the last view (still
+     * pending when the server takes longer); [onStarted] gets the `processing` view at once.
+     */
+    suspend fun rereadAndWait(
+        captureId: String,
+        pollMs: Long = 3_000,
+        polls: Int = 60,
+        onStarted: (CaptureView) -> Unit = {},
+    ): ApiResult<CaptureView> {
+        val r = forceLlm(captureId)
+        if (r !is ApiResult.Ok) return r
+        onStarted(r.value)
+        var v = r.value
+        var n = 0
+        while (isPending(v.status) && n++ < polls) {
+            delay(pollMs)
+            (load(captureId) as? ApiResult.Ok)?.value?.let { v = it }
+        }
+        return ApiResult.Ok(v)
+    }
+
+    /**
+     * The capture behind a recipe for "Ponownie odczytaj AI": the newest revision that came from one (user edits
+     * have none). Null when no revision has a capture.
+     */
+    suspend fun captureOfRecipe(recipeId: String): ApiResult<String?> {
+        val r = (backend() ?: return NO_BACKEND).revisions(recipeId)
+        if (r !is ApiResult.Ok) return r.failure()
+        return ApiResult.Ok(r.value.firstNotNullOfOrNull { it.captureId })
+    }
+
+    /**
      * "Odrzuć": deletes the capture on the server (an invoice shared by mistake) and on this phone. Already deleted
      * (404 `not_found`, e.g. by another phone) counts as done.
      */
@@ -122,6 +156,9 @@ class Inbox(private val store: CaptureStore, private val backend: () -> BackendC
             status == CaptureStates.NEEDS_ATTENTION && reason != TARGET_GONE
 
         fun isPending(status: String?) = status == CaptureStates.ACCEPTED || status == CaptureStates.PROCESSING
+
+        /** The server's message for a forced run that left an applied recipe as it was (state `done`). */
+        const val NO_COMPLETE_RECIPE = "Automatic extraction found no complete recipe"
 
         /**
          * Something the user can do now: a decision, or help with a failure ("Ponownie odczytaj AI", "Odrzuć").

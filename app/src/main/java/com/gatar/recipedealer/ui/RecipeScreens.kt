@@ -47,6 +47,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.AlertDialog
+import com.gatar.recipedealer.api.CaptureStates
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
@@ -345,6 +347,44 @@ fun RecipeDetailScreen(
             else -> note = apiErrorText(context, r)
         }
     }
+    var confirmReread by remember { mutableStateOf(false) }
+    var rereading by remember { mutableStateOf(false) }
+    var rereadNote by remember { mutableStateOf<String?>(null) }
+    /** "Ponownie odczytaj AI": the newest capture behind the recipe through the LLM steps again; the result is a revision. */
+    fun reread() = scope.launch {
+        rereading = true
+        rereadNote = context.getString(R.string.loading)
+        val captureId = container.inbox.captureOfRecipe(recipeId)
+        val id = (captureId as? ApiResult.Ok)?.value
+        if (id == null) {
+            rereadNote = apiErrorText(context, captureId) ?: context.getString(R.string.reread_no_capture)
+            rereading = false
+            return@launch
+        }
+        val r = container.inbox.rereadAndWait(id) { rereadNote = context.getString(R.string.reread_running) }
+        rereadNote = when {
+            isMissingRoute(r) -> context.getString(R.string.reread_unsupported)
+            r !is ApiResult.Ok -> apiErrorText(context, r)
+            else -> {
+                val v = r.value
+                if (v.status == CaptureStates.DONE) container.recipeSync.sync()
+                val text = rereadResultText(context, v)
+                if (text == context.getString(R.string.reread_done)) context.getString(R.string.reread_recipe_done)
+                else listOfNotNull(text, backendReasonText(context, v.reason), v.message).joinToString("\n")
+            }
+        }
+        rereading = false
+    }
+    if (confirmReread) {
+        AlertDialog(
+            onDismissRequest = { confirmReread = false },
+            text = { Text(stringResource(R.string.reread_recipe_confirm)) },
+            confirmButton = {
+                TextButton(onClick = { confirmReread = false; reread() }) { Text(stringResource(R.string.reread_ai)) }
+            },
+            dismissButton = { TextButton(onClick = { confirmReread = false }) { Text(stringResource(R.string.cancel)) } },
+        )
+    }
     LaunchedEffect(recipeId) {
         val client = container.backend() ?: return@LaunchedEffect
         when (val r = client.recipe(recipeId, container.recipes.get(recipeId)?.detailEtag)) {
@@ -435,7 +475,15 @@ fun RecipeDetailScreen(
                 }
             }
             // phone view only: the tablet view is for cooking
-            if (settings.hasBackend) TextButton(onClick = onStats) { Text(stringResource(R.string.stats_title)) }
+            if (settings.hasBackend) {
+                rereadNote?.let { Text(it, style = MaterialTheme.typography.titleSmall) }
+                Row {
+                    TextButton(onClick = { confirmReread = true }, enabled = !rereading) {
+                        Text(stringResource(R.string.reread_ai))
+                    }
+                    TextButton(onClick = onStats) { Text(stringResource(R.string.stats_title)) }
+                }
+            }
         }
     }
 }
