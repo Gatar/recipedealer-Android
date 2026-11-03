@@ -208,8 +208,11 @@ App work:
 - `sourceSummary` stays the lower-case source type (`image`, `pdf`) for now (user, 2026-10-28: no renaming).
 - Released as 1.0.2 (2026-10-28); verified by the user on the phones and the tablet (2026-11-03).
 - 1.0.3 (versionCode 4, 2026-11-03): server tagging wait-for-done, translation setting, stats labels. Debug build
-  verified on the emulator against production (tagging, translation, re-read); the release APK itself not installed
-  yet.
+  verified on the emulator against production (tagging, translation, re-read); never handed out (1.0.4 came first).
+- 1.0.4 (versionCode 5, 2026-11-03): 1.0.3 + recipe photo from the gallery / camera in every editor, consent dialogs
+  hidden before the web OCR, review "notes" dropped. Debug build verified on the emulator against production
+  (gallery photo on a recipe, camera photo in manual entry, consent dialog, re-read on allrecipes); the release APK
+  itself not installed yet.
 
 ## Translation of new recipes (backend 2026-11-03, `docs/api.md` "Translation of new recipes")
 - Setting `translateNew` (Settings: "Tłumacz nowe przepisy na język urządzenia (<język>)", the language name from
