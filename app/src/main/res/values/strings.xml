@@ -124,8 +124,9 @@
     <string name="field_image_url">Zdjęcie – adres (https://…)</string>
     <string name="field_image_url_invalid">Adres zdjęcia musi zaczynać się od https:// lub http://</string>
     <string name="photo_from_phone">Zdjęcie z telefonu</string>
-    <string name="photo_pick">Wybierz zdjęcie z galerii</string>
-    <string name="photo_change">Zmień zdjęcie</string>
+    <string name="photo_pick">Z galerii</string>
+    <string name="photo_take">Zrób zdjęcie</string>
+    <string name="photo_no_camera">Brak aplikacji aparatu.</string>
     <string name="photo_remove">Usuń zdjęcie</string>
     <string name="photo_uploading">Wysyłam zdjęcie…</string>
     <string name="photo_unreadable">Nie udało się odczytać tego zdjęcia.</string>

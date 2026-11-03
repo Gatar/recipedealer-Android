@@ -26,6 +26,8 @@ object WebTiming {
     /** Cloudflare "Just a moment…" passes by itself in 2–7 s. */
     const val CHALLENGE_MAX_MS = 30_000L
     const val SNAPSHOT_MAX_TILES = 8
+    /** After hiding a consent dialog, before the OCR snapshot. */
+    const val REPAINT_MS = 700L
 }
 
 /** Why a web capture has no usable recipe – drives the failure notification. */
@@ -100,6 +102,11 @@ class WebCaptureRunner(private val page: PageController, private val ocr: OcrEng
     private suspend fun ocrFallback(e: Extraction, timings: MutableMap<String, Long>, notes: MutableList<String>,
                                     errors: MutableList<String>): Extraction {
         val t = System.currentTimeMillis()
+        // a cookie dialog over the page would be read instead of the page
+        page.hideConsentOverlays().takeIf { it > 0 }?.let {
+            notes += "ocrFallback: hid $it consent overlay(s)"
+            delay(WebTiming.REPAINT_MS) // the snapshot draws the last frame: let the page repaint without the dialog
+        }
         val result = runCatching { ocr.recognize(page.snapshotSource(), WebTiming.SNAPSHOT_MAX_TILES) }
             .onFailure { errors += "ocr: ${it.message}" }.getOrNull() ?: return e
         timings["ocr"] = System.currentTimeMillis() - t

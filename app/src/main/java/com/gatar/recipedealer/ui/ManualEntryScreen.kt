@@ -53,7 +53,8 @@ fun ManualEntryScreen(onBack: () -> Unit, onSaved: (String) -> Unit) {
         },
     ) { padding ->
         Column(Modifier.fillMaxSize().padding(padding).imePadding().verticalScroll(rememberScrollState()).padding(16.dp)) {
-            RecipeEditor(draft) { draft = it }
+            // a photo goes into the capture's images[0] (blob:<sha256>): the new recipe's photo on the server
+            RecipeEditor(draft, rememberPhotoPicker { ref -> draft = draft.copy(imageUrl = ref) }) { draft = it }
             Button(
                 enabled = canSave,
                 modifier = Modifier.fillMaxWidth().padding(top = 16.dp),

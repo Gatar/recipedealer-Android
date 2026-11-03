@@ -90,7 +90,11 @@ or notification action). Setting "Wysyłaj automatycznie" sends right after extr
 `web/WebCapture.kt` (`WebCaptureRunner`): off-screen WebView → 5 s DOM quiet or 15 s hard timeout → extractor →
 Cloudflare wait (≤30 s, never OCR the challenge) → consent-wall check → late-content retries every 5 s until 30 s →
 OCR fallback (whole-page snapshot, tiled ML Kit, OCR text through `loadText`, fills only missing parts, provenance
-`ocr`). `ExtractorMerge` merges JSON-LD → microdata → plugins → heuristic with the group rule. `recipe.language`
+`ocr`). Before the OCR snapshot `PageController.hideConsentOverlays` hides cookie / consent dialogs laid over the page
+(known CMP containers + fixed/sticky layers about cookies or consent, CSS rule against re-insertion, 700 ms repaint):
+aniagotuje's Funding Choices dialog was read instead of the page. `ExtractorMerge` merges JSON-LD → microdata →
+plugins → heuristic with the group rule; heuristic notes are dropped next to ingredients and steps from structured
+data (allrecipes: they were readers' reviews). `recipe.language`
 comes from the content (`LanguageGuess`), page `lang` only breaks ties. `completeness.bestStage` = strongest stage
 that gave ingredients or steps. `BrowserActivity` is the visible WebView (failure notification, background mode off).
 
@@ -160,10 +164,13 @@ user left. 503 `llm_unavailable` is `Failed`, not `Retry`.
 - Entry to the tag manager: sliders icon (`Tune`) in the tag column header, and Settings.
 
 ## Recipe photo from the phone (backend 2026-11-03, `docs/api.md` `POST /v1/blobs`)
-- Recipe editor (server recipes only, `RecipeEditor(onPickPhoto)`): "Wybierz zdjęcie z galerii" → system photo
-  picker (`PickVisualMedia`, no permission) → `RecipePhoto.prepare` (ImageDecoder: upright, ≤ 1600 px, JPEG 85) →
-  `BackendClient.uploadPhoto` → the draft's `imageUrl` = `blob:<sha256>`; saved with the normal edit (USER revision).
-  The field then shows the preview with "Zmień zdjęcie" / "Usuń zdjęcie"; a URL can still be typed after removing.
+- Every editor (recipe editor, manual entry, "Popraw" of a capture; `RecipeEditor(photos)` with
+  `rememberPhotoPicker`, null in local mode): "Z galerii" (system photo picker, `PickVisualMedia`) or "Zrób zdjęcie"
+  (camera app, `TakePicture` into `cache/photos/`, FileProvider; no CAMERA permission declared, so none is needed) →
+  `RecipePhoto.prepare` (ImageDecoder: upright, ≤ 1600 px, JPEG 85) → `BackendClient.uploadPhoto` at once → the
+  draft's `imageUrl` = `blob:<sha256>`. The recipe editor saves it as a USER revision; a capture keeps it in
+  `recipe.images[0]` and the server gives the new recipe that photo. The field then shows the preview with
+  "Usuń zdjęcie"; a URL can still be typed after removing. The server deletes photos nothing names after 7 days.
 - The server makes it the `thumbnailBlob`; `recipeImage` also resolves a `blob:` `images[0]` itself. Missing route
   → "Serwer nie obsługuje jeszcze zdjęć z telefonu". Rejected earlier (b): a `data:` URI (bloats every sync).
 

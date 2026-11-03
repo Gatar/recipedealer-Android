@@ -125,6 +125,34 @@ class PageController(val webView: WebView, private val scripts: ExtractorScripts
         return r == "true"
     }
 
+    /**
+     * Hides cookie / consent dialogs (CMPs) laid over the page, so the OCR snapshot reads the page and not "… asks for
+     * your consent …": the known CMP containers, and fixed or sticky layers whose text is about cookies or consent.
+     * Returns how many elements were hidden.
+     */
+    suspend fun hideConsentOverlays(): Int {
+        val r = eval("""(function(){
+            var hidden = 0;
+            function hide(e) { if (e && e.style.display !== 'none') { e.style.setProperty('display', 'none', 'important'); hidden++; } }
+            var known = ['#fc-consent-root', '.fc-consent-root', '.fc-dialog-overlay', '.fc-dialog-container',
+                '#onetrust-consent-sdk', '#CybotCookiebotDialog', '.qc-cmp2-container', '#didomi-host',
+                '[id^="sp_message_container"]', '#usercentrics-root', '#cmpbox', '#cookie-law-info-bar'];
+            // a rule also hides a dialog the CMP inserts again
+            var style = document.createElement('style');
+            style.textContent = known.join(',') + '{display:none !important}';
+            (document.head || document.documentElement).appendChild(style);
+            known.forEach(function(s) { document.querySelectorAll(s).forEach(hide); });
+            var words = /cookie|consent|zgod|prywatno|privacy|rodo|gdpr|partner/i;
+            document.querySelectorAll('body *').forEach(function(e) {
+                var st = getComputedStyle(e);
+                if ((st.position === 'fixed' || st.position === 'sticky') && words.test(e.textContent || '')) hide(e);
+            });
+            [document.documentElement, document.body].forEach(function(e) { if (e) e.style.setProperty('overflow', 'visible', 'important'); });
+            return hidden;
+        })()""")
+        return r?.toIntOrNull() ?: 0
+    }
+
     /** Whole-page render for OCR (needs WebView.enableSlowWholeDocumentDraw() before the first WebView). */
     fun snapshotSource(): TileSource {
         val width = webView.width.coerceAtLeast(1)

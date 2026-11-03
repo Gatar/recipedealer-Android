@@ -104,7 +104,8 @@ fun CaptureDetailScreen(
                 Modifier.fillMaxSize().padding(padding).imePadding().verticalScroll(rememberScrollState()).padding(16.dp),
                 verticalArrangement = Arrangement.spacedBy(12.dp),
             ) {
-                RecipeEditor(draft) { editing = it }
+                // a photo goes into the capture's images[0] (blob:<sha256>): the new recipe's photo on the server
+                RecipeEditor(draft, rememberPhotoPicker { ref -> editing = editing?.copy(imageUrl = ref) }) { editing = it }
                 FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                     Button(onClick = {
                         val c = container.store.get(id)?.capture ?: return@Button

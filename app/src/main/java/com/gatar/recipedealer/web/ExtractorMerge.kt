@@ -76,7 +76,11 @@ object ExtractorMerge {
         if (images == null) {
             images = output.str("ogImage")?.let { listOf(it) }?.also { prov["images"] = Stage.PAGE }
         }
-        val notes = pick("notes") { it.notes.takeIf(List<String>::isNotEmpty) }
+        // next to a recipe from structured data, the heuristic's "notes" are mostly the page's comments and reviews
+        val structured = setOf(Stage.JSON_LD, Stage.MICRODATA, Stage.PLUGIN).let { s ->
+            prov["ingredients"] in s && prov["steps"] in s
+        }
+        val notes = pick("notes") { c -> c.notes.takeIf { it.isNotEmpty() && !(structured && c.stage == Stage.HEURISTIC) } }
         val author = pick("author") { it.author }
         val recipe = Recipe(
             title = title,

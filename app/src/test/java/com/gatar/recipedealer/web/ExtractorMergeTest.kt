@@ -40,6 +40,27 @@ class ExtractorMergeTest {
         assertEquals(Stage.JSON_LD, m.provenance["author"])
     }
 
+    @Test fun heuristicNotesNextToAStructuredRecipeAreLeftOut() {
+        // allrecipes: JSON-LD has the recipe, the heuristic's "notes" are the readers' reviews
+        val m = ExtractorMerge.merge(output("""
+        {"jsonLd": [{"@type":"Recipe","name":"Guacamole","recipeIngredient":["3 avocados"],"recipeInstructions":"Mash."}],
+         "microdata": [], "pluginHits": {},
+         "heuristic": {"ingredients": [], "instructions": [], "notes": ["\"If I could give 10 stars, I would\" raves LYNNE."]}}
+        """))
+        assertEquals(emptyList<String>(), m.recipe.notes)
+        assertNull(m.provenance["notes"])
+    }
+
+    @Test fun heuristicNotesOfAHeuristicRecipeStay() {
+        val m = ExtractorMerge.merge(output("""
+        {"jsonLd": [], "microdata": [], "pluginHits": {},
+         "heuristic": {"recipeHeading": "Gofry", "ingredients": [{"name":null,"items":["mąka"]}],
+                       "instructions": [{"name":null,"items":["Wymieszaj."]}], "notes": ["Podawać na ciepło."]}}
+        """))
+        assertEquals(listOf("Podawać na ciepło."), m.recipe.notes)
+        assertEquals(Stage.HEURISTIC, m.provenance["notes"])
+    }
+
     @Test fun howToSectionsBecomeNamedGroups() {
         val groups = JsonLd.instructions(CaptureJson.parseToJsonElement("""[
             {"@type":"HowToStep","text":"Rozgrzej piekarnik."},

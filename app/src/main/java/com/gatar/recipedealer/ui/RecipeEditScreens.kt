@@ -2,9 +2,6 @@ package com.gatar.recipedealer.ui
 
 import android.app.Application
 import androidx.activity.compose.BackHandler
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.PickVisualMediaRequest
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -64,13 +61,10 @@ import com.gatar.recipedealer.inbox.Inbox
 import com.gatar.recipedealer.model.Recipe
 import com.gatar.recipedealer.recipes.RecipeEditSession
 import com.gatar.recipedealer.recipes.RecipeEditSession.Phase
-import com.gatar.recipedealer.recipes.RecipePhoto
 import com.gatar.recipedealer.recipes.SyncWorker
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 /** Holds the edit session across configuration changes; closing the editor any other way releases the lock. */
 class RecipeEditViewModel(app: Application, handle: SavedStateHandle) : AndroidViewModel(app) {
@@ -110,27 +104,10 @@ fun RecipeEditScreen(onClose: () -> Unit, onDeleted: () -> Unit, vm: RecipeEditV
     var draft by rememberSaveable(stateSaver = NullableDraftSaver) { mutableStateOf<RecipeDraft?>(null) }
     var busy by remember { mutableStateOf(false) }
     var confirmDelete by remember { mutableStateOf(false) }
-    var uploading by remember { mutableStateOf(false) }
-    var photoError by remember { mutableStateOf<String?>(null) }
     LaunchedEffect(state.initial) { if (draft == null) state.initial?.let { draft = RecipeDraft.from(it) } }
-
-    // a photo from the gallery: scaled down here, uploaded at once, saved with the recipe as images[0] = blob:<sha256>
-    val pickPhoto = rememberLauncherForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
-        if (uri == null) return@rememberLauncherForActivityResult
-        scope.launch {
-            uploading = true
-            photoError = null
-            val jpeg = runCatching { withContext(Dispatchers.IO) { RecipePhoto.prepare(context, uri) } }.getOrNull()
-            val r = jpeg?.let { context.container.backend()?.uploadPhoto(it) ?: Inbox.NO_BACKEND }
-            uploading = false
-            when {
-                r == null -> photoError = context.getString(R.string.photo_unreadable)
-                r is ApiResult.Ok -> draft = draft?.copy(imageUrl = r.value.ref)
-                isMissingRoute(r) -> photoError = context.getString(R.string.photo_unsupported)
-                else -> photoError = apiErrorText(context, r)
-            }
-        }
-    }
+    // saved with the recipe as images[0] = blob:<sha256>
+    val photos = rememberPhotoPicker { ref -> draft = draft?.copy(imageUrl = ref) }
+    val uploading = photos?.uploading == true
 
     // the lock is released when the view model is cleared (RecipeEditViewModel.onCleared)
     fun close() = onClose()
@@ -213,10 +190,7 @@ fun RecipeEditScreen(onClose: () -> Unit, onDeleted: () -> Unit, vm: RecipeEditV
                 Text(apiErrorText(context, it).orEmpty(), color = MaterialTheme.colorScheme.error)
             }
             val d = draft ?: return@Column
-            photoError?.let { Text(it, color = MaterialTheme.colorScheme.error) }
-            RecipeEditor(d, onPickPhoto = {
-                pickPhoto.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
-            }, photoUploading = uploading) { draft = it }
+            RecipeEditor(d, photos) { draft = it }
         }
     }
     if (confirmDelete) {

@@ -2,6 +2,8 @@ package com.gatar.recipedealer.ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
@@ -51,15 +53,10 @@ val RecipeDraftSaver = Saver<RecipeDraft, String>(
 
 /**
  * The recipe form of the preview (editing), of manual entry and of a recipe on the server. Items: one per line.
- * [onPickPhoto]: a photo from the phone can be uploaded (recipes on the server only); [photoUploading] while it is.
+ * [photos]: a photo from the gallery or the camera can be uploaded ([rememberPhotoPicker]; null in local mode).
  */
 @Composable
-fun RecipeEditor(
-    draft: RecipeDraft,
-    onPickPhoto: (() -> Unit)? = null,
-    photoUploading: Boolean = false,
-    onChange: (RecipeDraft) -> Unit,
-) {
+fun RecipeEditor(draft: RecipeDraft, photos: PhotoPicker? = null, onChange: (RecipeDraft) -> Unit) {
     val sentences = KeyboardOptions(capitalization = KeyboardCapitalization.Sentences)
     val number = KeyboardOptions(keyboardType = KeyboardType.Number)
     Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -78,7 +75,7 @@ fun RecipeEditor(
                 label = { Text(stringResource(R.string.field_total)) }, suffix = { Text("min") }, singleLine = true,
                 keyboardOptions = number)
         }
-        PhotoField(draft.imageUrl, onPickPhoto, photoUploading) { onChange(draft.copy(imageUrl = it)) }
+        PhotoField(draft.imageUrl, photos) { onChange(draft.copy(imageUrl = it)) }
         GroupsEditor(stringResource(R.string.section_ingredients), stringResource(R.string.field_ingredients_hint),
             draft.ingredientGroups) { onChange(draft.copy(ingredientGroups = it)) }
         GroupsEditor(stringResource(R.string.section_steps), stringResource(R.string.field_steps_hint),
@@ -91,9 +88,10 @@ fun RecipeEditor(
 /** `https://…` or `http://…`, or `blob:<sha256>` of a photo uploaded from the phone (blank = no photo). */
 fun isImageUrl(s: String) = s.isBlank() || Regex("^https?://\\S+$").matches(s.trim()) || RecipePhoto.blobOf(s) != null
 
-/** The main photo: one uploaded from the phone (preview, change, remove), else a URL field; plus the gallery button. */
+/** The main photo: one uploaded from the phone (preview, remove), else a URL field; plus gallery / camera. */
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
-private fun PhotoField(image: String, onPickPhoto: (() -> Unit)?, uploading: Boolean, onChange: (String) -> Unit) {
+private fun PhotoField(image: String, photos: PhotoPicker?, onChange: (String) -> Unit) {
     val blob = RecipePhoto.blobOf(image)
     if (blob != null) {
         Text(stringResource(R.string.photo_from_phone), style = MaterialTheme.typography.bodyMedium)
@@ -108,15 +106,16 @@ private fun PhotoField(image: String, onPickPhoto: (() -> Unit)?, uploading: Boo
     } else {
         ImageUrlField(image, onChange)
     }
-    Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
-        if (onPickPhoto != null) {
-            OutlinedButton(enabled = !uploading, onClick = onPickPhoto) {
-                Text(stringResource(if (blob != null) R.string.photo_change else R.string.photo_pick))
-            }
+    val uploading = photos?.uploading == true
+    FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalArrangement = Arrangement.Center) {
+        if (photos != null) {
+            OutlinedButton(enabled = !uploading, onClick = photos.fromGallery) { Text(stringResource(R.string.photo_pick)) }
+            OutlinedButton(enabled = !uploading, onClick = photos.fromCamera) { Text(stringResource(R.string.photo_take)) }
         }
         if (blob != null) TextButton(enabled = !uploading, onClick = { onChange("") }) { Text(stringResource(R.string.photo_remove)) }
-        if (uploading) Text(stringResource(R.string.photo_uploading), style = MaterialTheme.typography.bodySmall)
     }
+    if (uploading) Text(stringResource(R.string.photo_uploading), style = MaterialTheme.typography.bodySmall)
+    photos?.error?.let { Text(it, color = MaterialTheme.colorScheme.error, style = MaterialTheme.typography.bodySmall) }
 }
 
 /** The main photo as a URL, with a preview once the typing stops. */
