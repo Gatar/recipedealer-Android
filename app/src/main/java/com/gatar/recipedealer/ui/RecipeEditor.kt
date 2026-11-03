@@ -13,6 +13,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -29,6 +30,7 @@ import com.gatar.recipedealer.capture.GroupDraft
 import com.gatar.recipedealer.capture.RecipeDraft
 import com.gatar.recipedealer.model.CaptureJson
 import com.gatar.recipedealer.container
+import com.gatar.recipedealer.recipes.RecipePhoto
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.getValue
@@ -47,9 +49,17 @@ val RecipeDraftSaver = Saver<RecipeDraft, String>(
     restore = { CaptureJson.decodeFromString(RecipeDraft.serializer(), it) },
 )
 
-/** The recipe form of the preview (editing) and of manual entry. Items: one per line. */
+/**
+ * The recipe form of the preview (editing), of manual entry and of a recipe on the server. Items: one per line.
+ * [onPickPhoto]: a photo from the phone can be uploaded (recipes on the server only); [photoUploading] while it is.
+ */
 @Composable
-fun RecipeEditor(draft: RecipeDraft, onChange: (RecipeDraft) -> Unit) {
+fun RecipeEditor(
+    draft: RecipeDraft,
+    onPickPhoto: (() -> Unit)? = null,
+    photoUploading: Boolean = false,
+    onChange: (RecipeDraft) -> Unit,
+) {
     val sentences = KeyboardOptions(capitalization = KeyboardCapitalization.Sentences)
     val number = KeyboardOptions(keyboardType = KeyboardType.Number)
     Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -68,7 +78,7 @@ fun RecipeEditor(draft: RecipeDraft, onChange: (RecipeDraft) -> Unit) {
                 label = { Text(stringResource(R.string.field_total)) }, suffix = { Text("min") }, singleLine = true,
                 keyboardOptions = number)
         }
-        ImageUrlField(draft.imageUrl) { onChange(draft.copy(imageUrl = it)) }
+        PhotoField(draft.imageUrl, onPickPhoto, photoUploading) { onChange(draft.copy(imageUrl = it)) }
         GroupsEditor(stringResource(R.string.section_ingredients), stringResource(R.string.field_ingredients_hint),
             draft.ingredientGroups) { onChange(draft.copy(ingredientGroups = it)) }
         GroupsEditor(stringResource(R.string.section_steps), stringResource(R.string.field_steps_hint),
@@ -78,8 +88,36 @@ fun RecipeEditor(draft: RecipeDraft, onChange: (RecipeDraft) -> Unit) {
     }
 }
 
-/** `https://…` or `http://…` (blank = no photo). */
-fun isImageUrl(s: String) = s.isBlank() || Regex("^https?://\\S+$").matches(s.trim())
+/** `https://…` or `http://…`, or `blob:<sha256>` of a photo uploaded from the phone (blank = no photo). */
+fun isImageUrl(s: String) = s.isBlank() || Regex("^https?://\\S+$").matches(s.trim()) || RecipePhoto.blobOf(s) != null
+
+/** The main photo: one uploaded from the phone (preview, change, remove), else a URL field; plus the gallery button. */
+@Composable
+private fun PhotoField(image: String, onPickPhoto: (() -> Unit)?, uploading: Boolean, onChange: (String) -> Unit) {
+    val blob = RecipePhoto.blobOf(image)
+    if (blob != null) {
+        Text(stringResource(R.string.photo_from_phone), style = MaterialTheme.typography.bodyMedium)
+        val images = LocalContext.current.container.images
+        val preview by produceState<ImageBitmap?>(null, blob) {
+            value = images.blob(blob)?.let { f -> withContext(Dispatchers.IO) { decodeSampled(f, 600) } }
+        }
+        preview?.let {
+            Image(it, null, Modifier.fillMaxWidth().heightIn(max = 200.dp).clip(RoundedCornerShape(12.dp)),
+                contentScale = ContentScale.Crop)
+        }
+    } else {
+        ImageUrlField(image, onChange)
+    }
+    Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
+        if (onPickPhoto != null) {
+            OutlinedButton(enabled = !uploading, onClick = onPickPhoto) {
+                Text(stringResource(if (blob != null) R.string.photo_change else R.string.photo_pick))
+            }
+        }
+        if (blob != null) TextButton(enabled = !uploading, onClick = { onChange("") }) { Text(stringResource(R.string.photo_remove)) }
+        if (uploading) Text(stringResource(R.string.photo_uploading), style = MaterialTheme.typography.bodySmall)
+    }
+}
 
 /** The main photo as a URL, with a preview once the typing stops. */
 @Composable

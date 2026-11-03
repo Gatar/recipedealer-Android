@@ -159,10 +159,13 @@ user left. 503 `llm_unavailable` is `Failed`, not `Retry`.
   every change answers with the whole catalog, then a sync picks up renamed / moved / deleted tag ids).
 - Entry to the tag manager: sliders icon (`Tune`) in the tag column header, and Settings.
 
-## Waiting for backend changes (postponed, backend not to be touched for now – user, 2026-10-24)
-- Photo from a file on the device: decided (a) – a backend upload endpoint (e.g. `POST /v1/blobs` → blob id the
-  recipe then references). Rejected (b): a `data:` URI JPEG inside `recipe.images` (bloats every sync).
-  Until then the photo can only be replaced by URL (editor field `imageUrl` = `images[0]`).
+## Recipe photo from the phone (backend 2026-11-03, `docs/api.md` `POST /v1/blobs`)
+- Recipe editor (server recipes only, `RecipeEditor(onPickPhoto)`): "Wybierz zdjęcie z galerii" → system photo
+  picker (`PickVisualMedia`, no permission) → `RecipePhoto.prepare` (ImageDecoder: upright, ≤ 1600 px, JPEG 85) →
+  `BackendClient.uploadPhoto` → the draft's `imageUrl` = `blob:<sha256>`; saved with the normal edit (USER revision).
+  The field then shows the preview with "Zmień zdjęcie" / "Usuń zdjęcie"; a URL can still be typed after removing.
+- The server makes it the `thumbnailBlob`; `recipeImage` also resolves a `blob:` `images[0]` itself. Missing route
+  → "Serwer nie obsługuje jeszcze zdjęć z telefonu". Rejected earlier (b): a `data:` URI (bloats every sync).
 
 ## LLM extraction (backend done and deployed 2026-10-28; app work to do)
 Backend: `RecipeDealerBE-PoC/CLAUDE.md` "LLM extraction", shapes in `docs/api.md`. Cascade heuristic (the phone's

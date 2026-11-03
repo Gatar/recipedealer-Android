@@ -82,6 +82,7 @@ import com.gatar.recipedealer.api.SearchHit
 import com.gatar.recipedealer.recipes.CachedRecipe
 import com.gatar.recipedealer.recipes.ImageCache
 import com.gatar.recipedealer.recipes.LocalSearch
+import com.gatar.recipedealer.recipes.RecipePhoto
 import com.gatar.recipedealer.recipes.TagFilter
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -284,7 +285,8 @@ private class ListRow(
  * copies the new URL within about a minute and the recipe comes again in the sync feed.
  */
 internal suspend fun recipeImage(r: CachedRecipe, images: ImageCache): File? =
-    r.thumbnailBlob?.let { images.blob(it) } ?: r.imageUrl?.let { images.url(it) }
+    r.thumbnailBlob?.let { images.blob(it) }
+        ?: r.imageUrl?.let { url -> RecipePhoto.blobOf(url)?.let { images.blob(it) } ?: images.url(url) }
 
 @Composable
 internal fun cachedImage(key: Any, maxWidth: Int, load: suspend (ImageCache) -> File?): ImageBitmap? {

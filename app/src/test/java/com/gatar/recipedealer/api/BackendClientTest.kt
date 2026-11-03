@@ -41,6 +41,29 @@ class BackendClientTest {
         "ingredientGroups":[{"items":["mąka","mleko"]}],"stepGroups":[{"name":"Ciasto","items":["Wymieszaj."]}],
         "notes":[],"images":["https://x/g.jpg"],"author":"Ania"}"""
 
+    // --- photos ---
+
+    @Test fun uploadPhotoSendsTheImagePartAndReturnsTheRef() = runTest {
+        val sha = "ab".repeat(32)
+        respond(201, """{"blob":"$sha","ref":"blob:$sha","width":1600,"height":1200,"sizeBytes":245678}""")
+        val p = client().uploadPhoto(byteArrayOf(1, 2, 3)).valueOrNull()!!
+        server.takeRequest().apply {
+            assertCall("POST", "/api/v1/blobs")
+            assertTrue(getHeader("Content-Type")!!.startsWith("multipart/form-data"))
+            val body = this.body.readUtf8()
+            assertTrue(body.contains("name=\"image\"; filename=\"photo.jpg\""))
+            assertTrue(body.contains("Content-Type: image/jpeg"))
+        }
+        assertEquals("blob:$sha", p.ref)
+        assertEquals(1600, p.width)
+    }
+
+    @Test fun uploadPhotoAgainstAnOldBackendIsAMissingRoute() = runTest {
+        respond(404, """{"error":"no_route"}""")
+        val r = client().uploadPhoto(byteArrayOf(1))
+        assertTrue(r is ApiResult.Failed && r.code == 404 && r.error != ApiErrors.NOT_FOUND)
+    }
+
     // --- captures ---
 
     @Test fun captureViewNeedsDecisionFull() = runTest {

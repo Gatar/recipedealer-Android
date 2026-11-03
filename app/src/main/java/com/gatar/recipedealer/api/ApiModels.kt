@@ -48,6 +48,10 @@ data class CaptureView(
 @Serializable
 data class RecipeRef(val recipeId: String, val title: String? = null)
 
+/** `POST /v1/blobs`: [ref] (`blob:<sha256>`) is the value for `recipe.images[0]`. */
+@Serializable
+data class UploadedPhoto(val blob: String, val ref: String, val width: Int = 0, val height: Int = 0, val sizeBytes: Long = 0)
+
 /** One recipe extracted from a capture, waiting for the user's NEW / UPDATE decision. */
 @Serializable
 data class ExtractedCandidate(

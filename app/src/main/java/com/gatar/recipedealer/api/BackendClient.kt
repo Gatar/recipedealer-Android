@@ -14,6 +14,7 @@ import kotlinx.serialization.json.jsonObject
 import okhttp3.HttpUrl
 import okhttp3.HttpUrl.Companion.toHttpUrl
 import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.RequestBody
@@ -171,6 +172,14 @@ class BackendClient(
     suspend fun blob(sha256: String): ApiResult<ByteArray> =
         execute(request(url("/v1/blobs/$sha256")).header("Accept", "*/*").get()) { r -> r.body!!.bytes() }
 
+    /**
+     * A recipe photo from the phone (`POST /v1/blobs`, already scaled down by [com.gatar.recipedealer.recipes.RecipePhoto]);
+     * the server stores it as JPEG of at most 1600 px. [UploadedPhoto.ref] goes into `images[0]` with the next save.
+     */
+    suspend fun uploadPhoto(jpeg: ByteArray): ApiResult<UploadedPhoto> =
+        call(request(url("/v1/blobs")).post(MultipartBody.Builder().setType(MultipartBody.FORM)
+            .addFormDataPart("image", "photo.jpg", jpeg.toRequestBody(JPEG)).build()), UploadedPhoto.serializer())
+
     // --- tags ---
 
     suspend fun tags() = call(get(url("/v1/tags")), TagCatalog.serializer())
@@ -287,6 +296,7 @@ class BackendClient(
 
     private companion object {
         val JSON = "application/json; charset=utf-8".toMediaType()
+        val JPEG = "image/jpeg".toMediaType()
         val EMPTY: RequestBody = ByteArray(0).toRequestBody(null)
         fun json(s: String) = s.toRequestBody(JSON)
     }
