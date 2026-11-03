@@ -43,6 +43,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.gatar.recipedealer.R
 import com.gatar.recipedealer.container
+import com.gatar.recipedealer.settings.AppSettings
 import com.gatar.recipedealer.upload.HttpCaptureSender
 import com.gatar.recipedealer.upload.UploadQueue
 import kotlinx.coroutines.launch
@@ -63,6 +64,7 @@ fun SettingsScreen(onBack: () -> Unit, onTags: () -> Unit, onLogin: () -> Unit, 
     var background by remember { mutableStateOf(initial.backgroundMode) }
     var autoSend by remember { mutableStateOf(initial.autoSend) }
     var tabletView by remember { mutableStateOf(initial.tabletView) }
+    var translateNew by remember { mutableStateOf(initial.translateNew) }
     var health by remember { mutableStateOf<String?>(null) }
     var confirmLogout by remember { mutableStateOf(false) }
     val scope = rememberCoroutineScope()
@@ -72,7 +74,10 @@ fun SettingsScreen(onBack: () -> Unit, onTags: () -> Unit, onLogin: () -> Unit, 
 
     fun save() {
         val backendChanged = url.trim().trimEnd('/') != repo.current.baseUrl
-        repo.update { it.copy(baseUrl = url, backgroundMode = background, autoSend = autoSend, tabletView = tabletView) }
+        repo.update {
+            it.copy(baseUrl = url, backgroundMode = background, autoSend = autoSend, tabletView = tabletView,
+                translateNew = translateNew)
+        }
         if (backendChanged) UploadQueue.resume(context, includeAuthFailures = true)
         Toast.makeText(context, R.string.settings_saved, Toast.LENGTH_SHORT).show()
     }
@@ -159,6 +164,8 @@ fun SettingsScreen(onBack: () -> Unit, onTags: () -> Unit, onLogin: () -> Unit, 
             SwitchRow(stringResource(R.string.settings_background), stringResource(R.string.settings_background_desc), background) { background = it }
             SwitchRow(stringResource(R.string.settings_autosend), stringResource(R.string.settings_autosend_desc), autoSend) { autoSend = it }
             SwitchRow(stringResource(R.string.settings_tablet), stringResource(R.string.settings_tablet_desc), tabletView) { tabletView = it }
+            SwitchRow(stringResource(R.string.settings_translate, AppSettings.deviceLanguageName()),
+                stringResource(R.string.settings_translate_desc), translateNew) { translateNew = it }
             if (repo.current.hasBackend) {
                 Column(Modifier.fillMaxWidth().clickable(onClick = onTags).padding(vertical = 4.dp)) {
                     Text(stringResource(R.string.tag_manager), style = MaterialTheme.typography.bodyLarge)

@@ -4,6 +4,7 @@ import android.content.Context
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import java.util.Locale
 
 data class AppSettings(
     /** Backend base URL, e.g. `https://recipes.example.org`; blank → local sender. */
@@ -24,8 +25,13 @@ data class AppSettings(
     val tabletView: Boolean = false,
     /** The tag column next to the recipe list. */
     val tagColumn: Boolean = true,
+    /** Uploads ask the server to translate a new recipe into the device language (header `Translate-To`). */
+    val translateNew: Boolean = false,
 ) {
     val hasBackend get() = baseUrl.isNotBlank()
+
+    /** The language a new recipe is translated into, or null when the setting is off. */
+    val translateTo: String? get() = if (translateNew) deviceLanguage() else null
 
     /** No usable token: the app asks for a login. */
     val needsLogin get() = token.isBlank() || authRejected
@@ -33,6 +39,12 @@ data class AppSettings(
     companion object {
         /** The household's server; editable, and blank still means local mode. */
         const val DEFAULT_BASE_URL = "https://2.31.66.200"
+
+        /** ISO 639 code of the device language, e.g. `pl`. */
+        fun deviceLanguage(): String = Locale.getDefault().language
+
+        /** The device language in itself, e.g. "polski". */
+        fun deviceLanguageName(): String = Locale.getDefault().let { it.getDisplayLanguage(it) }
     }
 }
 
@@ -56,6 +68,7 @@ class SettingsRepository(context: Context) {
             .putBoolean(AUTO_SEND, s.autoSend)
             .putBoolean(TABLET_VIEW, s.tabletView)
             .putBoolean(TAG_COLUMN, s.tagColumn)
+            .putBoolean(TRANSLATE_NEW, s.translateNew)
             .apply()
         _settings.value = read()
     }
@@ -71,6 +84,7 @@ class SettingsRepository(context: Context) {
         autoSend = prefs.getBoolean(AUTO_SEND, false),
         tabletView = prefs.getBoolean(TABLET_VIEW, false),
         tagColumn = prefs.getBoolean(TAG_COLUMN, true),
+        translateNew = prefs.getBoolean(TRANSLATE_NEW, false),
     )
 
     private companion object {
@@ -83,5 +97,6 @@ class SettingsRepository(context: Context) {
         const val AUTO_SEND = "autoSend"
         const val TABLET_VIEW = "tabletView"
         const val TAG_COLUMN = "tagColumn"
+        const val TRANSLATE_NEW = "translateNew"
     }
 }

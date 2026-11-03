@@ -26,6 +26,8 @@ import java.util.concurrent.TimeUnit
 class HttpCaptureSender(
     baseUrl: String,
     private val token: String?,
+    /** Header `Translate-To` on the upload: the server translates a new recipe into this language. Null → none. */
+    private val translateTo: String? = null,
     private val client: OkHttpClient = defaultClient,
 ) : CaptureSender {
     private val base = baseUrl.trim().trimEnd('/')
@@ -39,7 +41,9 @@ class HttpCaptureSender(
                 ?: return@withContext SendResult.Invalid(listOf("missing attachment file: ${a.name}"))
             body.addFormDataPart(a.name, a.name, f.asRequestBody(a.mimeType.toMediaType()))
         }
-        val request = request("/v1/captures/${capture.captureId}").put(body.build()).build()
+        val request = request("/v1/captures/${capture.captureId}").put(body.build())
+            .apply { translateTo?.let { header(TRANSLATE_TO, it) } }
+            .build()
         try {
             client.newCall(request).execute().use { r -> map(r) }
         } catch (e: IOException) {
@@ -97,6 +101,7 @@ class HttpCaptureSender(
 
     companion object {
         private val JSON = "application/json; charset=utf-8".toMediaType()
+        const val TRANSLATE_TO = "Translate-To"
 
         val defaultClient: OkHttpClient by lazy {
             OkHttpClient.Builder()

@@ -101,7 +101,11 @@ private fun RunCard(run: ExtractionRun) {
             Column(Modifier.padding(12.dp), verticalArrangement = Arrangement.spacedBy(2.dp)) {
                 Text(listOfNotNull(stepLabel(run.step), purposeLabel(run.purpose)).joinToString(" · "),
                     style = MaterialTheme.typography.titleSmall)
-                val applied = if (run.step == "tagging") "tagi przypisane" else "użyty w przepisie"
+                val applied = when (run.step) {
+                    "tagging" -> "tagi przypisane"
+                    "translation" -> "przetłumaczono"
+                    else -> "użyty w przepisie"
+                }
                 val status = listOfNotNull(statusLabel(run.status), applied.takeIf { run.applied })
                 Text(status.joinToString(" · "), style = MaterialTheme.typography.bodyMedium,
                     color = if (run.status == "failed" || run.status == "rejected") MaterialTheme.colorScheme.error
@@ -141,6 +145,7 @@ private fun stepLabel(step: String?) = when (step) {
     "haiku" -> "Claude Haiku"
     "sonnet" -> "Claude Sonnet"
     "tagging" -> "Tagowanie (Claude Haiku)"
+    "translation" -> "Tłumaczenie (Claude Haiku)"
     else -> step
 }
 

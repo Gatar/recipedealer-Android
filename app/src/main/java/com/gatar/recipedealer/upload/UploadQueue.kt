@@ -31,7 +31,7 @@ object UploadQueue {
     const val MAX_ATTEMPTS = 12
 
     fun senderFor(s: AppSettings): CaptureSender =
-        if (s.hasBackend) HttpCaptureSender(s.baseUrl, s.token) else LocalCaptureSender()
+        if (s.hasBackend) HttpCaptureSender(s.baseUrl, s.token, s.translateTo) else LocalCaptureSender()
 
     fun enqueue(context: Context, id: String) {
         context.container.store.updateState(id) { it.copy(status = CaptureStatus.QUEUED, error = null, needsAuth = false) }

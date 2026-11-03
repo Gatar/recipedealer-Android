@@ -72,6 +72,13 @@ class HttpCaptureSenderTest {
         assertTrue(parts["capture"]!!.first!!.startsWith("application/json"))
         assertEquals(emptyList<String>(), CaptureSchema.errors(parts["capture"]!!.second))
         assertEquals("image/jpeg" to "JPEG!", parts["image-1.jpg"])
+        assertNull(req.getHeader("Translate-To"))
+    }
+
+    @Test fun translateToIsSentAsHeader() = runTest {
+        respond(201)
+        HttpCaptureSender(base(), "secret", translateTo = "pl").send(capture(), emptyMap())
+        assertEquals("pl", server.takeRequest().getHeader("Translate-To"))
     }
 
     @Test fun existing200IsAcceptedToo() = runTest {

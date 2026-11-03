@@ -45,7 +45,9 @@ or notification action). Setting "Wysyłaj automatycznie" sends right after extr
 
 ## Build & test
 - `./gradlew :app:testDebugUnitTest` – JVM tests (contract, routing, merge, goldens, uploader).
-  `-PupdateGolden` rewrites golden files; review the git diff.
+  `-PupdateGolden` rewrites golden files; review the git diff. In the Claude Code sandbox add
+  `-Pkotlin.compiler.execution.strategy=in-process "-Dorg.gradle.jvmargs=-Djava.io.tmpdir=$TMPDIR" "-PtestTmpDir=$TMPDIR"`
+  (the system temp dir is not writable; `testTmpDir` sets the test JVM's).
 - `cd tools && npm install && node generate-extractor-fixtures.js` – real extractor in jsdom over the fixtures →
   `app/src/test/resources/extractor-output/` (rerun after every extractor.js change).
 - `./gradlew :app:connectedDebugAndroidTest` – instrumented tests (real WebView). **Uninstalls the app** –
@@ -195,6 +197,15 @@ App work:
   Typical cost: Haiku $0.001–0.003 per recipe, Sonnet ~$0.02.
 - `sourceSummary` stays the lower-case source type (`image`, `pdf`) for now (user, 2026-10-28: no renaming).
 - Released as 1.0.2 (2026-10-28); verified by the user on the phones and the tablet (2026-11-03).
+
+## Translation of new recipes (backend 2026-11-03, `docs/api.md` "Translation of new recipes")
+- Setting `translateNew` (Settings: "Tłumacz nowe przepisy na język urządzenia (<język>)", the language name from
+  `Locale.getDefault()` in itself; default off). On: every upload carries header `Translate-To: <Locale language>`
+  (`AppSettings.translateTo` → `HttpCaptureSender`), read at upload time. Older backends ignore the header.
+- The server translates a new recipe whose `language` differs into a new machine revision (original in "Historia"),
+  then tags it; the capture stays `processing` meanwhile, so the existing wait-for-`done` sync covers it. Only fixed
+  units are converted (°F, oz, lb, …, original in parentheses), cups and spoons stay.
+- Stats: step `translation` = "Tłumaczenie (Claude Haiku)", applied = "przetłumaczono".
 
 ## Accounts (backend 2026-10-27, `docs/api.md` Accounts)
 - `ui/AccountScreens.kt`: `LoginScreen` (login / "Załóż konto" with the household registration code; server URL,

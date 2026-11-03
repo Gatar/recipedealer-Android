@@ -68,6 +68,8 @@ android {
 tasks.withType<Test>().configureEach {
     systemProperty("updateGolden", project.hasProperty("updateGolden").toString())
     systemProperty("projectDir", rootProject.projectDir.absolutePath)
+    // `-PtestTmpDir=…`: temp dir of the test JVM (the Claude Code sandbox cannot write the system one)
+    providers.gradleProperty("testTmpDir").orNull?.let { systemProperty("java.io.tmpdir", it) }
 }
 
 dependencies {
