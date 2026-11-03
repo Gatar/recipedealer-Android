@@ -150,6 +150,8 @@ fun DecisionScreen(
         if (r is ApiResult.Ok) {
             Notifications.cancel(context, captureId)
             container.recipeSync.sync()
+            // the server tags a new recipe before `done`: the StatusWorker syncs again then
+            if (Inbox.isPending(r.value.status)) UploadQueue.scheduleStatus(context, captureId, delaySeconds = 5)
         }
     }
     var rereadNote by remember { mutableStateOf<String?>(null) }

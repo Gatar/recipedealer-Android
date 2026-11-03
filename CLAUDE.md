@@ -138,8 +138,14 @@ user left. 503 `llm_unavailable` is `Failed`, not `Retry`.
 ## Tags (agreed with the user 2026-10-25)
 - Two levels `category:tag`; each level has a `name` (stable readable id, `[a-z0-9-]`, e.g. `meal:breakfast`) and
   a `title` (shown, "Posiłek" / "Śniadanie"). Order everywhere = the tag manager's order. No ingredient tags.
-- Assigned manually only: recipe detail (label icon → `TagPickerDialog` → `PUT /v1/recipes/{id}/tags`, no edit lock,
+- Assigned manually: recipe detail (label icon → `TagPickerDialog` → `PUT /v1/recipes/{id}/tags`, no edit lock,
   no revision) and with "Nowy przepis" on the decision screen (`Resolution.tags`). Not with UPDATE.
+- Since backend 2026-11-03 a new recipe without tags chosen by the user is tagged by Claude Haiku from the catalog
+  before the capture goes `done` (`processing` a few seconds longer). The app needs nothing for the tags (they come
+  with the sync); after "Nowy przepis" on the decision screen a pending answer schedules the `StatusWorker` (5 s),
+  and "Wyślij jako nowy" in the `StatusWorker` retries until `done`, so the sync after `done` has the tags.
+  "Statystyki dla nerdów" show the tagging as step `tagging` ("Tagowanie (Claude Haiku)", status `skipped` =
+  "pominięte").
 - `recipes/Tags.kt`: `TagCatalogStore` (`files/recipes/tags.json`, refreshed at the start of every `RecipeSync`; a 404
   = backend without tags = empty catalog), `TagFilter` (column content, AND across categories / OR inside one, slug).
   Tag changes against such a backend: a 404 without the backend's `not_found` code = missing route (`isMissingRoute`)
@@ -188,8 +194,7 @@ App work:
   oldest first with Polish step / status labels, raw validation errors, tokens, latency, cost in USD (4 decimals).
   Typical cost: Haiku $0.001–0.003 per recipe, Sonnet ~$0.02.
 - `sourceSummary` stays the lower-case source type (`image`, `pdf`) for now (user, 2026-10-28: no renaming).
-- Then: release APK with a raised `versionCode`, verify on the emulator against production (force on a recipe,
-  stats popup), update `docs`/this file.
+- Released as 1.0.2 (2026-10-28); verified by the user on the phones and the tablet (2026-11-03).
 
 ## Accounts (backend 2026-10-27, `docs/api.md` Accounts)
 - `ui/AccountScreens.kt`: `LoginScreen` (login / "Załóż konto" with the household registration code; server URL,

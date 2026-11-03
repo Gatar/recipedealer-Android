@@ -126,6 +126,8 @@ class StatusWorker(context: Context, params: WorkerParameters) : CoroutineWorker
             // "Wyślij jako nowy": the rest of the candidates (a page with several recipes) without asking
             val r = c.inbox.resolveAllAsNew(view)
             if (r is ApiResult.Ok) {
+                // the server tags the new recipes before `done`: sync then
+                if (Inbox.isPending(r.value.status)) return Result.retry()
                 SyncWorker.syncNow(applicationContext)
                 return Result.success()
             }
