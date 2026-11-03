@@ -197,6 +197,9 @@ App work:
   Typical cost: Haiku $0.001–0.003 per recipe, Sonnet ~$0.02.
 - `sourceSummary` stays the lower-case source type (`image`, `pdf`) for now (user, 2026-10-28: no renaming).
 - Released as 1.0.2 (2026-10-28); verified by the user on the phones and the tablet (2026-11-03).
+- 1.0.3 (versionCode 4, 2026-11-03): server tagging wait-for-done, translation setting, stats labels. Debug build
+  verified on the emulator against production (tagging, translation, re-read); the release APK itself not installed
+  yet.
 
 ## Translation of new recipes (backend 2026-11-03, `docs/api.md` "Translation of new recipes")
 - Setting `translateNew` (Settings: "Tłumacz nowe przepisy na język urządzenia (<język>)", the language name from
