@@ -142,6 +142,10 @@ user left. 503 `llm_unavailable` is `Failed`, not `Retry`.
 - "Zatwierdzam bez zmian" (editor, `RecipeDraft.sameContentAs`) sends the normal save. Since backend 4857305
   (2026-10-25) content equal to a head that `needsReview` gives 201 with a new USER head without `needsReview`; equal
   content otherwise gives 200 (no revision). Older backends answered 200 and kept the flag.
+- Color theme (user, 2026-11-24): setting `colorTheme`, a select in Settings applied at once. SYSTEM = the original
+  look (Material You from the wallpaper, system light / dark); LIGHT / DARK (sage green) and KITCHEN (terracotta on
+  cream) are fixed palettes in `ui/theme/Color.kt` with every surface container role set. `RecipeDealerTheme` sets the
+  bar icon colors itself; "is dark" checks use `isDarkScheme()`, never `isSystemInDarkTheme()`.
 - Tablet view (`ui/TabletRecipeView.kt`): a setting (`tabletView`, also the phone/tablet icon on the recipe detail),
   not chosen by screen size. White page, ecru rounded cards: title 1/3 + photo 2/3, then ingredients, steps, notes.
   Fixed light colors also in the dark theme. Samsung's eye comfort filter tints screenshots (white looks cream).

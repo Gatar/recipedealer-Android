@@ -15,7 +15,11 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExposedDropdownMenuAnchorType
+import androidx.compose.material3.ExposedDropdownMenuBox
+import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -44,6 +48,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.gatar.recipedealer.R
 import com.gatar.recipedealer.container
 import com.gatar.recipedealer.settings.AppSettings
+import com.gatar.recipedealer.settings.ColorTheme
 import com.gatar.recipedealer.upload.HttpCaptureSender
 import com.gatar.recipedealer.upload.UploadQueue
 import kotlinx.coroutines.launch
@@ -161,6 +166,8 @@ fun SettingsScreen(onBack: () -> Unit, onTags: () -> Unit, onLogin: () -> Unit, 
                 }
             }
             HorizontalDivider()
+            // applied at once (not with "Zapisz"), so the choice can be seen right away
+            ColorThemeSelect(account.colorTheme) { theme -> repo.update { it.copy(colorTheme = theme) } }
             SwitchRow(stringResource(R.string.settings_background), stringResource(R.string.settings_background_desc), background) { background = it }
             SwitchRow(stringResource(R.string.settings_autosend), stringResource(R.string.settings_autosend_desc), autoSend) { autoSend = it }
             SwitchRow(stringResource(R.string.settings_tablet), stringResource(R.string.settings_tablet_desc), tabletView) { tabletView = it }
@@ -196,6 +203,37 @@ private fun LabeledValue(label: String, value: String) {
     Column {
         Text(label, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
         Text(value.ifBlank { "–" }, style = MaterialTheme.typography.bodyLarge)
+    }
+}
+
+private val ColorTheme.label get() = when (this) {
+    ColorTheme.SYSTEM -> R.string.theme_system
+    ColorTheme.LIGHT -> R.string.theme_light
+    ColorTheme.DARK -> R.string.theme_dark
+    ColorTheme.KITCHEN -> R.string.theme_kitchen
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun ColorThemeSelect(current: ColorTheme, onSelect: (ColorTheme) -> Unit) {
+    var expanded by remember { mutableStateOf(false) }
+    ExposedDropdownMenuBox(expanded = expanded, onExpandedChange = { expanded = it }) {
+        OutlinedTextField(
+            value = stringResource(current.label),
+            onValueChange = {},
+            readOnly = true,
+            label = { Text(stringResource(R.string.settings_theme)) },
+            trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded) },
+            modifier = Modifier.fillMaxWidth().menuAnchor(ExposedDropdownMenuAnchorType.PrimaryNotEditable),
+        )
+        ExposedDropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
+            ColorTheme.entries.forEach { theme ->
+                DropdownMenuItem(
+                    text = { Text(stringResource(theme.label)) },
+                    onClick = { expanded = false; onSelect(theme) },
+                )
+            }
+        }
     }
 }
 

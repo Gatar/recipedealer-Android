@@ -2,7 +2,6 @@ package com.gatar.recipedealer.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -117,7 +116,7 @@ fun TagColumn(
     onManage: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val pills = if (isSystemInDarkTheme()) DarkPills else LightPills
+    val pills = if (com.gatar.recipedealer.ui.theme.isDarkScheme()) DarkPills else LightPills
     LazyColumn(modifier.padding(horizontal = 6.dp)) {
         item {
             // Fixed height with the clear button beside the icon: selecting a tag must not push the list down.

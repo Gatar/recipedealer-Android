@@ -6,6 +6,9 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import java.util.Locale
 
+/** The app's colors: SYSTEM is the original look (wallpaper colors, system light / dark); the others are fixed. */
+enum class ColorTheme { SYSTEM, LIGHT, DARK, KITCHEN }
+
 data class AppSettings(
     /** Backend base URL, e.g. `https://recipes.example.org`; blank → local sender. */
     val baseUrl: String = "",
@@ -27,6 +30,7 @@ data class AppSettings(
     val tagColumn: Boolean = true,
     /** Recipe list layout: 0 = list, 1–3 = grid of photo cards with that many columns (3 only with [tabletView]). */
     val listColumns: Int = 0,
+    val colorTheme: ColorTheme = ColorTheme.SYSTEM,
     /** Uploads ask the server to translate a new recipe into the device language (header `Translate-To`). */
     val translateNew: Boolean = false,
 ) {
@@ -77,6 +81,7 @@ class SettingsRepository(context: Context) {
             .putBoolean(TABLET_VIEW, s.tabletView)
             .putBoolean(TAG_COLUMN, s.tagColumn)
             .putInt(LIST_COLUMNS, s.listColumns)
+            .putString(COLOR_THEME, s.colorTheme.name)
             .putBoolean(TRANSLATE_NEW, s.translateNew)
             .apply()
         _settings.value = read()
@@ -94,6 +99,7 @@ class SettingsRepository(context: Context) {
         tabletView = prefs.getBoolean(TABLET_VIEW, false),
         tagColumn = prefs.getBoolean(TAG_COLUMN, true),
         listColumns = prefs.getInt(LIST_COLUMNS, 0),
+        colorTheme = ColorTheme.entries.firstOrNull { it.name == prefs.getString(COLOR_THEME, null) } ?: ColorTheme.SYSTEM,
         translateNew = prefs.getBoolean(TRANSLATE_NEW, false),
     )
 
@@ -108,6 +114,7 @@ class SettingsRepository(context: Context) {
         const val TABLET_VIEW = "tabletView"
         const val TAG_COLUMN = "tagColumn"
         const val LIST_COLUMNS = "listColumns"
+        const val COLOR_THEME = "colorTheme"
         const val TRANSLATE_NEW = "translateNew"
     }
 }
