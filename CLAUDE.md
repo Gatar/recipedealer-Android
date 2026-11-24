@@ -224,6 +224,9 @@ App work:
   hidden before the web OCR, review "notes" dropped. Debug build verified on the emulator against production
   (gallery photo on a recipe, camera photo in manual entry, consent dialog, re-read on allrecipes); the release APK
   itself not installed yet.
+- 1.0.5 (versionCode 6, 2026-11-24): 1.0.4 + kwestiasmaku site plugin, list sorted by date added, grid layout,
+  "Do decyzji" tab hidden when empty, color themes. Debug build tested on the emulator and the tablet; the release APK
+  itself not installed (the tablet keeps the debug build for testing).
 
 ## Translation of new recipes (backend 2026-11-03, `docs/api.md` "Translation of new recipes")
 - Setting `translateNew` (Settings: "Tłumacz nowe przepisy na język urządzenia (<język>)", the language name from
