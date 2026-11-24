@@ -25,10 +25,18 @@ data class AppSettings(
     val tabletView: Boolean = false,
     /** The tag column next to the recipe list. */
     val tagColumn: Boolean = true,
+    /** Recipe list layout: 0 = list, 1–3 = grid of photo cards with that many columns (3 only with [tabletView]). */
+    val listColumns: Int = 0,
     /** Uploads ask the server to translate a new recipe into the device language (header `Translate-To`). */
     val translateNew: Boolean = false,
 ) {
     val hasBackend get() = baseUrl.isNotBlank()
+
+    /** Most grid columns this device offers: 3 only in the tablet view. */
+    val maxListColumns get() = if (tabletView) 3 else 2
+
+    /** [listColumns] limited to what the device offers (a tablet layout of 3 falls back to 2 without the tablet view). */
+    val effectiveListColumns get() = listColumns.coerceIn(0, maxListColumns)
 
     /** The language a new recipe is translated into, or null when the setting is off. */
     val translateTo: String? get() = if (translateNew) deviceLanguage() else null
@@ -68,6 +76,7 @@ class SettingsRepository(context: Context) {
             .putBoolean(AUTO_SEND, s.autoSend)
             .putBoolean(TABLET_VIEW, s.tabletView)
             .putBoolean(TAG_COLUMN, s.tagColumn)
+            .putInt(LIST_COLUMNS, s.listColumns)
             .putBoolean(TRANSLATE_NEW, s.translateNew)
             .apply()
         _settings.value = read()
@@ -84,6 +93,7 @@ class SettingsRepository(context: Context) {
         autoSend = prefs.getBoolean(AUTO_SEND, false),
         tabletView = prefs.getBoolean(TABLET_VIEW, false),
         tagColumn = prefs.getBoolean(TAG_COLUMN, true),
+        listColumns = prefs.getInt(LIST_COLUMNS, 0),
         translateNew = prefs.getBoolean(TRANSLATE_NEW, false),
     )
 
@@ -97,6 +107,7 @@ class SettingsRepository(context: Context) {
         const val AUTO_SEND = "autoSend"
         const val TABLET_VIEW = "tabletView"
         const val TAG_COLUMN = "tagColumn"
+        const val LIST_COLUMNS = "listColumns"
         const val TRANSLATE_NEW = "translateNew"
     }
 }

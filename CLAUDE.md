@@ -94,7 +94,10 @@ OCR fallback (whole-page snapshot, tiled ML Kit, OCR text through `loadText`, fi
 (known CMP containers + fixed/sticky layers about cookies or consent, CSS rule against re-insertion, 700 ms repaint):
 aniagotuje's Funding Choices dialog was read instead of the page. `ExtractorMerge` merges JSON-LD → microdata →
 plugins → heuristic with the group rule; heuristic notes are dropped next to ingredients and steps from structured
-data (allrecipes: they were readers' reviews). `recipe.language`
+data (allrecipes: they were readers' reviews). Site plugin `kwestiasmaku` (2026-11-24): its microdata has only name,
+author, image and rating, so ingredients and steps came from the heuristic and every recipe was `needsReview` on the
+server; Drupal fields read with `sections` (groups = `div.wyroznione` labels between the lists). Checked on 6 live
+recipes in the emulator's WebView: same content as the heuristic, provenance `pluginHits`. `recipe.language`
 comes from the content (`LanguageGuess`), page `lang` only breaks ties. `completeness.bestStage` = strongest stage
 that gave ingredients or steps. `BrowserActivity` is the visible WebView (failure notification, background mode off).
 
@@ -128,6 +131,10 @@ user left. 503 `llm_unavailable` is `Failed`, not `Retry`.
 ## Recipes: sync, search, editing (RecipeDealerBE)
 - The recipe list reads only `RecipeCache` (works offline). Search: `GET /v1/recipes/search`, offline / while
   loading `LocalSearch` (words in title or ingredients, diacritics ignored, no typo tolerance).
+- List order (user, 2026-11-24): "Najnowsze" = date added, the default; the feed has no `createdAt`, so it sorts by
+  `recipeId` (server UUIDv7, made at creation; `updatedAt` moves on tags, thumbnails, translations). Toggle "A–Z".
+- List layout (user, 2026-11-24): `listColumns` setting, icon left of the sort button cycles list → grid 1 → 2
+  (→ 3 only with `tabletView`) → list. Grid cards: photo (3:2 in one column, square otherwise) and the title only.
 - Editing is online only: `RecipeEditSession` (GET head → POST lock → heartbeat every 2 min → POST revision with
   `Lock-Id` + `If-Match`, or DELETE recipe, or release). `RecipeEditViewModel.onCleared` releases the lock on back /
   cancel; a killed app lets the 5 min lease expire (until then the server reports the phone itself as the editor).

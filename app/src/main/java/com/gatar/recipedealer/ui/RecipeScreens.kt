@@ -16,8 +16,17 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.GridItemSpan
+import androidx.compose.foundation.lazy.grid.LazyGridItemSpanScope
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.material.icons.automirrored.filled.ViewList
+import androidx.compose.material.icons.filled.GridView
+import androidx.compose.material.icons.filled.ViewAgenda
+import androidx.compose.material.icons.filled.ViewModule
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -92,7 +101,12 @@ import java.io.File
 import java.text.Collator
 import java.util.Locale
 
-private enum class RecipeSort { TITLE, UPDATED }
+/**
+ * ADDED: newest first by date added. The sync feed has no creation time, but `recipeId` is the server's UUIDv7, made
+ * when the recipe is created, so its text order is the creation order (`updatedAt` also moves on tag changes, late
+ * thumbnails and translations).
+ */
+private enum class RecipeSort { ADDED, TITLE }
 
 /** "Przepisy": the offline recipe cache (sync feed), pull-to-refresh syncs. */
 @OptIn(ExperimentalMaterial3Api::class)
@@ -102,7 +116,7 @@ fun RecipeListScreen(onOpen: (String) -> Unit, onSettings: () -> Unit, onManual:
     val container = context.container
     val recipes by container.recipes.recipes.collectAsStateWithLifecycle()
     val scope = rememberCoroutineScope()
-    var sort by rememberSaveable { mutableStateOf(RecipeSort.TITLE) }
+    var sort by rememberSaveable { mutableStateOf(RecipeSort.ADDED) }
     var refreshing by remember { mutableStateOf(false) }
     var error by remember { mutableStateOf<String?>(null) }
     fun refresh() = scope.launch {
@@ -115,7 +129,7 @@ fun RecipeListScreen(onOpen: (String) -> Unit, onSettings: () -> Unit, onManual:
     val sorted = remember(recipes, sort) {
         when (sort) {
             RecipeSort.TITLE -> recipes.sortedWith(compareBy(collator) { it.title.orEmpty() })
-            RecipeSort.UPDATED -> recipes.sortedByDescending { it.updatedAt }
+            RecipeSort.ADDED -> recipes.sortedByDescending { it.recipeId.lowercase() }
         }
     }
     // Search: the server (diacritics, typos, ingredients); meanwhile and offline a local filter over the cache.
@@ -143,6 +157,8 @@ fun RecipeListScreen(onOpen: (String) -> Unit, onSettings: () -> Unit, onManual:
         used.filterIndexed { i, uc -> (i >= 2) != (uc.category.name in flippedCategories) }.map { it.category.name }.toSet()
     }
     val showColumn = settings.tagColumn && used.isNotEmpty()
+    /** 0 = list, else the grid's column count. */
+    val columns = settings.effectiveListColumns
     // a hidden column does not filter
     val activeTags = remember(selectedTags, used, showColumn) {
         if (!showColumn) emptySet()
@@ -160,9 +176,22 @@ fun RecipeListScreen(onOpen: (String) -> Unit, onSettings: () -> Unit, onManual:
             TopAppBar(
                 title = { Text(stringResource(R.string.list_title)) },
                 actions = {
-                    TextButton(onClick = { sort = if (sort == RecipeSort.TITLE) RecipeSort.UPDATED else RecipeSort.TITLE }) {
+                    // shows the current layout; each tap takes the next one: list → 1 → 2 (→ 3 on the tablet) → list
+                    IconButton(onClick = {
+                        container.settings.update { s ->
+                            s.copy(listColumns = if (s.effectiveListColumns >= s.maxListColumns) 0 else s.effectiveListColumns + 1)
+                        }
+                    }) {
+                        Icon(when (columns) {
+                            0 -> Icons.AutoMirrored.Default.ViewList
+                            1 -> Icons.Default.ViewAgenda
+                            2 -> Icons.Default.GridView
+                            else -> Icons.Default.ViewModule
+                        }, stringResource(R.string.list_layout_next))
+                    }
+                    TextButton(onClick = { sort = if (sort == RecipeSort.ADDED) RecipeSort.TITLE else RecipeSort.ADDED }) {
                         Icon(Icons.AutoMirrored.Default.Sort, null)
-                        Text(stringResource(if (sort == RecipeSort.TITLE) R.string.sort_title else R.string.sort_updated))
+                        Text(stringResource(if (sort == RecipeSort.TITLE) R.string.sort_title else R.string.sort_added))
                     }
                     if (used.isNotEmpty()) {
                         IconButton(onClick = { container.settings.update { it.copy(tagColumn = !it.tagColumn) } }) {
@@ -178,11 +207,21 @@ fun RecipeListScreen(onOpen: (String) -> Unit, onSettings: () -> Unit, onManual:
     ) { padding ->
         Row(Modifier.fillMaxSize().padding(padding)) {
             PullToRefreshBox(refreshing, onRefresh = { refresh() }, Modifier.weight(3f).fillMaxHeight()) {
-                LazyColumn(Modifier.fillMaxSize()) {
-                    item {
+                // one grid for both layouts: the list is a single column of rows; headers span the whole width
+                val grid = columns > 0
+                val edge = if (grid) 12.dp else 0.dp
+                val full: LazyGridItemSpanScope.() -> GridItemSpan = { GridItemSpan(maxLineSpan) }
+                LazyVerticalGrid(
+                    columns = GridCells.Fixed(maxOf(columns, 1)),
+                    modifier = Modifier.fillMaxSize(),
+                    contentPadding = PaddingValues(start = edge, end = edge, bottom = edge),
+                    horizontalArrangement = Arrangement.spacedBy(edge),
+                    verticalArrangement = Arrangement.spacedBy(if (grid) 16.dp else 0.dp),
+                ) {
+                    item(span = full) {
                         OutlinedTextField(
                             query, { query = it },
-                            Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp),
+                            Modifier.fillMaxWidth().padding(horizontal = 16.dp - edge, vertical = 8.dp),
                             placeholder = { Text(stringResource(R.string.search_hint)) },
                             leadingIcon = { Icon(Icons.Default.Search, null) },
                             trailingIcon = {
@@ -192,12 +231,12 @@ fun RecipeListScreen(onOpen: (String) -> Unit, onSettings: () -> Unit, onManual:
                             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
                         )
                     }
-                    error?.let { item { Text(it, Modifier.padding(horizontal = 16.dp, vertical = 8.dp), color = MaterialTheme.colorScheme.error) } }
+                    error?.let { item(span = full) { Text(it, Modifier.padding(horizontal = 16.dp - edge, vertical = 8.dp), color = MaterialTheme.colorScheme.error) } }
                     if (query.isNotBlank()) searchNote?.let {
-                        item { Text(it, Modifier.padding(horizontal = 16.dp), style = MaterialTheme.typography.bodySmall) }
+                        item(span = full) { Text(it, Modifier.padding(horizontal = 16.dp - edge), style = MaterialTheme.typography.bodySmall) }
                     }
                     if (shown.isEmpty()) {
-                        item {
+                        item(span = full) {
                             Box(Modifier.fillMaxWidth().padding(32.dp), contentAlignment = Alignment.Center) {
                                 Text(stringResource(when {
                                     activeTags.isNotEmpty() && unfiltered.isNotEmpty() -> R.string.tags_filter_empty
@@ -208,8 +247,14 @@ fun RecipeListScreen(onOpen: (String) -> Unit, onSettings: () -> Unit, onManual:
                         }
                     }
                     items(shown, key = { it.recipeId }) { r ->
-                        RecipeRow(r.title, r.subtitle, r.needsReview, r.imageKey, r.thumbnail) { onOpen(r.recipeId) }
-                        HorizontalDivider()
+                        if (grid) {
+                            RecipeCard(r.title, r.imageKey, r.thumbnail, columns) { onOpen(r.recipeId) }
+                        } else {
+                            Column {
+                                RecipeRow(r.title, r.subtitle, r.needsReview, r.imageKey, r.thumbnail) { onOpen(r.recipeId) }
+                                HorizontalDivider()
+                            }
+                        }
                     }
                 }
             }
@@ -262,6 +307,36 @@ fun RecipeRow(
     }
 }
 
+/** Grid layout: the photo takes most of the card, the title below it. */
+@Composable
+private fun RecipeCard(
+    title: String?,
+    imageKey: Any,
+    thumbnail: (suspend (ImageCache) -> File?)?,
+    columns: Int,
+    onClick: () -> Unit,
+) {
+    val shape = RoundedCornerShape(12.dp)
+    Column(Modifier.fillMaxWidth().clip(shape).clickable(onClick = onClick)) {
+        Box(
+            Modifier.fillMaxWidth().aspectRatio(if (columns == 1) 3f / 2f else 1f).clip(shape)
+                .background(MaterialTheme.colorScheme.surfaceVariant),
+            contentAlignment = Alignment.Center,
+        ) {
+            val image = thumbnail?.let { cachedImage(imageKey, if (columns == 1) 900 else 500, it) }
+            if (image != null) Image(image, null, Modifier.fillMaxSize(), contentScale = ContentScale.Crop)
+            else Icon(Icons.Default.Restaurant, null, Modifier.size(if (columns == 1) 64.dp else 40.dp),
+                tint = MaterialTheme.colorScheme.onSurfaceVariant)
+        }
+        Text(
+            title ?: stringResource(R.string.untitled),
+            Modifier.padding(horizontal = 4.dp, vertical = 8.dp),
+            style = if (columns >= 3) MaterialTheme.typography.titleSmall else MaterialTheme.typography.titleMedium,
+            maxLines = 2, overflow = TextOverflow.Ellipsis,
+        )
+    }
+}
+
 /** A row of the recipe list: a cached recipe or a search hit (plus its cached recipe, if any). */
 private class ListRow(
     val recipeId: String,
@@ -291,7 +366,8 @@ internal suspend fun recipeImage(r: CachedRecipe, images: ImageCache): File? =
 @Composable
 internal fun cachedImage(key: Any, maxWidth: Int, load: suspend (ImageCache) -> File?): ImageBitmap? {
     val images = LocalContext.current.container.images
-    val bitmap by produceState<ImageBitmap?>(null, key) {
+    // the width is a key too: switching the list layout reuses the composable and needs a sharper (or smaller) decode
+    val bitmap by produceState<ImageBitmap?>(null, key, maxWidth) {
         value = load(images)?.let { f -> withContext(Dispatchers.IO) { decodeSampled(f, maxWidth) } }
     }
     return bitmap
