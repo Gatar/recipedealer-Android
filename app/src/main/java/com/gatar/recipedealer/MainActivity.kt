@@ -163,7 +163,9 @@ private fun AppNavHost(nav: NavHostController) {
         bottomBar = {
             if (TABS.any { it.route == route }) {
                 NavigationBar {
-                    TABS.forEach { tab ->
+                    // "Do decyzji" only when something waits (user, 2026-11-24); it stays while open, so the last
+                    // decision does not pull the screen away
+                    TABS.filter { it.route != Routes.INBOX || inbox.isNotEmpty() || route == Routes.INBOX }.forEach { tab ->
                         NavigationBarItem(
                             selected = route == tab.route,
                             onClick = {
