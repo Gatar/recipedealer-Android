@@ -66,6 +66,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.gatar.recipedealer.container
 import com.gatar.recipedealer.R
 import com.gatar.recipedealer.api.ApiErrors
 import com.gatar.recipedealer.api.ApiResult
@@ -99,6 +100,13 @@ private val DarkPills = PillColors(
     selected = Color(0xFF8BA07F), onSelected = Color(0xFF141C11),
 )
 
+/** The kitchen theme's pills: muted terracotta in the same light / lighter / darker steps (user, 2026-11-24). */
+private val KitchenPills = PillColors(
+    category = Color(0xFFE3B8A6), onCategory = Color(0xFF3A1F14),
+    tag = Color(0xFFF8EAE3), onTag = Color(0xFF4A3028),
+    selected = Color(0xFFC98A70), onSelected = Color(0xFF2A140B),
+)
+
 private val PillShape = RoundedCornerShape(10.dp)
 
 /**
@@ -116,7 +124,12 @@ fun TagColumn(
     onManage: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val pills = if (com.gatar.recipedealer.ui.theme.isDarkScheme()) DarkPills else LightPills
+    val theme = LocalContext.current.container.settings.settings.collectAsStateWithLifecycle().value.colorTheme
+    val pills = when {
+        theme == com.gatar.recipedealer.settings.ColorTheme.KITCHEN -> KitchenPills
+        com.gatar.recipedealer.ui.theme.isDarkScheme() -> DarkPills
+        else -> LightPills
+    }
     LazyColumn(modifier.padding(horizontal = 6.dp)) {
         item {
             // Fixed height with the clear button beside the icon: selecting a tag must not push the list down.
