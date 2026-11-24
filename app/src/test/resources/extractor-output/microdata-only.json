@@ -51,6 +51,12 @@
       "containerCount": 0,
       "fieldMatches": {},
       "recipe": {}
+    },
+    "kwestiasmaku": {
+      "found": false,
+      "containerCount": 0,
+      "fieldMatches": {},
+      "recipe": {}
     }
   },
   "heuristic": {
@@ -65,10 +71,10 @@
   "readableText": "6 porcji\n 1 l bulionu\n 500 g przecieru pomidorowego\n 100 g ryżu\n\n Zagotuj bulion.\n\n Dodaj przecier i ryż, gotuj 20 minut.",
   "timingsMs": {
     "jsonLd": 0,
-    "microdata": 2,
+    "microdata": 4,
     "pluginHits": 1,
-    "readability": 50,
-    "heuristic": 54
+    "readability": 55,
+    "heuristic": 57
   },
   "errors": []
 }

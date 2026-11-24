@@ -11,6 +11,9 @@
     // `attr` reads an attribute instead of text. `lines` also splits each match at <br> (one item per line).
     // `group` / `groupName`: when the container has group elements,
     // the field becomes [{name, items}] with the matches of each group.
+    // `sections: {heading, items}`: groups marked by sibling headings instead of wrappers: inside the first `sel`
+    // match, in document order, a `heading` match starts a named group and each `items` match is one item
+    // (items before the first heading form an unnamed group).
     // TODO: groups for Tasty / Mediavine once a live grouped recipe is seen.
     plugins: {
       wprm: { // WP Recipe Maker
@@ -59,6 +62,20 @@
           image: { sel: '.mv-create-image', attr: 'src' },
           notes: { sel: ['.mv-create-notes-content p, .mv-create-notes-content li', '.mv-create-notes-content',
                          '.mv-create-notes'], multiple: true, lines: true }
+        }
+      },
+      // kwestiasmaku.com (Drupal): its microdata has no ingredients or steps. Groups are `div.wyroznione` labels
+      // between the lists; loose `<p>` lines are items too ("Do posypania: cukier puder").
+      kwestiasmaku: {
+        container: '.node-przepis.view-mode-full',
+        fields: {
+          recipeIngredient: { sel: '.field-name-field-skladniki', multiple: true,
+                              sections: { heading: '.wyroznione', items: 'li, p' } },
+          recipeInstructions: { sel: '.field-name-field-przygotowanie', multiple: true,
+                                sections: { heading: '.wyroznione', items: 'li, p' } },
+          recipeYield: { sel: '.field-name-field-ilosc-porcji' },
+          notes: { sel: ['.field-name-field-wskazowki p, .field-name-field-wskazowki li', '.field-name-field-wskazowki'],
+                   multiple: true, lines: true }
         }
       }
     },
@@ -168,6 +185,21 @@
     });
     return values.filter(Boolean);
   }
+  // `sections` fields: groups from sibling headings, in document order.
+  function sectionGroups(root, f) {
+    var box = null;
+    [].concat(f.sel).some(function (sel) { box = queryAll(root, sel)[0] || null; return box; });
+    if (!box) return [];
+    var groups = [{ name: null, items: [] }];
+    queryAll(box, f.sections.heading + ', ' + f.sections.items).forEach(function (el) {
+      var text = norm(el.textContent);
+      if (!text) return;
+      var outer = el.parentElement && el.parentElement.closest(f.sections.items);
+      if (el.matches(f.sections.heading)) groups.push({ name: text, items: [] });
+      else if (!el.closest(f.sections.heading) && !(outer && box.contains(outer))) groups[groups.length - 1].items.push(text);
+    });
+    return groups.filter(function (g) { return g.items.length; });
+  }
   // Text of `el` split at <br>.
   function textLines(el) {
     var copy = el.cloneNode(true);
@@ -184,6 +216,12 @@
         var root = containers[0];
         Object.keys(cfg.fields).forEach(function (field) {
           var f = cfg.fields[field];
+          if (f.sections) {
+            var sections = sectionGroups(root, f);
+            hit.fieldMatches[field] = countItems(sections);
+            if (sections.length) hit.recipe[field] = sections;
+            return;
+          }
           var groupEls = f.group ? queryAll(root, f.group) : [];
           if (groupEls.length) {
             var groups = groupEls.map(function (g) {

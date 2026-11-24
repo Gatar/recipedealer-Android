@@ -38,7 +38,7 @@ class GoldenRecipeTest {
                 failures += "$name differs from its golden:\n$actual"
             }
         }
-        assertEquals(outputs.size, 15)
+        assertEquals(outputs.size, 16)
         if (failures.isNotEmpty()) throw AssertionError(failures.joinToString("\n\n"))
     }
 

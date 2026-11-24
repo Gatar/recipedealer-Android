@@ -1,0 +1,161 @@
+{
+  "title": "Placek śliwkowy | Kwestia Smaku",
+  "ogImage": "https://example.test/img/placek-og.jpg",
+  "siteName": null,
+  "canonicalUrl": null,
+  "finalUrl": "https://example.test/kwestiasmaku-sections",
+  "lang": "pl",
+  "botChallenge": null,
+  "visibility": "visible",
+  "jsonLd": [],
+  "microdata": [
+    {
+      "name": "Placek śliwkowy",
+      "author": "kwestiasmaku",
+      "image": "https://example.test/img/placek.jpg",
+      "description": "Prosty placek drożdżowy ze śliwkami i kruszonką.",
+      "aggregateRating": {
+        "ratingValue": "4.8",
+        "reviewCount": "120",
+        "@type": "AggregateRating"
+      },
+      "@type": "Recipe"
+    }
+  ],
+  "pluginHits": {
+    "wprm": {
+      "found": false,
+      "containerCount": 0,
+      "fieldMatches": {},
+      "recipe": {}
+    },
+    "tasty": {
+      "found": false,
+      "containerCount": 0,
+      "fieldMatches": {},
+      "recipe": {}
+    },
+    "mediavine": {
+      "found": false,
+      "containerCount": 0,
+      "fieldMatches": {},
+      "recipe": {}
+    },
+    "kwestiasmaku": {
+      "found": true,
+      "containerCount": 1,
+      "fieldMatches": {
+        "recipeIngredient": 8,
+        "recipeInstructions": 4,
+        "recipeYield": 1,
+        "notes": 1
+      },
+      "recipe": {
+        "recipeIngredient": [
+          {
+            "name": null,
+            "items": [
+              "1 kg śliwek węgierek",
+              "1 łyżka cukru"
+            ]
+          },
+          {
+            "name": "Ciasto",
+            "items": [
+              "400 g mąki",
+              "25 g świeżych drożdży",
+              "200 ml ciepłego mleka*"
+            ]
+          },
+          {
+            "name": "Kruszonka",
+            "items": [
+              "100 g masła",
+              "100 g mąki",
+              "Do posypania: cukier puder"
+            ]
+          }
+        ],
+        "recipeInstructions": [
+          {
+            "name": "Ciasto",
+            "items": [
+              "Drożdże rozpuścić w mleku, dodać mąkę i wyrobić ciasto.",
+              "Odstawić do wyrośnięcia na 1 godzinę."
+            ]
+          },
+          {
+            "name": "Pieczenie",
+            "items": [
+              "Ciasto rozłożyć w formie, ułożyć śliwki i posypać kruszonką.",
+              "Piec w 180 stopniach C przez ok. 45 minut."
+            ]
+          }
+        ],
+        "recipeYield": "16 porcji",
+        "notes": [
+          "* lub mleka roślinnego."
+        ]
+      }
+    }
+  },
+  "heuristic": {
+    "articleTitle": "Placek śliwkowy | Kwestia Smaku",
+    "recipeHeading": "Placek śliwkowy",
+    "usedBodyFallback": false,
+    "servings": "16 porcji",
+    "ingredients": [
+      {
+        "name": null,
+        "items": [
+          "1 kg śliwek węgierek",
+          "1 łyżka cukru"
+        ]
+      },
+      {
+        "name": "Ciasto",
+        "items": [
+          "400 g mąki",
+          "25 g świeżych drożdży",
+          "200 ml ciepłego mleka*"
+        ]
+      },
+      {
+        "name": "Kruszonka",
+        "items": [
+          "100 g masła",
+          "100 g mąki",
+          "Do posypania: cukier puder"
+        ]
+      }
+    ],
+    "instructions": [
+      {
+        "name": "Ciasto",
+        "items": [
+          "Drożdże rozpuścić w mleku, dodać mąkę i wyrobić ciasto.",
+          "Odstawić do wyrośnięcia na 1 godzinę."
+        ]
+      },
+      {
+        "name": "Pieczenie",
+        "items": [
+          "Ciasto rozłożyć w formie, ułożyć śliwki i posypać kruszonką.",
+          "Piec w 180 stopniach C przez ok. 45 minut."
+        ]
+      }
+    ],
+    "notes": [
+      "* lub mleka roślinnego."
+    ]
+  },
+  "readableText": "kwestiasmaku\n Prosty placek drożdżowy ze śliwkami i kruszonką.\n 4.8 120\n\n Składniki\n\n 16 porcji \n\n 1 kg śliwek węgierek\n 1 łyżka cukru\n\n Ciasto\n\n 400 g mąki\n 25 g świeżych drożdży\n 200 ml ciepłego mleka*\n\n Kruszonka\n\n 100 g masła\n 100 g mąki\n\n Do posypania: cukier puder\n\n Przygotowanie\n\n Ciasto\n\n Drożdże rozpuścić w mleku, dodać mąkę i wyrobić ciasto.\n Odstawić do wyrośnięcia na 1 godzinę.\n\n Pieczenie\n\n Ciasto rozłożyć w formie, ułożyć śliwki i posypać kruszonką.\n Piec w 180 stopniach C przez ok. 45 minut.\n\n Wskazówki\n * lub mleka roślinnego.\n\n Opinie\n Najlepszy placek, piekę co roku!",
+  "timingsMs": {
+    "jsonLd": 0,
+    "microdata": 2,
+    "pluginHits": 8,
+    "readability": 114,
+    "heuristic": 121
+  },
+  "errors": []
+}

@@ -44,7 +44,7 @@ class ExtractorWebViewTest {
             if (recipe != expectedRecipe) failures += "$name recipe:\n  webview: $recipe\n  golden:  $expectedRecipe"
             if (e.provenance != expectedProv) failures += "$name provenance: ${e.provenance} vs $expectedProv"
         }
-        assertEquals(15, names.size)
+        assertEquals(16, names.size)
         if (failures.isNotEmpty()) throw AssertionError(failures.joinToString("\n"))
     }
 

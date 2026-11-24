@@ -72,6 +72,12 @@
       "containerCount": 0,
       "fieldMatches": {},
       "recipe": {}
+    },
+    "kwestiasmaku": {
+      "found": false,
+      "containerCount": 0,
+      "fieldMatches": {},
+      "recipe": {}
     }
   },
   "heuristic": {
@@ -86,10 +92,10 @@
   "readableText": "Zagnieć ciasto z mąki i ciepłej wody.\n Ugotuj ziemniaki i zmiel je z twarogiem.\n Lep pierogi i gotuj 3 minuty od wypłynięcia.",
   "timingsMs": {
     "jsonLd": 1,
-    "microdata": 1,
-    "pluginHits": 6,
-    "readability": 44,
-    "heuristic": 48
+    "microdata": 0,
+    "pluginHits": 8,
+    "readability": 50,
+    "heuristic": 55
   },
   "errors": []
 }

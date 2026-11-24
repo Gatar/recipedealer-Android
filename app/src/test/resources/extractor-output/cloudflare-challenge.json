@@ -27,6 +27,12 @@
       "containerCount": 0,
       "fieldMatches": {},
       "recipe": {}
+    },
+    "kwestiasmaku": {
+      "found": false,
+      "containerCount": 0,
+      "fieldMatches": {},
+      "recipe": {}
     }
   },
   "heuristic": {
@@ -41,10 +47,10 @@
   "readableText": "www.example.test\n Enable JavaScript and cookies to continue",
   "timingsMs": {
     "jsonLd": 0,
-    "microdata": 1,
+    "microdata": 0,
     "pluginHits": 1,
-    "readability": 26,
-    "heuristic": 28
+    "readability": 27,
+    "heuristic": 31
   },
   "errors": []
 }

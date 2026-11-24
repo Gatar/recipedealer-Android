@@ -40,7 +40,7 @@ data class MergeResult(
  * with provenance (final-app.md §6.3 step 5). Pure Kotlin: unit-tested against the jsdom fixture outputs.
  */
 object ExtractorMerge {
-    private val PLUGINS = listOf("wprm", "tasty", "mediavine")
+    private val PLUGINS = listOf("wprm", "tasty", "mediavine", "kwestiasmaku")
 
     fun merge(output: JsonObject): MergeResult {
         val ld = JsonLd.findRecipe(output["jsonLd"])

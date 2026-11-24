@@ -48,6 +48,12 @@
       "containerCount": 0,
       "fieldMatches": {},
       "recipe": {}
+    },
+    "kwestiasmaku": {
+      "found": false,
+      "containerCount": 0,
+      "fieldMatches": {},
+      "recipe": {}
     }
   },
   "heuristic": {
@@ -61,11 +67,11 @@
   },
   "readableText": "Gotowe po 2 sekundach.",
   "timingsMs": {
-    "jsonLd": 6,
-    "microdata": 5,
-    "pluginHits": 0,
-    "readability": 41,
-    "heuristic": 48
+    "jsonLd": 2,
+    "microdata": 1,
+    "pluginHits": 1,
+    "readability": 56,
+    "heuristic": 60
   },
   "errors": []
 }

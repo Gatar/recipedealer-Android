@@ -27,6 +27,12 @@
       "containerCount": 0,
       "fieldMatches": {},
       "recipe": {}
+    },
+    "kwestiasmaku": {
+      "found": false,
+      "containerCount": 0,
+      "fieldMatches": {},
+      "recipe": {}
     }
   },
   "heuristic": {
@@ -43,7 +49,7 @@
     "jsonLd": 0,
     "microdata": 1,
     "pluginHits": 0,
-    "readability": 20,
+    "readability": 16,
     "heuristic": 21
   },
   "errors": []

@@ -1,0 +1,79 @@
+{
+  "source": {
+    "type": "WEB",
+    "url": "https://example.test/kwestiasmaku-sections",
+    "author": "kwestiasmaku",
+    "files": []
+  },
+  "recipe": {
+    "title": "Placek śliwkowy",
+    "language": "pl",
+    "servings": {
+      "text": "16 porcji",
+      "count": 16
+    },
+    "times": {},
+    "ingredientGroups": [
+      {
+        "items": [
+          "1 kg śliwek węgierek",
+          "1 łyżka cukru"
+        ]
+      },
+      {
+        "name": "Ciasto",
+        "items": [
+          "400 g mąki",
+          "25 g świeżych drożdży",
+          "200 ml ciepłego mleka*"
+        ]
+      },
+      {
+        "name": "Kruszonka",
+        "items": [
+          "100 g masła",
+          "100 g mąki",
+          "Do posypania: cukier puder"
+        ]
+      }
+    ],
+    "stepGroups": [
+      {
+        "name": "Ciasto",
+        "items": [
+          "Drożdże rozpuścić w mleku, dodać mąkę i wyrobić ciasto.",
+          "Odstawić do wyrośnięcia na 1 godzinę."
+        ]
+      },
+      {
+        "name": "Pieczenie",
+        "items": [
+          "Ciasto rozłożyć w formie, ułożyć śliwki i posypać kruszonką.",
+          "Piec w 180 stopniach C przez ok. 45 minut."
+        ]
+      }
+    ],
+    "notes": [
+      "* lub mleka roślinnego."
+    ],
+    "images": [
+      "https://example.test/img/placek.jpg"
+    ]
+  },
+  "provenance": {
+    "title": "microdata",
+    "ingredients": "pluginHits",
+    "steps": "pluginHits",
+    "servings": "pluginHits",
+    "images": "microdata",
+    "notes": "pluginHits",
+    "author": "microdata"
+  },
+  "completeness": {
+    "score": 1.0,
+    "hasTitle": true,
+    "hasIngredients": true,
+    "hasSteps": true,
+    "bestStage": "pluginHits"
+  }
+}

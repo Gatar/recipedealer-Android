@@ -27,6 +27,12 @@
       "containerCount": 0,
       "fieldMatches": {},
       "recipe": {}
+    },
+    "kwestiasmaku": {
+      "found": false,
+      "containerCount": 0,
+      "fieldMatches": {},
+      "recipe": {}
     }
   },
   "heuristic": {
@@ -78,10 +84,10 @@
   "readableText": "Tort na każdą okazję: wilgotny biszkopt i gęsty krem. Robię go na urodziny od lat i jeszcze nigdy nie zawiódł, a goście zawsze proszą o przepis.\n Składniki\n Biszkopt:\n 6 jajek1 szklanka cukru1 szklanka mąki\n Krem:\n 500 ml śmietanki 30%200 g gorzkiej czekolady\n Składniki na polewę:\n 100 g czekolady50 g masła\n Przygotowanie\n Biszkopt\n Ubić jajka z cukrem.Wmieszać mąkę i upiec.\n Krem\n Zagotować śmietankę i rozpuścić w niej czekoladę.\n Komentarze\n Pyszny!Robiłam na święta.",
   "timingsMs": {
     "jsonLd": 0,
-    "microdata": 0,
+    "microdata": 1,
     "pluginHits": 1,
-    "readability": 46,
-    "heuristic": 52
+    "readability": 51,
+    "heuristic": 62
   },
   "errors": []
 }

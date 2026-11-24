@@ -27,6 +27,12 @@
       "containerCount": 0,
       "fieldMatches": {},
       "recipe": {}
+    },
+    "kwestiasmaku": {
+      "found": false,
+      "containerCount": 0,
+      "fieldMatches": {},
+      "recipe": {}
     }
   },
   "heuristic": {
@@ -61,11 +67,11 @@
   },
   "readableText": "Ten przepis przekazywany jest w mojej rodzinie od trzech pokoleń. Szarlotka zawsze wychodzi puszysta, a jabłka są lekko kwaskowate i soczyste. Najlepiej smakuje jeszcze ciepła, z gałką lodów waniliowych albo odrobiną bitej śmietany.\n W jesienne popołudnia piekę ją prawie co tydzień, bo domownicy zjadają ją w kilkanaście minut. Poniżej znajdziesz wszystko, czego potrzebujesz.\n Składniki\n\n 1 kg kwaśnych jabłek\n 3 szklanki mąki pszennej\n 200 g masła\n 1 szklanka cukru\n 2 łyżeczki cynamonu\n\n Sposób przygotowania\n Mąkę, masło i cukier szybko zagnieć w jednolite ciasto, a następnie podziel je na dwie części i schłodź w lodówce przez pół godziny.\n Jabłka obierz, zetrzyj na grubych oczkach tarki i wymieszaj z cynamonem. Połowę ciasta wyłóż na blaszkę, przykryj jabłkami i zetrzyj na wierzch resztę ciasta.\n Piecz w temperaturze 180°C przez około 50 minut, aż wierzch się zarumieni.\n Podawaj ciepłą lub całkiem wystudzoną, posypaną cukrem pudrem. Smacznego!",
   "timingsMs": {
-    "jsonLd": 0,
+    "jsonLd": 1,
     "microdata": 0,
     "pluginHits": 0,
-    "readability": 16,
-    "heuristic": 25
+    "readability": 19,
+    "heuristic": 31
   },
   "errors": []
 }

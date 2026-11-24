@@ -169,6 +169,12 @@
       "containerCount": 0,
       "fieldMatches": {},
       "recipe": {}
+    },
+    "kwestiasmaku": {
+      "found": false,
+      "containerCount": 0,
+      "fieldMatches": {},
+      "recipe": {}
     }
   },
   "heuristic": {
@@ -184,9 +190,9 @@
   "timingsMs": {
     "jsonLd": 0,
     "microdata": 0,
-    "pluginHits": 14,
+    "pluginHits": 15,
     "readability": 40,
-    "heuristic": 56
+    "heuristic": 61
   },
   "errors": []
 }
