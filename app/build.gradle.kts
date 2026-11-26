@@ -14,8 +14,8 @@ android {
         applicationId = "com.gatar.recipedealer"
         minSdk = 34
         targetSdk = 37
-        versionCode = 6
-        versionName = "1.0.5"
+        versionCode = 7
+        versionName = "1.1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         // The server is part of the release, not a user setting (user, 2026-11-25); changed only with a new version.

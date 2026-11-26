@@ -227,6 +227,10 @@ App work:
 - 1.0.5 (versionCode 6, 2026-11-24): 1.0.4 + kwestiasmaku site plugin, list sorted by date added, grid layout,
   "Do decyzji" tab hidden when empty, color themes. Debug build tested on the emulator and the tablet; the release APK
   itself not installed (the tablet keeps the debug build for testing).
+- 1.1.0 (versionCode 7, 2026-11-26): 1.0.5 + households (new household, join, invitations, roles, limits), settings
+  tabs (Ogólne / Moje konto / Mój dom), e-mail addresses, login codes (also for one device), one card per user and
+  device. Debug build tested on the emulator and the tablet against production (backend 0b88e95); the release APK
+  itself not installed.
 
 ## Translation of new recipes (backend 2026-11-03, `docs/api.md` "Translation of new recipes")
 - Setting `translateNew` (Settings: "Tłumacz nowe przepisy na język urządzenia (<język>)", the language name from
