@@ -261,7 +261,8 @@ App work:
   server's English details.
 
 ## Households (backend 2026-11-25, `docs/api.md` Households; app 2026-11-26)
-- Login screen modes: "Zaloguj się" · "Kod" (login code, see below) · "Nowy dom" (`POST /v1/auth/households`, household name; the user becomes the
+- Login screen modes: "Zaloguj się" (user, 2026-11-26: "Zaloguj się nazwą i hasłem", then ——LUB—— "Zaloguj się
+  jednorazowym kodem" with only the code field and an info tooltip; see login codes below) · "Nowy dom" (`POST /v1/auth/households`, household name; the user becomes the
   owner) · "Dołącz" (`POST /v1/auth/join`, invitation code typed as received; the server ignores case, spaces and
   dashes, so the field does not rewrite the text). The old "Załóż konto" with the registration code is gone from the
   UI (`BackendClient.register` stays); default-household members are invited by an owner now.
@@ -285,8 +286,11 @@ App work:
   actions (rename, invite, ⋮ menu) are disabled until it sets one; recipes keep working. "Nowy dom" requires an
   address, "Dołącz" takes an optional one (omitted when empty).
 - Login codes: an owner's "Generuj kod logowania" (`POST /v1/household/members/{userId}/login-code`, also for itself)
-  shows the code once with the share sheet; login mode "Kod" (`POST /v1/auth/login-code`: code + device name) logs
-  that device into the account. A new code replaces the user's earlier one.
+  shows the code once with the share sheet; "Zaloguj się jednorazowym kodem" (`POST /v1/auth/login-code`) logs that
+  device into the account. The user types only the code (user: simplest possible, the owner vouches): the app sends
+  the device name field's value (stored or default), the server (cef80e6) numbers it when the account already has a
+  working device of that name ("Pixel 9 (2)") instead of replacing it, and the app stores the name from `GET /v1/me`.
+  A new code replaces the user's earlier one.
 - Errors: `owner_required`, `last_owner`, `default_household`, `household_limit_reached`, `invalid_invitation_code`,
   `recipe_limit_reached`, `llm_budget_exceeded`, `capture_id_taken` have Polish texts (`ApiTexts`). Reasons
   `RECIPE_LIMIT_REACHED` (the decision screen shows the candidates again: `Inbox.canDecide`; no "Ponownie odczytaj
@@ -297,7 +301,7 @@ App work:
   owner, delete the household (both users and the household deleted on the server); the emulator's own login was
   restored afterwards. Settings tabs, e-mail and login codes verified the same day on the emulator against production:
   member view of the default household, logged-out tabs, "Nowy dom" with a wrong then a valid address, login code for
-  the owner → logout → "Kod" with the code in lower case without dash (second device of the account), owner whose
+  the owner → logout → the code in lower case without dash (second device of the account), owner whose
   address was cleared on the server (banners, owner actions disabled), address set from "Moje konto", "Usuń dom".
 
 ## Preview, editing, manual entry (§6.7, D5)
