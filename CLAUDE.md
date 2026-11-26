@@ -261,7 +261,7 @@ App work:
   server's English details.
 
 ## Households (backend 2026-11-25, `docs/api.md` Households; app 2026-11-26)
-- Login screen modes: "Zaloguj się" · "Nowy dom" (`POST /v1/auth/households`, household name; the user becomes the
+- Login screen modes: "Zaloguj się" · "Kod" (login code, see below) · "Nowy dom" (`POST /v1/auth/households`, household name; the user becomes the
   owner) · "Dołącz" (`POST /v1/auth/join`, invitation code typed as received; the server ignores case, spaces and
   dashes, so the field does not rewrite the text). The old "Załóż konto" with the registration code is gone from the
   UI (`BackendClient.register` stays); default-household members are invited by an owner now.
@@ -269,10 +269,24 @@ App work:
   default household `DEFAULT_HOUSEHOLD_ID`). `AppContainer.signIn` empties the recipe cache, tag catalog, image cache
   and inbox when the session's `householdId` differs; `signOut(forgetData = true)` after deleting the account or the
   household. The device's own captures stay.
-- Settings → "Dom" (`ui/HouseholdScreen.kt`, online): name (owner renames), limits (recipes, users, Claude this month;
-  null = "bez limitu"), members with their devices (owner: role, remove, revoke any device; member: own devices),
-  invitations (owner: create → code shown once + system share sheet, list, revoke), "Usuń moje konto", "Usuń dom"
-  (owner, not the default household). Revoking this device signs out locally.
+- Settings has three tabs (user, 2026-11-26; `SettingsScreen`): "Ogólne" (only "Testuj połączenie" for the server,
+  its address is not shown; color theme, switches, tag manager, "Zapisz"), "Moje konto" and "Mój dom"
+  (`ui/HouseholdScreen.kt`: `AccountState` loads `GET /v1/me` + members + invitations once per login for both tabs,
+  `AccountTab`, `HouseholdTab`, `AccountDialogs`). Logged out, both account tabs show only "Zaloguj się".
+- "Moje konto": user and device name (from `me`, else the stored ones), e-mail (`PATCH /v1/me`; required for an owner,
+  optional for a member, shape checked like the server: `Emails.valid`), "Zmień / Ustaw hasło", "Wyloguj",
+  "Usuń moje konto".
+- "Mój dom" (online): name (owner renames), limits (recipes, users, Claude this month; null = "bez limitu"), members
+  with their devices (owner's ⋮ menu: "Generuj kod logowania", role, remove; revoke any device; member: own devices),
+  invitations (owner: create → code shown once + system share sheet, list, revoke), "Usuń dom" (owner, not the
+  default household). Revoking this device signs out locally.
+- E-mail addresses (backend 22df8e9): every owner needs one; "Zrób właścicielem" is disabled for a user without one
+  (`Member.hasEmail`). An owner from before addresses (`Me.ownerWithoutEmail`) gets a banner in both tabs and its owner
+  actions (rename, invite, ⋮ menu) are disabled until it sets one; recipes keep working. "Nowy dom" requires an
+  address, "Dołącz" takes an optional one (omitted when empty).
+- Login codes: an owner's "Generuj kod logowania" (`POST /v1/household/members/{userId}/login-code`, also for itself)
+  shows the code once with the share sheet; login mode "Kod" (`POST /v1/auth/login-code`: code + device name) logs
+  that device into the account. A new code replaces the user's earlier one.
 - Errors: `owner_required`, `last_owner`, `default_household`, `household_limit_reached`, `invalid_invitation_code`,
   `recipe_limit_reached`, `llm_budget_exceeded`, `capture_id_taken` have Polish texts (`ApiTexts`). Reasons
   `RECIPE_LIMIT_REACHED` (the decision screen shows the candidates again: `Inbox.canDecide`; no "Ponownie odczytaj
@@ -281,7 +295,10 @@ App work:
   screen of the default household), new household "Test Claude 7f3a" (limits 40 / $1), invitation + share sheet,
   join with the code in lower case without dash (member view, cache emptied), delete the member account, log in as
   owner, delete the household (both users and the household deleted on the server); the emulator's own login was
-  restored afterwards.
+  restored afterwards. Settings tabs, e-mail and login codes verified the same day on the emulator against production:
+  member view of the default household, logged-out tabs, "Nowy dom" with a wrong then a valid address, login code for
+  the owner → logout → "Kod" with the code in lower case without dash (second device of the account), owner whose
+  address was cleared on the server (banners, owner actions disabled), address set from "Moje konto", "Usuń dom".
 
 ## Preview, editing, manual entry (§6.7, D5)
 - `capture/RecipeEdits.kt`: `RecipeDraft` (form strings ↔ Recipe, items one per line), `applyEdit` (changed fields →

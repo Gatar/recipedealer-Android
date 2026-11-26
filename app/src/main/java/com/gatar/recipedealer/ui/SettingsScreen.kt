@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -26,23 +25,26 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.PrimaryTabRow
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Switch
+import androidx.compose.material3.Tab
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.gatar.recipedealer.R
@@ -50,34 +52,29 @@ import com.gatar.recipedealer.container
 import com.gatar.recipedealer.settings.AppSettings
 import com.gatar.recipedealer.settings.ColorTheme
 import com.gatar.recipedealer.upload.HttpCaptureSender
-import com.gatar.recipedealer.upload.UploadQueue
 import kotlinx.coroutines.launch
 
 /**
- * The server (fixed, with a connection test), the account (login, password, logout, the household screen; the token
- * itself is not shown), background mode, auto-send; entry to the tag manager.
+ * Three tabs (user, 2026-11-26): "Ogólne" (connection test, color theme, switches, tag manager), "Moje konto" (names,
+ * e-mail, password, logout, deleting the account) and "Mój dom" (household, members and devices, invitations, login
+ * codes). Logged out, the account and household tabs only offer the login. The token itself is not shown.
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SettingsScreen(onBack: () -> Unit, onTags: () -> Unit, onLogin: () -> Unit, onPassword: () -> Unit, onHousehold: () -> Unit) {
+fun SettingsScreen(onBack: () -> Unit, onTags: () -> Unit, onLogin: () -> Unit, onPassword: () -> Unit) {
     val context = LocalContext.current
     val container = context.container
     val repo = container.settings
-    val initial = remember { repo.current }
     val account by repo.settings.collectAsStateWithLifecycle()
-    var background by remember { mutableStateOf(initial.backgroundMode) }
-    var autoSend by remember { mutableStateOf(initial.autoSend) }
-    var tabletView by remember { mutableStateOf(initial.tabletView) }
-    var translateNew by remember { mutableStateOf(initial.translateNew) }
-    var health by remember { mutableStateOf<String?>(null) }
+    var tab by rememberSaveable { mutableIntStateOf(0) }
     var confirmLogout by remember { mutableStateOf(false) }
-    val scope = rememberCoroutineScope()
-
-    fun save() {
-        repo.update {
-            it.copy(backgroundMode = background, autoSend = autoSend, tabletView = tabletView, translateNew = translateNew)
-        }
-        Toast.makeText(context, R.string.settings_saved, Toast.LENGTH_SHORT).show()
+    val state = rememberAccountState()
+    // once per login (also after logging in from a tab), when a tab needs it
+    LaunchedEffect(account.token, account.needsLogin, tab) {
+        if (account.needsLogin) {
+            state.me = null
+            state.error = null
+        } else if (tab != 0 && state.me == null && !state.busy) state.reload()
     }
 
     if (confirmLogout) {
@@ -88,11 +85,14 @@ fun SettingsScreen(onBack: () -> Unit, onTags: () -> Unit, onLogin: () -> Unit, 
                     if (repo.current.userName.isBlank()) "\n\n" + stringResource(R.string.logout_confirm_enrolled) else "")
             },
             confirmButton = {
-                TextButton(onClick = { confirmLogout = false; container.signOut() }) { Text(stringResource(R.string.settings_logout)) }
+                TextButton(onClick = { confirmLogout = false; container.signOut() }) {
+                    Text(stringResource(R.string.settings_logout))
+                }
             },
             dismissButton = { TextButton(onClick = { confirmLogout = false }) { Text(stringResource(R.string.cancel)) } },
         )
     }
+    AccountDialogs(state)
 
     Scaffold(
         topBar = {
@@ -104,76 +104,88 @@ fun SettingsScreen(onBack: () -> Unit, onTags: () -> Unit, onLogin: () -> Unit, 
             )
         },
     ) { padding ->
-        Column(
-            Modifier.fillMaxSize().padding(padding).verticalScroll(rememberScrollState()).padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp),
-        ) {
-            Text(stringResource(R.string.settings_backend), style = MaterialTheme.typography.titleMedium)
-            // fixed per release (user, 2026-11-25): shown, not editable
-            LabeledValue(stringResource(R.string.settings_url), AppSettings.SERVER_URL)
-            Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
-                OutlinedButton(
-                    onClick = {
-                        health = context.getString(R.string.health_testing)
-                        scope.launch {
-                            health = when (val h = HttpCaptureSender(AppSettings.SERVER_URL, repo.current.token).health()) {
-                                HttpCaptureSender.Health.Ok -> context.getString(R.string.health_ok)
-                                HttpCaptureSender.Health.Unauthorized -> context.getString(R.string.health_unauthorized)
-                                is HttpCaptureSender.Health.Failed -> context.getString(R.string.health_failed, h.reason)
-                            }
-                        }
-                    },
-                ) { Text(stringResource(R.string.settings_test)) }
-            }
-            health?.let { Text(it, style = MaterialTheme.typography.bodyMedium) }
-            HorizontalDivider()
-            Text(stringResource(R.string.settings_account), style = MaterialTheme.typography.titleMedium)
-            when {
-                account.authRejected -> Text(stringResource(R.string.settings_rejected), style = MaterialTheme.typography.bodyMedium)
-                account.token.isBlank() -> Text(stringResource(R.string.settings_logged_out), style = MaterialTheme.typography.bodyMedium)
-                // no endpoint tells the names behind an admin's token: they come with the first login
-                account.userName.isBlank() -> Text(stringResource(R.string.settings_enrolled), style = MaterialTheme.typography.bodyMedium)
-                else -> {
-                    LabeledValue(stringResource(R.string.login_user), account.userName)
-                    LabeledValue(stringResource(R.string.login_device), account.deviceName)
-                }
-            }
-            if (!account.needsLogin) {
-                Column(Modifier.fillMaxWidth().clickable(onClick = onHousehold).padding(vertical = 4.dp)) {
-                    Text(stringResource(R.string.household_title), style = MaterialTheme.typography.bodyLarge)
-                    Text(stringResource(R.string.household_settings_desc), style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant)
-                }
-            }
-            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                if (account.needsLogin) {
-                    Button(onClick = onLogin) { Text(stringResource(R.string.login)) }
-                } else {
-                    OutlinedButton(onClick = onPassword) {
-                        Text(stringResource(if (account.userName.isBlank()) R.string.password_set else R.string.password_change))
+        Column(Modifier.fillMaxSize().padding(padding)) {
+            PrimaryTabRow(selectedTabIndex = tab) {
+                listOf(R.string.settings_tab_general, R.string.settings_tab_account, R.string.settings_tab_household)
+                    .forEachIndexed { i, label ->
+                        Tab(selected = tab == i, onClick = { tab = i }, text = { Text(stringResource(label), maxLines = 1) })
                     }
-                    OutlinedButton(onClick = { confirmLogout = true }) { Text(stringResource(R.string.settings_logout)) }
-                }
             }
-            HorizontalDivider()
-            // applied at once (not with "Zapisz"), so the choice can be seen right away
-            ColorThemeSelect(account.colorTheme) { theme -> repo.update { it.copy(colorTheme = theme) } }
-            SwitchRow(stringResource(R.string.settings_background), stringResource(R.string.settings_background_desc), background) { background = it }
-            SwitchRow(stringResource(R.string.settings_autosend), stringResource(R.string.settings_autosend_desc), autoSend) { autoSend = it }
-            SwitchRow(stringResource(R.string.settings_tablet), stringResource(R.string.settings_tablet_desc), tabletView) { tabletView = it }
-            SwitchRow(stringResource(R.string.settings_translate, AppSettings.deviceLanguageName()),
-                stringResource(R.string.settings_translate_desc), translateNew) { translateNew = it }
-            if (repo.current.hasBackend) {
-                Column(Modifier.fillMaxWidth().clickable(onClick = onTags).padding(vertical = 4.dp)) {
-                    Text(stringResource(R.string.tag_manager), style = MaterialTheme.typography.bodyLarge)
-                    Text(stringResource(R.string.tag_manager_desc), style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant)
+            Column(
+                Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(16.dp),
+                verticalArrangement = Arrangement.spacedBy(12.dp),
+            ) {
+                when {
+                    tab == 0 -> GeneralTab(onBack, onTags)
+                    account.needsLogin -> LoggedOut(account.authRejected, onLogin)
+                    tab == 1 -> AccountTab(state, onPassword, onLogout = { confirmLogout = true })
+                    else -> HouseholdTab(state)
                 }
-            }
-            Button(onClick = { save(); onBack() }, modifier = Modifier.fillMaxWidth()) {
-                Text(stringResource(R.string.settings_save))
             }
         }
+    }
+}
+
+@Composable
+private fun LoggedOut(rejected: Boolean, onLogin: () -> Unit) {
+    Text(stringResource(if (rejected) R.string.settings_rejected else R.string.settings_logged_out),
+        style = MaterialTheme.typography.bodyMedium)
+    Button(onClick = onLogin) { Text(stringResource(R.string.login)) }
+}
+
+/** "Ogólne": the server (fixed per release, only the connection test), the color theme, switches, tags. */
+@Composable
+private fun GeneralTab(onBack: () -> Unit, onTags: () -> Unit) {
+    val context = LocalContext.current
+    val repo = context.container.settings
+    val initial = remember { repo.current }
+    val account by repo.settings.collectAsStateWithLifecycle()
+    var background by remember { mutableStateOf(initial.backgroundMode) }
+    var autoSend by remember { mutableStateOf(initial.autoSend) }
+    var tabletView by remember { mutableStateOf(initial.tabletView) }
+    var translateNew by remember { mutableStateOf(initial.translateNew) }
+    var health by remember { mutableStateOf<String?>(null) }
+    val scope = rememberCoroutineScope()
+
+    fun save() {
+        repo.update {
+            it.copy(backgroundMode = background, autoSend = autoSend, tabletView = tabletView, translateNew = translateNew)
+        }
+        Toast.makeText(context, R.string.settings_saved, Toast.LENGTH_SHORT).show()
+    }
+
+    Text(stringResource(R.string.settings_backend), style = MaterialTheme.typography.titleMedium)
+    // fixed per release (user, 2026-11-25); its address is not shown (user, 2026-11-26)
+    OutlinedButton(
+        onClick = {
+            health = context.getString(R.string.health_testing)
+            scope.launch {
+                health = when (val h = HttpCaptureSender(AppSettings.SERVER_URL, repo.current.token).health()) {
+                    HttpCaptureSender.Health.Ok -> context.getString(R.string.health_ok)
+                    HttpCaptureSender.Health.Unauthorized -> context.getString(R.string.health_unauthorized)
+                    is HttpCaptureSender.Health.Failed -> context.getString(R.string.health_failed, h.reason)
+                }
+            }
+        },
+    ) { Text(stringResource(R.string.settings_test)) }
+    health?.let { Text(it, style = MaterialTheme.typography.bodyMedium) }
+    HorizontalDivider()
+    // applied at once (not with "Zapisz"), so the choice can be seen right away
+    ColorThemeSelect(account.colorTheme) { theme -> repo.update { it.copy(colorTheme = theme) } }
+    SwitchRow(stringResource(R.string.settings_background), stringResource(R.string.settings_background_desc), background) { background = it }
+    SwitchRow(stringResource(R.string.settings_autosend), stringResource(R.string.settings_autosend_desc), autoSend) { autoSend = it }
+    SwitchRow(stringResource(R.string.settings_tablet), stringResource(R.string.settings_tablet_desc), tabletView) { tabletView = it }
+    SwitchRow(stringResource(R.string.settings_translate, AppSettings.deviceLanguageName()),
+        stringResource(R.string.settings_translate_desc), translateNew) { translateNew = it }
+    if (repo.current.hasBackend) {
+        Column(Modifier.fillMaxWidth().clickable(onClick = onTags).padding(vertical = 4.dp)) {
+            Text(stringResource(R.string.tag_manager), style = MaterialTheme.typography.bodyLarge)
+            Text(stringResource(R.string.tag_manager_desc), style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant)
+        }
+    }
+    Button(onClick = { save(); onBack() }, modifier = Modifier.fillMaxWidth()) {
+        Text(stringResource(R.string.settings_save))
     }
 }
 

@@ -278,13 +278,47 @@ data class Session(
     val householdId: String? = null,
 )
 
-/** `POST /v1/auth/households`: a new household with its owner and the owner's first device. */
+/** `POST /v1/auth/households`: a new household with its owner (who needs an [email]) and the owner's first device. */
 @Serializable
-data class NewHouseholdRequest(val householdName: String, val userName: String, val password: String, val deviceName: String)
+data class NewHouseholdRequest(
+    val householdName: String,
+    val userName: String,
+    val password: String,
+    val deviceName: String,
+    val email: String? = null,
+)
 
-/** `POST /v1/auth/join`: a member of the invitation's household (the code is read without case, spaces, dashes). */
+/**
+ * `POST /v1/auth/join`: a member of the invitation's household (the code is read without case, spaces, dashes).
+ * [email] optional, omitted when null (ApiJson leaves nulls out), so older backends get the old body.
+ */
 @Serializable
-data class JoinRequest(val invitationCode: String, val userName: String, val password: String, val deviceName: String)
+data class JoinRequest(
+    val invitationCode: String,
+    val userName: String,
+    val password: String,
+    val deviceName: String,
+    val email: String? = null,
+)
+
+/** The server's shape check of e-mail addresses (`AccountService.EMAIL`): only the shape, no verification. */
+object Emails {
+    private val SHAPE = Regex("[^@\\s]+@[^@\\s.]+(\\.[^@\\s.]+)+")
+
+    fun valid(address: String) = address.trim().let { it.length <= 254 && SHAPE.matches(it) }
+}
+
+/** `POST /v1/auth/login-code`: a new device for an existing account, with a code an owner created. */
+@Serializable
+data class CodeLoginRequest(val loginCode: String, val deviceName: String)
+
+/** `PATCH /v1/me`: "" removes the address (a null would be left out by ApiJson). */
+@Serializable
+data class EmailChange(val email: String)
+
+/** `POST /v1/household/members/{userId}/login-code`: [code] only in this answer. */
+@Serializable
+data class LoginCode(val code: String, val userId: String, val userName: String, val expiresAt: String? = null)
 
 /** Roles of [Me.role] / [Member.role]. */
 object Roles {
@@ -313,11 +347,15 @@ data class Me(
     val userName: String,
     val role: String,
     val hasPassword: Boolean = true,
+    /** Null without an address; owners need one (backends from before e-mail addresses omit it). */
+    val email: String? = null,
     val deviceId: String,
     val deviceName: String,
     val household: HouseholdView,
 ) {
     val isOwner get() = role == Roles.OWNER
+    /** An owner from before e-mail addresses: owner actions wait until it sets one. */
+    val ownerWithoutEmail get() = isOwner && email.isNullOrBlank()
 }
 
 @Serializable
@@ -336,6 +374,8 @@ data class Member(
     val userId: String,
     val userName: String,
     val role: String,
+    /** Only a user with an address becomes an owner; true for backends from before e-mail addresses. */
+    val hasEmail: Boolean = true,
     val createdAt: String? = null,
     val devices: List<MemberDevice> = emptyList(),
 )

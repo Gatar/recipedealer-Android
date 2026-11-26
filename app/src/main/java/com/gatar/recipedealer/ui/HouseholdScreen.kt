@@ -6,35 +6,29 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -47,11 +41,14 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.unit.dp
+import com.gatar.recipedealer.AppContainer
 import com.gatar.recipedealer.R
 import com.gatar.recipedealer.api.ApiResult
 import com.gatar.recipedealer.api.BackendClient
+import com.gatar.recipedealer.api.Emails
 import com.gatar.recipedealer.api.HouseholdView
 import com.gatar.recipedealer.api.Invitation
+import com.gatar.recipedealer.api.LoginCode
 import com.gatar.recipedealer.api.Me
 import com.gatar.recipedealer.api.Member
 import com.gatar.recipedealer.api.MemberDevice
@@ -59,34 +56,31 @@ import com.gatar.recipedealer.api.Roles
 import com.gatar.recipedealer.container
 import com.gatar.recipedealer.inbox.Inbox
 import com.gatar.recipedealer.settings.AppSettings
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import java.util.Locale
 
 /** A destructive action waiting for "OK" in a dialog. */
-private class Confirm(val text: String, val button: String, val action: suspend (BackendClient) -> ApiResult<*>, val after: () -> Unit = {})
+class Confirm(val text: String, val button: String, val action: suspend (BackendClient) -> ApiResult<*>, val after: () -> Unit = {})
 
 /**
- * Settings → "Dom" (online only): the household with its limits (recipes, users, Claude this month), its users with
- * their devices, invitations (owner), renaming, leaving / deleting. Owners manage everyone; members only their own
- * devices and account (`docs/api.md` Households).
+ * What the Settings tabs "Moje konto" and "Mój dom" show (online only): the caller (`GET /v1/me`), the household's
+ * users with their devices, invitations (owner), and the dialogs of their actions (`docs/api.md` Households).
  */
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun HouseholdScreen(onBack: () -> Unit) {
-    val context = LocalContext.current
-    val container = context.container
-    var me by remember { mutableStateOf<Me?>(null) }
-    var members by remember { mutableStateOf<List<Member>>(emptyList()) }
-    var invitations by remember { mutableStateOf<List<Invitation>>(emptyList()) }
-    var error by remember { mutableStateOf<String?>(null) }
-    var busy by remember { mutableStateOf(true) }
-    var confirm by remember { mutableStateOf<Confirm?>(null) }
-    var created by remember { mutableStateOf<Invitation?>(null) }
-    var renaming by remember { mutableStateOf(false) }
-    val scope = rememberCoroutineScope()
+@Stable
+class AccountState(private val context: Context, private val container: AppContainer, private val scope: CoroutineScope) {
+    var me by mutableStateOf<Me?>(null)
+    var members by mutableStateOf<List<Member>>(emptyList())
+    var invitations by mutableStateOf<List<Invitation>>(emptyList())
+    var error by mutableStateOf<String?>(null)
+    var busy by mutableStateOf(false)
+    var confirm by mutableStateOf<Confirm?>(null)
+    var invitation by mutableStateOf<Invitation?>(null)
+    var loginCode by mutableStateOf<LoginCode?>(null)
+    var renaming by mutableStateOf(false)
 
     suspend fun reload() {
-        val client = container.backend() ?: run { error = apiErrorText(context, Inbox.NO_BACKEND); busy = false; return }
+        val client = container.backend() ?: run { error = apiErrorText(context, Inbox.NO_BACKEND); return }
         busy = true
         val r = client.me()
         if (r !is ApiResult.Ok) {
@@ -95,7 +89,8 @@ fun HouseholdScreen(onBack: () -> Unit) {
             return
         }
         me = r.value
-        // an admin-enrolled device never had a session: the household comes from here
+        // an admin-enrolled device never had a session: the household comes from here (the names are shown from
+        // `me`, not stored: a blank stored user name still means "enrolled", see the logout dialog)
         if (container.settings.current.householdId.isBlank()) {
             container.settings.update { it.copy(householdId = r.value.household.householdId) }
         }
@@ -114,151 +109,214 @@ fun HouseholdScreen(onBack: () -> Unit) {
             val r = action(client)
             if (r is ApiResult.Ok) {
                 after()
-                if (container.settings.current.needsLogin) return@launch
+                if (container.settings.current.needsLogin) { busy = false; return@launch }
                 reload()
             } else {
-                error = apiErrorText(context, r)
+                error = if (isMissingRoute(r)) context.getString(R.string.household_unsupported) else apiErrorText(context, r)
                 busy = false
             }
         }
     }
 
-    LaunchedEffect(Unit) { reload() }
+    fun deleteAccount() {
+        confirm = Confirm(context.getString(R.string.household_leave_confirm), context.getString(R.string.household_leave),
+            { it.deleteMe() }, after = { container.signOut(forgetData = true) })
+    }
+}
 
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = { Text(stringResource(R.string.household_title)) },
-                navigationIcon = {
-                    IconButton(onClick = onBack) { Icon(Icons.AutoMirrored.Default.ArrowBack, stringResource(R.string.back)) }
-                },
-            )
-        },
-    ) { padding ->
-        Column(
-            Modifier.fillMaxSize().padding(padding).verticalScroll(rememberScrollState()).padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp),
-        ) {
-            error?.let { Text(it, color = MaterialTheme.colorScheme.error, style = MaterialTheme.typography.bodyMedium) }
-            val self = me
-            if (self == null) {
-                if (busy) Text(stringResource(R.string.loading), style = MaterialTheme.typography.bodySmall)
-                return@Column
-            }
-            val h = self.household
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Text(h.name, style = MaterialTheme.typography.headlineSmall, modifier = Modifier.weight(1f))
-                if (self.isOwner) {
-                    IconButton(onClick = { renaming = true }, enabled = !busy) {
-                        Icon(Icons.Default.Edit, stringResource(R.string.household_rename))
-                    }
-                }
-            }
-            Text(stringResource(R.string.household_you, self.userName, roleLabel(context, self.role)),
-                style = MaterialTheme.typography.bodyMedium)
-            Limits(h)
+@Composable
+fun rememberAccountState(): AccountState {
+    val context = LocalContext.current
+    val container = context.container
+    val scope = rememberCoroutineScope()
+    return remember { AccountState(context, container, scope) }
+}
 
-            HorizontalDivider()
-            Text(stringResource(R.string.household_members), style = MaterialTheme.typography.titleMedium)
-            members.forEach { m ->
-                MemberCard(
-                    member = m,
-                    self = self,
-                    enabled = !busy,
-                    onRole = { role -> run({ it.setRole(m.userId, role) }) },
-                    onRemove = {
-                        confirm = Confirm(context.getString(R.string.household_remove_confirm, m.userName),
-                            context.getString(R.string.household_remove), { it.removeMember(m.userId) })
-                    },
-                    onRevoke = { d ->
-                        confirm = Confirm(
-                            context.getString(if (d.current) R.string.household_revoke_own_confirm else R.string.household_revoke_confirm,
-                                d.deviceName),
-                            context.getString(R.string.household_revoke),
-                            { it.revokeDevice(d.deviceId) },
-                            // this device's token is dead now: back to the login screen, the cache stays
-                            after = { if (d.current) container.signOut() },
-                        )
-                    },
-                )
-            }
+/** "Moje konto": names, e-mail address (required for owners), password, logout, deleting the account. */
+@Composable
+fun AccountTab(state: AccountState, onPassword: () -> Unit, onLogout: () -> Unit) {
+    val context = LocalContext.current
+    val settings = context.container.settings.current
+    val self = state.me
+    state.error?.let { Text(it, color = MaterialTheme.colorScheme.error, style = MaterialTheme.typography.bodyMedium) }
+    LabeledValue(stringResource(R.string.login_user), self?.userName ?: settings.userName)
+    LabeledValue(stringResource(R.string.login_device), self?.deviceName ?: settings.deviceName)
+    if (self != null) {
+        if (self.ownerWithoutEmail) EmailBanner(stringResource(R.string.email_owner_banner))
+        EmailEditor(state, self)
+        Text(stringResource(R.string.household_you, self.household.name, roleLabel(context, self.role)),
+            style = MaterialTheme.typography.bodyMedium)
+    } else if (state.busy) {
+        Text(stringResource(R.string.loading), style = MaterialTheme.typography.bodySmall)
+    }
+    HorizontalDivider()
+    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+        OutlinedButton(onClick = onPassword) {
+            val noPassword = self?.let { !it.hasPassword } ?: settings.userName.isBlank()
+            Text(stringResource(if (noPassword) R.string.password_set else R.string.password_change))
+        }
+        OutlinedButton(onClick = onLogout) { Text(stringResource(R.string.settings_logout)) }
+    }
+    if (self != null) {
+        OutlinedButton(enabled = !state.busy, onClick = state::deleteAccount) {
+            Text(stringResource(R.string.household_leave), color = MaterialTheme.colorScheme.error)
+        }
+    }
+}
 
-            if (self.isOwner) {
-                HorizontalDivider()
-                Text(stringResource(R.string.household_invitations), style = MaterialTheme.typography.titleMedium)
-                Text(stringResource(R.string.household_invitations_desc), style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant)
-                invitations.forEach { inv ->
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        Text(
-                            stringResource(R.string.household_invitation_row, inv.createdBy ?: "?",
-                                inv.expiresAt?.let(::formatInstant) ?: "?"),
-                            style = MaterialTheme.typography.bodyMedium, modifier = Modifier.weight(1f),
-                        )
-                        IconButton(onClick = { run({ it.revokeInvitation(inv.invitationId) }) }, enabled = !busy) {
-                            Icon(Icons.Default.Close, stringResource(R.string.household_invitation_revoke))
-                        }
-                    }
-                }
-                Button(
-                    enabled = !busy,
-                    onClick = {
-                        run({ c -> c.createInvitation().also { r -> if (r is ApiResult.Ok) created = r.value } })
-                    },
-                ) { Text(stringResource(R.string.household_invite)) }
-            }
+@Composable
+private fun EmailEditor(state: AccountState, self: Me) {
+    var email by remember(self.email) { mutableStateOf(self.email.orEmpty()) }
+    val changed = email.trim() != self.email.orEmpty()
+    // an owner cannot remove its address; a member may leave the field empty
+    val valid = if (email.isBlank()) !self.isOwner else Emails.valid(email)
+    Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+        EmailField(email, { email = it }, required = self.isOwner, modifier = Modifier.weight(1f))
+        Button(enabled = changed && valid && !state.busy, onClick = {
+            state.run({ c -> c.setEmail(email.trim()).also { r -> if (r is ApiResult.Ok) state.me = r.value } })
+        }) { Text(stringResource(R.string.save)) }
+    }
+}
 
-            HorizontalDivider()
-            OutlinedButton(
-                enabled = !busy,
-                onClick = {
-                    confirm = Confirm(context.getString(R.string.household_leave_confirm), context.getString(R.string.household_leave),
-                        { it.deleteMe() }, after = { container.signOut(forgetData = true) })
-                },
-            ) { Text(stringResource(R.string.household_leave)) }
-            if (self.isOwner && h.householdId != AppSettings.DEFAULT_HOUSEHOLD_ID) {
-                OutlinedButton(
-                    enabled = !busy,
-                    onClick = {
-                        confirm = Confirm(context.getString(R.string.household_delete_confirm, h.name),
-                            context.getString(R.string.household_delete),
-                            { it.deleteHousehold() }, after = { container.signOut(forgetData = true) })
-                    },
-                ) { Text(stringResource(R.string.household_delete), color = MaterialTheme.colorScheme.error) }
+@Composable
+private fun EmailBanner(text: String) {
+    Card(colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.errorContainer)) {
+        Text(text, color = MaterialTheme.colorScheme.onErrorContainer, style = MaterialTheme.typography.bodyMedium,
+            modifier = Modifier.padding(12.dp))
+    }
+}
+
+/**
+ * "Mój dom": the household with its limits (recipes, users, Claude this month), its users with their devices,
+ * invitations (owner), renaming, deleting. Owners manage everyone (once they have an e-mail address); members only
+ * their own devices.
+ */
+@Composable
+fun HouseholdTab(state: AccountState) {
+    val context = LocalContext.current
+    val container = context.container
+    state.error?.let { Text(it, color = MaterialTheme.colorScheme.error, style = MaterialTheme.typography.bodyMedium) }
+    val self = state.me
+    if (self == null) {
+        if (state.busy) Text(stringResource(R.string.loading), style = MaterialTheme.typography.bodySmall)
+        return
+    }
+    val h = self.household
+    // owner actions wait for the owner's e-mail address (the server answers 409 email_required)
+    val manage = self.isOwner && !self.ownerWithoutEmail
+    if (self.ownerWithoutEmail) EmailBanner(stringResource(R.string.email_owner_banner_household))
+    Row(verticalAlignment = Alignment.CenterVertically) {
+        Text(h.name, style = MaterialTheme.typography.headlineSmall, modifier = Modifier.weight(1f))
+        if (manage) {
+            IconButton(onClick = { state.renaming = true }, enabled = !state.busy) {
+                Icon(Icons.Default.Edit, stringResource(R.string.household_rename))
             }
         }
     }
+    Limits(h)
 
-    confirm?.let { c ->
-        AlertDialog(
-            onDismissRequest = { confirm = null },
-            text = { Text(c.text) },
-            confirmButton = { TextButton(onClick = { confirm = null; run(c.action, c.after) }) { Text(c.button) } },
-            dismissButton = { TextButton(onClick = { confirm = null }) { Text(stringResource(R.string.cancel)) } },
+    HorizontalDivider()
+    Text(stringResource(R.string.household_members), style = MaterialTheme.typography.titleMedium)
+    state.members.forEach { m ->
+        MemberCard(
+            member = m,
+            self = self,
+            manage = manage,
+            enabled = !state.busy,
+            onRole = { role -> state.run({ it.setRole(m.userId, role) }) },
+            onLoginCode = {
+                state.run({ c -> c.createLoginCode(m.userId).also { r -> if (r is ApiResult.Ok) state.loginCode = r.value } })
+            },
+            onRemove = {
+                state.confirm = Confirm(context.getString(R.string.household_remove_confirm, m.userName),
+                    context.getString(R.string.household_remove), { it.removeMember(m.userId) })
+            },
+            onRevoke = { d ->
+                state.confirm = Confirm(
+                    context.getString(if (d.current) R.string.household_revoke_own_confirm else R.string.household_revoke_confirm,
+                        d.deviceName),
+                    context.getString(R.string.household_revoke),
+                    { it.revokeDevice(d.deviceId) },
+                    // this device's token is dead now: back to the login screen, the cache stays
+                    after = { if (d.current) container.signOut() },
+                )
+            },
         )
     }
-    created?.let { inv ->
-        val name = me?.household?.name.orEmpty()
-        AlertDialog(
-            onDismissRequest = { created = null },
-            title = { Text(stringResource(R.string.household_invitation_created)) },
-            text = {
-                Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                    Text(inv.code.orEmpty(), style = MaterialTheme.typography.headlineMedium, fontFamily = FontFamily.Monospace)
-                    Text(stringResource(R.string.household_invitation_how, inv.expiresAt?.let(::formatInstant) ?: "?"),
-                        style = MaterialTheme.typography.bodyMedium)
+
+    if (self.isOwner) {
+        HorizontalDivider()
+        Text(stringResource(R.string.household_invitations), style = MaterialTheme.typography.titleMedium)
+        Text(stringResource(R.string.household_invitations_desc), style = MaterialTheme.typography.bodySmall,
+            color = MaterialTheme.colorScheme.onSurfaceVariant)
+        state.invitations.forEach { inv ->
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Text(
+                    stringResource(R.string.household_invitation_row, inv.createdBy ?: "?",
+                        inv.expiresAt?.let(::formatInstant) ?: "?"),
+                    style = MaterialTheme.typography.bodyMedium, modifier = Modifier.weight(1f),
+                )
+                IconButton(onClick = { state.run({ it.revokeInvitation(inv.invitationId) }) }, enabled = !state.busy) {
+                    Icon(Icons.Default.Close, stringResource(R.string.household_invitation_revoke))
                 }
+            }
+        }
+        Button(
+            enabled = manage && !state.busy,
+            onClick = { state.run({ c -> c.createInvitation().also { r -> if (r is ApiResult.Ok) state.invitation = r.value } }) },
+        ) { Text(stringResource(R.string.household_invite)) }
+    }
+
+    if (self.isOwner && h.householdId != AppSettings.DEFAULT_HOUSEHOLD_ID) {
+        HorizontalDivider()
+        OutlinedButton(
+            enabled = !state.busy,
+            onClick = {
+                state.confirm = Confirm(context.getString(R.string.household_delete_confirm, h.name),
+                    context.getString(R.string.household_delete),
+                    { it.deleteHousehold() }, after = { container.signOut(forgetData = true) })
             },
-            confirmButton = {
-                TextButton(onClick = { shareInvitation(context, name, inv) }) { Text(stringResource(R.string.household_invitation_share)) }
-            },
-            dismissButton = { TextButton(onClick = { created = null }) { Text(stringResource(R.string.close)) } },
+        ) { Text(stringResource(R.string.household_delete), color = MaterialTheme.colorScheme.error) }
+    }
+}
+
+/** The dialogs of both tabs: confirmations, a new invitation or login code, renaming. */
+@Composable
+fun AccountDialogs(state: AccountState) {
+    val context = LocalContext.current
+    state.confirm?.let { c ->
+        AlertDialog(
+            onDismissRequest = { state.confirm = null },
+            text = { Text(c.text) },
+            confirmButton = { TextButton(onClick = { state.confirm = null; state.run(c.action, c.after) }) { Text(c.button) } },
+            dismissButton = { TextButton(onClick = { state.confirm = null }) { Text(stringResource(R.string.cancel)) } },
         )
     }
-    if (renaming) {
-        var name by remember { mutableStateOf(me?.household?.name.orEmpty()) }
+    state.invitation?.let { inv ->
+        val expires = inv.expiresAt?.let(::formatInstant) ?: "?"
+        CodeDialog(
+            title = stringResource(R.string.household_invitation_created),
+            code = inv.code.orEmpty(),
+            how = stringResource(R.string.household_invitation_how, expires),
+            shareText = context.getString(R.string.household_invitation_text, state.me?.household?.name.orEmpty(),
+                inv.code.orEmpty(), expires),
+            onClose = { state.invitation = null },
+        )
+    }
+    state.loginCode?.let { lc ->
+        val expires = lc.expiresAt?.let(::formatInstant) ?: "?"
+        CodeDialog(
+            title = stringResource(R.string.login_code_created, lc.userName),
+            code = lc.code,
+            how = stringResource(R.string.login_code_how, lc.userName, expires),
+            shareText = context.getString(R.string.login_code_text, lc.userName, lc.code, expires),
+            onClose = { state.loginCode = null },
+        )
+    }
+    if (state.renaming) {
+        var name by remember { mutableStateOf(state.me?.household?.name.orEmpty()) }
         AlertDialog(
-            onDismissRequest = { renaming = false },
+            onDismissRequest = { state.renaming = false },
             title = { Text(stringResource(R.string.household_rename)) },
             text = {
                 OutlinedTextField(
@@ -270,13 +328,31 @@ fun HouseholdScreen(onBack: () -> Unit) {
             },
             confirmButton = {
                 TextButton(enabled = name.isNotBlank(), onClick = {
-                    renaming = false
-                    run({ it.renameHousehold(name.trim()) })
+                    state.renaming = false
+                    state.run({ it.renameHousehold(name.trim()) })
                 }) { Text(stringResource(R.string.save)) }
             },
-            dismissButton = { TextButton(onClick = { renaming = false }) { Text(stringResource(R.string.cancel)) } },
+            dismissButton = { TextButton(onClick = { state.renaming = false }) { Text(stringResource(R.string.cancel)) } },
         )
     }
+}
+
+/** A single-use code shown once, with the system share sheet (copying is one of its targets). */
+@Composable
+private fun CodeDialog(title: String, code: String, how: String, shareText: String, onClose: () -> Unit) {
+    val context = LocalContext.current
+    AlertDialog(
+        onDismissRequest = onClose,
+        title = { Text(title) },
+        text = {
+            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                Text(code, style = MaterialTheme.typography.headlineMedium, fontFamily = FontFamily.Monospace)
+                Text(how, style = MaterialTheme.typography.bodyMedium)
+            }
+        },
+        confirmButton = { TextButton(onClick = { share(context, shareText) }) { Text(stringResource(R.string.household_invitation_share)) } },
+        dismissButton = { TextButton(onClick = onClose) { Text(stringResource(R.string.close)) } },
+    )
 }
 
 @Composable
@@ -296,8 +372,10 @@ private fun dollars(v: Double) = String.format(Locale.ROOT, "$%.2f", v)
 private fun MemberCard(
     member: Member,
     self: Me,
+    manage: Boolean,
     enabled: Boolean,
     onRole: (String) -> Unit,
+    onLoginCode: () -> Unit,
     onRemove: () -> Unit,
     onRevoke: (MemberDevice) -> Unit,
 ) {
@@ -313,20 +391,32 @@ private fun MemberCard(
                     Text(roleLabel(context, member.role), style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant)
                 }
-                if (self.isOwner) {
+                if (manage) {
                     Box {
                         IconButton(onClick = { menu = true }, enabled = enabled) {
                             Icon(Icons.Default.MoreVert, stringResource(R.string.household_member_actions))
                         }
                         DropdownMenu(expanded = menu, onDismissRequest = { menu = false }) {
-                            val other = if (member.role == Roles.OWNER) Roles.MEMBER else Roles.OWNER
                             DropdownMenuItem(
-                                text = {
-                                    Text(stringResource(if (other == Roles.OWNER) R.string.household_make_owner
-                                        else R.string.household_make_member))
-                                },
-                                onClick = { menu = false; onRole(other) },
+                                text = { Text(stringResource(R.string.login_code_generate)) },
+                                onClick = { menu = false; onLoginCode() },
                             )
+                            if (member.role == Roles.OWNER) {
+                                DropdownMenuItem(
+                                    text = { Text(stringResource(R.string.household_make_member)) },
+                                    onClick = { menu = false; onRole(Roles.MEMBER) },
+                                )
+                            } else {
+                                // only a user with an e-mail address becomes an owner
+                                DropdownMenuItem(
+                                    text = {
+                                        Text(stringResource(if (member.hasEmail) R.string.household_make_owner
+                                            else R.string.household_make_owner_no_email))
+                                    },
+                                    enabled = member.hasEmail,
+                                    onClick = { menu = false; onRole(Roles.OWNER) },
+                                )
+                            }
                             if (!isSelf) {
                                 DropdownMenuItem(
                                     text = { Text(stringResource(R.string.household_remove)) },
@@ -366,10 +456,7 @@ private fun roleLabel(context: Context, role: String) =
 
 private fun <T> ApiResult<List<T>>.valueOrEmpty(): List<T> = (this as? ApiResult.Ok)?.value.orEmpty()
 
-/** The system share sheet with the code and how to use it (copying is one of its targets). */
-private fun shareInvitation(context: Context, household: String, inv: Invitation) {
-    val text = context.getString(R.string.household_invitation_text, household, inv.code.orEmpty(),
-        inv.expiresAt?.let(::formatInstant) ?: "?")
+private fun share(context: Context, text: String) {
     val send = Intent(Intent.ACTION_SEND).setType("text/plain").putExtra(Intent.EXTRA_TEXT, text)
     context.startActivity(Intent.createChooser(send, null).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
 }

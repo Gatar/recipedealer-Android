@@ -87,6 +87,10 @@ object ApiErrors {
     const val OWNER_REQUIRED = "owner_required"
     const val LAST_OWNER = "last_owner"
     const val DEFAULT_HOUSEHOLD = "default_household"
+    const val EMAIL_EXISTS = "email_exists"
+    const val EMAIL_REQUIRED = "email_required"
+    const val MEMBER_EMAIL_REQUIRED = "member_email_required"
+    const val INVALID_LOGIN_CODE = "invalid_login_code"
 }
 
 /**
@@ -129,7 +133,16 @@ class BackendClient(
         call(request(url("/v1/auth/join"), authorize = false).post(json(encode(JoinRequest.serializer(), request))),
             Session.serializer())
 
+    /** A new device for an existing account. 403 `invalid_login_code`, 429. */
+    suspend fun loginWithCode(request: CodeLoginRequest): ApiResult<Session> =
+        call(request(url("/v1/auth/login-code"), authorize = false).post(json(encode(CodeLoginRequest.serializer(), request))),
+            Session.serializer())
+
     suspend fun me(): ApiResult<Me> = call(get(url("/v1/me")), Me.serializer())
+
+    /** Sets ("" removes) the caller's e-mail address. 400 wrong shape, 409 `email_exists` / `email_required`. */
+    suspend fun setEmail(email: String): ApiResult<Me> =
+        call(request(url("/v1/me")).patch(json(encode(EmailChange.serializer(), EmailChange(email)))), Me.serializer())
 
     /** Deletes the caller's account (the last user takes the household along). 409 `last_owner`. */
     suspend fun deleteMe(): ApiResult<Unit> = execute(request(url("/v1/me")).delete()) { }
@@ -150,6 +163,10 @@ class BackendClient(
 
     suspend fun removeMember(userId: String): ApiResult<Unit> =
         execute(request(url("/v1/household/members/$userId")).delete()) { }
+
+    /** A single-use login code for a user of the household (owner), 48 h; replaces that user's earlier code. */
+    suspend fun createLoginCode(userId: String): ApiResult<LoginCode> =
+        call(request(url("/v1/household/members/$userId/login-code")).post(EMPTY), LoginCode.serializer())
 
     /** Owners any device of the household, members only their own; 204 also when already revoked. */
     suspend fun revokeDevice(deviceId: String): ApiResult<Unit> =

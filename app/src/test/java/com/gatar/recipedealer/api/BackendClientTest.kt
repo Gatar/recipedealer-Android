@@ -475,13 +475,15 @@ class BackendClientTest {
     @Test fun newHouseholdAndJoinWithoutToken() = runTest {
         val withHousehold = """{"token":"rd_new","userId":"u1","deviceId":"d1","userName":"Ania","householdId":"h1"}"""
         respond(201, withHousehold); respond(201, withHousehold)
-        val s = client().createHousehold(NewHouseholdRequest("Dom", "Ania", "pw", "Pixel 9")).valueOrNull()!!
+        val s = client().createHousehold(NewHouseholdRequest("Dom", "Ania", "pw", "Pixel 9", "ania@example.org"))
+            .valueOrNull()!!
         assertEquals("h1", s.householdId)
         server.takeRequest().apply {
             assertEquals("POST", method)
             assertEquals("/api/v1/auth/households", path)
             assertNull(getHeader("Authorization"))
-            assertEquals("""{"householdName":"Dom","userName":"Ania","password":"pw","deviceName":"Pixel 9"}""", body.readUtf8())
+            assertEquals("""{"householdName":"Dom","userName":"Ania","password":"pw","deviceName":"Pixel 9","email":"ania@example.org"}""",
+                body.readUtf8())
         }
         assertTrue(client().join(JoinRequest("abcd-efgh", "Bartek", "pw", "Tab")) is ApiResult.Ok)
         server.takeRequest().apply {
@@ -494,6 +496,40 @@ class BackendClientTest {
         assertNull(client().login(LoginRequest("a", "b", "c")).valueOrNull()!!.householdId)
     }
 
+    @Test fun loginCodesAndEmail() = runTest {
+        respond(201, """{"code":"ABCD-EFGH","userId":"u2","userName":"Bartek","expiresAt":"…"}""")
+        respond(201, """{"token":"rd_tab","userId":"u2","deviceId":"d9","userName":"Bartek","householdId":"h1"}""")
+        val me = """{"userId":"u1","userName":"Ania","role":"owner","hasPassword":true,"email":"%s","deviceId":"d1",
+            "deviceName":"Pixel 9","household":{"householdId":"h1","name":"Dom","recipeCount":0,"userCount":1,"llmSpentUsd":0}}"""
+        respond(200, me.format("ania@example.org"))
+        respond(409, """{"error":"email_required"}""")
+        assertEquals("ABCD-EFGH", client().createLoginCode("u2").valueOrNull()!!.code)
+        server.takeRequest().assertCall("POST", "/api/v1/household/members/u2/login-code")
+        assertEquals("Bartek", client(token = null).loginWithCode(CodeLoginRequest("abcdefgh", "Tablet")).valueOrNull()!!.userName)
+        server.takeRequest().apply {
+            assertEquals("/api/v1/auth/login-code", path)
+            assertNull(getHeader("Authorization"))
+            assertEquals("""{"loginCode":"abcdefgh","deviceName":"Tablet"}""", body.readUtf8())
+        }
+        val updated = client().setEmail("ania@example.org").valueOrNull()!!
+        assertFalse(updated.ownerWithoutEmail)
+        server.takeRequest().apply {
+            assertCall("PATCH", "/api/v1/me")
+            assertEquals("""{"email":"ania@example.org"}""", body.readUtf8())
+        }
+        assertEquals(ApiResult.Failed(409, ApiErrors.EMAIL_REQUIRED), client().setEmail(""))
+        assertEquals("""{"email":""}""", server.takeRequest().body.readUtf8())
+    }
+
+    @Test fun emailShape() {
+        assertTrue(Emails.valid(" ania@example.org "))
+        assertTrue(Emails.valid("a.b+c@dom.co.uk"))
+        assertFalse(Emails.valid("ania"))
+        assertFalse(Emails.valid("ania@example"))
+        assertFalse(Emails.valid("a b@example.org"))
+        assertFalse(Emails.valid("a@@example.org"))
+    }
+
     @Test fun meWithLimitsAndWithout() = runTest {
         respond(200, """{"userId":"u1","userName":"Ania","role":"owner","hasPassword":true,"deviceId":"d1",
             "deviceName":"Pixel 9","household":{"householdId":"h1","name":"Dom","recipeLimit":40,"recipeCount":12,
@@ -504,6 +540,7 @@ class BackendClientTest {
         val owner = client().me().valueOrNull()!!
         server.takeRequest().assertCall("GET", "/api/v1/me")
         assertTrue(owner.isOwner)
+        assertTrue(owner.ownerWithoutEmail)
         assertEquals(40, owner.household.recipeLimit)
         assertEquals(1.0, owner.household.llmBudgetUsd!!, 0.0)
         assertEquals(0.0123, owner.household.llmSpentUsd, 0.0)

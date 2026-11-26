@@ -43,6 +43,10 @@ private fun accountErrorText(context: Context, r: ApiResult.Failed): String? = w
     ApiErrors.OWNER_REQUIRED -> context.getString(R.string.api_owner_required)
     ApiErrors.LAST_OWNER -> context.getString(R.string.api_last_owner)
     ApiErrors.DEFAULT_HOUSEHOLD -> context.getString(R.string.api_default_household)
+    ApiErrors.EMAIL_EXISTS -> context.getString(R.string.api_email_exists)
+    ApiErrors.EMAIL_REQUIRED -> context.getString(R.string.api_email_required)
+    ApiErrors.MEMBER_EMAIL_REQUIRED -> context.getString(R.string.api_member_email_required)
+    ApiErrors.INVALID_LOGIN_CODE -> context.getString(R.string.auth_invalid_login_code)
     ApiErrors.INVALID_CREDENTIALS -> context.getString(
         if (r.code == 403) R.string.auth_wrong_current_password else R.string.auth_invalid_credentials)
     ApiErrors.REGISTRATION_DISABLED -> context.getString(R.string.auth_registration_disabled)

@@ -39,6 +39,8 @@ import androidx.compose.ui.unit.dp
 import com.gatar.recipedealer.R
 import com.gatar.recipedealer.api.ApiResult
 import com.gatar.recipedealer.api.BackendClient
+import com.gatar.recipedealer.api.CodeLoginRequest
+import com.gatar.recipedealer.api.Emails
 import com.gatar.recipedealer.api.JoinRequest
 import com.gatar.recipedealer.api.LoginRequest
 import com.gatar.recipedealer.api.NewHouseholdRequest
@@ -53,6 +55,7 @@ private enum class LoginMode(val label: Int, val hint: Int) {
     LOGIN(R.string.login, R.string.login_hint),
     NEW_HOUSEHOLD(R.string.household_new, R.string.household_new_hint),
     JOIN(R.string.household_join, R.string.household_join_hint),
+    CODE(R.string.login_code_mode, R.string.login_code_hint),
 }
 
 /**
@@ -69,16 +72,19 @@ fun LoginScreen(onBack: () -> Unit, onDone: () -> Unit) {
     var mode by remember { mutableStateOf(LoginMode.LOGIN) }
     var householdName by remember { mutableStateOf("") }
     var code by remember { mutableStateOf("") }
+    var email by remember { mutableStateOf("") }
     var user by remember { mutableStateOf(initial.userName) }
     var password by remember { mutableStateOf("") }
     var device by remember { mutableStateOf(initial.deviceName.ifBlank { container.defaultDeviceName() }) }
     var busy by remember { mutableStateOf(false) }
     var error by remember { mutableStateOf<String?>(null) }
     val scope = rememberCoroutineScope()
-    val ready = user.isNotBlank() && password.isNotEmpty() && device.isNotBlank() && when (mode) {
-        LoginMode.LOGIN -> true
-        LoginMode.NEW_HOUSEHOLD -> householdName.isNotBlank()
-        LoginMode.JOIN -> code.isNotBlank()
+    val emailWrong = email.isNotBlank() && !Emails.valid(email)
+    val ready = device.isNotBlank() && !emailWrong && when (mode) {
+        LoginMode.LOGIN -> user.isNotBlank() && password.isNotEmpty()
+        LoginMode.NEW_HOUSEHOLD -> user.isNotBlank() && password.isNotEmpty() && householdName.isNotBlank() && email.isNotBlank()
+        LoginMode.JOIN -> user.isNotBlank() && password.isNotEmpty() && code.isNotBlank()
+        LoginMode.CODE -> code.isNotBlank()
     }
 
     fun submit() {
@@ -88,9 +94,11 @@ fun LoginScreen(onBack: () -> Unit, onDone: () -> Unit) {
             val client = BackendClient(AppSettings.SERVER_URL, token = null)
             val r = when (mode) {
                 LoginMode.LOGIN -> client.login(LoginRequest(user.trim(), password, device.trim()))
-                LoginMode.NEW_HOUSEHOLD ->
-                    client.createHousehold(NewHouseholdRequest(householdName.trim(), user.trim(), password, device.trim()))
-                LoginMode.JOIN -> client.join(JoinRequest(code.trim(), user.trim(), password, device.trim()))
+                LoginMode.NEW_HOUSEHOLD -> client.createHousehold(
+                    NewHouseholdRequest(householdName.trim(), user.trim(), password, device.trim(), email.trim()))
+                LoginMode.JOIN -> client.join(
+                    JoinRequest(code.trim(), user.trim(), password, device.trim(), email.trim().ifEmpty { null }))
+                LoginMode.CODE -> client.loginWithCode(CodeLoginRequest(code.trim(), device.trim()))
             }
             busy = false
             if (r is ApiResult.Ok) {
@@ -122,7 +130,9 @@ fun LoginScreen(onBack: () -> Unit, onDone: () -> Unit) {
                         selected = mode == m,
                         onClick = { mode = m; error = null },
                         shape = SegmentedButtonDefaults.itemShape(i, LoginMode.entries.size),
-                    ) { Text(stringResource(m.label), maxLines = 1) }
+                        // four segments: the check mark would cut "Zaloguj się" on a phone
+                        icon = {},
+                    ) { Text(stringResource(m.label), maxLines = 1, softWrap = false) }
                 }
             }
             Text(stringResource(mode.hint), style = MaterialTheme.typography.bodyMedium,
@@ -137,11 +147,11 @@ fun LoginScreen(onBack: () -> Unit, onDone: () -> Unit) {
                     modifier = Modifier.fillMaxWidth(),
                 )
             }
-            if (mode == LoginMode.JOIN) {
+            if (mode == LoginMode.JOIN || mode == LoginMode.CODE) {
                 OutlinedTextField(
                     // the server ignores case, spaces and dashes; rewriting the text here fights the keyboard
                     value = code, onValueChange = { code = it },
-                    label = { Text(stringResource(R.string.household_code)) },
+                    label = { Text(stringResource(if (mode == LoginMode.CODE) R.string.login_code else R.string.household_code)) },
                     placeholder = { Text("ABCD-EFGH") },
                     singleLine = true,
                     keyboardOptions = KeyboardOptions(capitalization = KeyboardCapitalization.Characters,
@@ -149,13 +159,18 @@ fun LoginScreen(onBack: () -> Unit, onDone: () -> Unit) {
                     modifier = Modifier.fillMaxWidth(),
                 )
             }
-            OutlinedTextField(
-                value = user, onValueChange = { user = it },
-                label = { Text(stringResource(R.string.login_user)) },
-                singleLine = true,
-                modifier = Modifier.fillMaxWidth(),
-            )
-            PasswordField(password, { password = it }, stringResource(R.string.login_password))
+            if (mode != LoginMode.CODE) {
+                OutlinedTextField(
+                    value = user, onValueChange = { user = it },
+                    label = { Text(stringResource(R.string.login_user)) },
+                    singleLine = true,
+                    modifier = Modifier.fillMaxWidth(),
+                )
+                PasswordField(password, { password = it }, stringResource(R.string.login_password))
+            }
+            if (mode == LoginMode.NEW_HOUSEHOLD || mode == LoginMode.JOIN) {
+                EmailField(email, { email = it }, required = mode == LoginMode.NEW_HOUSEHOLD)
+            }
             OutlinedTextField(
                 value = device, onValueChange = { device = it },
                 label = { Text(stringResource(R.string.login_device)) },
@@ -169,6 +184,7 @@ fun LoginScreen(onBack: () -> Unit, onDone: () -> Unit) {
                     LoginMode.LOGIN -> R.string.login
                     LoginMode.NEW_HOUSEHOLD -> R.string.household_create
                     LoginMode.JOIN -> R.string.household_join_action
+                    LoginMode.CODE -> R.string.login
                 }))
             }
             Text(stringResource(R.string.login_offline_hint), style = MaterialTheme.typography.bodySmall,
@@ -230,6 +246,21 @@ fun PasswordScreen(onBack: () -> Unit) {
             }
         }
     }
+}
+
+/** An e-mail address; [required] for an owner, optional for a member. Shape checked with [Emails.valid]. */
+@Composable
+fun EmailField(value: String, onChange: (String) -> Unit, required: Boolean, modifier: Modifier = Modifier.fillMaxWidth()) {
+    val wrong = value.isNotBlank() && !Emails.valid(value)
+    OutlinedTextField(
+        value = value, onValueChange = onChange,
+        label = { Text(stringResource(if (required) R.string.email_required_label else R.string.email_optional_label)) },
+        isError = wrong,
+        supportingText = { Text(stringResource(if (wrong) R.string.email_wrong else R.string.email_hint)) },
+        singleLine = true,
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email, autoCorrectEnabled = false),
+        modifier = modifier,
+    )
 }
 
 @Composable
