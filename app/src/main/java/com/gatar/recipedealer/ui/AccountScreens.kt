@@ -32,23 +32,33 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import com.gatar.recipedealer.R
 import com.gatar.recipedealer.api.ApiResult
 import com.gatar.recipedealer.api.BackendClient
+import com.gatar.recipedealer.api.JoinRequest
 import com.gatar.recipedealer.api.LoginRequest
+import com.gatar.recipedealer.api.NewHouseholdRequest
 import com.gatar.recipedealer.api.PasswordChange
-import com.gatar.recipedealer.api.RegisterRequest
 import com.gatar.recipedealer.container
 import com.gatar.recipedealer.inbox.Inbox
 import com.gatar.recipedealer.settings.AppSettings
 import kotlinx.coroutines.launch
 
+/** What the login screen does: log in, create a household (its owner), join one with an invitation code. */
+private enum class LoginMode(val label: Int, val hint: Int) {
+    LOGIN(R.string.login, R.string.login_hint),
+    NEW_HOUSEHOLD(R.string.household_new, R.string.household_new_hint),
+    JOIN(R.string.household_join, R.string.household_join_hint),
+}
+
 /**
- * Login or registration (`POST /v1/auth/login` / `register`): server address, user, password, device name (+ the
- * household registration code). Success stores the token and goes back. Back without logging in = offline use.
+ * Login (`POST /v1/auth/login`), a new household (`POST /v1/auth/households`) or joining one with an invitation code
+ * (`POST /v1/auth/join`): user, password, device name (+ household name / code). The server address is fixed
+ * ([AppSettings.SERVER_URL]). Success stores the token and goes back. Back without logging in = offline use.
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -56,32 +66,39 @@ fun LoginScreen(onBack: () -> Unit, onDone: () -> Unit) {
     val context = LocalContext.current
     val container = context.container
     val initial = remember { container.settings.current }
-    var register by remember { mutableStateOf(false) }
-    var url by remember { mutableStateOf(initial.baseUrl.ifBlank { AppSettings.DEFAULT_BASE_URL }) }
+    var mode by remember { mutableStateOf(LoginMode.LOGIN) }
+    var householdName by remember { mutableStateOf("") }
+    var code by remember { mutableStateOf("") }
     var user by remember { mutableStateOf(initial.userName) }
     var password by remember { mutableStateOf("") }
     var device by remember { mutableStateOf(initial.deviceName.ifBlank { container.defaultDeviceName() }) }
-    var code by remember { mutableStateOf("") }
     var busy by remember { mutableStateOf(false) }
     var error by remember { mutableStateOf<String?>(null) }
     val scope = rememberCoroutineScope()
-    val urlValid = isAllowedUrl(url.trim())
-    val ready = urlValid && user.isNotBlank() && password.isNotEmpty() && device.isNotBlank() && (!register || code.isNotBlank())
+    val ready = user.isNotBlank() && password.isNotEmpty() && device.isNotBlank() && when (mode) {
+        LoginMode.LOGIN -> true
+        LoginMode.NEW_HOUSEHOLD -> householdName.isNotBlank()
+        LoginMode.JOIN -> code.isNotBlank()
+    }
 
     fun submit() {
         busy = true
         error = null
         scope.launch {
-            val baseUrl = url.trim().trimEnd('/')
-            val client = BackendClient(baseUrl, token = null)
-            val r = if (register) client.register(RegisterRequest(user.trim(), password, device.trim(), code.trim()))
-            else client.login(LoginRequest(user.trim(), password, device.trim()))
+            val client = BackendClient(AppSettings.SERVER_URL, token = null)
+            val r = when (mode) {
+                LoginMode.LOGIN -> client.login(LoginRequest(user.trim(), password, device.trim()))
+                LoginMode.NEW_HOUSEHOLD ->
+                    client.createHousehold(NewHouseholdRequest(householdName.trim(), user.trim(), password, device.trim()))
+                LoginMode.JOIN -> client.join(JoinRequest(code.trim(), user.trim(), password, device.trim()))
+            }
             busy = false
             if (r is ApiResult.Ok) {
-                container.signIn(baseUrl, device.trim(), r.value)
+                container.signIn(device.trim(), r.value)
                 Toast.makeText(context, context.getString(R.string.login_ok, r.value.userName), Toast.LENGTH_SHORT).show()
                 onDone()
-            } else error = apiErrorText(context, r)
+            } else error = if (mode != LoginMode.LOGIN && isMissingRoute(r)) context.getString(R.string.household_unsupported)
+                else apiErrorText(context, r)
         }
     }
 
@@ -100,25 +117,38 @@ fun LoginScreen(onBack: () -> Unit, onDone: () -> Unit) {
             verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
             SingleChoiceSegmentedButtonRow(Modifier.fillMaxWidth()) {
-                listOf(false to R.string.login, true to R.string.register).forEachIndexed { i, (mode, label) ->
+                LoginMode.entries.forEachIndexed { i, m ->
                     SegmentedButton(
-                        selected = register == mode,
-                        onClick = { register = mode; error = null },
-                        shape = SegmentedButtonDefaults.itemShape(i, 2),
-                    ) { Text(stringResource(label)) }
+                        selected = mode == m,
+                        onClick = { mode = m; error = null },
+                        shape = SegmentedButtonDefaults.itemShape(i, LoginMode.entries.size),
+                    ) { Text(stringResource(m.label), maxLines = 1) }
                 }
             }
-            OutlinedTextField(
-                value = url, onValueChange = { url = it },
-                label = { Text(stringResource(R.string.settings_url)) },
-                isError = url.isNotBlank() && !urlValid,
-                supportingText = if (url.isNotBlank() && !urlValid) {
-                    { Text(stringResource(R.string.settings_https_only)) }
-                } else null,
-                singleLine = true,
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Uri),
-                modifier = Modifier.fillMaxWidth(),
-            )
+            Text(stringResource(mode.hint), style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant)
+            if (mode == LoginMode.NEW_HOUSEHOLD) {
+                OutlinedTextField(
+                    value = householdName, onValueChange = { householdName = it },
+                    label = { Text(stringResource(R.string.household_name)) },
+                    placeholder = { Text(stringResource(R.string.household_name_example)) },
+                    singleLine = true,
+                    keyboardOptions = KeyboardOptions(capitalization = KeyboardCapitalization.Sentences),
+                    modifier = Modifier.fillMaxWidth(),
+                )
+            }
+            if (mode == LoginMode.JOIN) {
+                OutlinedTextField(
+                    // the server ignores case, spaces and dashes; rewriting the text here fights the keyboard
+                    value = code, onValueChange = { code = it },
+                    label = { Text(stringResource(R.string.household_code)) },
+                    placeholder = { Text("ABCD-EFGH") },
+                    singleLine = true,
+                    keyboardOptions = KeyboardOptions(capitalization = KeyboardCapitalization.Characters,
+                        keyboardType = KeyboardType.Ascii, autoCorrectEnabled = false),
+                    modifier = Modifier.fillMaxWidth(),
+                )
+            }
             OutlinedTextField(
                 value = user, onValueChange = { user = it },
                 label = { Text(stringResource(R.string.login_user)) },
@@ -133,10 +163,13 @@ fun LoginScreen(onBack: () -> Unit, onDone: () -> Unit) {
                 singleLine = true,
                 modifier = Modifier.fillMaxWidth(),
             )
-            if (register) PasswordField(code, { code = it }, stringResource(R.string.login_code))
             error?.let { Text(it, color = MaterialTheme.colorScheme.error, style = MaterialTheme.typography.bodyMedium) }
             Button(onClick = ::submit, enabled = ready && !busy, modifier = Modifier.fillMaxWidth()) {
-                Text(stringResource(if (busy) R.string.login_working else if (register) R.string.register else R.string.login))
+                Text(stringResource(if (busy) R.string.login_working else when (mode) {
+                    LoginMode.LOGIN -> R.string.login
+                    LoginMode.NEW_HOUSEHOLD -> R.string.household_create
+                    LoginMode.JOIN -> R.string.household_join_action
+                }))
             }
             Text(stringResource(R.string.login_offline_hint), style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant)

@@ -470,6 +470,111 @@ class BackendClientTest {
         assertEquals(1, rejected)
     }
 
+    // --- households ---
+
+    @Test fun newHouseholdAndJoinWithoutToken() = runTest {
+        val withHousehold = """{"token":"rd_new","userId":"u1","deviceId":"d1","userName":"Ania","householdId":"h1"}"""
+        respond(201, withHousehold); respond(201, withHousehold)
+        val s = client().createHousehold(NewHouseholdRequest("Dom", "Ania", "pw", "Pixel 9")).valueOrNull()!!
+        assertEquals("h1", s.householdId)
+        server.takeRequest().apply {
+            assertEquals("POST", method)
+            assertEquals("/api/v1/auth/households", path)
+            assertNull(getHeader("Authorization"))
+            assertEquals("""{"householdName":"Dom","userName":"Ania","password":"pw","deviceName":"Pixel 9"}""", body.readUtf8())
+        }
+        assertTrue(client().join(JoinRequest("abcd-efgh", "Bartek", "pw", "Tab")) is ApiResult.Ok)
+        server.takeRequest().apply {
+            assertEquals("/api/v1/auth/join", path)
+            assertNull(getHeader("Authorization"))
+            assertEquals("""{"invitationCode":"abcd-efgh","userName":"Bartek","password":"pw","deviceName":"Tab"}""", body.readUtf8())
+        }
+        // a backend from before households: no householdId
+        respond(201, session)
+        assertNull(client().login(LoginRequest("a", "b", "c")).valueOrNull()!!.householdId)
+    }
+
+    @Test fun meWithLimitsAndWithout() = runTest {
+        respond(200, """{"userId":"u1","userName":"Ania","role":"owner","hasPassword":true,"deviceId":"d1",
+            "deviceName":"Pixel 9","household":{"householdId":"h1","name":"Dom","recipeLimit":40,"recipeCount":12,
+            "userLimit":10,"userCount":3,"llmBudgetUsd":1.00,"llmSpentUsd":0.0123,"createdAt":"2026-11-25T10:00:00Z"}}""")
+        respond(200, """{"userId":"u1","userName":"Ania","role":"member","hasPassword":false,"deviceId":"d1",
+            "deviceName":"Pixel 9","household":{"householdId":"h1","name":"Dom","recipeLimit":null,"recipeCount":120,
+            "userLimit":10,"userCount":3,"llmBudgetUsd":null,"llmSpentUsd":0}}""")
+        val owner = client().me().valueOrNull()!!
+        server.takeRequest().assertCall("GET", "/api/v1/me")
+        assertTrue(owner.isOwner)
+        assertEquals(40, owner.household.recipeLimit)
+        assertEquals(1.0, owner.household.llmBudgetUsd!!, 0.0)
+        assertEquals(0.0123, owner.household.llmSpentUsd, 0.0)
+        val member = client().me().valueOrNull()!!
+        assertFalse(member.isOwner)
+        assertNull(member.household.recipeLimit)
+        assertNull(member.household.llmBudgetUsd)
+    }
+
+    @Test fun membersRolesAndDevices() = runTest {
+        val members = """[{"userId":"u1","userName":"Ania","role":"owner","createdAt":"…",
+            "devices":[{"deviceId":"d1","deviceName":"Pixel 9","createdAt":"…","lastUsedAt":"…","current":true}]},
+            {"userId":"u2","userName":"Bartek","role":"member","createdAt":"…","devices":[]}]"""
+        respond(200, members); respond(200, members); respond(204); respond(204)
+        val list = client().members().valueOrNull()!!
+        server.takeRequest().assertCall("GET", "/api/v1/household/members")
+        assertEquals(listOf("Ania", "Bartek"), list.map { it.userName })
+        assertTrue(list[0].devices.single().current)
+        assertTrue(client().setRole("u2", Roles.OWNER) is ApiResult.Ok)
+        server.takeRequest().apply {
+            assertCall("PATCH", "/api/v1/household/members/u2")
+            assertEquals("""{"role":"owner"}""", body.readUtf8())
+        }
+        assertEquals(ApiResult.Ok(Unit, 204), client().removeMember("u2"))
+        server.takeRequest().assertCall("DELETE", "/api/v1/household/members/u2")
+        assertEquals(ApiResult.Ok(Unit, 204), client().revokeDevice("d1"))
+        server.takeRequest().assertCall("DELETE", "/api/v1/household/devices/d1")
+    }
+
+    @Test fun invitationsRenameAndDeletion() = runTest {
+        respond(201, """{"invitationId":"i1","code":"ABCD-EFGH","createdBy":"Ania","createdAt":"…","expiresAt":"…"}""")
+        respond(200, """[{"invitationId":"i1","createdBy":"Ania","createdAt":"…","expiresAt":"…"}]""")
+        respond(204)
+        respond(200, """{"householdId":"h1","name":"Nowa nazwa","recipeCount":0,"userCount":1,"llmSpentUsd":0}""")
+        respond(204); respond(204)
+        assertEquals("ABCD-EFGH", client().createInvitation().valueOrNull()!!.code)
+        server.takeRequest().assertCall("POST", "/api/v1/household/invitations")
+        assertNull(client().invitations().valueOrNull()!!.single().code)
+        server.takeRequest().assertCall("GET", "/api/v1/household/invitations")
+        assertEquals(ApiResult.Ok(Unit, 204), client().revokeInvitation("i1"))
+        server.takeRequest().assertCall("DELETE", "/api/v1/household/invitations/i1")
+        assertEquals("Nowa nazwa", client().renameHousehold("Nowa nazwa").valueOrNull()!!.name)
+        server.takeRequest().apply {
+            assertCall("PATCH", "/api/v1/household")
+            assertEquals("""{"name":"Nowa nazwa"}""", body.readUtf8())
+        }
+        assertEquals(ApiResult.Ok(Unit, 204), client().deleteHousehold())
+        server.takeRequest().assertCall("DELETE", "/api/v1/household")
+        assertEquals(ApiResult.Ok(Unit, 204), client().deleteMe())
+        server.takeRequest().assertCall("DELETE", "/api/v1/me")
+    }
+
+    @Test fun householdErrorsAreAnswersNotDeadTokens() = runTest {
+        var rejected = 0
+        val c = BackendClient(server.url("/api").toString(), "secret", onUnauthorized = { rejected++ })
+        respond(403, """{"error":"owner_required","details":["x"]}""")
+        respond(409, """{"error":"last_owner"}""")
+        respond(403, """{"error":"invalid_invitation_code"}""")
+        respond(409, """{"error":"household_limit_reached"}""")
+        respond(409, """{"error":"recipe_limit_reached"}""")
+        respond(409, """{"error":"llm_budget_exceeded"}""")
+        assertEquals(ApiResult.Failed(403, ApiErrors.OWNER_REQUIRED, listOf("x")), c.createInvitation())
+        assertEquals(ApiResult.Failed(409, ApiErrors.LAST_OWNER), c.deleteMe())
+        assertEquals(ApiResult.Failed(403, ApiErrors.INVALID_INVITATION_CODE), c.join(JoinRequest("x", "a", "b", "c")))
+        assertEquals(ApiResult.Failed(409, ApiErrors.HOUSEHOLD_LIMIT_REACHED),
+            c.createHousehold(NewHouseholdRequest("D", "a", "b", "c")))
+        assertEquals(ApiResult.Failed(409, ApiErrors.RECIPE_LIMIT_REACHED), c.resolve(cid, 0, Resolution.new()))
+        assertEquals(ApiResult.Failed(409, ApiErrors.LLM_BUDGET_EXCEEDED), c.forceLlmExtraction(cid))
+        assertEquals(0, rejected)
+    }
+
     // --- common ---
 
     @Test fun authRetryAndNetworkErrors() = runTest {

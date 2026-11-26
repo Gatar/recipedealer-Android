@@ -157,12 +157,3 @@ class HttpCaptureSenderTest {
 
     @Suppress("unused") private fun keep(f: File) = f
 }
-
-class UrlRulesTest {
-    @Test fun httpsOnlyExceptEmulatorHost() {
-        assertTrue(com.gatar.recipedealer.ui.isAllowedUrl("https://recipes.example.org"))
-        assertTrue(com.gatar.recipedealer.ui.isAllowedUrl("http://10.0.2.2:8080"))
-        assertEquals(false, com.gatar.recipedealer.ui.isAllowedUrl("http://recipes.example.org"))
-        assertEquals(false, com.gatar.recipedealer.ui.isAllowedUrl("recipes.example.org"))
-    }
-}

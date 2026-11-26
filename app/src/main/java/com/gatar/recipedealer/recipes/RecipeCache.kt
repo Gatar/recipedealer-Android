@@ -126,6 +126,10 @@ class RecipeCache(private val file: File) {
     @Synchronized
     fun clearCursor() = write(data.copy(cursor = null))
 
+    /** Another household (or none): nothing of the old one stays; the next sync is a full one. */
+    @Synchronized
+    fun clear() = write(CacheFile())
+
     /** A fresh `GET /v1/recipes/{id}` (or the result of a save). */
     @Synchronized
     fun putDetail(view: RecipeView) {

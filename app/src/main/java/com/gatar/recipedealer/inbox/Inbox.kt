@@ -118,6 +118,11 @@ class Inbox(private val store: CaptureStore, private val backend: () -> BackendC
         return ApiResult.Ok(Unit)
     }
 
+    /** Another household (or none): its waiting captures are not this user's any more. */
+    fun clear() {
+        _items.value = emptyList()
+    }
+
     fun record(view: CaptureView) {
         recordLocal(view)
         _items.update { list ->
@@ -150,10 +155,21 @@ class Inbox(private val store: CaptureStore, private val backend: () -> BackendC
         const val LLM_REQUEST_REJECTED = "LLM_REQUEST_REJECTED"
         const val PROCESSING_FAILED = "PROCESSING_FAILED"
         const val TARGET_GONE = "TARGET_GONE"
+        /** `needs_attention`: a NEW decision waits, the household is at its recipe limit; decide again (NEW / UPDATE). */
+        const val RECIPE_LIMIT_REACHED = "RECIPE_LIMIT_REACHED"
+        /** `needs_attention`: the household's monthly Claude budget is used up and the phone's result was empty. */
+        const val LLM_BUDGET_EXCEEDED = "LLM_BUDGET_EXCEEDED"
 
-        /** A failed extraction: "Ponownie odczytaj AI" is the way out (not for TARGET_GONE, which is a new decision). */
+        /**
+         * A failed extraction: "Ponownie odczytaj AI" is the way out (not for TARGET_GONE / RECIPE_LIMIT_REACHED, which
+         * wait for a new decision).
+         */
         fun canReread(status: String?, reason: String?) =
-            status == CaptureStates.NEEDS_ATTENTION && reason != TARGET_GONE
+            status == CaptureStates.NEEDS_ATTENTION && reason != TARGET_GONE && reason != RECIPE_LIMIT_REACHED
+
+        /** The candidates can be decided: `needs_decision`, or a NEW that waits for room under the recipe limit. */
+        fun canDecide(status: String?, reason: String?) =
+            status == CaptureStates.NEEDS_DECISION || (status == CaptureStates.NEEDS_ATTENTION && reason == RECIPE_LIMIT_REACHED)
 
         fun isPending(status: String?) = status == CaptureStates.ACCEPTED || status == CaptureStates.PROCESSING
 

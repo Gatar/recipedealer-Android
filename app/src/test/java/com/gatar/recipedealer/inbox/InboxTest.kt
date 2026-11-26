@@ -230,9 +230,18 @@ class InboxTest {
     @Test fun rereadOnlyForFailedExtraction() {
         assertTrue(Inbox.canReread(CaptureStates.NEEDS_ATTENTION, Inbox.AWAITING_EXTRACTION))
         assertTrue(Inbox.canReread(CaptureStates.NEEDS_ATTENTION, Inbox.PROCESSING_FAILED))
+        assertTrue(Inbox.canReread(CaptureStates.NEEDS_ATTENTION, Inbox.LLM_BUDGET_EXCEEDED))
         assertTrue(!Inbox.canReread(CaptureStates.NEEDS_ATTENTION, Inbox.TARGET_GONE))
+        assertTrue(!Inbox.canReread(CaptureStates.NEEDS_ATTENTION, Inbox.RECIPE_LIMIT_REACHED))
         assertTrue(!Inbox.canReread(CaptureStates.NEEDS_DECISION, null))
         assertTrue(!Inbox.canReread(CaptureStates.DONE, null))
+    }
+
+    @Test fun aNewRecipeOverTheLimitIsDecidedAgain() {
+        assertTrue(Inbox.canDecide(CaptureStates.NEEDS_DECISION, null))
+        assertTrue(Inbox.canDecide(CaptureStates.NEEDS_ATTENTION, Inbox.RECIPE_LIMIT_REACHED))
+        assertTrue(!Inbox.canDecide(CaptureStates.NEEDS_ATTENTION, Inbox.AWAITING_EXTRACTION))
+        assertTrue(!Inbox.canDecide(CaptureStates.DONE, null))
     }
 
     @Test fun noBackend() = runTest {

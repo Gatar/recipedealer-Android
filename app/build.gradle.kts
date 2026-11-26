@@ -18,6 +18,8 @@ android {
         versionName = "1.0.5"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        // The server is part of the release, not a user setting (user, 2026-11-25); changed only with a new version.
+        buildConfigField("String", "SERVER_URL", "\"https://2.31.66.200\"")
     }
 
     // Release key outside both repos (`../signing/`, see CLAUDE.md "Release APK"); without it the release stays unsigned.
@@ -40,6 +42,8 @@ android {
         // test builds keep the last release's number: the suffix tells them apart in the system's app info
         debug {
             versionNameSuffix = "-debug"
+            // a development server for test builds only: `-PserverUrl=http://10.0.2.2:8080` (emulator → this Mac)
+            (project.findProperty("serverUrl") as String?)?.let { buildConfigField("String", "SERVER_URL", "\"$it\"") }
         }
         release {
             signingConfigs.findByName("release")?.let { signingConfig = it }
@@ -56,6 +60,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
     testOptions {
         unitTests.isReturnDefaultValues = true

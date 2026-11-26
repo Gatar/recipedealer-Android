@@ -268,9 +268,93 @@ data class RegisterRequest(val userName: String, val password: String, val devic
 @Serializable
 data class LoginRequest(val userName: String, val password: String, val deviceName: String)
 
-/** Registration and login; the token is shown only here. */
+/** Registration and login; the token is shown only here. [householdId]: backends from before households omit it. */
 @Serializable
-data class Session(val token: String, val userId: String? = null, val deviceId: String? = null, val userName: String)
+data class Session(
+    val token: String,
+    val userId: String? = null,
+    val deviceId: String? = null,
+    val userName: String,
+    val householdId: String? = null,
+)
+
+/** `POST /v1/auth/households`: a new household with its owner and the owner's first device. */
+@Serializable
+data class NewHouseholdRequest(val householdName: String, val userName: String, val password: String, val deviceName: String)
+
+/** `POST /v1/auth/join`: a member of the invitation's household (the code is read without case, spaces, dashes). */
+@Serializable
+data class JoinRequest(val invitationCode: String, val userName: String, val password: String, val deviceName: String)
+
+/** Roles of [Me.role] / [Member.role]. */
+object Roles {
+    const val OWNER = "owner"
+    const val MEMBER = "member"
+}
+
+/** A household with its limits; [recipeLimit] / [userLimit] / [llmBudgetUsd] null = no limit; [llmSpentUsd] this month's. */
+@Serializable
+data class HouseholdView(
+    val householdId: String,
+    val name: String,
+    val recipeLimit: Int? = null,
+    val recipeCount: Int = 0,
+    val userLimit: Int? = null,
+    val userCount: Int = 0,
+    val llmBudgetUsd: Double? = null,
+    val llmSpentUsd: Double = 0.0,
+    val createdAt: String? = null,
+)
+
+/** `GET /v1/me`: the token's user, device and household. */
+@Serializable
+data class Me(
+    val userId: String,
+    val userName: String,
+    val role: String,
+    val hasPassword: Boolean = true,
+    val deviceId: String,
+    val deviceName: String,
+    val household: HouseholdView,
+) {
+    val isOwner get() = role == Roles.OWNER
+}
+
+@Serializable
+data class MemberDevice(
+    val deviceId: String,
+    val deviceName: String,
+    val createdAt: String? = null,
+    val lastUsedAt: String? = null,
+    /** The caller's device. */
+    val current: Boolean = false,
+)
+
+/** `GET /v1/household/members`: a user of the household with the devices that work. */
+@Serializable
+data class Member(
+    val userId: String,
+    val userName: String,
+    val role: String,
+    val createdAt: String? = null,
+    val devices: List<MemberDevice> = emptyList(),
+)
+
+/** An invitation; [code] only in the answer that created it. */
+@Serializable
+data class Invitation(
+    val invitationId: String,
+    val code: String? = null,
+    val createdBy: String? = null,
+    val createdAt: String? = null,
+    val expiresAt: String? = null,
+)
+
+@Serializable
+data class RoleChange(val role: String)
+
+@Serializable
+data class HouseholdRename(val name: String)
 
 /** `PUT /v1/me/password`; [currentPassword] once the user has a password (omitted when null). */
 @Serializable

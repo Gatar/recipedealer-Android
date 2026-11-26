@@ -238,8 +238,7 @@ App work:
 - Stats: step `translation` = "Tłumaczenie (Claude Haiku)", applied = "przetłumaczono".
 
 ## Accounts (backend 2026-10-27, `docs/api.md` Accounts)
-- `ui/AccountScreens.kt`: `LoginScreen` (login / "Załóż konto" with the household registration code; server URL,
-  user, password, device name = `Settings.Global.DEVICE_NAME` or the model, editable and stored so a re-login keeps
+- `ui/AccountScreens.kt`: `LoginScreen` (login / new household / join, see "Households"; user, password, device name = `Settings.Global.DEVICE_NAME` or the model, editable and stored so a re-login keeps
   the server's device) and `PasswordScreen` (`PUT /v1/me/password`; current password optional for a device the admin
   enrolled). `AppContainer.signIn` / `signOut` (forgets the token locally only).
 - The token is not shown anywhere (kept in `settings`). Settings → "Konto": user and device name / enrolled by the
@@ -247,14 +246,42 @@ App work:
   logout + login) / logged out. "Wyloguj" always (enrolled: the dialog warns a password is needed).
 - Verified 2026-10-27 by the user on the tablet: set password (enrolled device), logout + login, reinstall + login
   (recipes and photos synced again). On the emulator: wrong password → Polish error against the real server.
-- Default server `AppSettings.DEFAULT_BASE_URL` = `https://2.31.66.200` (fresh install and an empty login form);
-  editable, a URL cleared by the user stays blank (local mode).
+- The server is fixed per release (user, 2026-11-25): `BuildConfig.SERVER_URL` = `AppSettings.SERVER_URL`
+  (`https://2.31.66.200`, `app/build.gradle.kts`), shown read-only in Settings with the connection test; the stored
+  `baseUrl` of older versions is ignored, so there is no local mode in the app any more. A debug build may name a
+  development server: `./gradlew :app:assembleDebug -PserverUrl=http://10.0.2.2:8080`. In the Claude Code sandbox the
+  emulator cannot reach a backend started from the sandbox (connect timeout): test against production instead.
+- `gradlew installDebug` installs on every connected device (the tablet too when it is plugged in): install with
+  `adb -s emulator-5554 install -r app/build/outputs/apk/debug/app-debug.apk`.
 - A dead token: every `ApiResult.Unauthorized` (BackendClient's `onUnauthorized`, upload, workers) →
   `UploadQueue.pauseForAuth` sets `authRejected` (+ one notification, tap → login). `AppSettings.needsLogin`
   (no token or rejected) opens the login screen; back = offline use of the cache.
 - `BackendClient`: 401 / 403 / 429 with an endpoint-specific code (`invalid_credentials`, `registration_disabled`,
   `too_many_requests`, …) are `Failed`, not `Unauthorized` / `Retry`; Polish texts in `ApiTexts` without the
   server's English details.
+
+## Households (backend 2026-11-25, `docs/api.md` Households; app 2026-11-26)
+- Login screen modes: "Zaloguj się" · "Nowy dom" (`POST /v1/auth/households`, household name; the user becomes the
+  owner) · "Dołącz" (`POST /v1/auth/join`, invitation code typed as received; the server ignores case, spaces and
+  dashes, so the field does not rewrite the text). The old "Załóż konto" with the registration code is gone from the
+  UI (`BackendClient.register` stays); default-household members are invited by an owner now.
+- `AppSettings.householdId`: the household the local cache holds (blank = installs from before households = the
+  default household `DEFAULT_HOUSEHOLD_ID`). `AppContainer.signIn` empties the recipe cache, tag catalog, image cache
+  and inbox when the session's `householdId` differs; `signOut(forgetData = true)` after deleting the account or the
+  household. The device's own captures stay.
+- Settings → "Dom" (`ui/HouseholdScreen.kt`, online): name (owner renames), limits (recipes, users, Claude this month;
+  null = "bez limitu"), members with their devices (owner: role, remove, revoke any device; member: own devices),
+  invitations (owner: create → code shown once + system share sheet, list, revoke), "Usuń moje konto", "Usuń dom"
+  (owner, not the default household). Revoking this device signs out locally.
+- Errors: `owner_required`, `last_owner`, `default_household`, `household_limit_reached`, `invalid_invitation_code`,
+  `recipe_limit_reached`, `llm_budget_exceeded`, `capture_id_taken` have Polish texts (`ApiTexts`). Reasons
+  `RECIPE_LIMIT_REACHED` (the decision screen shows the candidates again: `Inbox.canDecide`; no "Ponownie odczytaj
+  AI") and `LLM_BUDGET_EXCEEDED` (re-read stays offered; the server answers 409 until next month).
+- Verified 2026-11-26 on the emulator against production: update over a logged-in 1.0.5 debug build (household
+  screen of the default household), new household "Test Claude 7f3a" (limits 40 / $1), invitation + share sheet,
+  join with the code in lower case without dash (member view, cache emptied), delete the member account, log in as
+  owner, delete the household (both users and the household deleted on the server); the emulator's own login was
+  restored afterwards.
 
 ## Preview, editing, manual entry (§6.7, D5)
 - `capture/RecipeEdits.kt`: `RecipeDraft` (form strings ↔ Recipe, items one per line), `applyEdit` (changed fields →

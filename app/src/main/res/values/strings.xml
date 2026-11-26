@@ -57,8 +57,7 @@
     <string name="notif_auth_title">Zaloguj się ponownie</string>
     <string name="notif_auth_text">Serwer nie przyjmuje już logowania z tego urządzenia. Wysyłanie wstrzymane do ponownego zalogowania.</string>
     <string name="settings_backend">Serwer</string>
-    <string name="settings_url">Adres serwera (https://…)</string>
-    <string name="settings_url_hint">Puste = zapis tylko na telefonie</string>
+    <string name="settings_url">Adres serwera</string>
     <string name="settings_account">Konto</string>
     <string name="settings_enrolled">To urządzenie dodał administrator, więc aplikacja nie zna jeszcze nazwy użytkownika ani urządzenia. Jeśli masz już hasło, wyloguj się i zaloguj nim – nazwy pojawią się tutaj. Bez hasła najpierw je ustaw.</string>
     <string name="settings_logged_out">Nie zalogowano.</string>
@@ -67,13 +66,11 @@
     <string name="logout_confirm">Wylogować? Przepisy zostaną na urządzeniu, ale do wysyłania i edycji trzeba będzie zalogować się ponownie.</string>
     <string name="logout_confirm_enrolled">Do ponownego logowania potrzebne są nazwa użytkownika i hasło. Jeśli hasło nie jest jeszcze ustawione, najpierw użyj „Ustaw hasło”.</string>
     <string name="login">Zaloguj się</string>
-    <string name="register">Załóż konto</string>
     <string name="login_title">Logowanie</string>
     <string name="login_user">Nazwa użytkownika</string>
     <string name="login_password">Hasło</string>
     <string name="login_device">Nazwa urządzenia</string>
     <string name="login_device_hint">Ta sama nazwa przy kolejnym logowaniu = to samo urządzenie na serwerze.</string>
-    <string name="login_code">Kod rejestracyjny domu</string>
     <string name="login_working">Łączę…</string>
     <string name="login_offline_hint">Bez logowania przepisy z pamięci urządzenia nadal są dostępne – wróć strzałką.</string>
     <string name="login_ok">Zalogowano jako %1$s</string>
@@ -104,7 +101,6 @@
     <string name="settings_translate_desc">Serwer tłumaczy nowy przepis w innym języku; oryginał zostaje w historii. Stopnie Fahrenheita, uncje, funty i galony przelicza na jednostki metryczne.</string>
     <string name="view_tablet">Widok tabletu</string>
     <string name="view_phone">Widok telefonu</string>
-    <string name="settings_https_only">Adres musi zaczynać się od https://</string>
     <string name="health_ok">Połączenie działa</string>
     <string name="health_unauthorized">Serwer odrzucił logowanie z tego urządzenia – zaloguj się ponownie.</string>
     <string name="health_failed">Błąd połączenia: %1$s</string>
@@ -266,4 +262,64 @@
     <string name="tag_empty_category">Brak tagów w tej kategorii.</string>
     <string name="tag_manager_empty">Brak kategorii. Zacznij od „Dodaj kategorię”, np. Posiłek (posilek) z tagami Śniadanie, Obiad, Kolacja.</string>
     <string name="save">Zapisz</string>
+    <string name="close">Zamknij</string>
+
+    <!-- households (backend 2026-11-25) -->
+    <string name="login_hint">Masz już konto w domu – zaloguj się nim.</string>
+    <string name="household_new">Nowy dom</string>
+    <string name="household_new_hint">Załóż nowy dom: zostaniesz jego właścicielem i zaprosisz pozostałych domowników.</string>
+    <string name="household_join">Dołącz</string>
+    <string name="household_join_hint">Dołącz do istniejącego domu kodem zaproszenia od jego właściciela (ważny 48 godzin).</string>
+    <string name="household_create">Załóż dom</string>
+    <string name="household_join_action">Dołącz do domu</string>
+    <string name="household_name">Nazwa domu</string>
+    <string name="household_name_example">np. Dom Kowalskich</string>
+    <string name="household_code">Kod zaproszenia</string>
+    <string name="household_unsupported">Serwer nie obsługuje jeszcze domów.</string>
+    <string name="household_title">Dom</string>
+    <string name="household_settings_desc">Domownicy, urządzenia, zaproszenia, limity</string>
+    <string name="household_you">%1$s · %2$s</string>
+    <string name="household_rename">Zmień nazwę domu</string>
+    <string name="household_recipes">Przepisy</string>
+    <string name="household_users">Użytkownicy</string>
+    <string name="household_claude">Odczyt AI (Claude) w tym miesiącu</string>
+    <string name="household_unlimited">%1$s (bez limitu)</string>
+    <string name="household_members">Domownicy i urządzenia</string>
+    <string name="household_self">(Ty)</string>
+    <string name="household_this_device">(to urządzenie)</string>
+    <string name="household_last_used">ostatnio: %1$s</string>
+    <string name="household_no_devices">Brak aktywnych urządzeń.</string>
+    <string name="household_member_actions">Działania</string>
+    <string name="household_make_owner">Zrób właścicielem</string>
+    <string name="household_make_member">Zrób domownikiem</string>
+    <string name="household_remove">Usuń z domu</string>
+    <string name="household_remove_confirm">Usunąć konto %1$s z domu? Jego urządzenia przestaną działać, a nazwa użytkownika będzie wolna.</string>
+    <string name="household_revoke">Odłącz urządzenie</string>
+    <string name="household_revoke_confirm">Odłączyć urządzenie „%1$s”? Przestanie działać do ponownego zalogowania.</string>
+    <string name="household_revoke_own_confirm">Odłączyć to urządzenie („%1$s”)? Aplikacja wyloguje się; przepisy zostaną w pamięci urządzenia.</string>
+    <string name="household_invitations">Zaproszenia</string>
+    <string name="household_invitations_desc">Kod zaproszenia działa raz, przez 48 godzin. Nowa osoba wybiera na ekranie logowania „Dołącz”.</string>
+    <string name="household_invitation_row">od %1$s, ważne do %2$s</string>
+    <string name="household_invitation_revoke">Unieważnij zaproszenie</string>
+    <string name="household_invite">Zaproś do domu</string>
+    <string name="household_invitation_created">Kod zaproszenia</string>
+    <string name="household_invitation_how">Ważny do %1$s, jednorazowy. Kod widać tylko teraz – udostępnij go od razu.</string>
+    <string name="household_invitation_share">Udostępnij</string>
+    <string name="household_invitation_text">Zaproszenie do domu „%1$s” w RecipeDealer. W aplikacji wybierz „Dołącz” i wpisz kod %2$s (ważny do %3$s).</string>
+    <string name="household_leave">Usuń moje konto</string>
+    <string name="household_leave_confirm">Usunąć Twoje konto? Wszystkie Twoje urządzenia przestaną działać, a przepisy znikną z tego urządzenia. Przepisy domu zostają dla pozostałych domowników; jeśli jesteś ostatnią osobą w domu, dom zostanie usunięty.</string>
+    <string name="household_delete">Usuń dom</string>
+    <string name="household_delete_confirm">Usunąć dom „%1$s” razem z kontami wszystkich domowników? Wszystkie urządzenia przestaną działać. Tego nie da się cofnąć w aplikacji.</string>
+    <string name="role_owner">właściciel</string>
+    <string name="role_member">domownik</string>
+    <string name="auth_household_limit_reached">Na serwerze nie ma już miejsca na nowy dom.</string>
+    <string name="auth_invalid_invitation_code">Zły kod zaproszenia (albo już użyty, unieważniony lub przeterminowany).</string>
+    <string name="api_owner_required">To może zrobić tylko właściciel domu.</string>
+    <string name="api_last_owner">Jesteś jedynym właścicielem domu – najpierw zrób właścicielem kogoś innego.</string>
+    <string name="api_default_household">Tego domu nie można usunąć.</string>
+    <string name="api_recipe_limit_reached">Dom ma już tyle przepisów, ile pozwala limit. Usuń jakiś przepis albo zaktualizuj istniejący.</string>
+    <string name="api_llm_budget_exceeded">Dom wykorzystał miesięczny limit odczytu AI (Claude). Spróbuj w przyszłym miesiącu.</string>
+    <string name="api_capture_id_taken">Serwer ma już udostępnienie o tym identyfikatorze z innego domu.</string>
+    <string name="reason_recipe_limit_reached">Nowy przepis czeka: dom osiągnął limit przepisów. Usuń jakiś przepis i wybierz ponownie „Nowy przepis”, albo zaktualizuj istniejący.</string>
+    <string name="reason_llm_budget_exceeded">Dom wykorzystał miesięczny limit odczytu AI (Claude), a bez AI nie udało się odczytać przepisu.</string>
 </resources>

@@ -29,12 +29,20 @@ fun apiErrorText(context: Context, r: ApiResult<*>): String? = when (r) {
         ApiErrors.NO_LLM_INPUT -> context.getString(R.string.api_no_llm_input)
         ApiErrors.LLM_UNAVAILABLE -> context.getString(R.string.api_llm_unavailable)
         ApiErrors.CAPTURE_APPLIED -> context.getString(R.string.api_capture_applied)
+        ApiErrors.CAPTURE_ID_TAKEN -> context.getString(R.string.api_capture_id_taken)
+        ApiErrors.RECIPE_LIMIT_REACHED -> context.getString(R.string.api_recipe_limit_reached)
+        ApiErrors.LLM_BUDGET_EXCEEDED -> context.getString(R.string.api_llm_budget_exceeded)
         else -> null
     }.let { text -> listOfNotNull(text ?: "HTTP ${r.code}: ${r.error ?: "?"}", r.details.joinToString("\n").ifEmpty { null }).joinToString("\n") }
 }
 
-/** Login, registration, password: the Polish text says it all, without the server's English details. */
+/** Login, registration, password, household: the Polish text says it all, without the server's English details. */
 private fun accountErrorText(context: Context, r: ApiResult.Failed): String? = when (r.error) {
+    ApiErrors.HOUSEHOLD_LIMIT_REACHED -> context.getString(R.string.auth_household_limit_reached)
+    ApiErrors.INVALID_INVITATION_CODE -> context.getString(R.string.auth_invalid_invitation_code)
+    ApiErrors.OWNER_REQUIRED -> context.getString(R.string.api_owner_required)
+    ApiErrors.LAST_OWNER -> context.getString(R.string.api_last_owner)
+    ApiErrors.DEFAULT_HOUSEHOLD -> context.getString(R.string.api_default_household)
     ApiErrors.INVALID_CREDENTIALS -> context.getString(
         if (r.code == 403) R.string.auth_wrong_current_password else R.string.auth_invalid_credentials)
     ApiErrors.REGISTRATION_DISABLED -> context.getString(R.string.auth_registration_disabled)
@@ -70,5 +78,7 @@ fun backendReasonText(context: Context, reason: String?): String? = when (reason
     Inbox.LLM_UNAVAILABLE -> context.getString(R.string.reason_llm_unavailable)
     Inbox.LLM_REQUEST_REJECTED -> context.getString(R.string.reason_llm_request_rejected)
     Inbox.TARGET_GONE -> context.getString(R.string.reason_target_gone)
+    Inbox.RECIPE_LIMIT_REACHED -> context.getString(R.string.reason_recipe_limit_reached)
+    Inbox.LLM_BUDGET_EXCEEDED -> context.getString(R.string.reason_llm_budget_exceeded)
     else -> reason
 }

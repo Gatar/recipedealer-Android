@@ -79,12 +79,20 @@ object ApiErrors {
     const val NO_LLM_INPUT = "no_llm_input"
     const val LLM_UNAVAILABLE = "llm_unavailable"
     const val CAPTURE_APPLIED = "capture_applied"
+    const val CAPTURE_ID_TAKEN = "capture_id_taken"
+    const val RECIPE_LIMIT_REACHED = "recipe_limit_reached"
+    const val LLM_BUDGET_EXCEEDED = "llm_budget_exceeded"
+    const val HOUSEHOLD_LIMIT_REACHED = "household_limit_reached"
+    const val INVALID_INVITATION_CODE = "invalid_invitation_code"
+    const val OWNER_REQUIRED = "owner_required"
+    const val LAST_OWNER = "last_owner"
+    const val DEFAULT_HOUSEHOLD = "default_household"
 }
 
 /**
  * Everything after the upload (which stays in [HttpCaptureSender]): capture status / inbox / decisions, recipe
- * candidates, the sync feed, recipe detail and revisions, search, blobs and editing with the edit lock; accounts.
- * Bearer token on every call but registration and login. [onUnauthorized] runs on every [ApiResult.Unauthorized].
+ * candidates, the sync feed, recipe detail and revisions, search, blobs and editing with the edit lock; accounts and
+ * households. Bearer token on every call but registration, login, a new household and joining one. [onUnauthorized] runs on every [ApiResult.Unauthorized].
  */
 class BackendClient(
     baseUrl: String,
@@ -108,6 +116,53 @@ class BackendClient(
     /** Sets (enrolled user without one) or changes the token user's password; 403 `invalid_credentials` = wrong current. */
     suspend fun setPassword(change: PasswordChange): ApiResult<Unit> =
         execute(request(url("/v1/me/password")).put(json(encode(PasswordChange.serializer(), change)))) { }
+
+    // --- households ---
+
+    /** A new household; the caller becomes its owner. 409 `user_exists` / `household_limit_reached`, 429. */
+    suspend fun createHousehold(request: NewHouseholdRequest): ApiResult<Session> =
+        call(request(url("/v1/auth/households"), authorize = false).post(json(encode(NewHouseholdRequest.serializer(), request))),
+            Session.serializer())
+
+    /** Joins with an invitation code. 403 `invalid_invitation_code`, 409 `user_exists` / `user_limit_reached`, 429. */
+    suspend fun join(request: JoinRequest): ApiResult<Session> =
+        call(request(url("/v1/auth/join"), authorize = false).post(json(encode(JoinRequest.serializer(), request))),
+            Session.serializer())
+
+    suspend fun me(): ApiResult<Me> = call(get(url("/v1/me")), Me.serializer())
+
+    /** Deletes the caller's account (the last user takes the household along). 409 `last_owner`. */
+    suspend fun deleteMe(): ApiResult<Unit> = execute(request(url("/v1/me")).delete()) { }
+
+    suspend fun renameHousehold(name: String): ApiResult<HouseholdView> =
+        call(request(url("/v1/household")).patch(json(encode(HouseholdRename.serializer(), HouseholdRename(name)))),
+            HouseholdView.serializer())
+
+    /** With all its users (owner). 409 `default_household`. */
+    suspend fun deleteHousehold(): ApiResult<Unit> = execute(request(url("/v1/household")).delete()) { }
+
+    suspend fun members() = call(get(url("/v1/household/members")), ListSerializer(Member.serializer()))
+
+    /** Answers with all the members. 409 `last_owner` when demoting the only owner. */
+    suspend fun setRole(userId: String, role: String) =
+        call(request(url("/v1/household/members/$userId")).patch(json(encode(RoleChange.serializer(), RoleChange(role)))),
+            ListSerializer(Member.serializer()))
+
+    suspend fun removeMember(userId: String): ApiResult<Unit> =
+        execute(request(url("/v1/household/members/$userId")).delete()) { }
+
+    /** Owners any device of the household, members only their own; 204 also when already revoked. */
+    suspend fun revokeDevice(deviceId: String): ApiResult<Unit> =
+        execute(request(url("/v1/household/devices/$deviceId")).delete()) { }
+
+    /** A single-use code for 48 h; [Invitation.code] is only in this answer. */
+    suspend fun createInvitation(): ApiResult<Invitation> =
+        call(request(url("/v1/household/invitations")).post(EMPTY), Invitation.serializer())
+
+    suspend fun invitations() = call(get(url("/v1/household/invitations")), ListSerializer(Invitation.serializer()))
+
+    suspend fun revokeInvitation(invitationId: String): ApiResult<Unit> =
+        execute(request(url("/v1/household/invitations/$invitationId")).delete()) { }
 
     // --- captures ---
 

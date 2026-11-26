@@ -37,6 +37,11 @@ class ImageCache(
         }.getOrNull()?.let { write(f, it) }
     }
 
+    /** Another household (or none): its photos go too. */
+    fun clear() {
+        dir.deleteRecursively()
+    }
+
     private fun write(f: File, bytes: ByteArray): File {
         dir.mkdirs()
         val tmp = File(dir, f.name + ".tmp")

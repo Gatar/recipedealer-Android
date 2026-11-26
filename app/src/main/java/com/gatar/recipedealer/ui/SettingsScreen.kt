@@ -54,18 +54,17 @@ import com.gatar.recipedealer.upload.UploadQueue
 import kotlinx.coroutines.launch
 
 /**
- * Backend base URL, the account (login, password, logout; the token itself is not shown), background mode,
- * auto-send; entry to the tag manager.
+ * The server (fixed, with a connection test), the account (login, password, logout, the household screen; the token
+ * itself is not shown), background mode, auto-send; entry to the tag manager.
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SettingsScreen(onBack: () -> Unit, onTags: () -> Unit, onLogin: () -> Unit, onPassword: () -> Unit) {
+fun SettingsScreen(onBack: () -> Unit, onTags: () -> Unit, onLogin: () -> Unit, onPassword: () -> Unit, onHousehold: () -> Unit) {
     val context = LocalContext.current
     val container = context.container
     val repo = container.settings
     val initial = remember { repo.current }
     val account by repo.settings.collectAsStateWithLifecycle()
-    var url by remember { mutableStateOf(initial.baseUrl) }
     var background by remember { mutableStateOf(initial.backgroundMode) }
     var autoSend by remember { mutableStateOf(initial.autoSend) }
     var tabletView by remember { mutableStateOf(initial.tabletView) }
@@ -73,17 +72,11 @@ fun SettingsScreen(onBack: () -> Unit, onTags: () -> Unit, onLogin: () -> Unit, 
     var health by remember { mutableStateOf<String?>(null) }
     var confirmLogout by remember { mutableStateOf(false) }
     val scope = rememberCoroutineScope()
-    val urlValid = url.isBlank() || isAllowedUrl(url.trim())
-    // a login from here may store another server address: keep the field (and a later "Zapisz") in step
-    LaunchedEffect(account.baseUrl) { url = account.baseUrl }
 
     fun save() {
-        val backendChanged = url.trim().trimEnd('/') != repo.current.baseUrl
         repo.update {
-            it.copy(baseUrl = url, backgroundMode = background, autoSend = autoSend, tabletView = tabletView,
-                translateNew = translateNew)
+            it.copy(backgroundMode = background, autoSend = autoSend, tabletView = tabletView, translateNew = translateNew)
         }
-        if (backendChanged) UploadQueue.resume(context, includeAuthFailures = true)
         Toast.makeText(context, R.string.settings_saved, Toast.LENGTH_SHORT).show()
     }
 
@@ -116,24 +109,14 @@ fun SettingsScreen(onBack: () -> Unit, onTags: () -> Unit, onLogin: () -> Unit, 
             verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
             Text(stringResource(R.string.settings_backend), style = MaterialTheme.typography.titleMedium)
-            OutlinedTextField(
-                value = url, onValueChange = { url = it; health = null },
-                label = { Text(stringResource(R.string.settings_url)) },
-                supportingText = {
-                    Text(if (urlValid) stringResource(R.string.settings_url_hint) else stringResource(R.string.settings_https_only))
-                },
-                isError = !urlValid,
-                singleLine = true,
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Uri),
-                modifier = Modifier.fillMaxWidth(),
-            )
+            // fixed per release (user, 2026-11-25): shown, not editable
+            LabeledValue(stringResource(R.string.settings_url), AppSettings.SERVER_URL)
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
                 OutlinedButton(
-                    enabled = url.isNotBlank() && urlValid,
                     onClick = {
                         health = context.getString(R.string.health_testing)
                         scope.launch {
-                            health = when (val h = HttpCaptureSender(url, repo.current.token).health()) {
+                            health = when (val h = HttpCaptureSender(AppSettings.SERVER_URL, repo.current.token).health()) {
                                 HttpCaptureSender.Health.Ok -> context.getString(R.string.health_ok)
                                 HttpCaptureSender.Health.Unauthorized -> context.getString(R.string.health_unauthorized)
                                 is HttpCaptureSender.Health.Failed -> context.getString(R.string.health_failed, h.reason)
@@ -153,6 +136,13 @@ fun SettingsScreen(onBack: () -> Unit, onTags: () -> Unit, onLogin: () -> Unit, 
                 else -> {
                     LabeledValue(stringResource(R.string.login_user), account.userName)
                     LabeledValue(stringResource(R.string.login_device), account.deviceName)
+                }
+            }
+            if (!account.needsLogin) {
+                Column(Modifier.fillMaxWidth().clickable(onClick = onHousehold).padding(vertical = 4.dp)) {
+                    Text(stringResource(R.string.household_title), style = MaterialTheme.typography.bodyLarge)
+                    Text(stringResource(R.string.household_settings_desc), style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant)
                 }
             }
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -180,26 +170,15 @@ fun SettingsScreen(onBack: () -> Unit, onTags: () -> Unit, onLogin: () -> Unit, 
                         color = MaterialTheme.colorScheme.onSurfaceVariant)
                 }
             }
-            Button(onClick = { save(); onBack() }, enabled = urlValid, modifier = Modifier.fillMaxWidth()) {
+            Button(onClick = { save(); onBack() }, modifier = Modifier.fillMaxWidth()) {
                 Text(stringResource(R.string.settings_save))
             }
         }
     }
 }
 
-/** HTTPS only; plain HTTP just for a development server on the emulator host (debug builds allow it). */
-fun isAllowedUrl(url: String): Boolean {
-    val u = runCatching { java.net.URI(url) }.getOrNull() ?: return false
-    if (u.host.isNullOrBlank()) return false
-    return when (u.scheme?.lowercase()) {
-        "https" -> true
-        "http" -> u.host == "10.0.2.2" || u.host == "localhost"
-        else -> false
-    }
-}
-
 @Composable
-private fun LabeledValue(label: String, value: String) {
+fun LabeledValue(label: String, value: String) {
     Column {
         Text(label, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
         Text(value.ifBlank { "–" }, style = MaterialTheme.typography.bodyLarge)

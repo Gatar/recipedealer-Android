@@ -1,6 +1,7 @@
 package com.gatar.recipedealer.settings
 
 import android.content.Context
+import com.gatar.recipedealer.BuildConfig
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -10,7 +11,7 @@ import java.util.Locale
 enum class ColorTheme { SYSTEM, LIGHT, DARK, KITCHEN }
 
 data class AppSettings(
-    /** Backend base URL, e.g. `https://recipes.example.org`; blank → local sender. */
+    /** Backend base URL; always [SERVER_URL] in the app (blank → local sender, only in tests). */
     val baseUrl: String = "",
     /** Device token from login / registration (or an admin enrollment); blank → no Authorization header. Not shown. */
     val token: String = "",
@@ -18,6 +19,11 @@ data class AppSettings(
     val userName: String = "",
     /** Device name sent with the login; the same name again keeps the server's device (and replaces its token). */
     val deviceName: String = "",
+    /**
+     * The household whose recipes the local cache holds; blank on installs from before households (all of them in the
+     * default household). A login into another household empties the cache.
+     */
+    val householdId: String = "",
     /** The server rejected [token] (401): the login screen opens until a new login. */
     val authRejected: Boolean = false,
     /** Share → toast + notification (default); off → the capture screen opens in the app. */
@@ -49,8 +55,11 @@ data class AppSettings(
     val needsLogin get() = token.isBlank() || authRejected
 
     companion object {
-        /** The household's server; editable, and blank still means local mode. */
-        const val DEFAULT_BASE_URL = "https://2.31.66.200"
+        /** The server, fixed per release (a debug build may name a development server, see `app/build.gradle.kts`). */
+        const val SERVER_URL = BuildConfig.SERVER_URL
+
+        /** The household of every user from before households (backend V19). */
+        const val DEFAULT_HOUSEHOLD_ID = "00000000-0000-7000-8000-000000000001"
 
         /** ISO 639 code of the device language, e.g. `pl`. */
         fun deviceLanguage(): String = Locale.getDefault().language
@@ -71,10 +80,10 @@ class SettingsRepository(context: Context) {
     fun update(change: (AppSettings) -> AppSettings) {
         val s = change(current)
         prefs.edit()
-            .putString(BASE_URL, s.baseUrl.trim().trimEnd('/'))
             .putString(TOKEN, s.token.trim())
             .putString(USER_NAME, s.userName)
             .putString(DEVICE_NAME, s.deviceName.trim())
+            .putString(HOUSEHOLD_ID, s.householdId)
             .putBoolean(AUTH_REJECTED, s.authRejected)
             .putBoolean(BACKGROUND, s.backgroundMode)
             .putBoolean(AUTO_SEND, s.autoSend)
@@ -88,11 +97,12 @@ class SettingsRepository(context: Context) {
     }
 
     private fun read() = AppSettings(
-        // a fresh install talks to the household's server; a URL cleared by the user stays blank
-        baseUrl = prefs.getString(BASE_URL, AppSettings.DEFAULT_BASE_URL).orEmpty(),
+        // not a setting any more (user, 2026-11-25): the stored `baseUrl` of older versions is ignored
+        baseUrl = AppSettings.SERVER_URL,
         token = prefs.getString(TOKEN, "").orEmpty(),
         userName = prefs.getString(USER_NAME, "").orEmpty(),
         deviceName = prefs.getString(DEVICE_NAME, "").orEmpty(),
+        householdId = prefs.getString(HOUSEHOLD_ID, "").orEmpty(),
         authRejected = prefs.getBoolean(AUTH_REJECTED, false),
         backgroundMode = prefs.getBoolean(BACKGROUND, true),
         autoSend = prefs.getBoolean(AUTO_SEND, false),
@@ -104,10 +114,10 @@ class SettingsRepository(context: Context) {
     )
 
     private companion object {
-        const val BASE_URL = "baseUrl"
         const val TOKEN = "token"
         const val USER_NAME = "userName"
         const val DEVICE_NAME = "deviceName"
+        const val HOUSEHOLD_ID = "householdId"
         const val AUTH_REJECTED = "authRejected"
         const val BACKGROUND = "backgroundMode"
         const val AUTO_SEND = "autoSend"

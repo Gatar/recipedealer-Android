@@ -47,6 +47,7 @@ import com.gatar.recipedealer.ui.CaptureListScreen
 import com.gatar.recipedealer.ui.DecisionScreen
 import com.gatar.recipedealer.ui.ExtractionStatsScreen
 import com.gatar.recipedealer.ui.InboxScreen
+import com.gatar.recipedealer.ui.HouseholdScreen
 import com.gatar.recipedealer.ui.LoginScreen
 import com.gatar.recipedealer.ui.PasswordScreen
 import com.gatar.recipedealer.ui.ManualEntryScreen
@@ -128,6 +129,7 @@ object Routes {
     const val TAGS = "tags"
     const val LOGIN = "login"
     const val PASSWORD = "password"
+    const val HOUSEHOLD = "household"
     fun capture(id: String) = "capture/$id"
     fun decision(id: String) = "decision/$id"
     fun recipe(id: String) = "recipe/$id"
@@ -265,8 +267,10 @@ private fun AppNavHost(nav: NavHostController) {
                     onTags = { nav.navigate(Routes.TAGS) },
                     onLogin = { nav.navigate(Routes.LOGIN) },
                     onPassword = { nav.navigate(Routes.PASSWORD) },
+                    onHousehold = { nav.navigate(Routes.HOUSEHOLD) },
                 )
             }
+            composable(Routes.HOUSEHOLD) { HouseholdScreen(onBack = { nav.popBackStack() }) }
             composable(Routes.LOGIN) {
                 LoginScreen(onBack = { nav.popBackStack() }, onDone = {
                     if (!nav.popBackStack()) nav.navigate(Routes.RECIPES)

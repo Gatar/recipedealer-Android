@@ -221,7 +221,7 @@ fun DecisionScreen(
             if (Inbox.isPending(v.status)) {
                 TextButton(onClick = { load() }, enabled = !busy) { Text(stringResource(R.string.refresh_status)) }
             }
-            if (v.status == CaptureStates.NEEDS_DECISION) {
+            if (Inbox.canDecide(v.status, v.reason)) {
                 v.candidates.forEach { c ->
                     CandidateCard(captureId, c, enabled = !busy) { decide(c.index, it) }
                 }

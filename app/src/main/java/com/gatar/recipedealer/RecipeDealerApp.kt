@@ -6,6 +6,8 @@ import android.content.pm.ApplicationInfo
 import android.webkit.WebView
 import com.gatar.recipedealer.api.BackendClient
 import com.gatar.recipedealer.api.Session
+import com.gatar.recipedealer.api.TagCatalog
+import com.gatar.recipedealer.settings.AppSettings
 import com.gatar.recipedealer.capture.CaptureProcessor
 import com.gatar.recipedealer.inbox.Inbox
 import com.gatar.recipedealer.recipes.ImageCache
@@ -85,18 +87,42 @@ class AppContainer(val context: Context) {
         BackendClient(it.baseUrl, it.token, onUnauthorized = { UploadQueue.pauseForAuth(context) })
     }
 
-    /** After registration / login: the new token for [baseUrl]; the queue blocked by auth goes again. */
-    fun signIn(baseUrl: String, deviceName: String, session: Session) {
+    /**
+     * After login, a new household or joining one: the new token; the queue blocked by auth goes again. A session of
+     * another household than the cached one empties the cache first (installs from before households cached the
+     * default household).
+     */
+    fun signIn(deviceName: String, session: Session) {
+        val cached = settings.current.householdId.ifBlank { AppSettings.DEFAULT_HOUSEHOLD_ID }
+        val household = session.householdId ?: cached
+        if (household != cached) forgetHouseholdData()
         settings.update {
-            it.copy(baseUrl = baseUrl, token = session.token, userName = session.userName, deviceName = deviceName, authRejected = false)
+            it.copy(token = session.token, userName = session.userName, deviceName = deviceName, householdId = household,
+                authRejected = false)
         }
         Notifications.cancelAuth(context)
         UploadQueue.resume(context, includeAuthFailures = true)
         SyncWorker.syncNow(context)
     }
 
-    /** Forgets the token (the server keeps the device; the next login with the same device name reuses it). */
-    fun signOut() = settings.update { it.copy(token = "", userName = "", authRejected = false) }
+    /**
+     * Forgets the token (the server keeps the device; the next login with the same device name reuses it).
+     * [forgetData] after the account or the household was deleted: the cached recipes, tags and photos go too.
+     */
+    fun signOut(forgetData: Boolean = false) {
+        if (forgetData) forgetHouseholdData()
+        settings.update {
+            it.copy(token = "", userName = "", authRejected = false, householdId = if (forgetData) "" else it.householdId)
+        }
+    }
+
+    /** Recipes, tags, photos and waiting captures of the household; the device's own captures stay. */
+    private fun forgetHouseholdData() {
+        recipes.clear()
+        tags.put(TagCatalog())
+        images.clear()
+        inbox.clear()
+    }
 
     /** The device name from the system settings ("Galaxy Tab A8"), else the model. */
     fun defaultDeviceName(): String =
