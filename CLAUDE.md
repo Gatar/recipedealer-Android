@@ -277,8 +277,9 @@ App work:
 - "Moje konto": user and device name (from `me`, else the stored ones), e-mail (`PATCH /v1/me`; required for an owner,
   optional for a member, shape checked like the server: `Emails.valid`), "Zmień / Ustaw hasło", "Wyloguj",
   "Usuń moje konto".
-- "Mój dom" (online): name (owner renames), limits (recipes, users, Claude this month; null = "bez limitu"), members
-  with their devices (owner's ⋮ menu: "Generuj kod logowania", role, remove; revoke any device; member: own devices),
+- "Mój dom" (online): name (owner renames), limits (recipes, users, Claude this month; null = "bez limitu"), one card
+  per user and working device (user, 2026-11-26; a user without devices gets one card), ⋮ menu: owner "Generuj kod
+  logowania" (for that device), role, remove the user, "Odłącz urządzenie" (any); member: "Odłącz urządzenie" (own),
   invitations (owner: create → code shown once + system share sheet, list, revoke), "Usuń dom" (owner, not the
   default household). Revoking this device signs out locally.
 - E-mail addresses (backend 22df8e9): every owner needs one; "Zrób właścicielem" is disabled for a user without one
@@ -287,10 +288,11 @@ App work:
   address, "Dołącz" takes an optional one (omitted when empty).
 - Login codes: an owner's "Generuj kod logowania" (`POST /v1/household/members/{userId}/login-code`, also for itself)
   shows the code once with the share sheet; "Zaloguj się jednorazowym kodem" (`POST /v1/auth/login-code`) logs that
-  device into the account. The user types only the code (user: simplest possible, the owner vouches): the app sends
-  the device name field's value (stored or default), the server (cef80e6) numbers it when the account already has a
-  working device of that name ("Pixel 9 (2)") instead of replacing it, and the app stores the name from `GET /v1/me`.
-  A new code replaces the user's earlier one.
+  device into the account. The user types only the code (user: simplest possible, the owner vouches). A code generated
+  on a device card (`{"deviceId"}`) logs in as that device: same device id and name, its old token stops working, no
+  duplicate. A code without a device uses the device name field's value (stored or default); a working device of that
+  name gets the new token. The app stores the name from `GET /v1/me`. A new code replaces the user's earlier one.
+  Revoking a device frees its name (server V23): a later login with it adds a new device.
 - Errors: `owner_required`, `last_owner`, `default_household`, `household_limit_reached`, `invalid_invitation_code`,
   `recipe_limit_reached`, `llm_budget_exceeded`, `capture_id_taken` have Polish texts (`ApiTexts`). Reasons
   `RECIPE_LIMIT_REACHED` (the decision screen shows the candidates again: `Inbox.canDecide`; no "Ponownie odczytaj

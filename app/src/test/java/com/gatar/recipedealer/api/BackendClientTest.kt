@@ -519,6 +519,14 @@ class BackendClientTest {
         }
         assertEquals(ApiResult.Failed(409, ApiErrors.EMAIL_REQUIRED), client().setEmail(""))
         assertEquals("""{"email":""}""", server.takeRequest().body.readUtf8())
+
+        // a code for one device of the user
+        respond(201, """{"code":"WXYZ-2345","userId":"u2","userName":"Bartek","deviceId":"d7","deviceName":"Tablet"}""")
+        assertEquals("Tablet", client().createLoginCode("u2", "d7").valueOrNull()!!.deviceName)
+        server.takeRequest().apply {
+            assertEquals("/api/v1/household/members/u2/login-code", path)
+            assertEquals("""{"deviceId":"d7"}""", body.readUtf8())
+        }
     }
 
     @Test fun emailShape() {

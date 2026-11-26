@@ -164,9 +164,14 @@ class BackendClient(
     suspend fun removeMember(userId: String): ApiResult<Unit> =
         execute(request(url("/v1/household/members/$userId")).delete()) { }
 
-    /** A single-use login code for a user of the household (owner), 48 h; replaces that user's earlier code. */
-    suspend fun createLoginCode(userId: String): ApiResult<LoginCode> =
-        call(request(url("/v1/household/members/$userId/login-code")).post(EMPTY), LoginCode.serializer())
+    /**
+     * A single-use login code for a user of the household (owner), 48 h; replaces that user's earlier code. With
+     * [deviceId] (a working device of that user) the code logs in as that device; older backends ignore it.
+     */
+    suspend fun createLoginCode(userId: String, deviceId: String? = null): ApiResult<LoginCode> =
+        call(request(url("/v1/household/members/$userId/login-code"))
+            .post(deviceId?.let { json(encode(LoginCodeRequest.serializer(), LoginCodeRequest(it))) } ?: EMPTY),
+            LoginCode.serializer())
 
     /** Owners any device of the household, members only their own; 204 also when already revoked. */
     suspend fun revokeDevice(deviceId: String): ApiResult<Unit> =

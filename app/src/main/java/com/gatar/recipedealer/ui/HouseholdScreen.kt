@@ -217,15 +217,19 @@ fun HouseholdTab(state: AccountState) {
 
     HorizontalDivider()
     Text(stringResource(R.string.household_members), style = MaterialTheme.typography.titleMedium)
-    state.members.forEach { m ->
+    // one card per user and device (user, 2026-11-26); a user without a working device gets one card too
+    state.members.flatMap { m -> m.devices.ifEmpty { listOf(null) }.map { m to it } }.forEach { (m, device) ->
         MemberCard(
             member = m,
+            device = device,
             self = self,
             manage = manage,
             enabled = !state.busy,
             onRole = { role -> state.run({ it.setRole(m.userId, role) }) },
             onLoginCode = {
-                state.run({ c -> c.createLoginCode(m.userId).also { r -> if (r is ApiResult.Ok) state.loginCode = r.value } })
+                state.run({ c ->
+                    c.createLoginCode(m.userId, device?.deviceId).also { r -> if (r is ApiResult.Ok) state.loginCode = r.value }
+                })
             },
             onRemove = {
                 state.confirm = Confirm(context.getString(R.string.household_remove_confirm, m.userName),
@@ -305,11 +309,13 @@ fun AccountDialogs(state: AccountState) {
     }
     state.loginCode?.let { lc ->
         val expires = lc.expiresAt?.let(::formatInstant) ?: "?"
+        // a code for a device logs in as that device
+        val target = lc.deviceName?.let { stringResource(R.string.login_code_target_device, lc.userName, it) } ?: lc.userName
         CodeDialog(
-            title = stringResource(R.string.login_code_created, lc.userName),
+            title = stringResource(R.string.login_code_created, target),
             code = lc.code,
-            how = stringResource(R.string.login_code_how, lc.userName, expires),
-            shareText = context.getString(R.string.login_code_text, lc.userName, lc.code, expires),
+            how = stringResource(R.string.login_code_how, target, expires),
+            shareText = context.getString(R.string.login_code_text, target, lc.code, expires),
             onClose = { state.loginCode = null },
         )
     }
@@ -368,9 +374,11 @@ private fun Limits(h: HouseholdView) {
 /** Cents are enough here ("Statystyki dla nerdów" show 4 decimals). */
 private fun dollars(v: Double) = String.format(Locale.ROOT, "$%.2f", v)
 
+/** One user with one of its devices ([device] null: the user has no working device). */
 @Composable
 private fun MemberCard(
     member: Member,
+    device: MemberDevice?,
     self: Me,
     manage: Boolean,
     enabled: Boolean,
@@ -388,61 +396,61 @@ private fun MemberCard(
                 Column(Modifier.weight(1f)) {
                     Text(member.userName + if (isSelf) " " + stringResource(R.string.household_self) else "",
                         style = MaterialTheme.typography.titleMedium)
-                    Text(roleLabel(context, member.role), style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    if (device == null) {
+                        Text(stringResource(R.string.household_no_devices), style = MaterialTheme.typography.bodyMedium)
+                    } else {
+                        Text(device.deviceName + if (device.current) " " + stringResource(R.string.household_this_device) else "",
+                            style = MaterialTheme.typography.bodyMedium)
+                    }
+                    Text(
+                        listOfNotNull(roleLabel(context, member.role),
+                            device?.lastUsedAt?.let { stringResource(R.string.household_last_used, formatInstant(it)) })
+                            .joinToString(" · "),
+                        style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
                 }
-                if (manage) {
+                // owners manage everyone; members only revoke their own devices
+                val canRevoke = device != null && (self.isOwner || isSelf)
+                if (manage || canRevoke) {
                     Box {
                         IconButton(onClick = { menu = true }, enabled = enabled) {
                             Icon(Icons.Default.MoreVert, stringResource(R.string.household_member_actions))
                         }
                         DropdownMenu(expanded = menu, onDismissRequest = { menu = false }) {
-                            DropdownMenuItem(
-                                text = { Text(stringResource(R.string.login_code_generate)) },
-                                onClick = { menu = false; onLoginCode() },
-                            )
-                            if (member.role == Roles.OWNER) {
+                            if (manage) {
                                 DropdownMenuItem(
-                                    text = { Text(stringResource(R.string.household_make_member)) },
-                                    onClick = { menu = false; onRole(Roles.MEMBER) },
+                                    text = { Text(stringResource(R.string.login_code_generate)) },
+                                    onClick = { menu = false; onLoginCode() },
                                 )
-                            } else {
-                                // only a user with an e-mail address becomes an owner
+                                if (member.role == Roles.OWNER) {
+                                    DropdownMenuItem(
+                                        text = { Text(stringResource(R.string.household_make_member)) },
+                                        onClick = { menu = false; onRole(Roles.MEMBER) },
+                                    )
+                                } else {
+                                    // only a user with an e-mail address becomes an owner
+                                    DropdownMenuItem(
+                                        text = {
+                                            Text(stringResource(if (member.hasEmail) R.string.household_make_owner
+                                                else R.string.household_make_owner_no_email))
+                                        },
+                                        enabled = member.hasEmail,
+                                        onClick = { menu = false; onRole(Roles.OWNER) },
+                                    )
+                                }
+                                if (!isSelf) {
+                                    DropdownMenuItem(
+                                        text = { Text(stringResource(R.string.household_remove)) },
+                                        onClick = { menu = false; onRemove() },
+                                    )
+                                }
+                            }
+                            if (canRevoke) {
                                 DropdownMenuItem(
-                                    text = {
-                                        Text(stringResource(if (member.hasEmail) R.string.household_make_owner
-                                            else R.string.household_make_owner_no_email))
-                                    },
-                                    enabled = member.hasEmail,
-                                    onClick = { menu = false; onRole(Roles.OWNER) },
+                                    text = { Text(stringResource(R.string.household_revoke)) },
+                                    onClick = { menu = false; onRevoke(device!!) },
                                 )
                             }
-                            if (!isSelf) {
-                                DropdownMenuItem(
-                                    text = { Text(stringResource(R.string.household_remove)) },
-                                    onClick = { menu = false; onRemove() },
-                                )
-                            }
-                        }
-                    }
-                }
-            }
-            if (member.devices.isEmpty()) {
-                Text(stringResource(R.string.household_no_devices), style = MaterialTheme.typography.bodySmall)
-            }
-            member.devices.forEach { d ->
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    Column(Modifier.weight(1f).padding(start = 8.dp)) {
-                        Text(d.deviceName + if (d.current) " " + stringResource(R.string.household_this_device) else "",
-                            style = MaterialTheme.typography.bodyMedium)
-                        d.lastUsedAt?.let {
-                            Text(stringResource(R.string.household_last_used, formatInstant(it)),
-                                style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
-                        }
-                    }
-                    if (self.isOwner || isSelf) {
-                        IconButton(onClick = { onRevoke(d) }, enabled = enabled) {
-                            Icon(Icons.Default.Close, stringResource(R.string.household_revoke))
                         }
                     }
                 }

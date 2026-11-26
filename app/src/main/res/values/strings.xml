@@ -330,6 +330,7 @@
     <string name="auth_invalid_login_code">Kod logowania jest błędny, został już użyty albo wygasł.</string>
     <string name="login_code_generate">Generuj kod logowania</string>
     <string name="login_code_created">Kod logowania: %1$s</string>
+    <string name="login_code_target_device">%1$s – %2$s</string>
     <string name="login_code_how">Na innym urządzeniu wpisz go na ekranie logowania w „Zaloguj się jednorazowym kodem” – urządzenie zaloguje się na konto %1$s. Ważny do %2$s, jednorazowy; nowy kod unieważnia poprzedni. Kod widać tylko teraz.</string>
     <string name="login_code_text">Kod logowania na konto %1$s w RecipeDealer: %2$s (ważny do %3$s). Wpisz go w aplikacji na ekranie logowania w „Zaloguj się jednorazowym kodem”.</string>
     <string name="role_owner">właściciel</string>

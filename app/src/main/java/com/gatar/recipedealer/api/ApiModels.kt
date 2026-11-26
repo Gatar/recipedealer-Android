@@ -318,7 +318,19 @@ data class EmailChange(val email: String)
 
 /** `POST /v1/household/members/{userId}/login-code`: [code] only in this answer. */
 @Serializable
-data class LoginCode(val code: String, val userId: String, val userName: String, val expiresAt: String? = null)
+data class LoginCode(
+    val code: String,
+    val userId: String,
+    val userName: String,
+    /** The device the code logs in as; null for a code without a device (or from an older backend). */
+    val deviceId: String? = null,
+    val deviceName: String? = null,
+    val expiresAt: String? = null,
+)
+
+/** Body of `POST /v1/household/members/{userId}/login-code`: the device the code logs in as. */
+@Serializable
+data class LoginCodeRequest(val deviceId: String)
 
 /** Roles of [Me.role] / [Member.role]. */
 object Roles {
