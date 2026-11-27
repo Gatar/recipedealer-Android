@@ -14,12 +14,13 @@ android {
         applicationId = "com.gatar.recipedealer"
         minSdk = 34
         targetSdk = 37
-        versionCode = 7
-        versionName = "1.1.0"
+        versionCode = 8
+        versionName = "1.1.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         // The server is part of the release, not a user setting (user, 2026-11-25); changed only with a new version.
-        buildConfigField("String", "SERVER_URL", "\"https://2.31.66.200\"")
+        // Up to 1.1.0 it was https://2.31.66.200 (the backend keeps serving the IP for those installs).
+        buildConfigField("String", "SERVER_URL", "\"https://api.recipedealer.com\"")
     }
 
     // Release key outside both repos (`../signing/`, see CLAUDE.md "Release APK"); without it the release stays unsigned.

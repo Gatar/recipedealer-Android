@@ -231,6 +231,8 @@ App work:
   tabs (Ogólne / Moje konto / Mój dom), e-mail addresses, login codes (also for one device), one card per user and
   device. Debug build tested on the emulator and the tablet against production (backend 0b88e95); the release APK
   itself not installed.
+- 1.1.1 (versionCode 8, 2026-11-27): 1.1.0 + server `https://api.recipedealer.com` instead of the IP, deletion
+  confirmations say deletion is permanent (backend f3557ed). Debug build installed on the tablet.
 
 ## Translation of new recipes (backend 2026-11-03, `docs/api.md` "Translation of new recipes")
 - Setting `translateNew` (Settings: "Tłumacz nowe przepisy na język urządzenia (<język>)", the language name from
@@ -251,7 +253,7 @@ App work:
 - Verified 2026-10-27 by the user on the tablet: set password (enrolled device), logout + login, reinstall + login
   (recipes and photos synced again). On the emulator: wrong password → Polish error against the real server.
 - The server is fixed per release (user, 2026-11-25): `BuildConfig.SERVER_URL` = `AppSettings.SERVER_URL`
-  (`https://2.31.66.200`, `app/build.gradle.kts`), shown read-only in Settings with the connection test; the stored
+  (`https://api.recipedealer.com` since 1.1.1, `https://2.31.66.200` up to 1.1.0; `app/build.gradle.kts`), shown read-only in Settings with the connection test; the stored
   `baseUrl` of older versions is ignored, so there is no local mode in the app any more. A debug build may name a
   development server: `./gradlew :app:assembleDebug -PserverUrl=http://10.0.2.2:8080`. In the Claude Code sandbox the
   emulator cannot reach a backend started from the sandbox (connect timeout): test against production instead.
