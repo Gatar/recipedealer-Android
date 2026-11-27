@@ -217,7 +217,7 @@
     <string name="approve_unchanged">Zatwierdzam bez zmian</string>
     <string name="open_in_browser">Otwórz w przeglądarce</string>
     <string name="recipe_delete">Usuń przepis</string>
-    <string name="recipe_delete_confirm">Usunąć ten przepis ze wszystkich telefonów?</string>
+    <string name="recipe_delete_confirm">Usunąć ten przepis ze wszystkich urządzeń? Serwer usunie go na zawsze razem z historią, zdjęciami i plikami, z których powstał. Tego nie da się cofnąć.</string>
     <string name="revisions_title">Historia</string>
     <string name="revision_machine">Automatycznie</string>
     <string name="revision_user">Użytkownik</string>
@@ -290,7 +290,7 @@
     <string name="household_make_owner">Zrób właścicielem</string>
     <string name="household_make_member">Zrób domownikiem</string>
     <string name="household_remove">Usuń z domu</string>
-    <string name="household_remove_confirm">Usunąć konto %1$s z domu? Jego urządzenia przestaną działać, a nazwa użytkownika będzie wolna.</string>
+    <string name="household_remove_confirm">Usunąć konto %1$s na zawsze? Jego nazwa, e-mail, hasło i urządzenia zostaną usunięte, a nazwa użytkownika będzie wolna. Dodane przez niego przepisy zostają w domu. Tego nie da się cofnąć.</string>
     <string name="household_revoke">Odłącz urządzenie</string>
     <string name="household_revoke_confirm">Odłączyć urządzenie „%1$s”? Przestanie działać do ponownego zalogowania.</string>
     <string name="household_revoke_own_confirm">Odłączyć to urządzenie („%1$s”)? Aplikacja wyloguje się; przepisy zostaną w pamięci urządzenia.</string>
@@ -304,9 +304,9 @@
     <string name="household_invitation_share">Udostępnij</string>
     <string name="household_invitation_text">Zaproszenie do domu „%1$s” w RecipeDealer. W aplikacji wybierz „Dołącz” i wpisz kod %2$s (ważny do %3$s).</string>
     <string name="household_leave">Usuń moje konto</string>
-    <string name="household_leave_confirm">Usunąć Twoje konto? Wszystkie Twoje urządzenia przestaną działać, a przepisy znikną z tego urządzenia. Przepisy domu zostają dla pozostałych domowników; jeśli jesteś ostatnią osobą w domu, dom zostanie usunięty.</string>
+    <string name="household_leave_confirm">Usunąć Twoje konto na zawsze? Twoja nazwa, e-mail, hasło i urządzenia zostaną usunięte, a przepisy znikną z tego urządzenia. Przepisy domu zostają dla pozostałych domowników; jeśli jesteś ostatnią osobą w domu, dom zostanie usunięty razem ze wszystkimi danymi. Tego nie da się cofnąć.</string>
     <string name="household_delete">Usuń dom</string>
-    <string name="household_delete_confirm">Usunąć dom „%1$s” razem z kontami wszystkich domowników? Wszystkie urządzenia przestaną działać. Tego nie da się cofnąć w aplikacji.</string>
+    <string name="household_delete_confirm">Usunąć dom „%1$s” na zawsze? Wszystkie urządzenia przestaną działać, a serwer usunie wszystkie dane domu: przepisy, zdjęcia, pliki i konta domowników. Tego nie da się cofnąć.</string>
     <string name="settings_tab_general">Ogólne</string>
     <string name="settings_tab_account">Moje konto</string>
     <string name="settings_tab_household">Mój dom</string>
